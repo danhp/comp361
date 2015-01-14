@@ -1,0 +1,92 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1343\cocoasubrtf160
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww12240\viewh15460\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\b\fs36 \cf0 Environment Diagram Message Descriptions
+\fs28 \
+\
+Input Messages (:ClientGUI -> :GameEngine)
+\fs24 \
+
+\f1 \
+\pard\pardeftab720\sa240
+
+\f0 \cf0 \expnd0\expndtw0\kerning0
+newGame(player: Player) 
+\b0 - sent by ClientGUI to initialize new game\
+
+\b selectMap(name: String) 
+\b0 - sent by ClientGUI to choose map selection within GameEngine
+\b \
+loadGame(game: Game) 
+\b0 - sent by ClientGUI to load previous game
+\b \
+move(from: Tile , to: Tile) 
+\b0 - sent by ClientGUI to move selected unit from one Tile to another
+\b \
+upgradeUnit(selected: Tile , toUnitType: Unit) 
+\b0 - sent by ClientGUI to upgrade selected tile unit type
+\b \
+upgradeVillage(selected: Tile, village:VillageType) 
+\b0 - sent by ClientGUI to upgrade selected tile village type
+\b \
+build(builder: Tile, on:Tile, \'a0type: LandType) 
+\b0 - sent by ClientGUI to build selected tile to land type
+\b \
+combine(source: Tile, with: Tile) 
+\b0 - sent by ClientGUI to combine source tile unit with another tile unit
+\b \
+recruit(village: Tile, unit: UnitType) 
+\b0 - sent by ClientGUI to recruit selected tile w/ village to Unit type
+\b \
+forfeit(Player : player) 
+\b0 - sent by ClientGUI for player to forfeit and lose the game
+\b \
+endTurn() 
+\b0 - sent by ClientGUi once player is finished with turn
+\b \
+
+\b0 \
+
+\b\fs28 Output Messages (:GameEngine -> :GameCentre)
+\fs24 \
+authenticate(player: Player) 
+\b0 - sent to GameCentre to authenticate player sent once time triggered event goes off
+\b \
+matchPlayers(game: Game) 
+\b0 - sent to GameCentre to match / find players for the selected game
+\b \
+fetchGame(game: Game) 
+\b0 - sent to GameCentre to load / fetch the current game selected - will ask for updated game state
+\b \
+pushState(game: Game) 
+\b0 - sent to GameCentre to upload the current game state once player has finished turn / selected map
+\b \
+endGame(game: Game) 
+\b0 - sent to GameCentre to end the game due to a winner 
+\b \
+\
+
+\fs28 Input Messages (:GameCentre -> : GameEngine)
+\fs24 \
+matchedPlayers(players: List<Player>, game: Game) 
+\b0 - sent by GameCentre to return players included in current game
+\b \
+fetchedGame(game: Game) 
+\b0 - sent by GameCentre to update the game state, or a fetched / loaded game\
+
+\b\fs28 \
+Output Messages(:GameEngine -> :ClientGUI)
+\fs24 \
+matchedPlayers(players: List<Player>) 
+\b0 - sent to ClientGUI 
+\b \
+selectedMap(map: Map) 
+\b0 - sent to ClientGUI to show the map chosen for the game
+\b \
+updateGUIState(game: Game) 
+\b0 - sent to ClientGUI to update the GUI state and update menus
+\b \
+}
