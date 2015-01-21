@@ -7,24 +7,29 @@
 //
 
 struct Constants {
+	
+	struct Map {
+		static let dimension = 18	// 18x18 maps
+	}
+	
 	struct Tile {
-		static let size = 50	// Distance from center to a corner
+		static let size = 30	// Distance from center to a corner
 	}
 	
 	struct Types {
-		 enum Land {
+		 enum LandType {
 			case Sea, Grass, Tree, Meadow
 		}
 		
-		enum Village {
+		enum VillageType {
 			case Hovel, Town, Fort
 		}
 		
-		enum Unit {
+		enum UnitType {
 			case Peasant, Infantry, Soldier, Knight
 		}
 		
-		enum Structure {
+		enum StructureType {
 			case Tower, Road, Tombstone
 		}
 	}

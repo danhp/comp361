@@ -11,7 +11,11 @@ import SpriteKit
 class GameScene: SKScene {
 	
     override func didMoveToView(view: SKView) {
-		
+		self.anchorPoint = CGPointMake(0.5, 0.5)
+
+		let map = Map()
+		map.draw()
+		self.addChild(map)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
