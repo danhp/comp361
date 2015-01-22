@@ -10,13 +10,17 @@ import SpriteKit
 import Darwin
 
 class Map: SKNode {
-   let tiles = [[Tile]]()
+	let tiles = [[Tile]]()
+	let scroller = SKNode()
 	
 	override init() {
 		super.init()
 		
+		
+		// Initialize tiles array
+		
 		let d = Constants.Map.dimension
-
+		
 		tiles = Array<Array<Tile>>()
 		for column in 0..<d {
 			tiles.append(Array<Tile>())
@@ -24,6 +28,10 @@ class Map: SKNode {
 				tiles[column].append(Tile(landType: Constants.Types.LandType.Grass))
 			}
 		}
+		
+		// Initialize scroller node
+		scroller = SKNode()
+		self.addChild(scroller)
 	}
 	
 	func draw() {
@@ -36,19 +44,23 @@ class Map: SKNode {
 		// Go column by column
 		for (j, column) in enumerate(tiles) {
 			let x_offset = j % 2 == 0 ? 0 : width/2
-
+			
 			// Add the tiles for the current row.
 			for (i, tile) in enumerate(column) {
 				
 				let tile = tiles[i][j]
 				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(i)*horiz), CGFloat(j*vert))
 				
-				self.addChild(tile)
+				self.scroller.addChild(tile)
 			}
 		}
 	}
-
+	
+	func scroll(delta: CGPoint) {
+		scroller.position = CGPointMake(scroller.position.x + delta.x, scroller.position.y + delta.y)
+	}
+	
 	required init?(coder aDecoder: NSCoder) {
-	    fatalError("init(coder:) has not been implemented")
+		fatalError("init(coder:) has not been implemented")
 	}
 }

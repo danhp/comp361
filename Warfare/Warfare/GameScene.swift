@@ -9,11 +9,11 @@
 import SpriteKit
 
 class GameScene: SKScene {
+	let map = Map()
 	
     override func didMoveToView(view: SKView) {
 		self.anchorPoint = CGPointMake(0.5, 0.5)
 
-		let map = Map()
 		map.draw()
 		self.addChild(map)
     }
@@ -24,6 +24,17 @@ class GameScene: SKScene {
         for touch: AnyObject in touches {
         }
     }
+	
+	override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+		for touch: AnyObject in touches {
+			let current = touch.locationInNode(self)
+			let prev = touch.previousLocationInNode(self)
+			
+			let translation = CGPointMake(current.x - prev.x, current.y - prev.y)
+			
+			map.scroll(translation)
+		}
+	}
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */

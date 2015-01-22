@@ -9,11 +9,11 @@
 struct Constants {
 	
 	struct Map {
-		static let dimension = 18	// 18x18 maps
+		static let dimension = 10	// 18x18 maps
 	}
 	
 	struct Tile {
-		static let size = 30	// Distance from center to a corner
+		static let size = 50	// Distance from center to a corner
 	}
 	
 	struct Types {

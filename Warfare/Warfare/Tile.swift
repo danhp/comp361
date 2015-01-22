@@ -14,7 +14,22 @@ class Tile: SKShapeNode {
 		super.init()
 		
 		self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
-		self.fillColor = UIColor.blueColor()
+		
+		// TEMPORARY
+		var color = UIColor()
+		let n = arc4random_uniform(5)
+		
+		if (n < 2) {
+			color = UIColor.greenColor()
+		} else if (n == 2) {
+			color = UIColor.yellowColor()
+		} else if (n == 3) {
+			color = UIColor.blueColor()
+		} else if (n == 4) {
+			color = UIColor.redColor()
+		}
+		
+		self.fillColor = color
 	}
 
 	func makeHexagonalPath(size: CGFloat) -> CGPath {
