@@ -20,6 +20,8 @@
 		137101621A701B80009B807C /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137101611A701B80009B807C /* Map.swift */; };
 		13F84E1F1A72C1EF005322B7 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
 		13F84E221A72C5C8005322B7 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
+		522708541A72F148009ED4DA /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708531A72F148009ED4DA /* Unit.swift */; };
+		522708561A72F56B009ED4DA /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708551A72F56B009ED4DA /* Village.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		1371015F1A701411009B807C /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		137101611A701B80009B807C /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		13F84E1E1A72C1EF005322B7 /* HexGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexGrid.swift; sourceTree = "<group>"; };
+		522708531A72F148009ED4DA /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unit.swift; path = Warfare/Unit.swift; sourceTree = SOURCE_ROOT; };
+		522708551A72F56B009ED4DA /* Village.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Village.swift; path = Warfare/Village.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,8 @@
 				1371015D1A7010CE009B807C /* Constants.swift */,
 				1371015F1A701411009B807C /* Tile.swift */,
 				137101611A701B80009B807C /* Map.swift */,
+				522708551A72F56B009ED4DA /* Village.swift */,
+				522708531A72F148009ED4DA /* Unit.swift */,
 				13F84E1E1A72C1EF005322B7 /* HexGrid.swift */,
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
@@ -187,7 +193,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1371012F1A701096009B807C /* Build configuration list for PBXProject "warfare" */;
+			buildConfigurationList = 1371012F1A701096009B807C /* Build configuration list for PBXProject "Warfare" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -237,6 +243,8 @@
 				137101601A701411009B807C /* Tile.swift in Sources */,
 				13F84E1F1A72C1EF005322B7 /* HexGrid.swift in Sources */,
 				1371013A1A701096009B807C /* AppDelegate.swift in Sources */,
+				522708541A72F148009ED4DA /* Unit.swift in Sources */,
+				522708561A72F56B009ED4DA /* Village.swift in Sources */,
 				137101621A701B80009B807C /* Map.swift in Sources */,
 				1371015E1A7010CE009B807C /* Constants.swift in Sources */,
 			);
@@ -415,7 +423,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1371012F1A701096009B807C /* Build configuration list for PBXProject "warfare" */ = {
+		1371012F1A701096009B807C /* Build configuration list for PBXProject "Warfare" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				137101551A701096009B807C /* Debug */,

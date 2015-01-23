@@ -32,5 +32,9 @@ struct Constants {
 		enum StructureType {
 			case Tower, Road, Tombstone
 		}
+
+		enum UnitAction {
+			case Idle, Cultivating
+		}
 	}
 }
