@@ -18,6 +18,8 @@
 		1371015E1A7010CE009B807C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371015D1A7010CE009B807C /* Constants.swift */; };
 		137101601A701411009B807C /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371015F1A701411009B807C /* Tile.swift */; };
 		137101621A701B80009B807C /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137101611A701B80009B807C /* Map.swift */; };
+		13F84E1F1A72C1EF005322B7 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
+		13F84E221A72C5C8005322B7 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,7 @@
 		1371015D1A7010CE009B807C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		1371015F1A701411009B807C /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		137101611A701B80009B807C /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		13F84E1E1A72C1EF005322B7 /* HexGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +94,7 @@
 				1371015D1A7010CE009B807C /* Constants.swift */,
 				1371015F1A701411009B807C /* Tile.swift */,
 				137101611A701B80009B807C /* Map.swift */,
+				13F84E1E1A72C1EF005322B7 /* HexGrid.swift */,
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
 				1371013F1A701096009B807C /* GameViewController.swift */,
@@ -231,6 +235,7 @@
 				1371013E1A701096009B807C /* GameScene.swift in Sources */,
 				137101401A701096009B807C /* GameViewController.swift in Sources */,
 				137101601A701411009B807C /* Tile.swift in Sources */,
+				13F84E1F1A72C1EF005322B7 /* HexGrid.swift in Sources */,
 				1371013A1A701096009B807C /* AppDelegate.swift in Sources */,
 				137101621A701B80009B807C /* Map.swift in Sources */,
 				1371015E1A7010CE009B807C /* Constants.swift in Sources */,
@@ -242,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				137101541A701096009B807C /* warfareTests.swift in Sources */,
+				13F84E221A72C5C8005322B7 /* HexGrid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +431,7 @@
 				137101591A701096009B807C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1371015A1A701096009B807C /* Build configuration list for PBXNativeTarget "warfareTests" */ = {
 			isa = XCConfigurationList;
@@ -433,6 +440,7 @@
 				1371015C1A701096009B807C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

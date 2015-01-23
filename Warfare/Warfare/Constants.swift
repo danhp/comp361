@@ -9,7 +9,7 @@
 struct Constants {
 	
 	struct Map {
-		static let dimension = 10	// 18x18 maps
+		static let dimension = 5	// 18x18 maps
 	}
 	
 	struct Tile {
