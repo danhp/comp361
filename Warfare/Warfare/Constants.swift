@@ -9,7 +9,7 @@
 struct Constants {
 	
 	struct Map {
-		static let dimension = 5	// 18x18 maps
+		static let dimension = 18	// 18x18 maps
 	}
 	
 	struct Tile {
@@ -32,9 +32,7 @@ struct Constants {
 		enum StructureType {
 			case Tower, Road, Tombstone
 		}
-
-		enum UnitAction {
-			case Idle, Cultivating
-		}
+        
+        enum UnitAction { case Idle }
 	}
 }

@@ -51,7 +51,7 @@ class warfareTests: XCTestCase {
         XCTAssertEqual([-1,2], (grid[-1,2] as TileWithIndices).indices)
     }
     
-    func offsetToAxial() {
+    func testOffsetToAxial() {
         let offsetCoordinate = (row: 4, col: 1)
         XCTAssertEqual(-1, HexGrid.offsetToAxial(row: offsetCoordinate.row, col: offsetCoordinate.col).x)
         XCTAssertEqual(4, HexGrid.offsetToAxial(row: offsetCoordinate.row, col: offsetCoordinate.col).y)
