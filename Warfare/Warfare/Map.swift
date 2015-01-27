@@ -36,19 +36,18 @@ class Map: SKNode {
 	func draw() {
 		let height = Constants.Tile.size * 2
 		let width = sqrt(3)/2.0 * Double(height)
-		
 		let vert = height * 3/4
 		let horiz = width
 		
-		// Go column by column
-		for (j, column) in enumerate(tiles.rows) {
-			let x_offset = j % 2 == 0 ? 0 : width/2
+		// Go row by row
+        for (i, row) in enumerate(tiles.rows) {
+			let x_offset = i % 2 == 0 ? 0 : width/2
 			
 			// Add the tiles for the current row.
-			for (i, tile) in enumerate(column) {
+			for (j, tile) in enumerate(row) {
 				
 				let tile = tiles.rows[i][j]
-				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(i)*horiz), -CGFloat(j*vert))
+				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
                 
                 let index = HexGrid.offsetToAxial(row: i, col: j)
                 let s:String = index.x.description + "," + index.y.description
