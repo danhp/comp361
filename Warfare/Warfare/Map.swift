@@ -10,19 +10,20 @@ import SpriteKit
 import Darwin
 
 class Map: SKNode {
-	let tiles: HexGrid<Tile>
+	let tiles: HexGrid
 	let scroller = SKNode()
 	
 	override init() {
+        
 		// Initialize tiles array
 		var array = [[Tile]]()
 		for row in 0..<Constants.Map.dimension {
 			array.append(Array<Tile>())
 			for column in 0..<Constants.Map.dimension {
-				array[row].append(Tile(landType: Constants.Types.LandType.Grass))
+				array[row].append(Tile())
 			}
 		}
-		
+        
 		tiles = HexGrid(array: array)
 		
 		super.init()
@@ -46,9 +47,12 @@ class Map: SKNode {
 			// Add the tiles for the current row.
 			for (i, tile) in enumerate(column) {
 				
-				let tile = tiles[i,j]
-				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(i)*horiz), CGFloat(j*vert))
-				let label = SKLabelNode(text: i.description + "," + j.description)
+				let tile = tiles.rows[i][j]
+				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(i)*horiz), -CGFloat(j*vert))
+                
+                let index: (Int, Int) = HexGrid.offsetToAxial(row: i, col: j)
+                let s:String = index.0.description + "," + index.1.description
+				let label = SKLabelNode(text: s)
 				tile.addChild(label)
 				self.scroller.addChild(tile)
 			}
