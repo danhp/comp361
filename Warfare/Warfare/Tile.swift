@@ -10,9 +10,9 @@ import SpriteKit
 import Darwin
 
 class Tile: SKShapeNode {
-	init(landType: Constants.Types.LandType) {
+	init(landType: Constants.Types.LandType = .Grass) {
 		super.init()
-		
+        
 		self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
 		
 		// TEMPORARY
