@@ -13,12 +13,19 @@ class Village {
 		controlledTiles = Array<Tile>()
 	}
 
+	//Setters
 	func addGold(amount: Int) {
 		self.gold += amount
 	}
+	func removeGold(amount: Int) {
+		self.gold -= amount
+	}
 
 	func addWood(amount: Int) {
-		self.gold = self.gold + amount
+		self.wood += amount
+	}
+	func removeWood(amount: Int) {
+		self.wood -= amount
 	}
 
 	func upgradeVillage(newType: Constants.Types.Village) {
@@ -30,7 +37,7 @@ class Village {
 		controlledTiles.append(tile)
 	}
 
-
+	//Getters
 	func getVillageGold() -> Int {
 		return self.gold
 	}

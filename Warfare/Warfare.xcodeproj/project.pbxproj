@@ -25,6 +25,7 @@
 		13F84E1F1A72C1EF005322B7 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
 		522708541A72F148009ED4DA /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708531A72F148009ED4DA /* Unit.swift */; };
 		522708561A72F56B009ED4DA /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708551A72F56B009ED4DA /* Village.swift */; };
+		52DF21591A75B28600DEDC71 /* Structure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF21581A75B28600DEDC71 /* Structure.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		13F84E1E1A72C1EF005322B7 /* HexGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexGrid.swift; sourceTree = "<group>"; };
 		522708531A72F148009ED4DA /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unit.swift; path = Warfare/Unit.swift; sourceTree = SOURCE_ROOT; };
 		522708551A72F56B009ED4DA /* Village.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Village.swift; path = Warfare/Village.swift; sourceTree = SOURCE_ROOT; };
+		52DF21581A75B28600DEDC71 /* Structure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Structure.swift; path = Warfare/Structure.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				522708551A72F56B009ED4DA /* Village.swift */,
 				522708531A72F148009ED4DA /* Unit.swift */,
 				13F84E1E1A72C1EF005322B7 /* HexGrid.swift */,
+				52DF21581A75B28600DEDC71 /* Structure.swift */,
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
 				1371013F1A701096009B807C /* GameViewController.swift */,
@@ -248,6 +251,7 @@
 				1371013A1A701096009B807C /* AppDelegate.swift in Sources */,
 				522708541A72F148009ED4DA /* Unit.swift in Sources */,
 				522708561A72F56B009ED4DA /* Village.swift in Sources */,
+				52DF21591A75B28600DEDC71 /* Structure.swift in Sources */,
 				137101621A701B80009B807C /* Map.swift in Sources */,
 				1371015E1A7010CE009B807C /* Constants.swift in Sources */,
 			);

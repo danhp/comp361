@@ -11,18 +11,20 @@ class Unit {
 		self.currentAction = Constants.Unit.Action.Idle
 	}
 
-	func moveUnit(destination: Tile) {
-		self.position = destination
-	}
-
+	//Setters
 	func upgradeUnit(newType: Constants.Types.Unit) {
 		self.type = newType
+	}
+
+	func moveUnit(destination: Tile) {
+		self.position = destination
 	}
 
 	func setUnitAction(action: Constants.Unit.Action) {
 		self.currentAction = action
 	}
 
+	//Getters
 	func getUnitType() -> Constants.Types.Unit {
 		return self.type
 	}
