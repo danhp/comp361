@@ -1,29 +1,29 @@
 import Foundation
 
 class Unit {
-	private var type: Constants.Types.UnitType
+	private var type: Constants.Types.Unit
 	private var position: Tile
-	private var currentAction: Constants.Types.UnitAction
+	private var currentAction: Constants.Unit.Action
 
-	init(type: Constants.Types.UnitType, tile: Tile) {
+	init(type: Constants.Types.Unit, tile: Tile) {
 		self.type = type
 		self.position = tile
-		self.currentAction = Constants.Types.UnitAction.Idle
+		self.currentAction = Constants.Unit.Action.Idle
 	}
 
 	func moveUnit(destination: Tile) {
 		self.position = destination
 	}
 
-	func upgradeUnit(newType: Constants.Types.UnitType) {
+	func upgradeUnit(newType: Constants.Types.Unit) {
 		self.type = newType
 	}
 
-	func setUnitAction(action: Constants.Types.UnitAction) {
+	func setUnitAction(action: Constants.Unit.Action) {
 		self.currentAction = action
 	}
 
-	func getUnitType() -> Constants.Types.UnitType {
+	func getUnitType() -> Constants.Types.Unit {
 		return self.type
 	}
 
@@ -31,7 +31,7 @@ class Unit {
 		return self.position
 	}
 
-	func getUnitAction() -> Constants.Types.UnitAction {
+	func getUnitAction() -> Constants.Unit.Action {
 		return self.currentAction
 	}
 }

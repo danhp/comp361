@@ -17,22 +17,24 @@ struct Constants {
 	}
 	
 	struct Types {
-		 enum LandType {
+		 enum Land {
 			case Sea, Grass, Tree, Meadow
 		}
 		
-		enum VillageType {
+		enum Village {
 			case Hovel, Town, Fort
 		}
 		
-		enum UnitType {
+		enum Unit {
 			case Peasant, Infantry, Soldier, Knight
 		}
 		
-		enum StructureType {
+		enum Structure {
 			case Tower, Road, Tombstone
 		}
-        
-        enum UnitAction { case Idle }
-	}
+    }
+    
+    struct Unit {
+        enum Action { case Idle }
+    }
 }

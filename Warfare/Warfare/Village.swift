@@ -1,18 +1,14 @@
 import Foundation
 
 class Village {
-	private var type: Constants.Types.VillageType
-	private var gold: Int
-	private var wood: Int
+	private var type = Constants.Types.Village.Hovel
+	private var gold: Int = 0
+	private var wood: Int = 0
 
 	private let position: Tile
 	private var controlledTiles: Array<Tile>
 
 	init(tile: Tile) {
-		self.type = Constants.Types.VillageType.Hovel
-		self.gold = 0
-		self.wood = 0
-
 		self.position = tile
 		controlledTiles = Array<Tile>()
 	}
@@ -25,7 +21,7 @@ class Village {
 		self.gold = self.gold + amount
 	}
 
-	func upgradeVillage(newType: Constants.Types.VillageType) {
+	func upgradeVillage(newType: Constants.Types.Village) {
 		//TODO Remove gold from bank
 		self.type = newType
 	}
@@ -43,7 +39,7 @@ class Village {
 		return self.wood
 	}
 
-	func getVillageType() -> Constants.Types.VillageType {
+	func getVillageType() -> Constants.Types.Village {
 		return self.type
 	}
 
