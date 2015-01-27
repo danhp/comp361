@@ -8,30 +8,31 @@
 
 import Foundation
 
-class HexGrid<T> {
+class HexGrid {
 	var width: Int { return rows[0].count }
 	var height: Int { return rows.count }
 	var size: Int { return width * 2 }
-	var rows: [[T]]
+	var rows: [[Tile]]
 	
-	subscript(x: Int, y: Int) -> T {
+	subscript(x: Int, y: Int) -> Tile {
 		get {
-			return rows[y][x+y/2]
-		}
-		set {
-			rows[y][x+y/2] = newValue
+			return self.rows[y][x+y/2]
 		}
 	}
+    
+    class func offsetToAxial(#row: Int, col: Int) -> (x: Int, y: Int) {
+        return (row - (col-(col&1)) / 2, col)
+    }
 	
-	init() {
-		rows = []
+    init() {
+        self.rows = []
+    }
+    
+	init(hexGrid grid: HexGrid) {
+		self.rows = grid.rows
 	}
 	
-	init(hexGrid: HexGrid<T>) {
-		rows = hexGrid.rows
-	}
-	
-	init(array: Array<Array<T>>) {
-		rows = array
+	init(array: [[Tile]]) {
+		self.rows = array
 	}
 }
