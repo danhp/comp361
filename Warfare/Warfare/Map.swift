@@ -50,8 +50,8 @@ class Map: SKNode {
 				let tile = tiles.rows[i][j]
 				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(i)*horiz), -CGFloat(j*vert))
                 
-                let index: (Int, Int) = HexGrid.offsetToAxial(row: i, col: j)
-                let s:String = index.0.description + "," + index.1.description
+                let index = HexGrid.offsetToAxial(row: i, col: j)
+                let s:String = index.x.description + "," + index.y.description
 				let label = SKLabelNode(text: s)
 				tile.addChild(label)
 				self.scroller.addChild(tile)
