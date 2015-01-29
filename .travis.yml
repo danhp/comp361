@@ -1,0 +1,11 @@
+language: objective-c
+before_install:
+    - brew update
+    - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
+script:
+    - xctool clean test -project Warfare/Warfare.xcodeproj -scheme warfare -sdk iphonesimulator
+
+notifications:
+    email:
+      on_success: change
+      on_failure: change
