@@ -20,8 +20,10 @@ class HexGrid {
 		}
 	}
     
-    class func offsetToAxial(#row: Int, col: Int) -> (x: Int, y: Int) {
-        return (col - (row-(row&1)) / 2, row)
+    subscript(arrayX x: Int, Y y: Int) -> Tile {
+        get {
+            return self.rows[x][y]
+        }
     }
 	
     init() {

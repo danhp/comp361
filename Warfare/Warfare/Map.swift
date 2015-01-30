@@ -13,17 +13,7 @@ class Map: SKNode {
 	let tiles: HexGrid
 	let scroller = SKNode()
 	
-	override init() {
-        
-		// Initialize tiles array
-		var array = [[Tile]]()
-		for row in 0..<Constants.Map.dimension {
-			array.append(Array<Tile>())
-			for column in 0..<Constants.Map.dimension {
-				array[row].append(Tile())
-			}
-		}
-        
+    init(array: [[Tile]]) {
 		tiles = HexGrid(array: array)
 		
 		super.init()
@@ -32,6 +22,22 @@ class Map: SKNode {
 		scroller = SKNode()
 		self.addChild(scroller)
 	}
+    
+    func neighbors(#x: Int, y: Int) -> [Tile] {
+        var neighbors = [Tile]()
+        
+        let directions: [[Int]] = [
+            [+1,  0], [+1, -1], [ 0, -1],
+            [-1,  0], [-1, +1], [ 0, +1]
+        ]
+        
+        for i in 0...5 {
+            let d = directions[i]
+            neighbors.append(self.tiles[y+d[0],x+d[1]])
+        }
+        
+        return neighbors
+    }
 	
 	func draw() {
 		let height = Constants.Tile.size * 2
@@ -46,11 +52,11 @@ class Map: SKNode {
 			// Add the tiles for the current row.
 			for (j, tile) in enumerate(row) {
 				
-				let tile = tiles.rows[i][j]
+                let coord = Utilities.arrayToAxialCoordinates(row: i, col: j)
+                let tile = tiles[coord.x, coord.y]
 				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
                 
-                let index = HexGrid.offsetToAxial(row: i, col: j)
-                let s:String = index.x.description + "," + index.y.description
+                let s:String = coord.x.description + "," + coord.y.description
 				let label = SKLabelNode(text: s)
 				tile.addChild(label)
 				self.scroller.addChild(tile)
