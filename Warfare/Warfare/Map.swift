@@ -23,6 +23,10 @@ class Map: SKNode {
 		self.addChild(scroller)
 	}
     
+    func neighbords(#tile: Tile) -> [Tile] {
+        return neighbors(x: tile.coordinates.0, y: tile.coordinates.1)
+    }
+    
     func neighbors(#x: Int, y: Int) -> [Tile] {
         var neighbors = [Tile]()
         
@@ -38,6 +42,38 @@ class Map: SKNode {
         
         return neighbors
     }
+    
+//    func path(from: Tile, to: Tile) -> [Tile] {
+//        class Path {
+//            var total: Int!
+//            var destination: Vertex
+//            var previous: Path!
+//            
+//            init() { destination = Tile() }
+//        }
+//            
+//        var path = [Tile]()
+//        
+//        var queue = [Tile]()
+//        var dist = [from: 0]
+//        
+//        // Conditions to walk on a tile:
+//        //      1 - Tile is owned by Village
+//        //      2 - Tile is empty
+//        
+//        queue.append(from)
+//        
+//        while !queue.isEmpty {
+//            var tile = queue.removeLast()
+//            
+//            // Add unvisited neighbors to the queue
+//            for n in neighbors(tile: n) {
+//                if n.
+//            }
+//        }
+//        
+//        return path
+//    }
 	
 	func draw() {
 		let height = Constants.Tile.size * 2

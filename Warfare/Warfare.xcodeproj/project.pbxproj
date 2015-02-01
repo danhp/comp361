@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		131C14361A7E71DC00CE386D /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708531A72F148009ED4DA /* Unit.swift */; };
+		131C14371A7E71E000CE386D /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708551A72F56B009ED4DA /* Village.swift */; };
 		135DC1421A783D7E00474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		135DC1431A7849A800474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		1371013A1A701096009B807C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137101391A701096009B807C /* AppDelegate.swift */; };
@@ -274,6 +276,8 @@
 				135DC1431A7849A800474073 /* Utilities.swift in Sources */,
 				139527741A7714D20019E3F4 /* Tile.swift in Sources */,
 				139527761A7714DE0019E3F4 /* Map.swift in Sources */,
+				131C14361A7E71DC00CE386D /* Unit.swift in Sources */,
+				131C14371A7E71E000CE386D /* Village.swift in Sources */,
 				13AF2AA61A7803E100B4C67B /* mapTests.swift in Sources */,
 				139527751A7714DC0019E3F4 /* Constants.swift in Sources */,
 			);

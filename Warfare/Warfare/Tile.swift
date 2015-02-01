@@ -11,9 +11,12 @@ import Darwin
 
 class Tile: SKShapeNode {
     let coordinates: (Int, Int)
+    var unit: Unit?
+    var land: Constants.Types.Land
     
     init(coordinates: (Int, Int), landType: Constants.Types.Land = .Grass) {
         self.coordinates = coordinates
+        self.land = landType
         
 		super.init()
         
@@ -29,12 +32,18 @@ class Tile: SKShapeNode {
 			color = UIColor.yellowColor()
 		} else if (n == 3) {
 			color = UIColor.blueColor()
+            self.unit = Unit(type: .Knight, tile: self)
 		} else if (n == 4) {
 			color = UIColor.redColor()
+            self.unit = Unit(type: .Peasant, tile: self)
 		}
 		
 		self.fillColor = color
 	}
+    
+    func isWalkable() -> Bool {
+        return self.land == .Grass
+    }
 
 	func makeHexagonalPath(size: CGFloat) -> CGPath {
 		let path = CGPathCreateMutable()
