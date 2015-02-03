@@ -29,8 +29,8 @@ class Village {
 	}
 
 	func upgradeVillage(newType: Constants.Types.Village) {
-		if self.isLegalUpgrade(newType) {
-			self.wood -= 8 * (newType.rawValue - self.type.rawValue)
+		if (newType.rawValue - self.type.rawValue) == 1 && self.wood >= 8 {
+			self.wood -= 8
 			self.type = newType
 		}
 	}
@@ -60,13 +60,4 @@ class Village {
 		return self.controlledTiles
 	}
 
-
-	func isLegalUpgrade(newType: Constants.Types.Village) -> Bool {
-		if (newType.rawValue - self.type.rawValue) == 1 && self.wood >= 8 ||
-		   (newType.rawValue - self.type.rawValue) == 2 && self.wood >= 16 {
-			return true
-		} else {
-			return false
-		}
-	}
 }

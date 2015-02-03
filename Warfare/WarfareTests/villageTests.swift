@@ -19,6 +19,9 @@ class villageTest: XCTestCase {
 		village.addWood(10)
 		XCTAssertEqual(village.getVillageWood(), 10)
 
+		village.upgradeVillage(Constants.Types.Village.Fort)
+		XCTAssertEqual(village.getVillageType(), Constants.Types.Village.Hovel)
+
 		village.upgradeVillage(Constants.Types.Village.Town)
 		XCTAssertEqual(village.getVillageType(), Constants.Types.Village.Town)
 		XCTAssertEqual(village.getVillageWood(), 2)
@@ -37,14 +40,6 @@ class villageTest: XCTestCase {
 		village.upgradeVillage(Constants.Types.Village.Fort)
 		XCTAssertEqual(village.getVillageType(), Constants.Types.Village.Fort)
 		XCTAssertEqual(village.getVillageWood(), 0)
-
-
-		let village2 = Village(tile: tile)
-		XCTAssertEqual(village2.getVillageType(), Constants.Types.Village.Hovel)
-		village2.addWood(16)
-		village2.upgradeVillage(Constants.Types.Village.Fort)
-		XCTAssertEqual(village2.getVillageType(), Constants.Types.Village.Fort)
-		XCTAssertEqual(village2.getVillageWood(), 0)
 	}
 
 	
