@@ -25,8 +25,8 @@ struct Constants {
 			case Hovel = 1, Town, Fort
 		}
 		
-		enum Unit {
-			case Peasant, Infantry, Soldier, Knight
+		enum Unit: Int {
+			case Peasant = 1, Infantry, Soldier, Knight
 		}
 		
 		enum Structure {

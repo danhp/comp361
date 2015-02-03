@@ -6,11 +6,11 @@ class Village {
 	private var wood: Int = 0
 
 	private let position: Tile
-	private var controlledTiles: Array<Tile>
+	private var controlledUnits: Array<Unit> = Array<Unit>()
+	private var controlledTiles: Array<Tile> = Array<Tile>()
 
 	init(tile: Tile) {
 		self.position = tile
-		controlledTiles = Array<Tile>()
 	}
 
 	//Setters
@@ -35,8 +35,12 @@ class Village {
 		}
 	}
 
-	func addTiles(tile: Tile) {
+	func addTile(tile: Tile) {
 		controlledTiles.append(tile)
+	}
+
+	func addUnit(unit: Unit) {
+		controlledUnits.append(unit)
 	}
 
 	//Getters
@@ -60,4 +64,31 @@ class Village {
 		return self.controlledTiles
 	}
 
+	func getVillageControlledUnit() -> Array<Unit> {
+		return self.controlledUnits
+	}
+
+
+	func upgradeUnit(unit: Unit, newType: Constants.Types.Unit) {
+		if !self.containsUnit(unit) { return }
+
+		let upgradeInterval = newType.rawValue - unit.getUnitType().rawValue
+
+		if upgradeInterval >= 1 && self.gold >= upgradeInterval * 10 {
+			self.gold -= 10 * upgradeInterval
+			unit.upgradeUnit(newType)
+		}
+
+		
+	}
+
+	func containsUnit(unit: Unit) -> Bool {
+		for element in self.controlledUnits {
+			if element === unit {
+				return true
+			}
+		}
+
+		return false
+	}
 }

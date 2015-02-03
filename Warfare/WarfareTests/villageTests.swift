@@ -42,5 +42,33 @@ class villageTest: XCTestCase {
 		XCTAssertEqual(village.getVillageWood(), 0)
 	}
 
-	
+	func testUpgradeUnit() {
+		let tile = Tile(coordinates: (0,0))
+		let village = Village(tile: tile)
+
+		let tile2 = Tile(coordinates: (0,1))
+		let unit = Unit(type: Constants.Types.Unit.Peasant, tile: tile2)
+
+		XCTAssertEqual(village.containsUnit(unit), false)
+
+		village.addUnit(unit)
+		XCTAssertEqual(village.containsUnit(unit), true)
+		village.upgradeUnit(unit, newType: Constants.Types.Unit.Infantry)
+		XCTAssertEqual(unit.getUnitType(), Constants.Types.Unit.Peasant)
+
+		village.addGold(10)
+		village.upgradeUnit(unit, newType: Constants.Types.Unit.Infantry)
+		XCTAssertEqual(unit.getUnitType(), Constants.Types.Unit.Infantry)
+		XCTAssertEqual(village.getVillageGold(), 0)
+
+		village.addGold(15)
+		village.upgradeUnit(unit, newType: Constants.Types.Unit.Knight)
+		XCTAssertEqual(unit.getUnitType(), Constants.Types.Unit.Infantry)
+		XCTAssertEqual(village.getVillageGold(), 15)
+
+		village.addGold(5)
+		village.upgradeUnit(unit, newType: Constants.Types.Unit.Knight)
+		XCTAssertEqual(unit.getUnitType(), Constants.Types.Unit.Knight)
+		XCTAssertEqual(village.getVillageGold(), 0)
+	}
 }
