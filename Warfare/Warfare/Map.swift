@@ -23,7 +23,7 @@ class Map: SKNode {
 		self.addChild(scroller)
 	}
     
-    func neighbords(#tile: Tile) -> [Tile] {
+    func neighbors(#tile: Tile) -> [Tile] {
         return neighbors(x: tile.coordinates.0, y: tile.coordinates.1)
     }
     
@@ -37,43 +37,45 @@ class Map: SKNode {
         
         for i in 0...5 {
             let d = directions[i]
-            neighbors.append(self.tiles[y+d[0],x+d[1]])
+            
+            if let t = self.tiles[y+d[0],x+d[1]] {
+                neighbors.append(t)
+            }
         }
         
         return neighbors
     }
     
-//    func path(from: Tile, to: Tile) -> [Tile] {
-//        class Path {
-//            var total: Int!
-//            var destination: Vertex
-//            var previous: Path!
-//            
-//            init() { destination = Tile() }
-//        }
-//            
-//        var path = [Tile]()
-//        
-//        var queue = [Tile]()
-//        var dist = [from: 0]
-//        
-//        // Conditions to walk on a tile:
-//        //      1 - Tile is owned by Village
-//        //      2 - Tile is empty
-//        
-//        queue.append(from)
-//        
-//        while !queue.isEmpty {
-//            var tile = queue.removeLast()
-//            
-//            // Add unvisited neighbors to the queue
-//            for n in neighbors(tile: n) {
-//                if n.
-//            }
-//        }
-//        
-//        return path
-//    }
+    func pathExists(#from: Tile, to: Tile) -> Bool {        
+        var queue = [Tile]()
+        var seen = [Tile]()
+        
+        // Conditions to walk on a tile:
+        //      1 - Tile is owned by Village
+        //      2 - Tile is empty
+        
+        queue.append(from)
+        seen.append(from)
+        
+        while !queue.isEmpty {
+            var tile = queue.removeLast()
+            
+            // Visit the tile
+            if tile.coordinates.0 == to.coordinates.0 && tile.coordinates.1 == to.coordinates.1 {
+                return true
+            }
+            
+            // Add unvisited neighbors to the queue
+            for t in neighbors(tile: tile) {
+                if t.isWalkable() && !contains(seen, {$0 == t}) {
+                    seen += [t]
+                    queue += [t]
+                }
+            }
+        }
+        
+        return false
+    }
 	
 	func draw() {
 		let height = Constants.Tile.size * 2
@@ -89,7 +91,7 @@ class Map: SKNode {
 			for (j, tile) in enumerate(row) {
 				
                 let coord = Utilities.arrayToAxialCoordinates(row: i, col: j)
-                let tile = tiles[coord.x, coord.y]
+                let tile = tiles[coord.x, coord.y]!
 				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
                 
                 let s:String = coord.x.description + "," + coord.y.description

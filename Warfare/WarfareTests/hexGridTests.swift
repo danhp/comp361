@@ -27,25 +27,20 @@ class hexGridTests: XCTestCase {
         grid = HexGrid(array: a)
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func testSubscript() {
-        var (c1,c2) = grid[0,1].coordinates
+        var (c1,c2) = grid[0,1]!.coordinates
         XCTAssertEqual(0, c1)
         XCTAssertEqual(1, c2)
         
-        (c1,c2) = grid[-1,2].coordinates
+        (c1,c2) = grid[-1,2]!.coordinates
         XCTAssertEqual(-1, c1)
         XCTAssertEqual(2, c2)
         
-        (c1,c2) = grid[4,3].coordinates
+        (c1,c2) = grid[4,3]!.coordinates
         XCTAssertEqual(4, c1)
         XCTAssertEqual(3, c2)
         
-        (c1,c2) = grid[-2,5].coordinates
+        (c1,c2) = grid[-2,5]!.coordinates
         XCTAssertEqual(-2, c1)
         XCTAssertEqual(5, c2)
     }
