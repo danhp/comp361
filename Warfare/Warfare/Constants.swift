@@ -21,8 +21,8 @@ struct Constants {
 			case Sea, Grass, Tree, Meadow
 		}
 		
-		enum Village {
-			case Hovel, Town, Fort
+		enum Village: Int {
+			case Hovel = 1, Town, Fort
 		}
 		
 		enum Unit {
