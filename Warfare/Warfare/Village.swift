@@ -13,8 +13,8 @@ class Village {
 	}
 
 	func upgradeVillage(newType: Constants.Types.Village) {
-		if (newType.rawValue - self.type.rawValue) == 1 && self.wood >= 8 {
-			self.wood -= 8
+		if (newType.rawValue - self.type.rawValue) == 1 && self.wood >= Constants.Cost.Upgrade.Village.rawValue {
+			self.wood -= Constants.Cost.Upgrade.Village.rawValue
 			self.type = newType
 		}
 	}
@@ -28,8 +28,8 @@ class Village {
 
 		let upgradeInterval = newType.rawValue - unit.type.rawValue
 
-		if upgradeInterval >= 1 && self.gold >= upgradeInterval * 10 {
-			self.gold -= 10 * upgradeInterval
+		if upgradeInterval >= 1 && self.gold >= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue {
+			self.gold -= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue
 			unit.type = newType
 		}
 	}

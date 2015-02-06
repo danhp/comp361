@@ -37,4 +37,10 @@ struct Constants {
     struct Unit {
         enum Action { case Idle }
     }
+
+	struct Cost {
+		enum Upgrade: Int {
+			case Village = 8, Unit = 10
+		}
+	}
 }
