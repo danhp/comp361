@@ -14,17 +14,16 @@ class HexGrid {
 	var size: Int { return width * 2 }
 	var rows: [[Tile]]
 	
-	subscript(x: Int, y: Int) -> Tile {
+	subscript(x: Int, y: Int) -> Tile? {
 		get {
-			return self.rows[y][x+y/2]
+            let j = x+y/2
+            if y >= 0 && y < self.width && j >= 0 && j < self.height {
+                return self.rows[y][x+y/2]
+            } else {
+                return nil
+            }
 		}
 	}
-    
-    subscript(arrayX x: Int, Y y: Int) -> Tile {
-        get {
-            return self.rows[x][y]
-        }
-    }
 	
     init() {
         self.rows = []
