@@ -11,10 +11,18 @@ import Foundation
 class Player {
     var villages = [Village]()
     
-    /// Removes village v from the list of villages 
+    /// Removes village v from the list of villages
     /// and removes the unit or structures from the
     /// region controlled by that village
-    func removeVillages(v: Village) {
-        for u in v.un
+    func removeVillages(to_delete: Village) {
+        to_delete.clearRegion()
+        
+        // Find object in array
+        for (i, village) in enumerate(self.villages) {
+            if to_delete.position == village.position {
+                self.villages.removeAtIndex(i)
+                break
+            }
+        }
     }
 }
