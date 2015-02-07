@@ -2,44 +2,35 @@ import UIKit
 import XCTest
 
 class villageTest: XCTestCase {
-	func testInit() {
-		let tile = Tile(coordinates: (0,0))
-		let village = Village(tile: tile)
-
-		XCTAssertEqual(village.getVillagePosition(), tile)
-		XCTAssertEqual(village.getVillageType(), Constants.Types.Village.Hovel)
-		XCTAssertEqual(village.getVillageGold(), 0)
-		XCTAssertEqual(village.getVillageWood(), 0)
-	}
 
 	func testUpgrade() {
 		let tile = Tile(coordinates: (0,0))
 		let village = Village(tile: tile)
 
-		village.addWood(10)
-		XCTAssertEqual(village.getVillageWood(), 10)
+		village.wood += 10
+		XCTAssertEqual(village.wood, 10)
 
 		village.upgradeVillage(Constants.Types.Village.Fort)
-		XCTAssertEqual(village.getVillageType(), Constants.Types.Village.Hovel)
+		XCTAssertEqual(village.type, Constants.Types.Village.Hovel)
 
 		village.upgradeVillage(Constants.Types.Village.Town)
-		XCTAssertEqual(village.getVillageType(), Constants.Types.Village.Town)
-		XCTAssertEqual(village.getVillageWood(), 2)
+		XCTAssertEqual(village.type, Constants.Types.Village.Town)
+		XCTAssertEqual(village.wood, 2)
 
 		village.upgradeVillage(Constants.Types.Village.Hovel)
-		XCTAssertEqual(village.getVillageType(), Constants.Types.Village.Town)
-		XCTAssertEqual(village.getVillageWood(), 2)
+		XCTAssertEqual(village.type, Constants.Types.Village.Town)
+		XCTAssertEqual(village.wood, 2)
 
 		village.upgradeVillage(Constants.Types.Village.Fort)
-		XCTAssertEqual(village.getVillageType(), Constants.Types.Village.Town)
-		XCTAssertEqual(village.getVillageWood(), 2)
+		XCTAssertEqual(village.type, Constants.Types.Village.Town)
+		XCTAssertEqual(village.wood, 2)
 
-		village.addWood(6)
-		XCTAssertEqual(village.getVillageWood(), 8)
+		village.wood += 6
+		XCTAssertEqual(village.wood, 8)
 
 		village.upgradeVillage(Constants.Types.Village.Fort)
-		XCTAssertEqual(village.getVillageType(), Constants.Types.Village.Fort)
-		XCTAssertEqual(village.getVillageWood(), 0)
+		XCTAssertEqual(village.type, Constants.Types.Village.Fort)
+		XCTAssertEqual(village.wood, 0)
 	}
 
 	func testUpgradeUnit() {
@@ -49,26 +40,29 @@ class villageTest: XCTestCase {
 		let tile2 = Tile(coordinates: (0,1))
 		let unit = Unit(type: Constants.Types.Unit.Peasant, tile: tile2)
 
-		XCTAssertEqual(village.containsUnit(unit), false)
+		XCTAssertFalse(village.containsUnit(unit))
 
-		village.addUnit(unit)
-		XCTAssertEqual(village.containsUnit(unit), true)
+		tile.unit = unit
+		village.controlledTiles.append(tile)
+
+		XCTAssertTrue(village.containsUnit(unit))
+
 		village.upgradeUnit(unit, newType: Constants.Types.Unit.Infantry)
-		XCTAssertEqual(unit.getUnitType(), Constants.Types.Unit.Peasant)
+		XCTAssertEqual(unit.type, Constants.Types.Unit.Peasant)
 
-		village.addGold(10)
+		village.gold += 10
 		village.upgradeUnit(unit, newType: Constants.Types.Unit.Infantry)
-		XCTAssertEqual(unit.getUnitType(), Constants.Types.Unit.Infantry)
-		XCTAssertEqual(village.getVillageGold(), 0)
+		XCTAssertEqual(unit.type, Constants.Types.Unit.Infantry)
+		XCTAssertEqual(village.gold, 0)
 
-		village.addGold(15)
+		village.gold += 15
 		village.upgradeUnit(unit, newType: Constants.Types.Unit.Knight)
-		XCTAssertEqual(unit.getUnitType(), Constants.Types.Unit.Infantry)
-		XCTAssertEqual(village.getVillageGold(), 15)
+		XCTAssertEqual(unit.type, Constants.Types.Unit.Infantry)
+		XCTAssertEqual(village.gold, 15)
 
-		village.addGold(5)
+		village.gold += 5
 		village.upgradeUnit(unit, newType: Constants.Types.Unit.Knight)
-		XCTAssertEqual(unit.getUnitType(), Constants.Types.Unit.Knight)
-		XCTAssertEqual(village.getVillageGold(), 0)
+		XCTAssertEqual(unit.type, Constants.Types.Unit.Knight)
+		XCTAssertEqual(village.gold, 0)
 	}
 }
