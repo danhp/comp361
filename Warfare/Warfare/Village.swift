@@ -43,4 +43,10 @@ class Village {
 
 		return false
 	}
+    
+    func clearRegion() {
+        for t in controlledTiles {
+            t.clear()
+        }
+    }
 }

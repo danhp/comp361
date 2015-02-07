@@ -15,7 +15,7 @@ struct Constants {
 	}
 	
 	struct Tile {
-		static let size = 50	// Distance from center to a corner
+		static let size = 20	// Distance from center to a corner
 	}
 	
 	struct Types {

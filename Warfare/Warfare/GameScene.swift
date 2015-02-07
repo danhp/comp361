@@ -31,7 +31,11 @@ class GameScene: SKScene {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
-        for touch: AnyObject in touches {
+        let touch = touches.anyObject() as UITouch
+        let touchLocation = touch.locationInNode(self)
+        
+        if let touchedNode = nodeAtPoint(touchLocation) as? Tile {
+            self.map?.selected = touchedNode
         }
     }
 	

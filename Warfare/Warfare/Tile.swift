@@ -14,6 +14,16 @@ class Tile: SKShapeNode {
     var unit: Unit?
     var land: Constants.Types.Land
     
+    var selected: Bool = false {
+        didSet {
+            if selected {
+                self.fillColor = UIColor.blackColor()
+            } else {
+                self.fillColor = Utilities.Colors.colorForLandType(self.land)
+            }
+        }
+    }
+    
     init(coordinates: (Int, Int), landType: Constants.Types.Land = .Grass) {
         self.coordinates = coordinates
         self.land = landType
@@ -23,6 +33,7 @@ class Tile: SKShapeNode {
 		self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
 		
 		self.fillColor = Utilities.Colors.colorForLandType(self.land)
+        self.strokeColor = Utilities.Colors.Tile.strokeColor
 	}
     
     func isWalkable() -> Bool {
@@ -47,6 +58,10 @@ class Tile: SKShapeNode {
 		CGPathCloseSubpath(path)
 		return path
 	}
+    
+    func clear() {
+        unit = nil
+    }
 	
 	required init?(coder aDecoder: NSCoder) {
 	    fatalError("init(coder:) has not been implemented")

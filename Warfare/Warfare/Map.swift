@@ -12,6 +12,16 @@ import Darwin
 class Map: SKNode {
 	let tiles: HexGrid
 	let scroller = SKNode()
+    
+    var selected: Tile? {
+        willSet {
+            // Deselect previous tile
+            self.selected?.selected = false
+            
+            // Select new tile
+            newValue?.selected = true
+        }
+    }
 
     override init() {
         self.tiles = HexGrid()

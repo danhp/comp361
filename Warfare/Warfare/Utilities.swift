@@ -31,5 +31,9 @@ class Utilities {
             
             return color
         }
+        
+        struct Tile {
+            static let strokeColor = UIColor.whiteColor()
+        }
     }
 }
