@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Justin Domingue. All rights reserved.
 //
 
+import Darwin
+
 struct Constants {
 	
 	struct Map {
@@ -18,7 +20,20 @@ struct Constants {
 	
 	struct Types {
 		 enum Land {
-			case Sea, Grass, Tree, Meadow
+			case Grass, Tree, Meadow, Sea
+            
+            static func random() -> Land {
+                switch arc4random_uniform(14) {
+                case 0...2:
+                    return .Tree
+                case 3...4:
+                    return .Meadow
+                case 5: Sea
+                    return .Sea
+                default:
+                    return .Grass
+                }
+            }
 		}
 		
 		enum Village: Int {

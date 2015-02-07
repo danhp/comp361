@@ -10,7 +10,7 @@ import UIKit
 import XCTest
 
 class mapTests: XCTestCase {
-	var map = Map(array: [])
+	var map = Map()
 
 	override func setUp() {
 		super.setUp()

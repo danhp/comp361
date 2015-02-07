@@ -22,23 +22,7 @@ class Tile: SKShapeNode {
         
 		self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
 		
-		// TEMPORARY
-		var color = UIColor()
-		let n = arc4random_uniform(5)
-		
-		if (n < 2) {
-			color = UIColor.greenColor()
-		} else if (n == 2) {
-			color = UIColor.yellowColor()
-		} else if (n == 3) {
-			color = UIColor.blueColor()
-            self.unit = Unit(type: .Knight, tile: self)
-		} else if (n == 4) {
-			color = UIColor.redColor()
-            self.unit = Unit(type: .Peasant, tile: self)
-		}
-		
-		self.fillColor = color
+		self.fillColor = Utilities.Colors.colorForLandType(self.land)
 	}
     
     func isWalkable() -> Bool {

@@ -13,15 +13,25 @@ class Map: SKNode {
 	let tiles: HexGrid
 	let scroller = SKNode()
 
-	init(array: [[Tile]]) {
-		tiles = HexGrid(array: array)
+    override init() {
+        self.tiles = HexGrid()
+        
+        super.init()
+        
+        initalizeScroller()
+    }
+    
+    init(array: [[Tile]]) {
+		self.tiles = HexGrid(array: array)
 
-		super.init()
-
-		// Initialize scroller node
-		scroller = SKNode()
-		self.addChild(scroller)
+        super.init()
+        
+        initalizeScroller()
 	}
+    
+    func initalizeScroller() {
+        self.addChild(scroller)
+    }
 
 	func neighbors(#tile: Tile) -> [Tile] {
 		return neighbors(x: tile.coordinates.0, y: tile.coordinates.1)
@@ -94,9 +104,9 @@ class Map: SKNode {
 				let tile = tiles[coord.x, coord.y]!
 				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
 
-				let s:String = coord.x.description + "," + coord.y.description
-				let label = SKLabelNode(text: s)
-				tile.addChild(label)
+//				let s:String = coord.x.description + "," + coord.y.description
+//				let label = SKLabelNode(text: s)
+//				tile.addChild(label)
 				self.scroller.addChild(tile)
 			}
 		}

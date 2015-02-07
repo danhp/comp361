@@ -19,7 +19,7 @@ class GameScene: SKScene {
         for row in 0..<Constants.Map.dimension {
             array.append(Array<Tile>())
             for column in 0..<Constants.Map.dimension {
-                array[row].append(Tile(coordinates: (column, row)))
+                array[row].append(Tile(coordinates: (column, row), landType: Constants.Types.Land.random()))
             }
         }
         
