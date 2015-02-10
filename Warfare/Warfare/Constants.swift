@@ -22,6 +22,17 @@ struct Constants {
 		 enum Land {
 			case Grass, Tree, Meadow, Sea
             
+            func gold() -> Int {
+                switch self {
+                case .Meadow:
+                    return 2
+                case .Tree:
+                    return 0
+                default:
+                    return 1
+                }
+            }
+            
             static func random() -> Land {
                 switch arc4random_uniform(14) {
                 case 0...2:
