@@ -5,14 +5,11 @@ class Engine {
 	let players: [Player]
 
 	init(firstPlayer: Int, players: [Player]) {
+        assert(players.count == 3, "A Game should be between exactly 3 players.")
+
 		self.currentPlayer = players[firstPlayer]
 		self.players = players
 	}
-
-    func newGame(between: [Player]) {
-        assert(between.count == 3, "A Game should be between exactly 3 players.")
-        
-    }
     
 	func beginTurn() {
 		
