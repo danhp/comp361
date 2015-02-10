@@ -26,14 +26,7 @@ class Engine {
 				// TODO:
 
 				// Add gold value to village.
-				switch tile.land {
-				case .Meadow:
-					village.gold += 2
-				case .Tree:
-					break
-				default:
-					village.gold += 1
-				}
+                village.gold += tile.land.gold()
 
 				// Payout wages
                 village.gold += (tile.unit?.type.wage())!
