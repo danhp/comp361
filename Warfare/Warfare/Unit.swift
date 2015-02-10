@@ -8,6 +8,6 @@ class Unit {
 	init(type: Constants.Types.Unit, tile: Tile) {
 		self.type = type
 		self.position = tile
-		self.currentAction = Constants.Unit.Action.Idle
+		self.currentAction = .Idle
 	}
 }
