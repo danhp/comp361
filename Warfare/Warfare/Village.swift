@@ -23,6 +23,10 @@ class Village {
 		controlledTiles.append(tile)
 	}
 
+	func removeTile(tile: Tile) {
+		controlledTiles = controlledTiles.filter({ $0 !== tile })
+	}
+
 	func upgradeUnit(unit: Unit, newType: Constants.Types.Unit) {
 		if !self.containsUnit(unit) { return }
 

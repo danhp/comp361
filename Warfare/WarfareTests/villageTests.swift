@@ -65,4 +65,17 @@ class villageTest: XCTestCase {
 		XCTAssertEqual(unit.type, Constants.Types.Unit.Knight)
 		XCTAssertEqual(village.gold, 0)
 	}
+
+	func testAddRemoveTile() {
+		let tile = Tile(coordinates: (0,0))
+		let village = Village(tile: tile)
+
+		let tile2 = Tile(coordinates: (1,1))
+
+		village.addTile(tile2)
+		XCTAssertTrue(contains(village.controlledTiles, {$0 === tile2}))
+
+		village.removeTile(tile2)
+		XCTAssertFalse(contains(village.controlledTiles, {$0 !== tile2}))
+	}
 }
