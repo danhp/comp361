@@ -34,18 +34,7 @@ class Engine {
 				}
 
 				// Payout wages
-				if tile.unit?.type == Constants.Types.Unit.Peasant {
-					village.gold -= Constants.Cost.Upkeep.Peasant.rawValue
-				}
-				if tile.unit?.type == Constants.Types.Unit.Infantry {
-					village.gold -= Constants.Cost.Upkeep.Infantry.rawValue
-				}
-				if tile.unit?.type == Constants.Types.Unit.Soldier {
-					village.gold -= Constants.Cost.Upkeep.Soldier.rawValue
-				}
-				if tile.unit?.type == Constants.Types.Unit.Knight{
-					village.gold -= Constants.Cost.Upkeep.Knight.rawValue
-				}
+                village.gold += (tile.unit?.type.wage())!
 			}
 
 			// Delete the Village

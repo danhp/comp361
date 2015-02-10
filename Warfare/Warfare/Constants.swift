@@ -42,6 +42,10 @@ struct Constants {
 		
 		enum Unit: Int {
 			case Peasant = 1, Infantry, Soldier, Knight
+            
+            func wage() -> Int {
+                return self.rawValue
+            }
 		}
 		
 		enum Structure {
