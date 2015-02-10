@@ -4,11 +4,16 @@ class Engine {
 	var currentPlayer: Player
 	let players: [Player]
 
-	init(firstPlayer: Player, players: [Player]) {
-		self.currentPlayer = firstPlayer
+	init(firstPlayer: Int, players: [Player]) {
+		self.currentPlayer = players[firstPlayer]
 		self.players = players
 	}
 
+    func newGame(between: [Player]) {
+        assert(between.count == 3, "A Game should be between exactly 3 players.")
+        
+    }
+    
 	func beginTurn() {
 		
 		for village in currentPlayer.villages {
