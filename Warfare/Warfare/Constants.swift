@@ -15,7 +15,7 @@ struct Constants {
 	}
 	
 	struct Tile {
-		static let size = 20	// Distance from center to a corner
+		static let size = 40	// Distance from center to a corner
 	}
 	
 	struct Types {
@@ -65,7 +65,9 @@ struct Constants {
     }
     
     struct Unit {
-        enum Action { case Idle }
+        enum Action {
+            case ReadyForOrders, Moved, BuildingRoad, ChoppingTree, ClearingTombstone, UpgradingCombining, StartCultivating, FinishCultivating
+        }
     }
 
 	struct Cost {

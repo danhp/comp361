@@ -29,6 +29,7 @@
 		139527761A7714DE0019E3F4 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137101611A701B80009B807C /* Map.swift */; };
 		139527771A7714E10019E3F4 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
 		13AF2AA61A7803E100B4C67B /* mapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AF2AA51A7803E100B4C67B /* mapTests.swift */; };
+		13CDF0CC1A8AA4D300E6AB9D /* TileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CDF0CB1A8AA4D300E6AB9D /* TileTests.swift */; };
 		13F84E1F1A72C1EF005322B7 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
 		522683901A80765800E54870 /* villageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5226838F1A80765800E54870 /* villageTests.swift */; };
 		522708541A72F148009ED4DA /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708531A72F148009ED4DA /* Unit.swift */; };
@@ -68,6 +69,7 @@
 		1371015F1A701411009B807C /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		137101611A701B80009B807C /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		13AF2AA51A7803E100B4C67B /* mapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = mapTests.swift; path = WarfareTests/mapTests.swift; sourceTree = SOURCE_ROOT; };
+		13CDF0CB1A8AA4D300E6AB9D /* TileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileTests.swift; path = WarfareTests/TileTests.swift; sourceTree = SOURCE_ROOT; };
 		13F84E1E1A72C1EF005322B7 /* HexGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexGrid.swift; sourceTree = "<group>"; };
 		5226838F1A80765800E54870 /* villageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = villageTests.swift; path = WarfareTests/villageTests.swift; sourceTree = SOURCE_ROOT; };
 		522708531A72F148009ED4DA /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unit.swift; path = Warfare/Unit.swift; sourceTree = SOURCE_ROOT; };
@@ -151,6 +153,7 @@
 				137101531A701096009B807C /* hexGridTests.swift */,
 				13AF2AA51A7803E100B4C67B /* mapTests.swift */,
 				5226838F1A80765800E54870 /* villageTests.swift */,
+				13CDF0CB1A8AA4D300E6AB9D /* TileTests.swift */,
 				137101511A701096009B807C /* Supporting Files */,
 			);
 			path = warfareTests;
@@ -288,6 +291,7 @@
 				5299B27B1A898B6400EADED0 /* Structure.swift in Sources */,
 				131D324A1A86A7A50073310B /* Player.swift in Sources */,
 				522683901A80765800E54870 /* villageTests.swift in Sources */,
+				13CDF0CC1A8AA4D300E6AB9D /* TileTests.swift in Sources */,
 				137101541A701096009B807C /* hexGridTests.swift in Sources */,
 				139527771A7714E10019E3F4 /* HexGrid.swift in Sources */,
 				135DC1431A7849A800474073 /* Utilities.swift in Sources */,

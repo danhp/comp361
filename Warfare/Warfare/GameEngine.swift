@@ -17,19 +17,19 @@ class Engine {
 			for tile in village.controlledTiles {
 
 				// Replace tombstones
-				if tile.structure?.type == Constants.Types.Structure.Tombstone {
-					tile.structure == nil
-					tile.land = .Tree
-				}
+				tile.replaceTombstone()
 
 				// Produce constructions
-				// TODO:
+                if tile.makeRoadOrMeadow() {
+                    // Add a new meadow
+                    // TODO
+                }
 
 				// Add gold value to village.
-                village.gold += tile.land.gold()
+                village.gold += tile.goldValue()
 
 				// Payout wages
-                village.gold += (tile.unit?.type.wage())!
+                village.gold += tile.wage()
 			}
 
 			// Delete the Village

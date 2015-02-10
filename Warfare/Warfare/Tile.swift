@@ -26,6 +26,8 @@ class Tile: SKShapeNode {
         }
     }
     
+    // MARK - Initializer
+    
     init(coordinates: (Int, Int), landType: Constants.Types.Land = .Grass) {
         self.coordinates = coordinates
         self.land = landType
@@ -38,11 +40,60 @@ class Tile: SKShapeNode {
         self.strokeColor = Utilities.Colors.Tile.strokeColor
 	}
     
+    // MARK - Public functions
+    
+    func goldValue() -> Int {
+        return self.land.gold()
+    }
+    
+    func wage() -> Int {
+        if let u = self.unit {
+            return u.type.wage()
+        }
+        
+        return 0
+    }
+    
+    func replaceTombstone() {
+        if self.structure?.type == Constants.Types.Structure.Tombstone {
+            self.structure = nil
+            self.land = .Tree
+        }
+    }
+    
+    // Builds a road or finishes cultivating a meadow if the required conditions are met
+    //
+    // @returns True if a meadow was done being cultivated (in which case, according to the requirements, a new meadow should be produce
+    //
+    func makeRoadOrMeadow() -> Bool {
+        if let action: Constants.Unit.Action = self.unit?.currentAction {
+            if action == .BuildingRoad {
+                self.structure = Structure(type: .Road)
+                self.unit = Unit(type: (self.unit?.type)!, tile: self)
+            } else if action == .FinishCultivating && self.land == .Meadow {
+                self.land = .Grass
+                self.unit = Unit(type: (self.unit?.type)!, tile: self)
+                return true
+            }
+        }
+        
+        return false
+    }
+
     func isWalkable() -> Bool {
         return self.land == .Grass
     }
 
-	func makeHexagonalPath(size: CGFloat) -> CGPath {
+    
+    func clear() {
+        unit = nil
+        village = nil
+        structure = nil
+    }
+    
+    // MARK - Drawing
+
+	private func makeHexagonalPath(size: CGFloat) -> CGPath {
 		let path = CGPathCreateMutable()
 		
 		for i in 0...5 {
@@ -60,12 +111,6 @@ class Tile: SKShapeNode {
 		CGPathCloseSubpath(path)
 		return path
 	}
-    
-    func clear() {
-        unit = nil
-		village = nil
-		structure = nil
-    }
 	
 	required init?(coder aDecoder: NSCoder) {
 	    fatalError("init(coder:) has not been implemented")

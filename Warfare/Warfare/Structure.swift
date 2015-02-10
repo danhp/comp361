@@ -1,9 +1,9 @@
 import Foundation
 
 class Structure {
-	let type: Constants.Types.Structure
+	var type: Constants.Types.Structure
 
-	init(newType: Constants.Types.Structure) {
-		self.type = newType
+	init(type: Constants.Types.Structure) {
+		self.type = type
 	}
 }
