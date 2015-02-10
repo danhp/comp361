@@ -55,7 +55,15 @@ struct Constants {
 
 	struct Cost {
 		enum Upgrade: Int {
-			case Village = 8, Unit = 10
+			case Village = 8
+			case Unit = 10
+		}
+
+		enum Upkeep: Int {
+			case Peasant = 2
+			case Infantry = 6
+			case Soldier = 18
+			case Knight = 54
 		}
 	}
 }

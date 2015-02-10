@@ -3,5 +3,7 @@
 #Xcode
 xcuserdata
 *.xccheckout
+
 *vpp.bak
 *.vpp~*
+*.working

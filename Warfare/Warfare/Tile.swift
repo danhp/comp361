@@ -12,6 +12,8 @@ import Darwin
 class Tile: SKShapeNode {
     let coordinates: (Int, Int)
     var unit: Unit?
+	var village: Village?
+	var structure: Structure?
     var land: Constants.Types.Land
     
     var selected: Bool = false {
@@ -61,6 +63,8 @@ class Tile: SKShapeNode {
     
     func clear() {
         unit = nil
+		village = nil
+		structure = nil
     }
 	
 	required init?(coder aDecoder: NSCoder) {

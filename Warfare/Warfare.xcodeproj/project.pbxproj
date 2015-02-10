@@ -33,6 +33,9 @@
 		522683901A80765800E54870 /* villageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5226838F1A80765800E54870 /* villageTests.swift */; };
 		522708541A72F148009ED4DA /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708531A72F148009ED4DA /* Unit.swift */; };
 		522708561A72F56B009ED4DA /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708551A72F56B009ED4DA /* Village.swift */; };
+		5299B2791A8984F500EADED0 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5299B2781A8984F500EADED0 /* GameEngine.swift */; };
+		5299B27A1A89855600EADED0 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5299B2781A8984F500EADED0 /* GameEngine.swift */; };
+		5299B27B1A898B6400EADED0 /* Structure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF21581A75B28600DEDC71 /* Structure.swift */; };
 		52DF21591A75B28600DEDC71 /* Structure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF21581A75B28600DEDC71 /* Structure.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +72,7 @@
 		5226838F1A80765800E54870 /* villageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = villageTests.swift; path = WarfareTests/villageTests.swift; sourceTree = SOURCE_ROOT; };
 		522708531A72F148009ED4DA /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unit.swift; path = Warfare/Unit.swift; sourceTree = SOURCE_ROOT; };
 		522708551A72F56B009ED4DA /* Village.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Village.swift; path = Warfare/Village.swift; sourceTree = SOURCE_ROOT; };
+		5299B2781A8984F500EADED0 /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameEngine.swift; path = Warfare/GameEngine.swift; sourceTree = SOURCE_ROOT; };
 		52DF21581A75B28600DEDC71 /* Structure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Structure.swift; path = Warfare/Structure.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -116,11 +120,12 @@
 				1371015F1A701411009B807C /* Tile.swift */,
 				135DC1411A783D7E00474073 /* Utilities.swift */,
 				137101611A701B80009B807C /* Map.swift */,
-				522708551A72F56B009ED4DA /* Village.swift */,
 				131D32481A86A7A50073310B /* Player.swift */,
+				522708551A72F56B009ED4DA /* Village.swift */,
 				522708531A72F148009ED4DA /* Unit.swift */,
-				13F84E1E1A72C1EF005322B7 /* HexGrid.swift */,
 				52DF21581A75B28600DEDC71 /* Structure.swift */,
+				13F84E1E1A72C1EF005322B7 /* HexGrid.swift */,
+				5299B2781A8984F500EADED0 /* GameEngine.swift */,
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
 				1371013F1A701096009B807C /* GameViewController.swift */,
@@ -261,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1371013E1A701096009B807C /* GameScene.swift in Sources */,
+				5299B2791A8984F500EADED0 /* GameEngine.swift in Sources */,
 				137101401A701096009B807C /* GameViewController.swift in Sources */,
 				135DC1421A783D7E00474073 /* Utilities.swift in Sources */,
 				137101601A701411009B807C /* Tile.swift in Sources */,
@@ -279,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5299B27B1A898B6400EADED0 /* Structure.swift in Sources */,
 				131D324A1A86A7A50073310B /* Player.swift in Sources */,
 				522683901A80765800E54870 /* villageTests.swift in Sources */,
 				137101541A701096009B807C /* hexGridTests.swift in Sources */,
@@ -286,6 +293,7 @@
 				135DC1431A7849A800474073 /* Utilities.swift in Sources */,
 				139527741A7714D20019E3F4 /* Tile.swift in Sources */,
 				139527761A7714DE0019E3F4 /* Map.swift in Sources */,
+				5299B27A1A89855600EADED0 /* GameEngine.swift in Sources */,
 				131C14361A7E71DC00CE386D /* Unit.swift in Sources */,
 				131C14371A7E71E000CE386D /* Village.swift in Sources */,
 				13AF2AA61A7803E100B4C67B /* mapTests.swift in Sources */,

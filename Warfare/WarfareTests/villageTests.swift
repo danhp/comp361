@@ -3,7 +3,7 @@ import XCTest
 
 class villageTest: XCTestCase {
 
-	func testUpgrade() {
+	func testUpgradeVillage() {
 		let tile = Tile(coordinates: (0,0))
 		let village = Village(tile: tile)
 
