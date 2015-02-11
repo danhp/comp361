@@ -76,6 +76,6 @@ class villageTest: XCTestCase {
 		XCTAssertTrue(contains(village.controlledTiles, {$0 === tile2}))
 
 		village.removeTile(tile2)
-		XCTAssertFalse(contains(village.controlledTiles, {$0 !== tile2}))
+		XCTAssertFalse(contains(village.controlledTiles, {$0 === tile2}))
 	}
 }
