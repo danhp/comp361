@@ -74,7 +74,7 @@
 		5226838F1A80765800E54870 /* villageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = villageTests.swift; path = WarfareTests/villageTests.swift; sourceTree = SOURCE_ROOT; };
 		522708531A72F148009ED4DA /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unit.swift; path = Warfare/Unit.swift; sourceTree = SOURCE_ROOT; };
 		522708551A72F56B009ED4DA /* Village.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Village.swift; path = Warfare/Village.swift; sourceTree = SOURCE_ROOT; };
-		5299B2781A8984F500EADED0 /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameEngine.swift; path = Warfare/GameEngine.swift; sourceTree = SOURCE_ROOT; };
+		5299B2781A8984F500EADED0 /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameEngine.swift; path = Warfare/GameEngine.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
