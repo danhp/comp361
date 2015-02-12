@@ -15,11 +15,12 @@ class GameEngine {
 
     init() {   }
 
-    init(firstPlayer: Int, players: [Player]) {
+    init(firstPlayer: Int, players: [Player], map: Map) {
         assert(players.count == 3, "A Game should be between exactly 3 players.")
 
         self.currentPlayer = players[firstPlayer]
         self.players = players
+        self.map = map
     }
 
     // MARK: - Serialization
@@ -107,7 +108,23 @@ class GameEngine {
 
         for village in currentPlayer.villages {
             if contains(village.controlledTiles, { $0 === from }) {
-                // TODO: Check if path exists given set of tiles.
+                // Check if path exists.
+                // If to is in controlledTiles, find path normally
+                // Else find path to one its neighbours that is a controlledTile
+                if contains(village.controlledTiles, { $0 === to }) {
+                    if !map.pathExists(from: from, to: to, accessible: village.controlledTiles) { return }
+                } else {
+                    var a: Bool = false
+                    for n in map.neighbors(tile: to) {
+                        if contains(village.controlledTiles, { $0 === n }) {
+                            if map.pathExists(from: from, to: n, accessible: village.controlledTiles) {
+                                a = true
+                                break
+                            }
+                        }
+                    }
+                    if !a { return }
+                }
 
                 // Update tiles in path
 

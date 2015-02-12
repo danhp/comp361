@@ -72,7 +72,7 @@ class Map: SKNode {
 		return neighbors
 	}
 
-	func pathExists(#from: Tile, to: Tile) -> Bool {
+	func pathExists(#from: Tile, to: Tile, accessible: [Tile]) -> Bool {
 		var queue = [Tile]()
 		var seen = [Tile]()
 
@@ -93,7 +93,7 @@ class Map: SKNode {
 
 			// Add unvisited neighbors to the queue
 			for t in neighbors(tile: tile) {
-				if t.isWalkable() && !contains(seen, {$0 === t}) {
+				if t.isWalkable() && !contains(seen, {$0 === t}) && contains(accessible, { $0 === t }) {
 					queue += [t]
 				}
 				seen += [t]

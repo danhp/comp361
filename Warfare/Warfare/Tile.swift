@@ -114,9 +114,11 @@ class Tile: SKShapeNode {
     }
 
     func isWalkable() -> Bool {
-        return self.land == .Grass
+        return (self.land == .Grass || self.land == .Meadow)
+            && self.unit == nil
+            && self.village == nil
+            && (self.structure == .Road || self.structure == nil)
     }
-
 
     func clear() {
         unit = nil
