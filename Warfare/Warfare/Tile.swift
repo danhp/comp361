@@ -102,7 +102,7 @@ class Tile: SKShapeNode {
         if let action: Constants.Unit.Action = self.unit?.currentAction {
             if action == .BuildingRoad {
                 self.structure = .Road
-                self.unit = Unit(type: (self.unit?.type)!, tile: self)
+                self.unit?.currentAction = Constants.Unit.Action.ReadyForOrders
             } else if action == .FinishCultivating && self.land == .Meadow {
                 self.land = .Grass
                 self.unit?.currentAction = .ReadyForOrders
