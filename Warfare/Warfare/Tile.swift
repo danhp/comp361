@@ -120,6 +120,13 @@ class Tile: SKShapeNode {
             && (self.structure == .Road || self.structure == nil)
     }
 
+    // Check if self can prevent enemy from invading neighbouring tile.
+    // @returns True if againt unit is outclassed by tile content.
+    func isProtected(againt: Unit) -> Bool {
+        return self.unit?.type.rawValue >= againt.type.rawValue
+            || (self.structure? == Constants.Types.Structure.Tower && againt.type.rawValue < Constants.Types.Unit.Soldier.rawValue)
+    }
+
     func clear() {
         unit = nil
         village = nil

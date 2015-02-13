@@ -110,7 +110,7 @@ class GameEngine {
             if contains(village.controlledTiles, { $0 === from }) {
                 // Check if path exists.
                 // If to is in controlledTiles, find path normally
-                // Else find path to one its neighbours that is a controlledTile
+                // Else find path to one of its neighbours that must be a controlledTile
                 if contains(village.controlledTiles, { $0 === to }) {
                     if !map.pathExists(from: from, to: to, accessible: village.controlledTiles) { return }
                 } else {
@@ -124,6 +124,22 @@ class GameEngine {
                         }
                     }
                     if !a { return }
+                }
+
+                //Check if tile in unprotected
+                for n in map.neighbors(tile: to) {
+                    if n.isProtected(from.unit!) && !contains(village.controlledTiles, { $0 === n}) { return }
+                }
+
+                // Peasant can only invade neautral
+                if from.unit?.type == Constants.Types.Unit.Peasant {
+                    // TODO: Change depending on implementation.
+                    for p in self.players {
+                        if p === self.currentPlayer { continue }
+                        for v in p.villages {
+                            if contains(village.controlledTiles, { $0 === to }) { return }
+                        }
+                    }
                 }
 
                 // Update tiles in path
