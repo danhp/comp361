@@ -140,7 +140,7 @@ class Tile: SKShapeNode {
 
         dict["position"] = [self.coordinates.0, self.coordinates.1]
         dict["unit"] = self.unit?.serialize()
-        dict["structure"] = self.structure?.type.rawValue
+        dict["structure"] = self.structure?.rawValue
         dict["land"] = self.land.rawValue
 
         return dict
