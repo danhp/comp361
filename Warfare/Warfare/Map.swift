@@ -72,36 +72,49 @@ class Map: SKNode {
 		return neighbors
 	}
 
-	func pathExists(#from: Tile, to: Tile, accessible: [Tile]) -> Bool {
-		var queue = [Tile]()
-		var seen = [Tile]()
+    // Get the set of tiles in the shortest path
+    // @return [Tile] if path exists, else return nil.
+    func getPath(#from: Tile, to: Tile, accessible: [Tile]) -> [Tile]? {
+        var queue = [Tile]()
+        var seen = [Tile]()
+        var cameFrom = [Tile: Tile]()
 
-		// Conditions to walk on a tile:
-		//      1 - Tile is owned by Village
-		//      2 - Tile is empty
+        // Conditions to walk on a tile:
+        //      1 - Tile is owned by Village
+        //      2 - Tile is empty
 
-		queue.append(from)
-		seen.append(from)
+        queue.append(from)
+        seen.append(from)
 
-		while !queue.isEmpty {
-			let tile = queue.removeLast()
+        while !queue.isEmpty {
+            let tile = queue.removeLast()
 
-			// Visit the tile
-			if tile.coordinates.0 == to.coordinates.0 && tile.coordinates.1 == to.coordinates.1 {
-				return true
-			}
+            // Visit the tile
+            if tile == to {
+                var current = to
+                var finalPath = [Tile]()
+                finalPath.append(current)
 
-			// Add unvisited neighbors to the queue
-			for t in neighbors(tile: tile) {
-				if t.isWalkable() && !contains(seen, {$0 === t}) && contains(accessible, { $0 === t }) {
-					queue += [t]
-				}
-				seen += [t]
-			}
-		}
+                while current != from {
+                    current = cameFrom[current]!
+                    finalPath.append(current)
+                }
 
-		return false
-	}
+                return finalPath
+            }
+
+            // Add unvisited neighbors to the queue
+            for t in neighbors(tile: tile) {
+                if t.isWalkable() && contains(accessible, { $0 === t }) && !contains(seen, {$0 === t}) {
+                    queue += [t]
+                    cameFrom[t] = tile
+                }
+                seen += [t]
+            }
+        }
+
+        return nil
+    }
 
 	func draw() {
 		let height = Constants.Tile.size * 2

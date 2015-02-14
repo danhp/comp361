@@ -9,12 +9,19 @@
 import SpriteKit
 import Darwin
 
-class Tile: SKShapeNode {
+func == (lhs: Tile, rhs: Tile) -> Bool {
+    return lhs.hashValue == rhs.hashValue
+}
+
+class Tile: SKShapeNode, Hashable {
     var coordinates: (Int, Int)
     var unit: Unit?
     var village: Village?
     var structure: Constants.Types.Structure?
     var land: Constants.Types.Land
+    override var hashValue: Int {
+        return "\(self.coordinates.0), \(self.coordinates.1)".hashValue
+    }
 
     var selected: Bool = false {
         didSet {

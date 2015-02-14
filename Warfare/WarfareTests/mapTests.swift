@@ -75,11 +75,11 @@ class mapTests: XCTestCase {
 		let to = tiles[3,5]!
 		let tileList: [Tile] = tiles.rows.reduce([], +)
 
-		XCTAssertTrue(map.pathExists(from: from, to: to, accessible: tileList))
+		XCTAssertNotNil(map.getPath(from: from, to: to, accessible: tileList))
 
 		tiles[2,5]!.land = .Tree
 
-		XCTAssertFalse(map.pathExists(from: from, to: to, accessible: tileList))
+		XCTAssertNil(map.getPath(from: from, to: to, accessible: tileList))
 
 		// TODO: Simulate village.controlledTiles
 

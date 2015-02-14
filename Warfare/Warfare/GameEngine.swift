@@ -111,19 +111,20 @@ class GameEngine {
                 // Check if path exists.
                 // If to is in controlledTiles, find path normally
                 // Else find path to one of its neighbours that must be a controlledTile
+                var path = [Tile]()
                 if contains(village.controlledTiles, { $0 === to }) {
-                    if !map.pathExists(from: from, to: to, accessible: village.controlledTiles) { return }
+                    path = map.getPath(from: from, to: to, accessible: village.controlledTiles)!
+                    if path.isEmpty { return }
                 } else {
-                    var a: Bool = false
                     for n in map.neighbors(tile: to) {
                         if contains(village.controlledTiles, { $0 === n }) {
-                            if map.pathExists(from: from, to: n, accessible: village.controlledTiles) {
-                                a = true
+                            path = map.getPath(from: from, to: n, accessible: village.controlledTiles)!
+                            if !path.isEmpty {
                                 break
                             }
                         }
                     }
-                    if !a { return }
+                    if path.isEmpty { return }
                 }
 
                 //Check if tile in unprotected
@@ -143,6 +144,13 @@ class GameEngine {
                 }
 
                 // Update tiles in path
+                for tile in path {
+                    if from.unit?.type == Constants.Types.Unit.Knight
+                                && tile.land == .Meadow
+                                && tile.structure != .Road {
+                        tile.land = .Grass
+                    }
+                }
 
                 // Update destination tile.
                 to.removeTombstone()
