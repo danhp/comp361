@@ -14,18 +14,9 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
 		self.anchorPoint = CGPointMake(0.5, 0.5)
 
-        // Initialize tiles array
-        var array = [[Tile]]()
-        for row in 0..<Constants.Map.dimension {
-            array.append(Array<Tile>())
-            for column in 0..<Constants.Map.dimension {
-                array[row].append(Tile(coordinates: (column, row), landType: Constants.Types.Land.random()))
-            }
-        }
-        
-        map = Map(array: array)
-		map?.draw()
-		self.addChild(map!)
+        GameEngine.Instance.loadMap(number: "1")
+        GameEngine.Instance.map.draw()
+		self.addChild(GameEngine.Instance.map)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {

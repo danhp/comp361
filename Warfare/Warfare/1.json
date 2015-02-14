@@ -1,0 +1,53 @@
+{
+    "players":[
+               {
+               "name":"justin",
+               "villages":[
+                           {
+                           "type":2,
+                           "gold":3,
+                           "wood":5,
+                           "position":"(1,1)",
+                           "controlledTiles":[
+                                    {
+                                    "position":[0,1],
+                                    "land":0,
+                                    "unit":{
+                                              "type":1,
+                                              "currentAction":2
+                                    },
+                                    "structure":{
+                                    
+                                    }
+                                    }
+                                    ]
+                           },
+                           {
+                           "type":2,
+                           "gold":3,
+                           "wood":5,
+                           "position":"(1,1)",
+                           "controlledTiles":[
+                                              {
+                                              "position":[-1,2],
+                                              "land":2,
+                                              "unit":{
+                                              "type":3,
+                                              "currentAction":2
+                                              },
+                                              "structure":{
+                                              
+                                              }
+                                              }
+                                              ]
+                           }
+                           ]
+               }
+               ],
+    "neutral":[
+               {
+               "position":[0,0],
+               "land":3
+               }
+               ]
+}

@@ -11,6 +11,7 @@
 		131C14371A7E71E000CE386D /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708551A72F56B009ED4DA /* Village.swift */; };
 		131D32491A86A7A50073310B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D32481A86A7A50073310B /* Player.swift */; };
 		131D324A1A86A7A50073310B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D32481A86A7A50073310B /* Player.swift */; };
+		132A65AB1A8EAAD300D588B2 /* 1.json in Resources */ = {isa = PBXBuildFile; fileRef = 132A65AA1A8EAAD300D588B2 /* 1.json */; };
 		135DC1421A783D7E00474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		135DC1431A7849A800474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		1371013A1A701096009B807C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137101391A701096009B807C /* AppDelegate.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		131D32481A86A7A50073310B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = Warfare/Player.swift; sourceTree = SOURCE_ROOT; };
+		132A65AA1A8EAAD300D588B2 /* 1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 1.json; path = Warfare/1.json; sourceTree = SOURCE_ROOT; };
 		135DC1411A783D7E00474073 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = Warfare/Utilities.swift; sourceTree = SOURCE_ROOT; };
 		137101341A701096009B807C /* warfare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = warfare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		137101381A701096009B807C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,6 +98,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		132A65A91A8EAAC200D588B2 /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				132A65AA1A8EAAD300D588B2 /* 1.json */,
+			);
+			name = Maps;
+			sourceTree = "<group>";
+		};
 		1371012B1A701096009B807C = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +141,7 @@
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
 				1371013F1A701096009B807C /* GameViewController.swift */,
+				132A65A91A8EAAC200D588B2 /* Maps */,
 				137101411A701096009B807C /* Main.storyboard */,
 				137101441A701096009B807C /* Images.xcassets */,
 				137101461A701096009B807C /* LaunchScreen.xib */,
@@ -247,6 +258,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				132A65AB1A8EAAD300D588B2 /* 1.json in Resources */,
 				137101481A701096009B807C /* LaunchScreen.xib in Resources */,
 				137101451A701096009B807C /* Images.xcassets in Resources */,
 				1371013C1A701096009B807C /* GameScene.sks in Resources */,

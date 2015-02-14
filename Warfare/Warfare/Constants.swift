@@ -19,7 +19,7 @@ struct Constants {
     }
 
     struct Types {
-         enum Land {
+        enum Land: Int {
             case Grass, Tree, Meadow, Sea
 
             func gold() -> Int {
@@ -68,13 +68,13 @@ struct Constants {
             }
         }
 
-        enum Structure {
+        enum Structure: Int {
             case Tower, Road, Tombstone
         }
     }
 
     struct Unit {
-        enum Action {
+        enum Action: Int {
             case ReadyForOrders, Moved, BuildingRoad, ChoppingTree, ClearingTombstone, UpgradingCombining, StartCultivating, FinishCultivating
         }
     }

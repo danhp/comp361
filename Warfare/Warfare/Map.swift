@@ -42,6 +42,12 @@ class Map: SKNode {
     func initalizeScroller() {
         self.addChild(scroller)
     }
+    
+    
+    // Helper for deserialization
+    func setTile(#at: (Int, Int), to: Tile) {
+        self.tiles[at.0, at.1] = to
+    }
 
 	func neighbors(#tile: Tile) -> [Tile] {
 		return neighbors(x: tile.coordinates.0, y: tile.coordinates.1)
@@ -114,9 +120,9 @@ class Map: SKNode {
 				let tile = tiles[coord.x, coord.y]!
 				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
 
-//				let s:String = coord.x.description + "," + coord.y.description
-//				let label = SKLabelNode(text: s)
-//				tile.addChild(label)
+				let s:String = coord.x.description + "," + coord.y.description
+				let label = SKLabelNode(text: s)
+				tile.addChild(label)
 				self.scroller.addChild(tile)
 			}
 		}

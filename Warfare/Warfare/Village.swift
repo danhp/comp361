@@ -5,12 +5,16 @@ class Village {
 	var gold: Int = 0
 	var wood: Int = 0
 
-	let position: Tile
+	let position: Tile?
 	var controlledTiles: [Tile] = [Tile]()
 
 	init(tile: Tile) {
 		self.position = tile
 	}
+    
+    init(dict: NSDictionary) {
+        self.deserialize(dict)
+    }
 
 	func upgradeVillage(newType: Constants.Types.Village) {
 		if (newType.rawValue - self.type.rawValue) == 1 && self.wood >= Constants.Cost.Upgrade.Village.rawValue {
@@ -51,6 +55,32 @@ class Village {
     func clearRegion() {
         for t in self.controlledTiles {
             t.clear()
+        }
+    }
+    
+    // MARK - Serialization
+    
+    func serialize() -> NSDictionary {
+        var dict = [String: AnyObject]()
+        
+        dict["type"] = self.type.rawValue
+        dict["gold"] = self.gold
+        dict["wood"] = self.wood
+        dict["controlledTiles"] = self.controlledTiles.map({$0.serialize()})
+        
+        return dict
+    }
+    
+    func deserialize(dict: NSDictionary) {
+        self.type = Constants.Types.Village(rawValue: dict["type"] as Int)!
+        self.gold = dict["gold"] as Int
+        self.wood = dict["wood"] as Int
+        
+        // TILES
+        if let controlled = dict["controlledTiles"] as? NSArray {
+            for t in controlled {    // t is NSDictionary
+                self.controlledTiles.append(Tile(dict: t as NSDictionary, village: self))
+            }
         }
     }
 }

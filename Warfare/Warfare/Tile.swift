@@ -10,7 +10,7 @@ import SpriteKit
 import Darwin
 
 class Tile: SKShapeNode {
-    let coordinates: (Int, Int)
+    var coordinates: (Int, Int)
     var unit: Unit?
 	var village: Village?
 	var structure: Structure?
@@ -28,17 +28,30 @@ class Tile: SKShapeNode {
     
     // MARK - Initializer
     
+    init(dict: NSDictionary, village: Village?) {
+        self.coordinates = (-1,-1)
+        self.land = .Grass
+        
+        super.init()
+        
+        self.village = village
+        self.deserialize(dict)
+        
+        self.draw()
+    }
+    
     init(coordinates: (Int, Int), landType: Constants.Types.Land = .Grass) {
         self.coordinates = coordinates
         self.land = landType
         
 		super.init()
-        
-		self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
-		
-		self.fillColor = Utilities.Colors.colorForLandType(self.land)
+    }
+    
+    func draw() {
+        self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
+        self.fillColor = Utilities.Colors.colorForLandType(self.land)
         self.strokeColor = Utilities.Colors.Tile.strokeColor
-	}
+    }
     
     // MARK - Public functions
     
@@ -91,6 +104,38 @@ class Tile: SKShapeNode {
         structure = nil
     }
     
+    // MARK - Serialize
+    
+    func serialize() -> NSDictionary {
+        var dict = [String: AnyObject]()
+        
+        dict["position"] = [self.coordinates.0, self.coordinates.1]
+        dict["unit"] = self.unit?.serialize()
+        dict["structure"] = self.structure?.type.rawValue
+        dict["land"] = self.land.rawValue
+        
+        return dict
+    }
+    
+    func deserialize(dict: NSDictionary) {
+        let p = dict["position"] as? NSArray
+        self.coordinates = (p![0] as Int, p![1] as Int)
+        
+        self.land = Constants.Types.Land(rawValue: dict["land"] as Int)!
+
+        // UNIT
+        if let u = dict["unit"] as? NSDictionary {
+            self.unit = Unit(dict: u, position: self)
+        }
+        
+        // STRUCTURE
+        if let u = dict["structure"] as? NSDictionary {
+        }
+        
+        // Add tile to Map
+        GameEngine.Instance.map.setTile(at:self.coordinates, to: self)
+    }
+    
     // MARK - Drawing
 
 	private func makeHexagonalPath(size: CGFloat) -> CGPath {
@@ -111,7 +156,7 @@ class Tile: SKShapeNode {
 		CGPathCloseSubpath(path)
 		return path
 	}
-	
+    
 	required init?(coder aDecoder: NSCoder) {
 	    fatalError("init(coder:) has not been implemented")
 	}
