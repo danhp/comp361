@@ -50,7 +50,12 @@ class Tile: SKShapeNode {
     func draw() {
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
-        self.strokeColor = Utilities.Colors.Tile.strokeColor
+        
+        if let id = self.village?.player?.id {
+            self.strokeColor = Utilities.Colors.colorForPlayer(id)
+        } else {
+            self.strokeColor = Utilities.Colors.colorForPlayer(-1)
+        }
     }
     
     // MARK - Public functions

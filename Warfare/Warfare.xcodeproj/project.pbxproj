@@ -129,8 +129,8 @@
 			children = (
 				137101391A701096009B807C /* AppDelegate.swift */,
 				1371015D1A7010CE009B807C /* Constants.swift */,
-				1371015F1A701411009B807C /* Tile.swift */,
 				135DC1411A783D7E00474073 /* Utilities.swift */,
+				1371015F1A701411009B807C /* Tile.swift */,
 				137101611A701B80009B807C /* Map.swift */,
 				131D32481A86A7A50073310B /* Player.swift */,
 				522708551A72F56B009ED4DA /* Village.swift */,

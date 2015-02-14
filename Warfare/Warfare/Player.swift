@@ -9,13 +9,19 @@
 import Foundation
 
 class Player {
-    var villages = [Village]()
+    var id: Int?
     
-    init() { }
+    var villages = [Village]()
+    var gold: Int { return self.villages.reduce(0) {$0 + $1.gold} }
+    var wood: Int { return self.villages.reduce(0) {$0 + $1.wood} }
+    
+    init() {}
     
     init(dict: NSDictionary) {
         self.deserialize(dict)
     }
+    
+    // MARK: - Actions
     
     /// Removes village v from the list of villages
     /// and removes the unit or structures from the
@@ -25,7 +31,7 @@ class Player {
         
         // Find object in array
         for (i, village) in enumerate(self.villages) {
-            if to_delete.position == village.position {
+            if to_delete === village {
                 self.villages.removeAtIndex(i)
                 break
             }
@@ -35,18 +41,16 @@ class Player {
     // MARK - Serialization
     
     func serialize() -> NSDictionary {
-        return ["villages":self.villages.map({$0.serialize()})]
+        return ["id":self.id!, "villages":self.villages.map({$0.serialize()})]
     }
     
     func deserialize(dict: NSDictionary) {
-        if let name = dict["name"] as? String {
-            // Do something with the name
-        }
+        self.id = dict["id"] as? Int
         
         // VILLAGES
         if let villages = dict["villages"] as? NSArray {
             for v in villages { // v is NSDictionary
-                self.villages.append(Village(dict: v as NSDictionary))
+                self.villages.append(Village(dict: v as NSDictionary, owner: self))
             }
         }
     }

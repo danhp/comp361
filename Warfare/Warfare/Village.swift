@@ -1,18 +1,17 @@
 import Foundation
 
 class Village {
+    let player: Player?
 	var type = Constants.Types.Village.Hovel
 	var gold: Int = 0
 	var wood: Int = 0
 
-	let position: Tile?
-	var controlledTiles: [Tile] = [Tile]()
+    var controlledTiles: [Tile] = [Tile]()
 
-	init(tile: Tile) {
-		self.position = tile
-	}
+    init() { }
     
-    init(dict: NSDictionary) {
+    init(dict: NSDictionary, owner: Player) {
+        self.player = owner
         self.deserialize(dict)
     }
 

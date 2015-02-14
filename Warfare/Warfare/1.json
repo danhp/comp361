@@ -1,7 +1,7 @@
 {
     "players":[
                {
-               "name":"justin",
+               "id":1,
                "villages":[
                            {
                            "type":2,
@@ -10,7 +10,7 @@
                            "position":"(1,1)",
                            "controlledTiles":[
                                     {
-                                    "position":[0,1],
+                                    "position":[0,2],
                                     "land":0,
                                     "unit":{
                                               "type":1,
@@ -42,11 +42,115 @@
                                               ]
                            }
                            ]
+               },
+               {
+               "id":2,
+               "villages":[
+                           {
+                           "type":2,
+                           "gold":3,
+                           "wood":5,
+                           "position":"(1,1)",
+                           "controlledTiles":[
+                                              {
+                                              "position":[2,2],
+                                              "land":1,
+                                              "unit":{
+                                              "type":1,
+                                              "currentAction":2
+                                              },
+                                              "structure":{
+                                              
+                                              }
+                                              }
+                                              ]
+                           },
+                           {
+                           "type":2,
+                           "gold":3,
+                           "wood":5,
+                           "position":"(1,1)",
+                           "controlledTiles":[
+                                              {
+                                              "position":[2,3],
+                                              "land":2,
+                                              "unit":{
+                                              "type":3,
+                                              "currentAction":2
+                                              },
+                                              "structure":{
+                                              
+                                              }
+                                              }
+                                              ]
+                           }
+                           ]
+               },
+               {
+               "id":3,
+               "villages":[
+                           {
+                           "type":2,
+                           "gold":3,
+                           "wood":5,
+                           "controlledTiles":[
+                                              {
+                                              "position":[3,0],
+                                              "land":0,
+                                              "unit":{
+                                              "type":1,
+                                              "currentAction":2
+                                              },
+                                              "structure":{
+                                              
+                                              }
+                                              }
+                                              ]
+                           },
+                           {
+                           "type":2,
+                           "gold":3,
+                           "wood":5,
+                           "controlledTiles":[
+                                              {
+                                              "position":[2,0],
+                                              "land":0,
+                                              "unit":{
+                                              "type":3,
+                                              "currentAction":2
+                                              },
+                                              "structure":{
+                                              
+                                              }
+                                              }
+                                              ]
+                           }
+                           ]
                }
                ],
     "neutral":[
                {
                "position":[0,0],
+               "land":1
+               },
+               {
+               "position":[0,1],
+               "land":1
+               },
+               {
+               "position":[1,0],
+               "land":3
+               },
+               {
+               "position":[1,1],
+               "land":2
+               },
+               {
+               "position":[2,1],
+               "land":1
+               },
+               {
+               "position":[1,2],
                "land":3
                }
                ]

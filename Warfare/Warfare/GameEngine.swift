@@ -45,7 +45,7 @@ class GameEngine {
                     if let neutral = top["neutral"] as? NSArray {
                         for t in neutral {  // t is an NSDictionary
                             let t = Tile(dict: t as NSDictionary, village: nil)
-                            self.map.setTile(at: t.coordinates, to: t)
+//                            self.map.setTile(at: t.coordinates, to: t)
                         }
                     }
                 }

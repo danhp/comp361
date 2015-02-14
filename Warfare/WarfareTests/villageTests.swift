@@ -5,7 +5,7 @@ class villageTest: XCTestCase {
 
 	func testUpgradeVillage() {
 		let tile = Tile(coordinates: (0,0))
-		let village = Village(tile: tile)
+		let village = Village()
 
 		village.wood += 10
 		XCTAssertEqual(village.wood, 10)
@@ -35,7 +35,7 @@ class villageTest: XCTestCase {
 
 	func testUpgradeUnit() {
 		let tile = Tile(coordinates: (0,0))
-		let village = Village(tile: tile)
+		let village = Village()
 
 		let tile2 = Tile(coordinates: (0,1))
 		let unit = Unit(type: Constants.Types.Unit.Peasant, tile: tile2)
@@ -68,7 +68,7 @@ class villageTest: XCTestCase {
 
 	func testAddRemoveTile() {
 		let tile = Tile(coordinates: (0,0))
-		let village = Village(tile: tile)
+		let village = Village()
 
 		let tile2 = Tile(coordinates: (1,1))
 

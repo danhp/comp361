@@ -16,6 +16,7 @@ class GameScene: SKScene {
 
         GameEngine.Instance.loadMap(number: "1")
         GameEngine.Instance.map.draw()
+        self.map = GameEngine.Instance.map
 		self.addChild(GameEngine.Instance.map)
     }
     

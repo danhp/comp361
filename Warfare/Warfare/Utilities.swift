@@ -16,20 +16,29 @@ class Utilities {
     
     class Colors {
         class func colorForLandType(l: Constants.Types.Land) -> UIColor {
-            var color: UIColor
-            
             switch l {
             case .Sea:
-                color = UIColor.blueColor()
+                return UIColor.blueColor()
             case .Grass:
-                color = UIColor.greenColor()
+                return UIColor.greenColor()
             case .Tree:
-                color = UIColor.brownColor()
+                return UIColor.brownColor()
             case .Meadow:
-                color = UIColor.yellowColor()
+                return UIColor.yellowColor()
             }
-            
-            return color
+        }
+        
+        class func colorForPlayer(id: Int) -> UIColor {
+            switch id {
+            case 1:
+                return UIColor.blueColor()
+            case 2:
+                return UIColor.greenColor()
+            case 3:
+                return UIColor.redColor()
+            default:
+                return UIColor.whiteColor()
+            }
         }
         
         struct Tile {
