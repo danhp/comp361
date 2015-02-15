@@ -117,7 +117,6 @@ class GameEngine {
                 // Else find path to one of its neighbours that must be a controlledTile
                 if contains(village.controlledTiles, { $0 === to }) {
                     path = map.getPath(from: from, to: to, accessible: village.controlledTiles)!
-                    if path.isEmpty { return }
                 } else {
                     for n in map.neighbors(tile: to) {
                         if contains(village.controlledTiles, { $0 === n }) {
@@ -127,8 +126,8 @@ class GameEngine {
                             }
                         }
                     }
-                    if path.isEmpty { return }
                 }
+                if path.isEmpty { return }
 
                 //Check if tile in unprotected
                 if to.isProtected(from.unit!) { return }
@@ -137,6 +136,7 @@ class GameEngine {
                 }
 
                 // Find player and village for to tile.
+                // nil if tile is neutral
                 for p in self.players {
                     if p === self.currentPlayer { continue }
                     for v in p.villages {
@@ -152,6 +152,7 @@ class GameEngine {
                 }
 
                 // Update tiles in path
+                path.append(to)
                 for tile in path {
                     if from.unit?.type == Constants.Types.Unit.Knight
                                 && tile.land == .Meadow
@@ -208,39 +209,50 @@ class GameEngine {
                         enemyVillage?.removeTile(to)
 
                         let regions = self.map.getRegions((enemyVillage?.controlledTiles)!)
-                        if regions.count == 1 {
+
+                        // Update destination tile.
+                        to.unit = nil
+                        to.structure = nil
+                        if to.village != nil {
+                            village.wood += (to.village?.wood)!
+                            village.gold += (to.village?.gold)!
+                            to.village = nil
+                            enemyPlayer?.removeVillage(enemyVillage!)
+                        }
+
+
+                        for r in regions {
                             // Region is too small
-                            if regions[0].count < 3 {
-                                enemyPlayer?.clearVillages(enemyVillage!)
-
-                            } else {
-                                to.unit = nil
-                                to.structure = nil
-
-                                // Invade a village
-                                if to.village != nil {
-                                    village.wood += (enemyVillage?.wood)!
-                                    village.gold += (enemyVillage?.gold)!
-
-                                    // Region can still suppport another village.
-                                    let newHovel: Village = Village()
-                                    for t in regions[0] {
-                                        newHovel.addTile(t)
+                            if r.count < 3 {
+                                for t in r {
+                                    t.unit = nil
+                                    t.structure = nil
+                                    enemyVillage?.removeTile(t)
+                                    if t.village != nil {
+                                        t.village = nil
+                                        enemyPlayer?.removeVillage(t.village!)
                                     }
-
-                                    // clearVillage has a side effect of killing all units.
-                                    enemyPlayer?.clearVillages(enemyVillage!)
-                                    enemyPlayer?.addVillage(newHovel)
-                                    
-                                    // TODO: Randomize this position.
-                                    newHovel.controlledTiles[0].village = newHovel
                                 }
+                                continue
                             }
-                        } else {
-                            // Invasion splits into at most 3 regions.
-                            for r in regions {
 
+                            // Region can still support a village.
+                            if map.getVillage(r) == nil {
+                                let newHovel = Village()
+                                for t in r {
+                                    newHovel.addTile(t)
+                                    enemyVillage?.removeTile(t)
+                                }
+
+                                enemyPlayer?.addVillage(newHovel)
+
+                                // TODO: Actually place it somewhere legal.
+                                r[0].land = .Grass
+                                r[0].unit = nil
+                                r[0].structure = nil
+                                r[0].village = newHovel
                             }
+                            
                         }
                     }
                 }

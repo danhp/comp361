@@ -152,6 +152,15 @@ class Map: SKNode {
         return regions
     }
 
+    func getVillage(region: [Tile]) -> Village? {
+        for tile in region {
+            if tile.village != nil {
+                return tile.village
+            }
+        }
+        return nil
+    }
+
 	func draw() {
 		let height = Constants.Tile.size * 2
 		let width = sqrt(3)/2.0 * Double(height)
