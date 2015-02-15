@@ -1,7 +1,7 @@
 import Foundation
 
 class Village {
-    let player: Player?
+    var player: Player?
 	var type = Constants.Types.Village.Hovel
 	var gold: Int = 0
 	var wood: Int = 0
@@ -49,6 +49,14 @@ class Village {
 		}
 
 		return false
+	}
+
+	func compareTo(village: Village) -> Bool {
+		if self.type.rawValue >= village.type.rawValue {
+			return true
+		} else {
+			return false
+		}
 	}
     
     func clearRegion() {

@@ -97,7 +97,7 @@ class GameEngine {
 
             // Delete the Village
             if village.gold <= 0 {
-                self.currentPlayer.removeVillages(village)
+                self.currentPlayer.clearVillages(village)
             }
         }
     }
@@ -173,8 +173,34 @@ class GameEngine {
                         // TakeOver neutral tile
                         village.addTile(to)
 
+                        // Check if regions join.
                         for n in self.map.neighbors(tile: to) {
-                            
+                            for v in self.currentPlayer.villages {
+                                if v === village { continue }
+                                if contains(v.controlledTiles, {$0 === n}) {
+                                    var mainVillage: Village
+                                    var mergedVillage: Village
+
+                                    if village.compareTo(v) {
+                                        mainVillage = village
+                                        mergedVillage = v
+                                    } else {
+                                        mainVillage = v
+                                        mergedVillage = village
+                                    }
+
+                                    mainVillage.wood += mergedVillage.wood
+                                    mainVillage.gold += mergedVillage.gold
+
+                                    for t in mergedVillage.controlledTiles {
+                                        mainVillage.addTile(t)
+                                        if t.village! === mergedVillage {
+                                            t.village = nil
+                                        }
+                                    }
+                                    self.currentPlayer.removeVillage(mergedVillage)
+                                }
+                            }
                         }
                     } else {
                         // Invade enemy tile
@@ -185,7 +211,7 @@ class GameEngine {
                         if regions.count == 1 {
                             // Region is too small
                             if regions[0].count < 3 {
-                                enemyPlayer?.removeVillages(enemyVillage!)
+                                enemyPlayer?.clearVillages(enemyVillage!)
 
                             } else {
                                 to.unit = nil
@@ -202,8 +228,8 @@ class GameEngine {
                                         newHovel.addTile(t)
                                     }
 
-                                    // Remove Village has a side effect of killing all units.
-                                    enemyPlayer?.removeVillages(enemyVillage!)
+                                    // clearVillage has a side effect of killing all units.
+                                    enemyPlayer?.clearVillages(enemyVillage!)
                                     enemyPlayer?.addVillage(newHovel)
                                     
                                     // TODO: Randomize this position.
