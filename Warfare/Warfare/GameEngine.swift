@@ -106,12 +106,15 @@ class GameEngine {
     func moveUnit(from: Tile, to: Tile) {
         if from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders { return }
 
-        for village in currentPlayer.villages {
+        var path = [Tile]()
+        var enemyPlayer: Player?
+        var enemyVillage: Village?
+
+        villageLoop: for village in currentPlayer.villages {
             if contains(village.controlledTiles, { $0 === from }) {
                 // Check if path exists.
                 // If to is in controlledTiles, find path normally
                 // Else find path to one of its neighbours that must be a controlledTile
-                var path = [Tile]()
                 if contains(village.controlledTiles, { $0 === to }) {
                     path = map.getPath(from: from, to: to, accessible: village.controlledTiles)!
                     if path.isEmpty { return }
@@ -128,17 +131,22 @@ class GameEngine {
                 }
 
                 //Check if tile in unprotected
+                if to.isProtected(from.unit!) { return }
                 for n in map.neighbors(tile: to) {
                     if n.isProtected(from.unit!) && !contains(village.controlledTiles, { $0 === n}) { return }
                 }
 
-                // Peasant can only invade neautral
-                if from.unit?.type == Constants.Types.Unit.Peasant {
-                    // TODO: Change depending on implementation.
-                    for p in self.players {
-                        if p === self.currentPlayer { continue }
-                        for v in p.villages {
-                            if contains(village.controlledTiles, { $0 === to }) { return }
+                // Find player and village for to tile.
+                for p in self.players {
+                    if p === self.currentPlayer { continue }
+                    for v in p.villages {
+                        if contains(v.controlledTiles, { $0 === to }) {
+                            // Peasant can only invade neutral
+                            if from.unit?.type == Constants.Types.Unit.Peasant { return }
+
+                            enemyPlayer = p
+                            enemyVillage = v
+                            break
                         }
                     }
                 }
@@ -159,13 +167,65 @@ class GameEngine {
                     village.wood += 1
                 }
 
-                // TakeOver neutral tile
+                // Execute if tile is outside controlled region
+                if !contains(village.controlledTiles, {$0 === to}) {
+                    if enemyPlayer == nil {
+                        // TakeOver neutral tile
+                        village.addTile(to)
 
-                // Invade tile
+                        for n in self.map.neighbors(tile: to) {
+                            
+                        }
+                    } else {
+                        // Invade enemy tile
+                        village.addTile(to)
+                        enemyVillage?.removeTile(to)
+
+                        let regions = self.map.getRegions((enemyVillage?.controlledTiles)!)
+                        if regions.count == 1 {
+                            // Region is too small
+                            if regions[0].count < 3 {
+                                enemyPlayer?.removeVillages(enemyVillage!)
+
+                            } else {
+                                to.unit = nil
+                                to.structure = nil
+
+                                // Invade a village
+                                if to.village != nil {
+                                    village.wood += (enemyVillage?.wood)!
+                                    village.gold += (enemyVillage?.gold)!
+
+                                    // Region can still suppport another village.
+                                    let newHovel: Village = Village()
+                                    for t in regions[0] {
+                                        newHovel.addTile(t)
+                                    }
+
+                                    // Remove Village has a side effect of killing all units.
+                                    enemyPlayer?.removeVillages(enemyVillage!)
+                                    enemyPlayer?.addVillage(newHovel)
+                                    
+                                    // TODO: Randomize this position.
+                                    newHovel.controlledTiles[0].village = newHovel
+                                }
+                            }
+                        } else {
+                            // Invasion splits into at most 3 regions.
+                            for r in regions {
+
+                            }
+                        }
+                    }
+                }
 
                 // Move the unit
+                from.unit?.currentAction = Constants.Unit.Action.Moved
                 to.unit = from.unit
                 from.unit = nil
+
+                // Completed operations
+                break villageLoop
             }
         }
     }

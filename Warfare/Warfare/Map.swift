@@ -116,6 +116,42 @@ class Map: SKNode {
         return nil
     }
 
+    // Split a set of unconnected regions into sets of connected regions
+    // @returns [[Tile]] made up of at most 3 sets of connected regions.
+    func getRegions(tileSet: [Tile]) -> [[Tile]] {
+        var tileSetCopy = tileSet
+        var seen = [Tile]()
+        var queue = [Tile]()
+
+        var regions = [[Tile]]()
+        var group = [Tile]()
+
+        while !tileSetCopy.isEmpty {
+            var seed = tileSetCopy.removeLast()
+            seen.append(seed)
+            queue.append(seed)
+
+            while !queue.isEmpty {
+                let tile = queue.removeLast()
+
+                // Visit the tile
+                group.append(tile)
+                tileSetCopy = tileSetCopy.filter({$0 !== tile})
+
+                // Visit the neighbours
+                for t in neighbors(tile: tile) {
+                    if contains(tileSet, {$0 === t}) && !contains(seen, {$0 === t}) {
+                        queue.append(t)
+                    }
+                    seen.append(t)
+                }
+            }
+            regions.append(group)
+            group = [Tile]()
+        }
+        return regions
+    }
+
 	func draw() {
 		let height = Constants.Tile.size * 2
 		let width = sqrt(3)/2.0 * Double(height)

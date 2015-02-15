@@ -37,6 +37,10 @@ class Player {
             }
         }
     }
+
+	func addVillage(toAdd: Village) {
+		self.villages.append(toAdd)
+	}
     
     // MARK - Serialization
     
