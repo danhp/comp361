@@ -107,9 +107,9 @@ class Tile: SKShapeNode, Hashable {
 
     func isWalkable() -> Bool {
         return (self.land == .Grass || self.land == .Meadow)
-            && self.unit == nil
-            && self.village == nil
-            && (self.structure == .Road || self.structure == nil)
+                && self.unit == nil
+                && self.village == nil
+                && (self.structure == .Road || self.structure == nil)
     }
 
     // Check if self can prevent enemy from invading neighbouring tile.

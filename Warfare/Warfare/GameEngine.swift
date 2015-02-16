@@ -121,13 +121,14 @@ class GameEngine {
                 // Else find path to one of its neighbours that must be a controlledTile
                 if contains(village.controlledTiles, { $0 === to }) {
                     path = map.getPath(from: from, to: to, accessible: village.controlledTiles)
+
+                    // Cannot destroy onject within controlled region.
+                    if to.unit != nil || to.village != nil || to.structure == .Tower { return }
                 } else {
                     for n in map.neighbors(tile: to) {
                         if contains(village.controlledTiles, { $0 === n }) {
                             path = map.getPath(from: from, to: n, accessible: village.controlledTiles)
-                            if path.isEmpty {
-                                break
-                            }
+                            if !path.isEmpty { break }
                         }
                     }
                 }
