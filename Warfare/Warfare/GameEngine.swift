@@ -1,4 +1,5 @@
 import Foundation
+import GameKit
 
 private let _instance = GameEngine()
 
@@ -13,7 +14,15 @@ class GameEngine {
     
     // MARK: - Initializers
     
-    init() {   }
+    init() {
+        // Create match request
+        let request = GKMatchRequest()
+        request.minPlayers = 3
+        request.maxPlayers = 3
+        request.defaultNumberOfPlayers = 3
+        
+        let mmvc = GKTurnBasedMatchmakerViewController(matchRequest: request)
+    }
     
     init(firstPlayer: Int, players: [Player]) {
         assert(players.count == 3, "A Game should be between exactly 3 players.")
