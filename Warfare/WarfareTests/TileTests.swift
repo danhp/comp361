@@ -24,7 +24,7 @@ class TileTests: XCTestCase {
     
     func testMakeRoadOrMeadow() {
         let t = Tile(coordinates: (0,0))
-        t.unit = Unit(type: .Peasant, tile: t)
+        t.unit = Unit(type: .Peasant)
         
         // Test Roads
         t.unit?.currentAction = .BuildingRoad
@@ -37,7 +37,7 @@ class TileTests: XCTestCase {
         // Test Meadows
         t.clear()
         t.land = .Meadow
-        t.unit = Unit(type: .Peasant, tile: t)
+        t.unit = Unit(type: .Peasant)
         t.unit?.currentAction = .FinishCultivating
         
         t.makeRoadOrMeadow()

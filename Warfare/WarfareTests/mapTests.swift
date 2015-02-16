@@ -58,7 +58,7 @@ class mapTests: XCTestCase {
 		XCTAssertEqual(neighborTiles.count, count)
 	}
 
-	func testPathExists() {
+	func testgetPath() {
 		let tiles = map.tiles
 
 		// Add obstacles to grid
@@ -75,13 +75,30 @@ class mapTests: XCTestCase {
 		let to = tiles[3,5]!
 		let tileList: [Tile] = tiles.rows.reduce([], +)
 
-		XCTAssertNotNil(map.getPath(from: from, to: to, accessible: tileList))
+		XCTAssertTrue(!map.getPath(from: from, to: to, accessible: tileList).isEmpty)
 
 		tiles[2,5]!.land = .Tree
 
-		XCTAssertNil(map.getPath(from: from, to: to, accessible: tileList))
+		XCTAssertTrue(map.getPath(from: from, to: to, accessible: tileList).isEmpty)
 
 		// TODO: Simulate village.controlledTiles
 
 	}
+
+    func testGetRegions() {
+        let tiles = map.tiles
+
+        var regions = [Tile]()
+        regions.append(tiles[0, 0]!)
+        regions.append(tiles[1, 0]!)
+        regions.append(tiles[-1, 2]!)
+        regions.append(tiles[2, 2]!)
+
+        XCTAssertEqual(map.getRegions(regions).count, 3)
+
+        regions.append(tiles[0, 1]!)
+        XCTAssertEqual(map.getRegions(regions).count, 2)
+
+
+    }
 }

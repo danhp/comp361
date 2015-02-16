@@ -73,8 +73,8 @@ class Map: SKNode {
 	}
 
     // Get the set of tiles in the shortest path
-    // @return [Tile] if path exists, else return nil.
-    func getPath(#from: Tile, to: Tile, accessible: [Tile]) -> [Tile]? {
+    // @return [Tile] if path exists, else return empty set.
+    func getPath(#from: Tile, to: Tile, accessible: [Tile]) -> [Tile] {
         var queue = [Tile]()
         var seen = [Tile]()
         var cameFrom = [Tile: Tile]()
@@ -105,7 +105,8 @@ class Map: SKNode {
 
             // Add unvisited neighbors to the queue
             for t in neighbors(tile: tile) {
-                if t.isWalkable() && contains(accessible, { $0 === t }) && !contains(seen, {$0 === t}) {
+                if t.isWalkable() && contains(accessible, { $0 === t }) && !contains(seen, {$0 === t})
+                            || (t === to  && t.land != .Sea) {
                     queue += [t]
                     cameFrom[t] = tile
                 }
@@ -113,7 +114,8 @@ class Map: SKNode {
             }
         }
 
-        return nil
+        var empty = [Tile]()
+        return empty
     }
 
     // Split a set of unconnected regions into sets of connected regions

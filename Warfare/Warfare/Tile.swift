@@ -86,21 +86,6 @@ class Tile: SKShapeNode, Hashable {
         }
     }
 
-    func removeTombstone() {
-        if self.structure? == Constants.Types.Structure.Tombstone {
-            self.structure = nil
-        }
-    }
-
-    func chopTree() -> Bool {
-        if self.land == .Tree {
-            self.land = .Grass
-            return true
-        }
-
-        return false
-    }
-
     // Builds a road or finishes cultivating a meadow if the required conditions are met
     //
     // @returns True if a meadow was done being cultivated (in which case, according to the requirements, a new meadow should be produce

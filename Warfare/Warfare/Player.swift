@@ -44,11 +44,11 @@ class Player {
 	}
 
 	func removeVillage(toRemove: Village) {
-		self.villages.filter({$0 !== toRemove})
+		self.villages = self.villages.filter({$0 !== toRemove})
 	}
-    
+
     // MARK - Serialization
-    
+
     func serialize() -> NSDictionary {
         return ["id":self.id!, "villages":self.villages.map({$0.serialize()})]
     }

@@ -38,7 +38,7 @@ class villageTest: XCTestCase {
 		let village = Village()
 
 		let tile2 = Tile(coordinates: (0,1))
-		let unit = Unit(type: Constants.Types.Unit.Peasant, tile: tile2)
+		let unit = Unit(type: Constants.Types.Unit.Peasant)
 
 		XCTAssertFalse(village.containsUnit(unit))
 

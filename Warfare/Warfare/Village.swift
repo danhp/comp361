@@ -52,7 +52,7 @@ class Village {
 	}
 
 	func compareTo(village: Village) -> Bool {
-		if self.type.rawValue >= village.type.rawValue {
+		if self.type.rawValue > village.type.rawValue {
 			return true
 		} else {
 			return false

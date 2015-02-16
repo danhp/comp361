@@ -112,16 +112,20 @@ class GameEngine {
 
         villageLoop: for village in currentPlayer.villages {
             if contains(village.controlledTiles, { $0 === from }) {
+                // Knight cannot clear tiles
+                if from.unit?.type == Constants.Types.Unit.Knight
+                            && (to.land == .Tree || to.structure? == Constants.Types.Structure.Tombstone) { return }
+
                 // Check if path exists.
                 // If to is in controlledTiles, find path normally
                 // Else find path to one of its neighbours that must be a controlledTile
                 if contains(village.controlledTiles, { $0 === to }) {
-                    path = map.getPath(from: from, to: to, accessible: village.controlledTiles)!
+                    path = map.getPath(from: from, to: to, accessible: village.controlledTiles)
                 } else {
                     for n in map.neighbors(tile: to) {
                         if contains(village.controlledTiles, { $0 === n }) {
-                            path = map.getPath(from: from, to: n, accessible: village.controlledTiles)!
-                            if !path.isEmpty {
+                            path = map.getPath(from: from, to: n, accessible: village.controlledTiles)
+                            if path.isEmpty {
                                 break
                             }
                         }
@@ -129,24 +133,27 @@ class GameEngine {
                 }
                 if path.isEmpty { return }
 
-                //Check if tile in unprotected
-                if to.isProtected(from.unit!) { return }
-                for n in map.neighbors(tile: to) {
-                    if n.isProtected(from.unit!) && !contains(village.controlledTiles, { $0 === n}) { return }
-                }
+                // Gather information if tile is external to controlled region
+                if !contains(village.controlledTiles, {$0 === to}) {
+                    //Check if tile in unprotected
+                    if to.isProtected(from.unit!) { return }
+                    for n in map.neighbors(tile: to) {
+                        if n.isProtected(from.unit!) && !contains(village.controlledTiles, { $0 === n}) { return }
+                    }
 
-                // Find player and village for to tile.
-                // nil if tile is neutral
-                for p in self.players {
-                    if p === self.currentPlayer { continue }
-                    for v in p.villages {
-                        if contains(v.controlledTiles, { $0 === to }) {
-                            // Peasant can only invade neutral
-                            if from.unit?.type == Constants.Types.Unit.Peasant { return }
+                    // Find player and village for to tile.
+                    // nil if tile is neutral
+                    for p in self.players {
+                        if p === self.currentPlayer { continue }
+                        for v in p.villages {
+                            if contains(v.controlledTiles, { $0 === to }) {
+                                // Peasant can only invade neutral
+                                if from.unit?.type == Constants.Types.Unit.Peasant { return }
 
-                            enemyPlayer = p
-                            enemyVillage = v
-                            break
+                                enemyPlayer = p
+                                enemyVillage = v
+                                break
+                            }
                         }
                     }
                 }
@@ -162,9 +169,11 @@ class GameEngine {
                 }
 
                 // Update destination tile.
-                to.removeTombstone()
-
-                if to.chopTree() {
+                if to.structure? == Constants.Types.Structure.Tombstone {
+                    to.structure = nil
+                }
+                if to.land == .Tree {
+                    to.land = .Grass
                     village.wood += 1
                 }
 
@@ -175,19 +184,18 @@ class GameEngine {
                         village.addTile(to)
 
                         // Check if regions join.
+                        var mainVillage: Village = village
+                        var mergedVillage: Village = Village()
+
                         for n in self.map.neighbors(tile: to) {
                             for v in self.currentPlayer.villages {
-                                if v === village { continue }
+                                if v === mainVillage || v === village { continue }
                                 if contains(v.controlledTiles, {$0 === n}) {
-                                    var mainVillage: Village
-                                    var mergedVillage: Village
-
-                                    if village.compareTo(v) {
-                                        mainVillage = village
+                                    if mainVillage.compareTo(v) {
                                         mergedVillage = v
                                     } else {
+                                        mergedVillage = mainVillage
                                         mainVillage = v
-                                        mergedVillage = village
                                     }
 
                                     mainVillage.wood += mergedVillage.wood
@@ -195,9 +203,7 @@ class GameEngine {
 
                                     for t in mergedVillage.controlledTiles {
                                         mainVillage.addTile(t)
-                                        if t.village! === mergedVillage {
-                                            t.village = nil
-                                        }
+                                        t.village = nil
                                     }
                                     self.currentPlayer.removeVillage(mergedVillage)
                                 }
@@ -225,12 +231,15 @@ class GameEngine {
                             // Region is too small
                             if r.count < 3 {
                                 for t in r {
-                                    t.unit = nil
                                     t.structure = nil
+                                    if t.unit != nil {
+                                        t.structure = Constants.Types.Structure.Tombstone
+                                    }
+                                    t.unit = nil
                                     enemyVillage?.removeTile(t)
                                     if t.village != nil {
-                                        t.village = nil
                                         enemyPlayer?.removeVillage(t.village!)
+                                        t.village = nil
                                     }
                                 }
                                 continue
