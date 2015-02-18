@@ -1,0 +1,4 @@
+TODO
+
+- Remove Tile.Village has tile's owner - should instead be village on tile
+- Tile.Structure should be a variable, not an object
