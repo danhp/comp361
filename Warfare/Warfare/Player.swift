@@ -26,7 +26,7 @@ class Player {
     /// Removes village v from the list of villages
     /// and removes the unit or structures from the
     /// region controlled by that village
-    func removeVillages(to_delete: Village) {
+    func clearVillages(to_delete: Village) {
         to_delete.clearRegion()
         
         // Find object in array
@@ -37,9 +37,18 @@ class Player {
             }
         }
     }
-    
+
+	func addVillage(toAdd: Village) {
+		toAdd.player = self
+		self.villages.append(toAdd)
+	}
+
+	func removeVillage(toRemove: Village) {
+		self.villages = self.villages.filter({$0 !== toRemove})
+	}
+
     // MARK - Serialization
-    
+
     func serialize() -> NSDictionary {
         return ["id":self.id!, "villages":self.villages.map({$0.serialize()})]
     }

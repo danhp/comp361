@@ -69,7 +69,7 @@ struct Constants {
         }
 
         enum Structure: Int {
-            case Tower, Road, Tombstone
+            case Tower = 1, Road, Tombstone
         }
     }
 

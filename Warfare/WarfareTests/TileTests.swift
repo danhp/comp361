@@ -12,32 +12,32 @@ import XCTest
 class TileTests: XCTestCase {
     func testReplaceTombstone() {
         let t = Tile(coordinates: (0,0))
-        t.structure = Structure(type: Constants.Types.Structure.Tombstone)
+        t.structure = Constants.Types.Structure.Tombstone
         
-        XCTAssertEqual((t.structure?.type)!, Constants.Types.Structure.Tombstone)
+        XCTAssertEqual((t.structure?)!, Constants.Types.Structure.Tombstone)
         
         t.replaceTombstone()
 
-        XCTAssertNil(t.structure, "Tile structure should be nil after removing tombstone.")
+        XCTAssertTrue(t.structure? == nil, "Tile structure should be nil after removing tombstone.")
         XCTAssertEqual(t.land, Constants.Types.Land.Tree, "Tile land type should be tree.")
     }
     
     func testMakeRoadOrMeadow() {
         let t = Tile(coordinates: (0,0))
-        t.unit = Unit(type: .Peasant, tile: t)
+        t.unit = Unit(type: .Peasant)
         
         // Test Roads
         t.unit?.currentAction = .BuildingRoad
         
         t.makeRoadOrMeadow()
         
-        XCTAssertEqual((t.structure?.type)!, Constants.Types.Structure.Road, "Tile structure should be road after building")
+        XCTAssertEqual((t.structure?)!, Constants.Types.Structure.Road, "Tile structure should be road after building")
         XCTAssertEqual((t.unit?.currentAction)!, Constants.Unit.Action.ReadyForOrders, "Tile unit should be ready for orders")
         
         // Test Meadows
         t.clear()
         t.land = .Meadow
-        t.unit = Unit(type: .Peasant, tile: t)
+        t.unit = Unit(type: .Peasant)
         t.unit?.currentAction = .FinishCultivating
         
         t.makeRoadOrMeadow()
