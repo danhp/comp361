@@ -15,19 +15,19 @@ class Village {
         self.deserialize(dict)
     }
 
-	func upgradeVillage(newType: Constants.Types.Village) {
-		if (newType.rawValue - self.type.rawValue) == 1 && self.wood >= Constants.Cost.Upgrade.Village.rawValue {
-			self.wood -= Constants.Cost.Upgrade.Village.rawValue
-			self.type = newType
-		}
-	}
-
 	func addTile(tile: Tile) {
 		controlledTiles.append(tile)
 	}
 
 	func removeTile(tile: Tile) {
 		controlledTiles = controlledTiles.filter({ $0 !== tile })
+	}
+
+	func upgradeVillage() {
+		if self.type.rawValue < 3 && self.wood >= Constants.Cost.Upgrade.Village.rawValue {
+			self.wood -= Constants.Cost.Upgrade.Village.rawValue
+			self.type = Constants.Types.Village(rawValue: self.type.rawValue + 1)!
+		}
 	}
 
 	func upgradeUnit(unit: Unit, newType: Constants.Types.Unit) {
@@ -42,8 +42,8 @@ class Village {
 	}
 
 	func containsUnit(unit: Unit) -> Bool {
-		for element in self.controlledTiles {
-			if element.unit === unit {
+		for tile in self.controlledTiles {
+			if tile.unit === unit {
 				return true
 			}
 		}

@@ -119,6 +119,13 @@ class Tile: SKShapeNode, Hashable {
             || (self.structure? == Constants.Types.Structure.Tower && againt.type.rawValue < Constants.Types.Unit.Soldier.rawValue)
     }
 
+    func isBuildable() -> Bool {
+        return self.unit == nil
+                    && self.village == nil
+                    && self.structure == nil
+                    && self.land == .Grass
+    }
+
     func clear() {
         unit = nil
         village = nil

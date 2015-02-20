@@ -102,6 +102,10 @@ class GameEngine {
         }
     }
 
+	func endTurn() {
+
+	}
+
     // Move a unit and update all affected tiles in path.
     func moveUnit(from: Tile, to: Tile) {
         if from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders { return }
@@ -277,4 +281,42 @@ class GameEngine {
             }
         }
     }
+
+	func upgradeVillage(village: Village) {
+        if !contains(self.currentPlayer.villages, {$0 === village}) { return }
+
+        village.upgradeVillage()
+	}
+
+	func upgradeUnit(unit: Unit, newLevel: Constants.Types.Unit) {
+        for village in self.currentPlayer.villages {
+            if village.containsUnit(unit) {
+                village.upgradeUnit(unit, newType: newLevel)
+                return
+            }
+        }
+	}
+
+    func recruitUnit(village: Village, type: Constants.Types.Unit, tile: Tile) {
+        if !contains(self.currentPlayer.villages, {$0 === village}) { return }
+
+        let cost = type.rawValue * Constants.Cost.Upgrade.Unit.rawValue
+        if village.gold < cost || !tile.isWalkable() { return }
+
+        village.gold -= cost
+
+        var newUnit = Unit(type: type)
+        newUnit.currentAction = .Moved
+        tile.unit = newUnit
+	}
+
+    func buildTower(village: Village, on: Tile) {
+        if !contains(self.currentPlayer.villages, {$0 === village}) { return }
+        
+        let tower = Constants.Types.Structure.Tower
+        if village.wood < tower.cost() || !on.isBuildable() { return }
+
+        village.wood -= tower.cost()
+        on.structure = tower
+	}
 }

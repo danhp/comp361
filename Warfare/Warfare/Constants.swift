@@ -70,6 +70,17 @@ struct Constants {
 
         enum Structure: Int {
             case Tower = 1, Road, Tombstone
+
+            func cost() -> Int {
+                switch self {
+                case .Tower:
+                    return 5
+                case .Road:
+                    return 10
+                case .Tombstone:
+                    return 0
+                }
+            }
         }
     }
 
