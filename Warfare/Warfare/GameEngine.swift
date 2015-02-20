@@ -102,9 +102,9 @@ class GameEngine {
         }
     }
 
-	func endTurn() {
+    func endTurn() {
 
-	}
+    }
 
     // Move a unit and update all affected tiles in path.
     func moveUnit(from: Tile, to: Tile) {
@@ -114,7 +114,7 @@ class GameEngine {
         var enemyPlayer: Player?
         var enemyVillage: Village?
 
-        villageLoop: for village in currentPlayer.villages {
+        for village in currentPlayer.villages {
             if contains(village.controlledTiles, { $0 === from }) {
                 // Knight cannot clear tiles
                 if from.unit?.type == Constants.Types.Unit.Knight
@@ -266,7 +266,7 @@ class GameEngine {
                                 r[0].structure = nil
                                 r[0].village = newHovel
                             }
-                            
+
                         }
                     }
                 }
@@ -277,25 +277,25 @@ class GameEngine {
                 from.unit = nil
 
                 // Completed operations
-                break villageLoop
+                return
             }
         }
     }
 
-	func upgradeVillage(village: Village) {
+    func upgradeVillage(village: Village) {
         if !contains(self.currentPlayer.villages, {$0 === village}) { return }
 
         village.upgradeVillage()
-	}
+    }
 
-	func upgradeUnit(unit: Unit, newLevel: Constants.Types.Unit) {
+    func upgradeUnit(unit: Unit, newLevel: Constants.Types.Unit) {
         for village in self.currentPlayer.villages {
             if village.containsUnit(unit) {
                 village.upgradeUnit(unit, newType: newLevel)
                 return
             }
         }
-	}
+    }
 
     func recruitUnit(village: Village, type: Constants.Types.Unit, tile: Tile) {
         if !contains(self.currentPlayer.villages, {$0 === village}) { return }
@@ -308,15 +308,41 @@ class GameEngine {
         var newUnit = Unit(type: type)
         newUnit.currentAction = .Moved
         tile.unit = newUnit
-	}
+    }
 
     func buildTower(village: Village, on: Tile) {
         if !contains(self.currentPlayer.villages, {$0 === village}) { return }
-        
+
         let tower = Constants.Types.Structure.Tower
         if village.wood < tower.cost() || !on.isBuildable() { return }
 
         village.wood -= tower.cost()
         on.structure = tower
-	}
+    }
+
+    func buildRoad(on: Tile, from: Tile) {
+        // TODO: Change with implementation of tile (loop)
+        for village in self.currentPlayer.villages {
+            // Check tiles are both in the same region and connected
+            let path = self.map.getPath(from: from, to: on, accessible: village.controlledTiles)
+            if path.isEmpty { return }
+
+            let road = Constants.Types.Structure.Road
+            if village.wood < road.cost()
+                        || !on.isBuildable()
+                        || from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders
+                        || from.unit?.type != Constants.Types.Unit.Peasant{ return }
+
+            village.wood -= road.cost()
+            on.unit = from.unit
+            from.unit = nil
+            on.unit?.currentAction = Constants.Unit.Action.BuildingRoad
+
+            return
+        }
+    }
+
+    func startCultivating(on: Tile) {
+
+    }
 }
