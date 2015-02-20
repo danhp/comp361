@@ -117,6 +117,7 @@ class Tile: SKShapeNode, Hashable {
     func isProtected(againt: Unit) -> Bool {
         return self.unit?.type.rawValue >= againt.type.rawValue
             || (self.structure? == Constants.Types.Structure.Tower && againt.type.rawValue < Constants.Types.Unit.Soldier.rawValue)
+            || (self.village?.type == Constants.Types.Village.Fort && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
     }
 
     func isBuildable() -> Bool {

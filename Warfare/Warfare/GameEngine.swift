@@ -138,12 +138,13 @@ class GameEngine {
                 }
                 if path.isEmpty { return }
 
-                // Gather information if tile is external to controlled region
+                // Execute if tile is outside controlled region
                 if !contains(village.controlledTiles, {$0 === to}) {
                     //Check if tile in unprotected
                     if to.isProtected(from.unit!) { return }
                     for n in map.neighbors(tile: to) {
-                        if n.isProtected(from.unit!) && !contains(village.controlledTiles, { $0 === n}) { return }
+                        // TODO: Fix check belongs to player.
+                        if n.isProtected(from.unit!) && !contains(village.controlledTiles, { $0 === n }) { return }
                     }
 
                     // Find player and village for to tile.
@@ -161,29 +162,7 @@ class GameEngine {
                             }
                         }
                     }
-                }
 
-                // Update tiles in path
-                path.append(to)
-                for tile in path {
-                    if from.unit?.type == Constants.Types.Unit.Knight
-                                && tile.land == .Meadow
-                                && tile.structure != .Road {
-                        tile.land = .Grass
-                    }
-                }
-
-                // Update destination tile.
-                if to.structure? == Constants.Types.Structure.Tombstone {
-                    to.structure = nil
-                }
-                if to.land == .Tree {
-                    to.land = .Grass
-                    village.wood += 1
-                }
-
-                // Execute if tile is outside controlled region
-                if !contains(village.controlledTiles, {$0 === to}) {
                     if enemyPlayer == nil {
                         // TakeOver neutral tile
                         village.addTile(to)
@@ -215,6 +194,12 @@ class GameEngine {
                             }
                         }
                     } else {
+                        // Peasant and infantry cannot invade a village
+                        // Soldiers cannot invade a fort.
+                        if to.village != nil && from.unit?.type.rawValue < 3
+                                    || from.unit?.type.rawValue == 3 && to.village?.type.rawValue == 3 { return }
+
+
                         // Invade enemy tile
                         village.addTile(to)
                         enemyVillage?.removeTile(to)
@@ -271,6 +256,25 @@ class GameEngine {
                     }
                 }
 
+                // Update tiles in path
+                path.append(to)
+                for tile in path {
+                    if (from.unit?.type == Constants.Types.Unit.Knight || from.unit?.type == Constants.Types.Unit.Soldier)
+                        && tile.land == .Meadow
+                        && tile.structure != .Road {
+                            tile.land = .Grass
+                    }
+                }
+
+                // Update destination tile.
+                if to.structure? == Constants.Types.Structure.Tombstone {
+                    to.structure = nil
+                }
+                if to.land == .Tree {
+                    to.land = .Grass
+                    village.wood += 1
+                }
+
                 // Move the unit
                 from.unit?.currentAction = Constants.Unit.Action.Moved
                 to.unit = from.unit
@@ -310,6 +314,11 @@ class GameEngine {
     func recruitUnit(village: Village, type: Constants.Types.Unit, tile: Tile) {
         if !contains(self.currentPlayer.villages, {$0 === village}) { return }
 
+        // Hovel can only recruit peasants and infantry (rawVaue: 1 & 2)
+        // Town can also recruit soldiers (rawValue: 3)
+        // Fort can also recruit knight (rawValue: 4)
+        if type.rawValue > village.type.rawValue + 1 { return }
+
         let cost = type.rawValue * Constants.Cost.Upgrade.Unit.rawValue
         if village.gold < cost || !tile.isWalkable() { return }
 
@@ -321,6 +330,8 @@ class GameEngine {
     }
 
     func buildTower(village: Village, on: Tile) {
+        // Hovels cannot build Towers.
+        if village.type == .Hovel { return }
         if !contains(self.currentPlayer.villages, {$0 === village}) { return }
 
         let tower = Constants.Types.Structure.Tower
