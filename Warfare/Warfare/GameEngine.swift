@@ -342,7 +342,24 @@ class GameEngine {
         }
     }
 
-    func startCultivating(on: Tile) {
+    func startCultivating(on: Tile, from: Tile) {
+        for village in self.currentPlayer.villages {
+            // Check tiles are both in the same region and connected
+            let path = self.map.getPath(from: from, to: on, accessible: village.controlledTiles)
+            if path.isEmpty { return }
 
+            let cost = Constants.Types.Land.Meadow.cost()
+            if village.wood < cost
+                        || !on.isBuildable()
+                        || from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders
+                        || from.unit?.type != Constants.Types.Unit.Peasant{ return }
+
+            village.wood -= cost
+            on.unit = from.unit
+            from.unit = nil
+            on.unit?.currentAction = Constants.Unit.Action.StartCultivating
+
+            return
+        }
     }
 }

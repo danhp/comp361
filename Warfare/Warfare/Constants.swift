@@ -33,6 +33,13 @@ struct Constants {
                 }
             }
 
+            func cost() -> Int {
+                switch self {
+                case .Meadow:
+                    return 5
+                }
+            }
+
             static func random() -> Land {
                 switch arc4random_uniform(14) {
                 case 0...2:
