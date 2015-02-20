@@ -37,6 +37,8 @@ struct Constants {
                 switch self {
                 case .Meadow:
                     return 5
+                default:
+                    return 0
                 }
             }
 
