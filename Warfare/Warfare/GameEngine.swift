@@ -297,6 +297,16 @@ class GameEngine {
         }
     }
 
+    func combineUnit(tileA: Tile, tileB: Tile) {
+        for village in self.currentPlayer.villages {
+            if contains(village.controlledTiles, {$0 === tileA}) { return }
+            if contains(village.controlledTiles, {$0 === tileB}) { return }
+
+            tileA.unit?.combine(tileB.unit!)
+            tileB.unit = nil
+        }
+    }
+
     func recruitUnit(village: Village, type: Constants.Types.Unit, tile: Tile) {
         if !contains(self.currentPlayer.villages, {$0 === village}) { return }
 
@@ -325,7 +335,7 @@ class GameEngine {
         for village in self.currentPlayer.villages {
             // Check tiles are both in the same region and connected
             let path = self.map.getPath(from: from, to: on, accessible: village.controlledTiles)
-            if path.isEmpty { return }
+            if path.isEmpty { continue }
 
             let road = Constants.Types.Structure.Road
             if village.wood < road.cost()
@@ -346,7 +356,7 @@ class GameEngine {
         for village in self.currentPlayer.villages {
             // Check tiles are both in the same region and connected
             let path = self.map.getPath(from: from, to: on, accessible: village.controlledTiles)
-            if path.isEmpty { return }
+            if path.isEmpty { continue }
 
             let cost = Constants.Types.Land.Meadow.cost()
             if village.wood < cost
