@@ -33,4 +33,9 @@ class Unit {
         self.type = Constants.Types.Unit(rawValue: dict["type"] as Int)!
         self.currentAction = Constants.Unit.Action(rawValue: dict["currentAction"] as Int)!
     }
+
+    func combine(with: Unit) {
+        let newLevel = min(self.type.rawValue + with.type.rawValue, 4)
+        self.type = Constants.Types.Unit(rawValue: newLevel)!
+    }
 }

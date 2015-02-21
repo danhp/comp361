@@ -67,7 +67,7 @@ class gameEngine: XCTestCase {
 
         var village2 = Village()
         village2.wood = 30
-        village2.upgradeVillage(Constants.Types.Village.Town)
+        village2.upgradeVillage()
         village2.addTile(tiles[1, 0]!)
         village2.addTile(tiles[1, 1]!)
         village2.addTile(tiles[0, 2]!)
@@ -76,8 +76,8 @@ class gameEngine: XCTestCase {
 
         var village3 = Village()
         village3.wood = 30
-        village3.upgradeVillage(Constants.Types.Village.Town)
-        village3.upgradeVillage(Constants.Types.Village.Fort)
+        village3.upgradeVillage()
+        village3.upgradeVillage()
         village3.addTile(tiles[3, 0]!)
         village3.addTile(tiles[4, 0]!)
         village3.addTile(tiles[5, 0]!)
@@ -90,6 +90,7 @@ class gameEngine: XCTestCase {
         XCTAssertEqual(village2.wood, 22)
         XCTAssertEqual(village3.wood, 14)
         XCTAssertEqual(ge.currentPlayer.villages.count, 3)
+        XCTAssertNotEqual(unit.type, Constants.Types.Unit.Knight)
         ge.moveUnit(tiles[2, 2]!, to: tiles[2, 1]!)
         XCTAssertTrue(contains(village2.controlledTiles, {$0 === tiles[2, 1]}))
         XCTAssertEqual(village3.wood, 37)
