@@ -90,6 +90,7 @@ class gameEngine: XCTestCase {
         XCTAssertEqual(village2.wood, 22)
         XCTAssertEqual(village3.wood, 14)
         XCTAssertEqual(ge.currentPlayer.villages.count, 3)
+        XCTAssertNotEqual(unit.type, Constants.Types.Unit.Knight)
         ge.moveUnit(tiles[2, 2]!, to: tiles[2, 1]!)
         XCTAssertTrue(contains(village2.controlledTiles, {$0 === tiles[2, 1]}))
         XCTAssertEqual(village3.wood, 37)

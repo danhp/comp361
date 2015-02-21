@@ -143,8 +143,16 @@ class GameEngine {
                     //Check if tile in unprotected
                     if to.isProtected(from.unit!) { return }
                     for n in map.neighbors(tile: to) {
-                        // TODO: Fix check belongs to player.
-                        if n.isProtected(from.unit!) && !contains(village.controlledTiles, { $0 === n }) { return }
+                        // TODO: hackish temp fix
+                        var a: Bool = false
+                        for v in self.currentPlayer.villages {
+                            if contains(v.controlledTiles, {$0 === n}) {
+                                a = true
+                                break
+                            }
+                        }
+
+                        if !a && n.isProtected(from.unit!) { return }
                     }
 
                     // Find player and village for to tile.
@@ -260,9 +268,9 @@ class GameEngine {
                 path.append(to)
                 for tile in path {
                     if (from.unit?.type == Constants.Types.Unit.Knight || from.unit?.type == Constants.Types.Unit.Soldier)
-                        && tile.land == .Meadow
-                        && tile.structure != .Road {
-                            tile.land = .Grass
+                                && tile.land == .Meadow
+                                && tile.structure != .Road {
+                        tile.land = .Grass
                     }
                 }
 
