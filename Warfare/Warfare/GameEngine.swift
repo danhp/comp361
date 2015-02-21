@@ -74,18 +74,25 @@ class GameEngine {
 
     // MARK: - Operations
 
+    // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
-
         for village in currentPlayer.villages {
             for tile in village.controlledTiles {
 
                 // Replace tombstones
                 tile.replaceTombstone()
 
-                // Produce constructions
-                if tile.makeRoadOrMeadow() {
-                    // Add a new meadow
-                    // TODO
+                // Produce constructions and set unit actions.
+                // ReadyForOrders for all except first phase cultivation
+                if tile.unit?.currentAction == Constants.Unit.Action.StartCultivating {
+                    tile.unit?.currentAction = Constants.Unit.Action.FinishCultivating
+                } else {
+                    if tile.unit?.currentAction == Constants.Unit.Action.FinishCultivating {
+                        tile.land = .Meadow
+                    } else if tile.unit?.currentAction == Constants.Unit.Action.BuildingRoad {
+                        tile.structure = .Road
+                    }
+                    tile.unit?.currentAction = Constants.Unit.Action.ReadyForOrders
                 }
 
                 // Add gold value to village.
@@ -349,6 +356,7 @@ class GameEngine {
         on.structure = tower
     }
 
+    // Moves unit from -> on, instruct unit to start building road.
     func buildRoad(on: Tile, from: Tile) {
         // TODO: Change with implementation of tile (loop)
         for village in self.currentPlayer.villages {
@@ -371,6 +379,7 @@ class GameEngine {
         }
     }
 
+    // Moves unit from -> on, instruct unit to start creating meadow for 2 turns
     func startCultivating(on: Tile, from: Tile) {
         for village in self.currentPlayer.villages {
             // Check tiles are both in the same region and connected
