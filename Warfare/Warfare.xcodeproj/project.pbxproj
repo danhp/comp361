@@ -13,6 +13,7 @@
 		131D32491A86A7A50073310B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D32481A86A7A50073310B /* Player.swift */; };
 		131D324A1A86A7A50073310B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D32481A86A7A50073310B /* Player.swift */; };
 		132A65AB1A8EAAD300D588B2 /* 1.json in Resources */ = {isa = PBXBuildFile; fileRef = 132A65AA1A8EAAD300D588B2 /* 1.json */; };
+		13390A8E1A9692CC005949A1 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13390A8D1A9692CC005949A1 /* GameKit.framework */; };
 		135DC1421A783D7E00474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		135DC1431A7849A800474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		1371013A1A701096009B807C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137101391A701096009B807C /* AppDelegate.swift */; };
@@ -56,6 +57,7 @@
 		130B0CF51A924901007A20EB /* MatchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MatchHelper.swift; path = Warfare/MatchHelper.swift; sourceTree = SOURCE_ROOT; };
 		131D32481A86A7A50073310B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = Warfare/Player.swift; sourceTree = SOURCE_ROOT; };
 		132A65AA1A8EAAD300D588B2 /* 1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 1.json; path = Warfare/1.json; sourceTree = SOURCE_ROOT; };
+		13390A8D1A9692CC005949A1 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		135DC1411A783D7E00474073 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = Warfare/Utilities.swift; sourceTree = SOURCE_ROOT; };
 		137101341A701096009B807C /* warfare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = warfare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		137101381A701096009B807C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13390A8E1A9692CC005949A1 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +114,7 @@
 		1371012B1A701096009B807C = {
 			isa = PBXGroup;
 			children = (
+				13390A8D1A9692CC005949A1 /* GameKit.framework */,
 				137101361A701096009B807C /* warfare */,
 				137101501A701096009B807C /* warfareTests */,
 				137101351A701096009B807C /* Products */,
@@ -134,7 +138,6 @@
 				135DC1411A783D7E00474073 /* Utilities.swift */,
 				1371015F1A701411009B807C /* Tile.swift */,
 				137101611A701B80009B807C /* Map.swift */,
-				130B0CF51A924901007A20EB /* MatchHelper.swift */,
 				131D32481A86A7A50073310B /* Player.swift */,
 				522708551A72F56B009ED4DA /* Village.swift */,
 				522708531A72F148009ED4DA /* Unit.swift */,
@@ -144,6 +147,7 @@
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
 				1371013F1A701096009B807C /* GameViewController.swift */,
+				130B0CF51A924901007A20EB /* MatchHelper.swift */,
 				132A65A91A8EAAC200D588B2 /* Maps */,
 				137101411A701096009B807C /* Main.storyboard */,
 				137101441A701096009B807C /* Images.xcassets */,
@@ -231,6 +235,11 @@
 					137101331A701096009B807C = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 5655YQE5M4;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
 					};
 					1371014C1A701096009B807C = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -434,9 +443,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = warfare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -446,9 +457,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = warfare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

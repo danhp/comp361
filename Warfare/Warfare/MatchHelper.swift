@@ -11,7 +11,7 @@ import GameKit
 
 private var sharedHelper: MatchHelper?
 
-class MatchHelper {
+class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate {
     var gameCenterAvailable: Bool {
         // Check for presence of GKLocalPlayer API
         let gClass: AnyClass? = NSClassFromString("GKLocalPlayer")
@@ -21,10 +21,14 @@ class MatchHelper {
     }
     var userAuthenticated = false
     
-    init() {
+    var vc: GameViewController?
+    
+    override init() {
+        super.init()
+        
         if self.gameCenterAvailable {
             let nc = NSNotificationCenter.defaultCenter()
-            nc.addObserver(self, selector: "authenticationChanged", name:GKPlayerAuthenticationDidChangeNotificationName, object: nil)
+            nc.addObserver(self, selector: Selector("authenticationChanged"), name:GKPlayerAuthenticationDidChangeNotificationName, object: nil)
         }
         
     }
@@ -37,6 +41,8 @@ class MatchHelper {
         return sharedHelper!
     }
     
+    // MARK: - Authentication
+    
     func authenticateLocalUser() {
         if !gameCenterAvailable { return }
         
@@ -44,9 +50,10 @@ class MatchHelper {
             var localPlayer = GKLocalPlayer.localPlayer()
             localPlayer.authenticateHandler = {(viewController : UIViewController!, error : NSError!) -> Void in
                 if ((viewController) != nil) {
-//                    self.presentViewController(viewController, animated: true, completion: nil)
+                    self.vc?.presentViewController(viewController, animated: true, completion: nil)
                 }else{
                     println((GKLocalPlayer.localPlayer().authenticated))
+                    self.userAuthenticated = true
                 }
             }
         }
@@ -60,4 +67,38 @@ class MatchHelper {
         }
     }
     
+    // MARK: - GKMatch
+    
+    func joinMatch() {
+        if self.userAuthenticated {
+            println("Joining match")
+
+            // Create match request
+            let request = GKMatchRequest()
+            request.minPlayers = 3
+            request.maxPlayers = 3
+            request.defaultNumberOfPlayers = 3
+            
+            let mmvc = GKTurnBasedMatchmakerViewController(matchRequest: request)
+            mmvc.turnBasedMatchmakerDelegate = self
+            self.vc?.presentViewController(mmvc, animated: true, completion: nil)
+        }
+    }
+    
+    func turnBasedMatchmakerViewControllerWasCancelled(controller: GKTurnBasedMatchmakerViewController!) {
+        self.vc?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, didFindMatch match: GKTurnBasedMatch!) {
+        self.vc?.dismissViewControllerAnimated(true, completion: nil)
+        self.vc?.showGamePlayScene()
+    }
+    
+    func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, playerQuitForMatch match: GKTurnBasedMatch!) {
+        
+    }
+    
+    func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, didFailWithError: NSError!) {
+        self.vc?.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

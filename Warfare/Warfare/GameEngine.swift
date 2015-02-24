@@ -15,13 +15,6 @@ class GameEngine {
     // MARK: - Initializers
     
     init() {
-        // Create match request
-        let request = GKMatchRequest()
-        request.minPlayers = 3
-        request.maxPlayers = 3
-        request.defaultNumberOfPlayers = 3
-        
-        let mmvc = GKTurnBasedMatchmakerViewController(matchRequest: request)
     }
     
     init(firstPlayer: Int, players: [Player]) {

@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import GameKit
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
@@ -29,7 +30,19 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Set MatchHelper's view controller
+        MatchHelper.sharedInstance().vc = self
+        
+        self.showGamePlayScene()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: MatchHelper.sharedInstance(), selector: Selector("joinMatch"), userInfo: nil, repeats: false)
+    }
+    
+    func showGamePlayScene() {
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
             let skView = self.view as SKView
@@ -46,7 +59,7 @@ class GameViewController: UIViewController {
             skView.presentScene(scene)
         }
     }
-
+    
     override func shouldAutorotate() -> Bool {
         return true
     }
