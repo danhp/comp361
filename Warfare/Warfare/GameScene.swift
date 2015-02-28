@@ -44,4 +44,34 @@ class GameScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
+    
+    func setupHud() {
+        
+        //create gold label
+        let goldLabel = SKLabelNode(fontNamed: "Courier")
+        goldLabel.name = kGoldHudName
+        goldLabel.fontSize = 25
+        
+        goldLabel.fontColor = SKColor.blackColor()
+        goldLabel.text = NSString(format: "Gold: %04u", 0)
+        
+        println(size.height)
+        goldLabel.position = CGPoint(x: frame.size.width / 2, y: size.height - (40 + goldLabel.frame.size.height/2))
+        addChild(goldLabel)
+        
+        //create wood label
+        let woodLabel = SKLabelNode(fontNamed: "Courier")
+        woodLabel.name = kWoodHudName
+        woodLabel.fontSize   = 25
+        
+        woodLabel.fontColor = SKColor.redColor()
+        woodLabel.text = NSString(format: "Wood: %.1f%%", 100.0)
+        
+        woodLabel.position = CGPoint(x: frame.size.width / 2, y:size.height - (80 + woodLabel.frame.size.height/2))
+        addChild(woodLabel)
+        
+    }
+    
+    let kGoldHudName = "Gold"
+    let kWoodHudName = "Wood"
 }
