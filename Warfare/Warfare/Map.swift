@@ -120,9 +120,9 @@ class Map: SKNode {
 				let tile = tiles[coord.x, coord.y]!
 				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
 
-				let s:String = coord.x.description + "," + coord.y.description
-				let label = SKLabelNode(text: s)
-				tile.addChild(label)
+//				let s:String = coord.x.description + "," + coord.y.description
+//				let label = SKLabelNode(text: s)
+//				tile.addChild(label)
 				self.scroller.addChild(tile)
 			}
 		}

@@ -37,11 +37,6 @@ class GameViewController: UIViewController {
         self.showGamePlayScene()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        var timer = NSTimer.scheduledTimerWithTimeInterval(2, target: MatchHelper.sharedInstance(), selector: Selector("joinMatch"), userInfo: nil, repeats: false)
-    }
-    
     func showGamePlayScene() {
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.

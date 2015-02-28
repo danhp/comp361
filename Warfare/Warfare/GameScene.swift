@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Justin Domingue. All rights reserved.
 //
 
+import UIKit
 import SpriteKit
 
 class GameScene: SKScene {
@@ -18,6 +19,10 @@ class GameScene: SKScene {
         GameEngine.Instance.map.draw()
         self.map = GameEngine.Instance.map
 		self.addChild(GameEngine.Instance.map)
+        
+        let n = SKLabelNode(text: "Join Match!")
+        n.position = CGPointMake(-200, 0)
+        self.addChild(n)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -28,6 +33,8 @@ class GameScene: SKScene {
         
         if let touchedNode = nodeAtPoint(touchLocation) as? Tile {
             self.map?.selected = touchedNode
+        } else if let touchedNode = nodeAtPoint(touchLocation) as? SKLabelNode {
+            MatchHelper.sharedInstance().joinMatch()
         }
     }
 	

@@ -30,26 +30,51 @@ class GameEngine {
         var e: NSError?
         if let path = NSBundle.mainBundle().pathForResource(number, ofType: "json") {
             if let json = NSString(contentsOfFile:path, encoding:NSUTF8StringEncoding, error:&e) {
-                let data = (json as NSString).dataUsingEncoding(NSUTF8StringEncoding)
-                var parseError: NSError?
-                let parsedObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: &parseError)
-                
-                if let top = parsedObject as? NSDictionary {
-                    
-                    // PLAYERS
-                    if let players = top["players"] as? NSArray {
-                        for p in players {
-                            self.players.append(Player(dict: p as NSDictionary))
-                        }
-                    }
-                    
-                    // NEUTRAL TILES
-                    if let neutral = top["neutral"] as? NSArray {
-                        for t in neutral {  // t is an NSDictionary
-                            let t = Tile(dict: t as NSDictionary, village: nil)
-//                            self.map.setTile(at: t.coordinates, to: t)
-                        }
-                    }
+                if let data = (json as NSString).dataUsingEncoding(NSUTF8StringEncoding) {
+                    self.deserialize(data)
+                }
+            }
+        }
+    }
+    
+    func decode(matchData: NSData) {
+        self.deserialize(matchData)
+    }
+    
+    func encodeMatchData() -> NSData {
+        let dict = GameEngine.Instance.serialize()
+        let matchData = NSJSONSerialization.dataWithJSONObject(dict, options: nil, error: nil)
+        return matchData!
+    }
+    
+    func encodePlayerOrder() -> NSArray {
+        // TODO
+        return [0,1,2]
+    }
+    
+    func matchTurnMessage() -> String {
+        // TODO
+        return ""
+    }
+    
+    func deserialize(data: NSData) {
+        var parseError: NSError?
+        let parsedObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parseError)
+        
+        if let top = parsedObject as? NSDictionary {
+            
+            // PLAYERS
+            if let players = top["players"] as? NSArray {
+                for p in players {
+                    self.players.append(Player(dict: p as NSDictionary))
+                }
+            }
+            
+            // NEUTRAL TILES
+            if let neutral = top["neutral"] as? NSArray {
+                for t in neutral {  // t is an NSDictionary
+                    let t = Tile(dict: t as NSDictionary, village: nil)
+                    //                            self.map.setTile(at: t.coordinates, to: t)
                 }
             }
         }
