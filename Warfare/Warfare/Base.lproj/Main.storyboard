@@ -15,11 +15,42 @@
                     <view key="view" contentMode="scaleToFill" id="bdc-N1-crn" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="bottom" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="MOD-Nf-7Hs">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="Menu" id="rCH-Kg-Xcf"/>
+                                    <barButtonItem title="Info" id="et7-Fj-wl1"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="RY6-dZ-g6z"/>
+                                    <barButtonItem title="Move" id="DnP-xL-XJG"/>
+                                    <barButtonItem title="Build" id="FOt-5m-LFk"/>
+                                    <barButtonItem title="Upgrade" id="4WM-Dr-20Z"/>
+                                    <barButtonItem title="Combine" id="YBW-OR-u0Q"/>
+                                    <barButtonItem title="Skip" id="hTB-Og-xl3"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="MOD-Nf-7Hs" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leading" id="JDT-tN-Ce2"/>
+                            <constraint firstAttribute="trailing" secondItem="MOD-Nf-7Hs" secondAttribute="trailing" id="lhs-aX-5p3"/>
+                            <constraint firstItem="MOD-Nf-7Hs" firstAttribute="bottom" secondItem="b3d-qh-BLL" secondAttribute="top" id="sNa-0t-ySj"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="GameToolbar" destination="MOD-Nf-7Hs" id="47i-LG-dNs"/>
+                        <outlet property="InfoButton" destination="et7-Fj-wl1" id="H37-R1-ljk"/>
+                        <outlet property="Menubutton" destination="rCH-Kg-Xcf" id="7Do-ab-ale"/>
+                        <outlet property="MoveButton" destination="DnP-xL-XJG" id="EiD-0o-H4W"/>
+                        <outlet property="buildButton" destination="FOt-5m-LFk" id="7de-rS-Ih6"/>
+                        <outlet property="combineButton" destination="YBW-OR-u0Q" id="s9O-x4-VfX"/>
+                        <outlet property="skipButton" destination="hTB-Og-xl3" id="nJf-BE-KsD"/>
+                        <outlet property="upgradeButton" destination="4WM-Dr-20Z" id="0gG-mc-Ur7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="596" y="1087"/>
         </scene>
     </scenes>
 </document>

@@ -18,6 +18,8 @@ class GameScene: SKScene {
         GameEngine.Instance.map.draw()
         self.map = GameEngine.Instance.map
 		self.addChild(GameEngine.Instance.map)
+        
+        setupHud()
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -53,10 +55,11 @@ class GameScene: SKScene {
         goldLabel.fontSize = 25
         
         goldLabel.fontColor = SKColor.blackColor()
-        goldLabel.text = NSString(format: "Gold: %04u", 0)
+        goldLabel.text = NSString(format: "Gold: %03u", 0)
         
         println(size.height)
-        goldLabel.position = CGPoint(x: frame.size.width / 2, y: size.height - (40 + goldLabel.frame.size.height/2))
+        //Note need to position relative and scalable - not hard coded
+        goldLabel.position = CGPoint(x: -430, y: 250 )
         addChild(goldLabel)
         
         //create wood label
@@ -65,10 +68,15 @@ class GameScene: SKScene {
         woodLabel.fontSize   = 25
         
         woodLabel.fontColor = SKColor.redColor()
-        woodLabel.text = NSString(format: "Wood: %.1f%%", 100.0)
+        //Note need to poisiton relative and scalable - not hard coded
+        woodLabel.text = NSString(format: "Wood: %03u", 100.0)
         
-        woodLabel.position = CGPoint(x: frame.size.width / 2, y:size.height - (80 + woodLabel.frame.size.height/2))
+        woodLabel.position = CGPoint(x: -250, y: 250)
         addChild(woodLabel)
+        
+        
+        
+        
         
     }
     

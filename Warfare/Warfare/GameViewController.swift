@@ -27,6 +27,16 @@ extension SKNode {
 
 class GameViewController: UIViewController {
 
+    
+    @IBOutlet weak var gameToolbar: UIToolbar!
+    @IBOutlet weak var menubutton: UIBarButtonItem!
+    @IBOutlet weak var infoButton: UIBarButtonItem!
+    @IBOutlet weak var moveButton: UIBarButtonItem!
+    @IBOutlet weak var buildButton: UIBarButtonItem!
+    @IBOutlet weak var upgradeButton: UIBarButtonItem!
+    @IBOutlet weak var combineButton: UIBarButtonItem!
+    @IBOutlet weak var skipButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
