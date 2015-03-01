@@ -29,13 +29,34 @@ class GameViewController: UIViewController {
 
     
     @IBOutlet weak var gameToolbar: UIToolbar!
-    @IBOutlet weak var menubutton: UIBarButtonItem!
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var infoButton: UIBarButtonItem!
     @IBOutlet weak var moveButton: UIBarButtonItem!
     @IBOutlet weak var buildButton: UIBarButtonItem!
     @IBOutlet weak var upgradeButton: UIBarButtonItem!
     @IBOutlet weak var combineButton: UIBarButtonItem!
     @IBOutlet weak var skipButton: UIBarButtonItem!
+    
+    @IBAction func menuButtonTapped(sender: AnyObject) {
+    }
+ 
+    @IBAction func infoButtonTapped(sender: AnyObject) {
+    }
+    
+    @IBAction func moveButtonTapped(sender: AnyObject) {
+    }
+    
+    @IBAction func buildButtonTapped(sender: AnyObject) {
+    }
+    
+    @IBAction func upgradeButtonTapped(sender: AnyObject) {
+    }
+    
+    @IBAction func combineButtonTapped(sender: AnyObject) {
+    }
+    
+    @IBAction func skipButtonTapped(sender: AnyObject) {
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

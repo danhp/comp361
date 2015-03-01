@@ -19,14 +19,42 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="bottom" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="MOD-Nf-7Hs">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem title="Menu" id="rCH-Kg-Xcf"/>
-                                    <barButtonItem title="Info" id="et7-Fj-wl1"/>
+                                    <barButtonItem title="Menu" id="rCH-Kg-Xcf">
+                                        <connections>
+                                            <action selector="menuButtonTapped:" destination="LVB-YS-i5n" id="iC4-zn-WxQ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Info" id="et7-Fj-wl1">
+                                        <connections>
+                                            <action selector="infoButtonTapped:" destination="LVB-YS-i5n" id="8O1-hF-F8H"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="RY6-dZ-g6z"/>
-                                    <barButtonItem title="Move" id="DnP-xL-XJG"/>
-                                    <barButtonItem title="Build" id="FOt-5m-LFk"/>
-                                    <barButtonItem title="Upgrade" id="4WM-Dr-20Z"/>
-                                    <barButtonItem title="Combine" id="YBW-OR-u0Q"/>
-                                    <barButtonItem title="Skip" id="hTB-Og-xl3"/>
+                                    <barButtonItem title="Move" id="DnP-xL-XJG">
+                                        <connections>
+                                            <action selector="moveButtonTapped:" destination="LVB-YS-i5n" id="ivc-DF-Ghj"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Build" id="FOt-5m-LFk">
+                                        <connections>
+                                            <action selector="buildButtonTapped:" destination="LVB-YS-i5n" id="L4s-Fh-a4N"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Upgrade" id="4WM-Dr-20Z">
+                                        <connections>
+                                            <action selector="upgradeButtonTapped:" destination="LVB-YS-i5n" id="Nyi-un-exl"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Combine" id="YBW-OR-u0Q">
+                                        <connections>
+                                            <action selector="combineButtonTapped:" destination="LVB-YS-i5n" id="fr4-mP-qkz"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Skip" id="hTB-Og-xl3">
+                                        <connections>
+                                            <action selector="skipButtonTapped:" destination="LVB-YS-i5n" id="ROe-Zo-mlu"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
