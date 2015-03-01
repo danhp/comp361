@@ -66,14 +66,13 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="GameToolbar" destination="MOD-Nf-7Hs" id="47i-LG-dNs"/>
-                        <outlet property="InfoButton" destination="et7-Fj-wl1" id="H37-R1-ljk"/>
-                        <outlet property="Menubutton" destination="rCH-Kg-Xcf" id="7Do-ab-ale"/>
-                        <outlet property="MoveButton" destination="DnP-xL-XJG" id="EiD-0o-H4W"/>
-                        <outlet property="buildButton" destination="FOt-5m-LFk" id="7de-rS-Ih6"/>
-                        <outlet property="combineButton" destination="YBW-OR-u0Q" id="s9O-x4-VfX"/>
-                        <outlet property="skipButton" destination="hTB-Og-xl3" id="nJf-BE-KsD"/>
-                        <outlet property="upgradeButton" destination="4WM-Dr-20Z" id="0gG-mc-Ur7"/>
+                        <outlet property="buildButton" destination="FOt-5m-LFk" id="oS1-h1-H5C"/>
+                        <outlet property="combineButton" destination="YBW-OR-u0Q" id="qB4-8K-JIf"/>
+                        <outlet property="infoButton" destination="et7-Fj-wl1" id="cnW-CK-HvL"/>
+                        <outlet property="menuButton" destination="rCH-Kg-Xcf" id="0L3-iT-Fro"/>
+                        <outlet property="moveButton" destination="DnP-xL-XJG" id="qfn-ve-52f"/>
+                        <outlet property="skipButton" destination="hTB-Og-xl3" id="aVN-Qh-7h2"/>
+                        <outlet property="upgradeButton" destination="4WM-Dr-20Z" id="SMy-hU-5bw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
