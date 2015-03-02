@@ -11,7 +11,7 @@ import GameKit
 
 private var sharedHelper: MatchHelper?
 
-class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKTurnBasedEventListener {
+class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLocalPlayerListener {
     var gameCenterAvailable: Bool {
         // Check for presence of GKLocalPlayer API
         let gClass: AnyClass? = NSClassFromString("GKLocalPlayer")
@@ -63,6 +63,8 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKTurn
     func authenticationChanged() {
         if GKLocalPlayer.localPlayer().authenticated && !self.userAuthenticated {
             self.userAuthenticated = true
+            GKLocalPlayer.localPlayer().unregisterAllListeners()
+            GKLocalPlayer.localPlayer().registerListener(self)
         } else if !GKLocalPlayer.localPlayer().authenticated && self.userAuthenticated {
             self.userAuthenticated = false
         }
@@ -88,8 +90,14 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKTurn
     
     func loadMatchData() {
         self.myMatch?.loadMatchDataWithCompletionHandler({ (matchData: NSData!, error: NSError!) -> Void in
-            // Decode match data
-            GameEngine.Instance.decode(matchData)
+            
+            // If match data has length of 0, the game is *new*, else, decode it
+            if matchData.length > 0 {
+                GameEngine.Instance.decode(matchData)
+            } else {
+                GameEngine.Instance.newGame()
+                self.updateMatchData()
+            }
         })
     }
     
@@ -111,10 +119,11 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKTurn
     // the match or requires another participant to act
     //
     func advanceTurn() {
-        let updatedMatchData = GameEngine.Instance.encodeMatchData()
-        let sortedPlayerOrder = GameEngine.Instance.encodePlayerOrder()
+        let allData = GameEngine.Instance.encodeAll()
         
-        self.myMatch?.message = GameEngine.Instance.matchTurnMessage()
+        let updatedMatchData = allData.0
+        let sortedPlayerOrder = allData.1
+        self.myMatch?.message = allData.2
         
         self.myMatch?.endTurnWithNextParticipants(sortedPlayerOrder, turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
             if ((error) != nil) {
@@ -144,12 +153,16 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKTurn
     
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, didFindMatch match: GKTurnBasedMatch!) {
         self.myMatch = match
+        self.loadMatchData()
         self.vc?.dismissViewControllerAnimated(true, completion: nil)
         self.vc?.showGamePlayScene()
     }
     
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, playerQuitForMatch match: GKTurnBasedMatch!) {
+        // Create array for next participants
+//        let nextParticipants = self.myMatch?.participants.filter( {$0.player.playerID === GKLocalPlayer.localPlayer().playerID })
         
+//        self.myMatch?.participantQuitInTurnWithOutcome(.Quit, nextParticipants: <#[AnyObject]!#>, turnTimeout: <#NSTimeInterval#>, matchData: <#NSData!#>, completionHandler: <#((NSError!) -> Void)!##(NSError!) -> Void#>)
     }
     
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, didFailWithError: NSError!) {

@@ -51,8 +51,8 @@ class Tile: SKShapeNode {
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
         
-        if let id = self.village?.player?.id {
-            self.strokeColor = Utilities.Colors.colorForPlayer(id)
+        if let turn = self.village?.player?.turn {
+            self.strokeColor = Utilities.Colors.colorForPlayer(turn)
         } else {
             self.strokeColor = Utilities.Colors.colorForPlayer(-1)
         }
@@ -138,7 +138,7 @@ class Tile: SKShapeNode {
         }
         
         // Add tile to Map
-        GameEngine.Instance.map.setTile(at:self.coordinates, to: self)
+//        GameEngine.Instance.map.setTile(at:self.coordinates, to: self)
     }
     
     // MARK - Drawing

@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import GameKit
 
 class Player {
-    var id: Int?
+    var id: String!
+    let turn: Int = -1
     
     var villages = [Village]()
     var gold: Int { return self.villages.reduce(0) {$0 + $1.gold} }
@@ -17,7 +19,8 @@ class Player {
     
     init() {}
     
-    init(dict: NSDictionary) {
+    init(dict: NSDictionary, turn: Int) {
+        self.turn = turn
         self.deserialize(dict)
     }
     
@@ -45,7 +48,7 @@ class Player {
     }
     
     func deserialize(dict: NSDictionary) {
-        self.id = dict["id"] as? Int
+        self.id = dict["id"] as? String ?? "nil"
         
         // VILLAGES
         if let villages = dict["villages"] as? NSArray {

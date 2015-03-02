@@ -15,10 +15,10 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
 		self.anchorPoint = CGPointMake(0.5, 0.5)
 
-        GameEngine.Instance.loadMap(number: "1")
-        GameEngine.Instance.map.draw()
         self.map = GameEngine.Instance.map
-		self.addChild(GameEngine.Instance.map)
+        if let m = self.map {
+            self.addChild(m)
+        }
         
         let n = SKLabelNode(text: "Join Match!")
         n.position = CGPointMake(-200, 0)
