@@ -30,29 +30,34 @@ class GameViewController: UIViewController {
     
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var skipButton: UIBarButtonItem!
-    
     @IBOutlet weak var combineButton: UIBarButtonItem!
     @IBOutlet weak var upgradeButton: UIBarButtonItem!
     @IBOutlet weak var buildButton: UIBarButtonItem!
     @IBOutlet weak var moveButton: UIBarButtonItem!
     @IBOutlet weak var infoButton: UIBarButtonItem!
+    
     @IBAction func menuButtonTapped(sender: AnyObject) {
+        
     }
  
     @IBAction func infoButtonTapped(sender: AnyObject) {
     }
     
     @IBAction func moveButtonTapped(sender: AnyObject) {
+//        GameEngine.Instance.moveUnit( ... )
     }
     
     @IBAction func buildButtonTapped(sender: AnyObject) {
     }
     
     @IBAction func upgradeButtonTapped(sender: AnyObject) {
+//        GameEngine.Instance.upgradeUnit(<#unit: Unit#>, newLevel: <#Constants.Types.Unit#>)
     }
     
     @IBAction func combineButtonTapped(sender: AnyObject) {
+//        GameEngine.Instance.combineUnit(<#tileA: Tile#>, tileB: <#Tile#>)
     }
+
     
     @IBAction func skipButtonTapped(sender: AnyObject) {
     }

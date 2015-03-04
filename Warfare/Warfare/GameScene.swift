@@ -74,10 +74,6 @@ class GameScene: SKScene {
         woodLabel.position = CGPoint(x: -250, y: 250)
         addChild(woodLabel)
         
-        
-        
-        
-        
     }
     
     let kGoldHudName = "Gold"
