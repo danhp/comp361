@@ -30,6 +30,9 @@
                                 <state key="normal" title="Continue Match">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="LVB-YS-i5n" kind="show" id="1Yc-TX-Vhd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a2d-vb-Lfd">
                                 <rect key="frame" x="253" y="301" width="54" height="30"/>
@@ -121,4 +124,7 @@
             <point key="canvasLocation" x="596" y="1087"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="2qW-CA-MxX"/>
+    </inferredMetricsTieBreakers>
 </document>
