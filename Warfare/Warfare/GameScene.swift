@@ -31,6 +31,7 @@ class GameScene: SKScene {
         if let touchedNode = nodeAtPoint(touchLocation) as? Tile {
             self.map?.selected = touchedNode
         }
+        
     }
 	
 	override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
@@ -55,7 +56,7 @@ class GameScene: SKScene {
         goldLabel.fontSize = 25
         
         goldLabel.fontColor = SKColor.blackColor()
-        goldLabel.text = NSString(format: "Gold: %03u", 0)
+        goldLabel.text = "Gold: " + String(GameEngine.Instance.currentPlayer.gold)
         
         println(size.height)
         //Note need to position relative and scalable - not hard coded
@@ -69,9 +70,10 @@ class GameScene: SKScene {
         
         woodLabel.fontColor = SKColor.redColor()
         //Note need to poisiton relative and scalable - not hard coded
-        woodLabel.text = NSString(format: "Wood: %03u", 100.0)
+        woodLabel.text = NSString(format: "Wood: %02u", 100.0)
         
         woodLabel.position = CGPoint(x: -250, y: 250)
+        woodLabel.text = "Wood: " + String(GameEngine.Instance.currentPlayer.wood)
         addChild(woodLabel)
         
     }

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Iq-47-Qvh">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--MainMenuViewController-->
@@ -94,29 +95,78 @@
                                             <action selector="combineButtonTapped:" destination="LVB-YS-i5n" id="fr4-mP-qkz"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Skip" id="hTB-Og-xl3">
+                                    <barButtonItem title="EndTurn" id="hTB-Og-xl3">
                                         <connections>
                                             <action selector="skipButtonTapped:" destination="LVB-YS-i5n" id="ROe-Zo-mlu"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="01a-Yn-L7o">
+                                <rect key="frame" x="39" y="498" width="54" height="30"/>
+                                <state key="normal" title="Validate">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="validateButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="3z0-GX-z08"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SyT-za-Flx">
+                                <rect key="frame" x="517" y="498" width="48" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="X9S-0u-h27"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dLO-SS-pGv">
+                                <rect key="frame" x="39" y="460" width="49" height="30"/>
+                                <state key="normal" title="Recruit">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="recruitButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="0bj-m9-gCP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="law-KU-HRD">
+                                <rect key="frame" x="517" y="451" width="48" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancel2ButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="dXR-ma-1rr"/>
+                                    <action selector="cancelButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="Wwx-29-khk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="SyT-za-Flx" firstAttribute="top" secondItem="law-KU-HRD" secondAttribute="bottom" constant="17" id="0iB-OL-tCL"/>
+                            <constraint firstItem="law-KU-HRD" firstAttribute="leading" secondItem="SyT-za-Flx" secondAttribute="leading" id="A2X-8z-tC2"/>
                             <constraint firstItem="MOD-Nf-7Hs" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leading" id="JDT-tN-Ce2"/>
+                            <constraint firstItem="MOD-Nf-7Hs" firstAttribute="top" secondItem="01a-Yn-L7o" secondAttribute="bottom" constant="28" id="VcH-4D-ZqU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SyT-za-Flx" secondAttribute="trailing" constant="19" id="c9o-eH-C7c"/>
+                            <constraint firstItem="dLO-SS-pGv" firstAttribute="leading" secondItem="01a-Yn-L7o" secondAttribute="leading" id="hq4-Tw-Mw2"/>
                             <constraint firstAttribute="trailing" secondItem="MOD-Nf-7Hs" secondAttribute="trailing" id="lhs-aX-5p3"/>
+                            <constraint firstItem="01a-Yn-L7o" firstAttribute="top" secondItem="dLO-SS-pGv" secondAttribute="bottom" constant="8" symbolic="YES" id="nOU-eS-0hX"/>
+                            <constraint firstItem="01a-Yn-L7o" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="23" id="o3f-uB-6Gw"/>
                             <constraint firstItem="MOD-Nf-7Hs" firstAttribute="bottom" secondItem="b3d-qh-BLL" secondAttribute="top" id="sNa-0t-ySj"/>
+                            <constraint firstItem="SyT-za-Flx" firstAttribute="baseline" secondItem="01a-Yn-L7o" secondAttribute="baseline" id="uNj-nf-Biy"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="buildButton" destination="FOt-5m-LFk" id="oS1-h1-H5C"/>
+                        <outlet property="cancelButton" destination="SyT-za-Flx" id="85b-IK-pfq"/>
+                        <outlet property="cancelButton2" destination="law-KU-HRD" id="YE8-w4-sGP"/>
                         <outlet property="combineButton" destination="YBW-OR-u0Q" id="qB4-8K-JIf"/>
                         <outlet property="infoButton" destination="et7-Fj-wl1" id="cnW-CK-HvL"/>
                         <outlet property="menuButton" destination="rCH-Kg-Xcf" id="0L3-iT-Fro"/>
                         <outlet property="moveButton" destination="DnP-xL-XJG" id="qfn-ve-52f"/>
+                        <outlet property="recruitButton" destination="dLO-SS-pGv" id="FQc-tk-FX2"/>
                         <outlet property="skipButton" destination="hTB-Og-xl3" id="aVN-Qh-7h2"/>
                         <outlet property="upgradeButton" destination="4WM-Dr-20Z" id="SMy-hU-5bw"/>
+                        <outlet property="validateButton" destination="01a-Yn-L7o" id="enr-BA-xef"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>

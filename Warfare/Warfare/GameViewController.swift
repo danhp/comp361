@@ -27,7 +27,12 @@ extension SKNode {
 
 class GameViewController: UIViewController {
 
+    var tileSource : Tile?
     
+    @IBOutlet weak var cancelButton2: UIButton!
+    @IBOutlet weak var recruitButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var validateButton: UIButton!
     @IBOutlet weak var menuButton: UIBarButtonItem!
     @IBOutlet weak var skipButton: UIBarButtonItem!
     @IBOutlet weak var combineButton: UIBarButtonItem!
@@ -35,6 +40,32 @@ class GameViewController: UIViewController {
     @IBOutlet weak var buildButton: UIBarButtonItem!
     @IBOutlet weak var moveButton: UIBarButtonItem!
     @IBOutlet weak var infoButton: UIBarButtonItem!
+    
+    @IBAction func recruitButtonTapped(sender: AnyObject) {
+        var tileSelected = GameEngine.Instance.map.selected
+        if (tileSelected?.village == nil)
+        {
+            return
+        }
+        GameEngine.Instance.recruitUnit((tileSelected?.village)!, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
+        
+    }
+    
+
+    @IBAction func cancel2ButtonTapped(sender: AnyObject) {
+    }
+    
+    @IBAction func validateButtonTapped(sender: AnyObject) {
+        var dest = GameEngine.Instance.map.selected
+        GameEngine.Instance.moveUnit(tileSource! , to: dest!)
+        validateButton.hidden = true
+        cancelButton.hidden = true
+    }
+    
+    @IBAction func cancelButtonTapped(sender: AnyObject) {
+        validateButton.hidden = true
+        cancelButton.hidden = true
+    }
     
     @IBAction func menuButtonTapped(sender: AnyObject) {
         
@@ -44,7 +75,16 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func moveButtonTapped(sender: AnyObject) {
-//        GameEngine.Instance.moveUnit( ... )
+        tileSource = GameEngine.Instance.map.selected
+        if (tileSource?.unit == nil)
+        {
+            return
+        }
+        
+        validateButton.hidden = false
+        cancelButton.hidden = false
+//        GameEngine.Instance.moveUnit(... )
+        
     }
     
     @IBAction func buildButtonTapped(sender: AnyObject) {
@@ -60,6 +100,7 @@ class GameViewController: UIViewController {
 
     
     @IBAction func skipButtonTapped(sender: AnyObject) {
+        
     }
     
     override func viewDidLoad() {
@@ -71,6 +112,11 @@ class GameViewController: UIViewController {
             skView.showsFPS = true
             skView.showsNodeCount = true
             skView.showsDrawCount = true
+            
+            validateButton.hidden = true
+            cancelButton.hidden = true
+            recruitButton.hidden = false
+            cancelButton2.hidden = true
             
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = true
