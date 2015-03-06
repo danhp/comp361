@@ -10,27 +10,27 @@ class villageTest: XCTestCase {
 		village.wood += 10
 		XCTAssertEqual(village.wood, 10)
 
-		village.upgradeVillage(Constants.Types.Village.Fort)
 		XCTAssertEqual(village.type, Constants.Types.Village.Hovel)
 
-		village.upgradeVillage(Constants.Types.Village.Town)
+		village.upgradeVillage()
 		XCTAssertEqual(village.type, Constants.Types.Village.Town)
 		XCTAssertEqual(village.wood, 2)
 
-		village.upgradeVillage(Constants.Types.Village.Hovel)
-		XCTAssertEqual(village.type, Constants.Types.Village.Town)
-		XCTAssertEqual(village.wood, 2)
-
-		village.upgradeVillage(Constants.Types.Village.Fort)
+		village.upgradeVillage()
 		XCTAssertEqual(village.type, Constants.Types.Village.Town)
 		XCTAssertEqual(village.wood, 2)
 
 		village.wood += 6
 		XCTAssertEqual(village.wood, 8)
 
-		village.upgradeVillage(Constants.Types.Village.Fort)
+		village.upgradeVillage()
 		XCTAssertEqual(village.type, Constants.Types.Village.Fort)
 		XCTAssertEqual(village.wood, 0)
+
+        village.wood += 8
+        village.upgradeVillage()
+		XCTAssertEqual(village.type, Constants.Types.Village.Fort)
+		XCTAssertEqual(village.wood, 8)
 	}
 
 	func testUpgradeUnit() {
@@ -38,7 +38,7 @@ class villageTest: XCTestCase {
 		let village = Village()
 
 		let tile2 = Tile(coordinates: (0,1))
-		let unit = Unit(type: Constants.Types.Unit.Peasant, tile: tile2)
+		let unit = Unit(type: Constants.Types.Unit.Peasant)
 
 		XCTAssertFalse(village.containsUnit(unit))
 

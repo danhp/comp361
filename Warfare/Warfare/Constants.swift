@@ -33,6 +33,15 @@ struct Constants {
                 }
             }
 
+            func cost() -> Int {
+                switch self {
+                case .Meadow:
+                    return 5
+                default:
+                    return 0
+                }
+            }
+
             static func random() -> Land {
                 switch arc4random_uniform(14) {
                 case 0...2:
@@ -69,7 +78,18 @@ struct Constants {
         }
 
         enum Structure: Int {
-            case Tower, Road, Tombstone
+            case Tower = 1, Road, Tombstone
+
+            func cost() -> Int {
+                switch self {
+                case .Tower:
+                    return 5
+                case .Road:
+                    return 10
+                case .Tombstone:
+                    return 0
+                }
+            }
         }
     }
 

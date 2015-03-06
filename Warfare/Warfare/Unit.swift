@@ -2,7 +2,6 @@ import Foundation
 
 class Unit {
     var type: Constants.Types.Unit
-	var position: Tile
 	var currentAction = Constants.Unit.Action.ReadyForOrders
 
     var disabled: Bool {
@@ -13,13 +12,11 @@ class Unit {
     
     init(dict: NSDictionary, position: Tile) {
         self.type = .Infantry
-        self.position = position
         self.deserialize(dict)
     }
     
-	init(type: Constants.Types.Unit, tile: Tile) {
+	init(type: Constants.Types.Unit) {
 		self.type = type
-		self.position = tile
 		self.currentAction = .ReadyForOrders
 	}
     
@@ -35,5 +32,10 @@ class Unit {
     func deserialize(dict: NSDictionary) {
         self.type = Constants.Types.Unit(rawValue: dict["type"] as Int)!
         self.currentAction = Constants.Unit.Action(rawValue: dict["currentAction"] as Int)!
+    }
+
+    func combine(with: Unit) {
+        let newLevel = min(self.type.rawValue + with.type.rawValue, 4)
+        self.type = Constants.Types.Unit(rawValue: newLevel)!
     }
 }
