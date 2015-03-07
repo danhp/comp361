@@ -21,7 +21,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     }
     var userAuthenticated = false
     
-    var vc: GameViewController?
+    var vc: UIViewController?
     var myMatch: GKTurnBasedMatch?
     
     override init() {
@@ -119,17 +119,29 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     // the match or requires another participant to act
     //
     func advanceTurn() {
-        let allData = GameEngine.Instance.encodeAll()
-        
-        let updatedMatchData = allData.0
-        let sortedPlayerOrder = allData.1
-        self.myMatch?.message = allData.2
-        
-        self.myMatch?.endTurnWithNextParticipants(sortedPlayerOrder, turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
-            if ((error) != nil) {
-                println(error)
+        if let match = self.myMatch {
+            let allData = GameEngine.Instance.encodeAll()
+            
+            let updatedMatchData = allData.0
+            //        let sortedPlayerOrder = allData.1
+            self.myMatch?.message = allData.2
+            
+            let nextParticipants = NSMutableArray()
+            for p in match.participants {
+                if p.playerID! != nil && p.playerID! == GKLocalPlayer.localPlayer().playerID {
+                    nextParticipants.addObject(p)
+                } else {
+                    nextParticipants.insertObject(p, atIndex: 0)
+                }
             }
-        })
+            
+            self.myMatch?.endTurnWithNextParticipants(nextParticipants, turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
+                if ((error) != nil) {
+                    println(error)
+                }
+            })
+
+        }
     }
     
     func endMatch() {
@@ -154,8 +166,11 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, didFindMatch match: GKTurnBasedMatch!) {
         self.myMatch = match
         self.loadMatchData()
-        self.vc?.dismissViewControllerAnimated(true, completion: nil)
-        self.vc?.showGamePlayScene()
+        self.vc?.dismissViewControllerAnimated(true, completion: ({() in
+            // Create GameViewController and move to it
+            if let mmvc = self.vc as? MainMenuViewController {
+                mmvc.segueToGameViewController()
+            }}))
     }
     
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, playerQuitForMatch match: GKTurnBasedMatch!) {

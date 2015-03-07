@@ -58,8 +58,8 @@ class Tile: SKShapeNode, Hashable {
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
         
-        if let turn = self.village?.player?.turn {
-            self.strokeColor = Utilities.Colors.colorForPlayer(turn)
+        if let order = self.village?.player?.order {
+            self.strokeColor = Utilities.Colors.colorForPlayer(order)
         } else {
             self.strokeColor = Utilities.Colors.colorForPlayer(-1)
         }
@@ -162,7 +162,7 @@ class Tile: SKShapeNode, Hashable {
         }
 
         // Add tile to Map
-//        GameEngine.Instance.map.setTile(at:self.coordinates, to: self)
+        GameEngine.Instance.game?.map.setTile(at:self.coordinates, to: self)
     }
 
     // MARK - Drawing

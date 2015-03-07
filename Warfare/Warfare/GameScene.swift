@@ -18,6 +18,7 @@ class GameScene: SKScene {
         self.map = GameEngine.Instance.map
 
         if let m = self.map {
+            m.draw()
             self.addChild(m)
         }
         
@@ -60,7 +61,7 @@ class GameScene: SKScene {
         goldLabel.fontSize = 25
         
         goldLabel.fontColor = SKColor.blackColor()
-        goldLabel.text = "Gold: " + String(GameEngine.Instance.currentPlayer.gold)
+        goldLabel.text = "Gold: " + String((GameEngine.Instance.game?.currentPlayerGold)!)
         
         println(size.height)
         //Note need to position relative and scalable - not hard coded
@@ -77,7 +78,7 @@ class GameScene: SKScene {
         woodLabel.text = NSString(format: "Wood: %02u", 100.0)
         
         woodLabel.position = CGPoint(x: -250, y: 250)
-        woodLabel.text = "Wood: " + String(GameEngine.Instance.currentPlayer.wood)
+        woodLabel.text = "Wood: " + String((GameEngine.Instance.game?.currentPlayerWood)!)
         addChild(woodLabel)
         
     }

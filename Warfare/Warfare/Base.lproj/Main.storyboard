@@ -18,21 +18,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MyO-rB-Ne2">
-                                <rect key="frame" x="242" y="168" width="76" height="30"/>
-                                <state key="normal" title="New Game">
+                                <rect key="frame" x="242" y="168" width="74" height="30"/>
+                                <state key="normal" title="Join Game">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="LVB-YS-i5n" kind="show" id="2qW-CA-MxX"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lCR-7j-rU0">
-                                <rect key="frame" x="225" y="236" width="110" height="30"/>
-                                <state key="normal" title="Continue Match">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="LVB-YS-i5n" kind="show" id="1Yc-TX-Vhd"/>
+                                    <action selector="joinMatch:" destination="1Iq-47-Qvh" eventType="touchUpInside" id="e20-LP-laM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a2d-vb-Lfd">
@@ -44,6 +35,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="LVB-YS-i5n" kind="show" identifier="gameViewControllerSegue" id="XGZ-bE-edm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aut-iQ-ryz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -174,7 +168,4 @@
             <point key="canvasLocation" x="596" y="1087"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="2qW-CA-MxX"/>
-    </inferredMetricsTieBreakers>
 </document>

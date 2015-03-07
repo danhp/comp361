@@ -137,7 +137,6 @@
 		137101361A701096009B807C /* warfare */ = {
 			isa = PBXGroup;
 			children = (
-				B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */,
 				137101391A701096009B807C /* AppDelegate.swift */,
 				1371015D1A7010CE009B807C /* Constants.swift */,
 				135DC1411A783D7E00474073 /* Utilities.swift */,
@@ -151,6 +150,7 @@
 				5299B2781A8984F500EADED0 /* GameEngine.swift */,
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
+				B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */,
 				1371013F1A701096009B807C /* GameViewController.swift */,
 				130B0CF51A924901007A20EB /* MatchHelper.swift */,
 				132A65A91A8EAAC200D588B2 /* Maps */,
@@ -321,7 +321,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5299B27B1A898B6400EADED0 /* Structure.swift in Sources */,
 				13D24A351AA256B400378490 /* Game.swift in Sources */,
 				131D324A1A86A7A50073310B /* Player.swift in Sources */,
 				522683901A80765800E54870 /* villageTests.swift in Sources */,
