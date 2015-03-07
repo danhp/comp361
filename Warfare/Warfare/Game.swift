@@ -19,6 +19,12 @@ class Game {
     
     var currentPlayerGold: Int { return self.currentPlayer.gold }
     var currentPlayerWood: Int { return self.currentPlayer.wood }
+
+	init(players: [Player], playerOrder: [Int], map: Map) {
+		self.players = players
+		self.playerOrder = playerOrder
+		self.map = map
+	}
     
     init(initWithData data: NSData) {
         self.playerOrder = [Int](count: 3, repeatedValue: 0)
@@ -66,11 +72,16 @@ class Game {
             }
         }
     }
-    
+
+	// Set the turn to the next player.
     func endTurn() {
-        
+		// TODO check if player outcome is none
+		let tmp = self.playerOrder[0]
+		self.playerOrder[0] = self.playerOrder[1]
+		self.playerOrder[1] = self.playerOrder[2]
+		self.playerOrder[2] = tmp
     }
-    
+
     // Move a unit and update all affected tiles in path.
     func moveUnit(from: Tile, to: Tile) {
         if from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders { return }
@@ -370,11 +381,6 @@ class Game {
     
     // Encodes the player order in a sendable format
     func encodePlayerOrder() -> NSArray {
-        // TODO check if player outcome is none
-        let tmp = self.playerOrder[0]
-        self.playerOrder[0] = self.playerOrder[1]
-        self.playerOrder[1] = self.playerOrder[2]
-        self.playerOrder[2] = tmp
         return NSArray(array: self.playerOrder)
     }
     
