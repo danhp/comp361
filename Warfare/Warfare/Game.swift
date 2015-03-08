@@ -359,12 +359,13 @@ class Game {
         }
     }
     
-    // Mark: - Encoding
+    // MARK: - Encoding
     
     // Encodes the match data in a sendable format
     func encodeMatchData() -> NSData {
         let dict = self.serialize()
-        let matchData = NSJSONSerialization.dataWithJSONObject(dict, options: nil, error: nil)
+        var error:NSError?
+        let matchData = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
         return matchData!
     }
     
@@ -392,8 +393,7 @@ class Game {
         return parsedObject as? NSDictionary
     }
 
-    
-    // Mark: - Serialization
+    // MARK: - Serialization
     
     // Populates the current Game with match data
     func deserialize(dict: NSDictionary) {
@@ -424,6 +424,15 @@ class Game {
         dict["neutral"] = ""
         
         return dict
+    }
+    
+    func toJSON(dict: NSDictionary) -> String {
+        // Make JSON
+        var error:NSError?
+        var data = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
+        
+        // Return as a String
+        return NSString(data: data!, encoding: NSUTF8StringEncoding)!
     }
     
 }

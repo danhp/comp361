@@ -174,10 +174,22 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     }
     
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, playerQuitForMatch match: GKTurnBasedMatch!) {
-        // Create array for next participants
-//        let nextParticipants = self.myMatch?.participants.filter( {$0.player.playerID === GKLocalPlayer.localPlayer().playerID })
         
-//        self.myMatch?.participantQuitInTurnWithOutcome(.Quit, nextParticipants: <#[AnyObject]!#>, turnTimeout: <#NSTimeInterval#>, matchData: <#NSData!#>, completionHandler: <#((NSError!) -> Void)!##(NSError!) -> Void#>)
+        let participants = match.participants!
+        
+        // Make next participant array
+        var nextParticipants = [GKTurnBasedParticipant]()
+        for p in participants {
+             if p.playerID! != nil && p.playerID! == GKLocalPlayer.localPlayer().playerID {
+                nextParticipants.append(p as GKTurnBasedParticipant)
+             } else {
+                nextParticipants.insert(p as GKTurnBasedParticipant, atIndex: 0)
+            }
+        }
+        
+        // Send quit
+        // TODO matchData mught not be the most up to date
+        match.participantQuitInTurnWithOutcome(.Quit, nextParticipants: nextParticipants, turnTimeout: GKTurnTimeoutDefault, matchData: match.matchData, completionHandler: nil)
     }
     
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, didFailWithError: NSError!) {

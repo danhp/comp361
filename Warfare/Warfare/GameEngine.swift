@@ -39,13 +39,4 @@ class GameEngine {
     func encodeAll() -> (NSData, NSArray, String) {
         return ((self.game?.encodeMatchData())!, (self.game?.encodePlayerOrder())!, (self.game?.matchTurnMessage())!)
     }
-
-    func toJSON(dict: NSDictionary) -> String {
-        // Make JSON
-        var error:NSError?
-        var data = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
-
-        // Return as a String
-        return NSString(data: data!, encoding: NSUTF8StringEncoding)!
-    }
 }
