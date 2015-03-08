@@ -1,7 +1,7 @@
 import UIKit
 import XCTest
 
-class gameEngine: XCTestCase {
+class gameTests: XCTestCase {
     var map = Map()
     var player1 = Player()
     var player2 = Player()
@@ -24,8 +24,7 @@ class gameEngine: XCTestCase {
         players.append(player1)
         players.append(player2)
         players.append(player3)
-//        ge = GameEngine(firstPlayer: 0, players: players, map: map)
-        ge = GameEngine()
+        ge.game = Game(players: players, playerOrder: [0, 1, 2], map: map)
     }
 
     func testMoveUnit() {
@@ -104,7 +103,9 @@ class gameEngine: XCTestCase {
         XCTAssertEqual((ge.game?.currentPlayer.villages.count)!, 1)
 
         // Invade
-//        ge.game?.currentPlayer = players[1]
+        // TODO: Prone to break.
+        ge.game?.endTurn()
+        
         var enemyUnit = Unit(type: Constants.Types.Unit.Knight)
         var enemyVillage = Village()
         ge.game?.currentPlayer.addVillage(enemyVillage)
