@@ -10,7 +10,6 @@ import Foundation
 import GameKit
 
 class Player {
-    var id: String!
     var order: Int!
     
     var villages = [Village]()
@@ -52,11 +51,10 @@ class Player {
     // MARK - Serialization
 
     func serialize() -> NSDictionary {
-        return ["id":self.id, "order":self.order, "villages":self.villages.map({$0.serialize()})]
+        return ["order":self.order, "villages":self.villages.map({$0.serialize()})]
     }
     
     func deserialize(dict: NSDictionary) {
-        self.id = dict["id"] as? String ?? "nil"
         self.order = dict["order"] as? Int ?? 0
         
         // VILLAGES

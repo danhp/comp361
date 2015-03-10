@@ -19,7 +19,6 @@ class GameScene: SKScene {
 
         if let m = self.map {
             m.draw()
-            println("drawing map")
             m.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
             self.addChild(m)
         }
@@ -65,7 +64,6 @@ class GameScene: SKScene {
         goldLabel.fontColor = SKColor.blackColor()
         goldLabel.text = "Gold: " + String((GameEngine.Instance.game?.currentPlayerGold)!)
         
-        println(size.height)
         //Note need to position relative and scalable - not hard coded
         goldLabel.position = CGPoint(x: -430, y: 250 )
         addChild(goldLabel)

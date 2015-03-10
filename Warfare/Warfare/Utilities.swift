@@ -30,11 +30,11 @@ class Utilities {
         
         class func colorForPlayer(id: Int) -> UIColor {
             switch id {
+            case 0:
+                return UIColor.orangeColor()
             case 1:
-                return UIColor.blueColor()
+                return UIColor.purpleColor()
             case 2:
-                return UIColor.greenColor()
-            case 3:
                 return UIColor.redColor()
             default:
                 return UIColor.whiteColor()

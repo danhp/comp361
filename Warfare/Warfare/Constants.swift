@@ -20,7 +20,7 @@ struct Constants {
 
     struct Types {
         enum Land: Int {
-            case Grass, Tree, Meadow, Sea
+            case Grass = 0, Tree, Meadow, Sea
 
             func gold() -> Int {
                 switch self {
@@ -57,11 +57,11 @@ struct Constants {
         }
 
         enum Village: Int {
-            case Hovel = 1, Town, Fort
+            case Hovel = 0, Town, Fort
         }
 
         enum Unit: Int {
-            case Peasant = 1, Infantry, Soldier, Knight
+            case Peasant = 0, Infantry, Soldier, Knight
 
             func wage() -> Int {
                 switch self {
@@ -78,7 +78,7 @@ struct Constants {
         }
 
         enum Structure: Int {
-            case Tower = 1, Road, Tombstone
+            case Tower = 0, Road, Tombstone
 
             func cost() -> Int {
                 switch self {
@@ -95,7 +95,7 @@ struct Constants {
 
     struct Unit {
         enum Action: Int {
-            case ReadyForOrders, Moved, BuildingRoad, ChoppingTree, ClearingTombstone, UpgradingCombining, StartCultivating, FinishCultivating
+            case ReadyForOrders = 0, Moved, BuildingRoad, ChoppingTree, ClearingTombstone, UpgradingCombining, StartCultivating, FinishCultivating
         }
     }
 

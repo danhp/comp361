@@ -13,9 +13,11 @@ class Game {
     var players = [Player]()
     var playerOrder: [Int]
     var currentPlayer: Player { return self.players[self.playerOrder[0]] }
+  
     let map = Map()
-
-    var isCurrentPlayer: Bool { return GKLocalPlayer.localPlayer().playerID == self.currentPlayer.id }
+    var neutralTiles = [Tile]()
+    
+    var isCurrentPlayer: Bool { return GKLocalPlayer.localPlayer().playerID == MatchHelper.sharedInstance().myMatch?.currentParticipant.playerID}
 
     var currentPlayerGold: Int { return self.currentPlayer.gold }
     var currentPlayerWood: Int { return self.currentPlayer.wood }
@@ -420,6 +422,7 @@ class Game {
             for t in neutral {  // t is an NSDictionary
                 let t = Tile(dict: t as NSDictionary)
                 self.map.setTile(at: t.coordinates, to: t)
+                self.neutralTiles.append(t)
             }
         }
     }
@@ -429,7 +432,7 @@ class Game {
         var dict = [String: AnyObject]()
 
         dict["players"] = self.players.map({$0.serialize()})
-        dict["neutral"] = ""
+        dict["neutral"] = self.neutralTiles.map({$0.serialize()})
 
         return dict
     }

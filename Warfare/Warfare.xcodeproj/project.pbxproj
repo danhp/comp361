@@ -14,6 +14,11 @@
 		131D324A1A86A7A50073310B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D32481A86A7A50073310B /* Player.swift */; };
 		132A65AB1A8EAAD300D588B2 /* 1.json in Resources */ = {isa = PBXBuildFile; fileRef = 132A65AA1A8EAAD300D588B2 /* 1.json */; };
 		13390A8E1A9692CC005949A1 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13390A8D1A9692CC005949A1 /* GameKit.framework */; };
+		13541BE81AAF7BD200689C60 /* MatchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130B0CF51A924901007A20EB /* MatchHelper.swift */; };
+		13541BE91AAF7C9F00689C60 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */; };
+		13541BEA1AAF7CA300689C60 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371013F1A701096009B807C /* GameViewController.swift */; };
+		13541BEB1AAF7CC900689C60 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1371013B1A701096009B807C /* GameScene.sks */; };
+		13541BEC1AAF7CE000689C60 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371013D1A701096009B807C /* GameScene.swift */; };
 		135DC1421A783D7E00474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		135DC1431A7849A800474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		1371013A1A701096009B807C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137101391A701096009B807C /* AppDelegate.swift */; };
@@ -289,6 +294,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13541BEB1AAF7CC900689C60 /* GameScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,15 +328,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				13D24A351AA256B400378490 /* Game.swift in Sources */,
+				13541BEC1AAF7CE000689C60 /* GameScene.swift in Sources */,
 				131D324A1A86A7A50073310B /* Player.swift in Sources */,
 				522683901A80765800E54870 /* villageTests.swift in Sources */,
 				13CDF0CC1A8AA4D300E6AB9D /* TileTests.swift in Sources */,
+				13541BEA1AAF7CA300689C60 /* GameViewController.swift in Sources */,
 				52ADD5541A91372C00F5307D /* gameEngineTests.swift in Sources */,
 				137101541A701096009B807C /* hexGridTests.swift in Sources */,
 				139527771A7714E10019E3F4 /* HexGrid.swift in Sources */,
 				135DC1431A7849A800474073 /* Utilities.swift in Sources */,
 				139527741A7714D20019E3F4 /* Tile.swift in Sources */,
+				13541BE81AAF7BD200689C60 /* MatchHelper.swift in Sources */,
 				139527761A7714DE0019E3F4 /* Map.swift in Sources */,
+				13541BE91AAF7C9F00689C60 /* MainMenuViewController.swift in Sources */,
 				5299B27A1A89855600EADED0 /* GameEngine.swift in Sources */,
 				131C14361A7E71DC00CE386D /* Unit.swift in Sources */,
 				131C14371A7E71E000CE386D /* Village.swift in Sources */,

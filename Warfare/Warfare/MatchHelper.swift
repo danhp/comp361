@@ -53,7 +53,6 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
                 if ((viewController) != nil) {
                     self.vc?.presentViewController(viewController, animated: true, completion: nil)
                 }else{
-                    println((GKLocalPlayer.localPlayer().authenticated))
                     self.userAuthenticated = true
                 }
             }
@@ -74,8 +73,6 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     
     func joinMatch() {
         if self.userAuthenticated {
-            println("Joining match")
-
             // Create match request
             let request = GKMatchRequest()
             request.minPlayers = 3
@@ -90,7 +87,6 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     
     func loadMatchData() {
         self.myMatch?.loadMatchDataWithCompletionHandler({ (matchData: NSData!, error: NSError!) -> Void in
-            println("loading match data.")
             // If match data has length of 0, the game is *new*, else, decode it
             if matchData.length > 0 {
                 GameEngine.Instance.decode(matchData)
