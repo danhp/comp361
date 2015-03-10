@@ -42,6 +42,19 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         return sharedHelper!
     }
     
+    func currentParticipantIndex() -> Int {
+        let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as [GKTurnBasedParticipant]
+        
+        for (index, p) in enumerate(participants) {
+            if p === self.myMatch?.currentParticipant {
+                return index
+            }
+        }
+        
+        // fallback
+        return 0
+    }
+    
     // MARK: - Authentication
     
     func authenticateLocalUser() {
@@ -116,20 +129,16 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     //
     func advanceTurn() {
         if let match = self.myMatch {
-            let allData = GameEngine.Instance.encodeAll()
             
-            let updatedMatchData = allData.0
-            //        let sortedPlayerOrder = allData.1
-            self.myMatch?.message = allData.2
+            let updatedMatchData = GameEngine.Instance.encodeMatchData()
+            self.myMatch?.message = GameEngine.Instance.encodeTurnMessage()
             
+            let current = self.currentParticipantIndex()
+    
             let nextParticipants = NSMutableArray()
-            for p in match.participants {
-                if p.playerID! != nil && p.playerID! == GKLocalPlayer.localPlayer().playerID {
-                    nextParticipants.addObject(p)
-                } else {
-                    nextParticipants.insertObject(p, atIndex: 0)
-                }
-            }
+            nextParticipants[0] = (self.myMatch?.participants[current+1%3])!
+            nextParticipants[1] = (self.myMatch?.participants[current+2%3])!
+            nextParticipants[1] = (self.myMatch?.participants[current+3%3])! // should be current participant
             
             self.myMatch?.endTurnWithNextParticipants(nextParticipants, turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
                 if ((error) != nil) {
