@@ -135,10 +135,10 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
             
             let current = self.currentParticipantIndex()
     
-            let nextParticipants = NSMutableArray()
-            nextParticipants[0] = (self.myMatch?.participants[current+1%3])!
-            nextParticipants[1] = (self.myMatch?.participants[current+2%3])!
-            nextParticipants[1] = (self.myMatch?.participants[current+3%3])! // should be current participant
+            let nextParticipants = NSMutableArray(capacity: 3)
+            nextParticipants[0] = (self.myMatch?.participants[(current+1)%3])!
+            nextParticipants[1] = (self.myMatch?.participants[(current+2)%3])!
+            nextParticipants[2] = (self.myMatch?.participants[current])! // should be current participant
             
             self.myMatch?.endTurnWithNextParticipants(nextParticipants, turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
                 if ((error) != nil) {
