@@ -58,9 +58,11 @@ class Tile: SKShapeNode, Hashable {
 
 		if self.unit != nil {
 			self.addChild((self.unit?.draw())!)
-		} else if self.structure != nil {
+		}
+		if self.structure != nil {
 			self.addChild(SKLabelNode(text: "sturct"))
-		} else if self.village != nil {
+		}
+		if self.village != nil {
 			self.addChild((self.owner?.draw())!)
 
 		}
@@ -71,6 +73,11 @@ class Tile: SKShapeNode, Hashable {
             self.strokeColor = Utilities.Colors.colorForPlayer(-1)
         }
     }
+
+	func update() {
+		self.removeAllChildren()
+		self.draw()
+	}
 
     // MARK - Public functions
 
@@ -92,6 +99,13 @@ class Tile: SKShapeNode, Hashable {
             self.land = .Tree
         }
     }
+
+	func removeUnit() {
+		if self.unit != nil {
+			self.unit?.node?.removeFromParent()
+			self.unit = nil
+		}
+	}
 
     // Builds a road or finishes cultivating a meadow if the required conditions are met
     //

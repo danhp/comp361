@@ -2,6 +2,7 @@ import SpriteKit
 import Foundation
 
 class Village {
+	var node: SKLabelNode?
     var player: Player?
 	var type = Constants.Types.Village.Hovel
 	var gold: Int = 0
@@ -71,7 +72,15 @@ class Village {
 	// MARK - Drawing
 
 	func draw() -> SKLabelNode {
-		return SKLabelNode(text: "A Village")
+		switch self.type {
+		case .Hovel:
+			node = SKLabelNode(text: "Hovel")
+		case .Town:
+			node = SKLabelNode(text: "Town")
+		case .Fort:
+			node = SKLabelNode(text: "Frot")
+		}
+		return node!
 	}
 
     // MARK - Serialization

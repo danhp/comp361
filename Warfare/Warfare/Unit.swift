@@ -2,6 +2,7 @@ import SpriteKit
 import Foundation
 
 class Unit {
+    var node: SKLabelNode?
     var type: Constants.Types.Unit
 	var currentAction = Constants.Unit.Action.ReadyForOrders
 
@@ -24,14 +25,15 @@ class Unit {
     func draw() -> SKLabelNode {
         switch self.type {
         case .Peasant:
-            return SKLabelNode(text: "Peasant")
+            node = SKLabelNode(text: "Peasant")
         case .Infantry:
-            return SKLabelNode(text: "Infantry")
+            node = SKLabelNode(text: "Infantry")
         case .Soldier:
-            return SKLabelNode(text: "Soldier")
+            node = SKLabelNode(text: "Soldier")
         case .Knight:
-            return SKLabelNode(text: "Knight")
+            node = SKLabelNode(text: "Knight")
         }
+        return node!
     }
     
     func serialize() -> NSDictionary {
