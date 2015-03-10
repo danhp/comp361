@@ -14,11 +14,12 @@ func == (lhs: Tile, rhs: Tile) -> Bool {
 }
 
 class Tile: SKShapeNode, Hashable {
-    var coordinates: (Int, Int)
+    var coordinates: (Int, Int)!
     var unit: Unit?
-    var village: Village?
+    var village: Constants.Types.Village?
     var structure: Constants.Types.Structure?
-    var land: Constants.Types.Land
+    var land: Constants.Types.Land!
+    var owner: Village!
     override var hashValue: Int {
         return "\(self.coordinates.0), \(self.coordinates.1)".hashValue
     }
@@ -35,13 +36,10 @@ class Tile: SKShapeNode, Hashable {
 
     // MARK - Initializer
 
-    init(dict: NSDictionary, village: Village?) {
-        self.coordinates = (-1,-1)
-        self.land = .Grass
-
+    init(dict: NSDictionary, ownerVillage village: Village? = nil) {
         super.init()
 
-        self.village = village
+        self.owner = village
         self.deserialize(dict)
 
         self.draw()
@@ -58,7 +56,7 @@ class Tile: SKShapeNode, Hashable {
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
         
-        if let order = self.village?.player?.order {
+        if let order = self.owner?.player?.order {
             self.strokeColor = Utilities.Colors.colorForPlayer(order)
         } else {
             self.strokeColor = Utilities.Colors.colorForPlayer(-1)
@@ -95,7 +93,7 @@ class Tile: SKShapeNode, Hashable {
             if action == .BuildingRoad {
                 self.structure = .Road
                 self.unit?.currentAction = Constants.Unit.Action.ReadyForOrders
-            } else if action == .FinishCultivating && self.land == .Meadow {
+            } else if action == .FinishCultivating && self.land! == .Meadow {
                 self.land = .Grass
                 self.unit?.currentAction = .ReadyForOrders
                 return true
@@ -117,7 +115,7 @@ class Tile: SKShapeNode, Hashable {
     func isProtected(againt: Unit) -> Bool {
         return againt.type.rawValue < self.unit?.type.rawValue
             || (self.structure? == Constants.Types.Structure.Tower && againt.type.rawValue < Constants.Types.Unit.Soldier.rawValue)
-            || (self.village?.type == Constants.Types.Village.Fort && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
+            || (self.owner?.type == Constants.Types.Village.Fort && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
     }
 
     func isBuildable() -> Bool {
@@ -141,8 +139,9 @@ class Tile: SKShapeNode, Hashable {
         dict["position"] = [self.coordinates.0, self.coordinates.1]
         dict["unit"] = self.unit?.serialize()
         dict["structure"] = self.structure?.rawValue
+        dict["village"] = self.village?.rawValue
         dict["land"] = self.land.rawValue
-
+        
         return dict
     }
 
@@ -152,15 +151,21 @@ class Tile: SKShapeNode, Hashable {
 
         self.land = Constants.Types.Land(rawValue: dict["land"] as Int)!
 
-        // UNIT
+        // Unit
         if let u = dict["unit"] as? NSDictionary {
             self.unit = Unit(dict: u, position: self)
         }
 
-        // STRUCTURE
-        if let u = dict["structure"] as? NSDictionary {
+        // Structure
+        if let s = dict["structure"] as? Int {
+            self.structure = Constants.Types.Structure(rawValue: s)
         }
-
+        
+        // Village
+        if let v = dict["village"] as? Int {
+            self.village = Constants.Types.Village(rawValue: v)
+        }
+ 
         // Add tile to Map
         GameEngine.Instance.map.setTile(at:self.coordinates, to: self)
     }

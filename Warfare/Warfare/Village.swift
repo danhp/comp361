@@ -86,7 +86,7 @@ class Village {
         // TILES
         if let controlled = dict["controlledTiles"] as? NSArray {
             for t in controlled {    // t is NSDictionary
-                self.controlledTiles.append(Tile(dict: t as NSDictionary, village: self))
+                self.controlledTiles.append(Tile(dict: t as NSDictionary, ownerVillage: self))
             }
         }
     }

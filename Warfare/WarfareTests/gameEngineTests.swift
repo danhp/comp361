@@ -32,7 +32,7 @@ class gameTests: XCTestCase {
         var unit = Unit(type: Constants.Types.Unit.Knight)
         var village = Village()
         ge.game?.currentPlayer.addVillage(village)
-        tiles[3, 5]?.village = village
+        tiles[3, 5]?.owner = village
 
         tiles[3, 4]?.unit = unit
         tiles[3, 2]?.land = .Tree
@@ -71,7 +71,7 @@ class gameTests: XCTestCase {
         village2.addTile(tiles[1, 0]!)
         village2.addTile(tiles[1, 1]!)
         village2.addTile(tiles[0, 2]!)
-        tiles[1, 1]?.village = village2
+        tiles[1, 1]?.owner = village2
         ge.game?.currentPlayer.addVillage(village2)
 
         var village3 = Village()
@@ -81,7 +81,7 @@ class gameTests: XCTestCase {
         village3.addTile(tiles[3, 0]!)
         village3.addTile(tiles[4, 0]!)
         village3.addTile(tiles[5, 0]!)
-        tiles[3, 0]?.village = village3
+        tiles[3, 0]?.owner = village3
         ge.game?.currentPlayer.addVillage(village3)
 
         // 3-way merge
