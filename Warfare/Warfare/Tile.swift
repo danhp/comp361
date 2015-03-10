@@ -55,6 +55,15 @@ class Tile: SKShapeNode, Hashable {
     func draw() {
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
+
+		if self.unit != nil {
+			self.addChild((self.unit?.draw())!)
+		} else if self.structure != nil {
+			self.addChild(SKLabelNode(text: "sturct"))
+		} else if self.village != nil {
+			self.addChild((self.owner?.draw())!)
+
+		}
         
         if let order = self.owner?.player?.order {
             self.strokeColor = Utilities.Colors.colorForPlayer(order)
@@ -115,7 +124,7 @@ class Tile: SKShapeNode, Hashable {
     func isProtected(againt: Unit) -> Bool {
         return againt.type.rawValue < self.unit?.type.rawValue
             || (self.structure? == Constants.Types.Structure.Tower && againt.type.rawValue < Constants.Types.Unit.Soldier.rawValue)
-            || (self.owner?.type == Constants.Types.Village.Fort && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
+            || (self.village? == Constants.Types.Village.Fort && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
     }
 
     func isBuildable() -> Bool {

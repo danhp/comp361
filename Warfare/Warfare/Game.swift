@@ -185,7 +185,7 @@ class Game {
                         // Peasant and infantry cannot invade a village
                         // Soldiers cannot invade a fort.
                         if to.village != nil && from.unit?.type.rawValue < 3
-                            || from.unit?.type.rawValue == 3 && to.owner?.type.rawValue == 3 { return }
+                            || from.unit?.type.rawValue == 3 && to.village?.rawValue == 3 { return }
 
 
                         // Invade enemy tile

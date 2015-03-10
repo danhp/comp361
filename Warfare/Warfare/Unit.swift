@@ -1,3 +1,4 @@
+import SpriteKit
 import Foundation
 
 class Unit {
@@ -19,6 +20,19 @@ class Unit {
 		self.type = type
 		self.currentAction = .ReadyForOrders
 	}
+
+    func draw() -> SKLabelNode {
+        switch self.type {
+        case .Peasant:
+            return SKLabelNode(text: "Peasant")
+        case .Infantry:
+            return SKLabelNode(text: "Infantry")
+        case .Soldier:
+            return SKLabelNode(text: "Soldier")
+        case .Knight:
+            return SKLabelNode(text: "Knight")
+        }
+    }
     
     func serialize() -> NSDictionary {
         var dict = [String: Int]()

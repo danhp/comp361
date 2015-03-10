@@ -1,3 +1,4 @@
+import SpriteKit
 import Foundation
 
 class Village {
@@ -17,10 +18,12 @@ class Village {
 
 	func addTile(tile: Tile) {
 		controlledTiles.append(tile)
+		tile.owner = self
 	}
 
 	func removeTile(tile: Tile) {
 		controlledTiles = controlledTiles.filter({ $0 !== tile })
+		tile.owner = nil
 	}
 
 	func upgradeVillage() {
@@ -64,7 +67,13 @@ class Village {
             t.clear()
         }
     }
-    
+
+	// MARK - Drawing
+
+	func draw() -> SKLabelNode {
+		return SKLabelNode(text: "A Village")
+	}
+
     // MARK - Serialization
     
     func serialize() -> NSDictionary {
