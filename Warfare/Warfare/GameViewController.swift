@@ -48,7 +48,7 @@ class GameViewController: UIViewController {
         {
             return
         }
-        GameEngine.Instance.game?.recruitUnit((tileSelected?.village)!, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
+        GameEngine.Instance.game?.recruitUnit((tileSelected?.owner)!, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
         
     }
     

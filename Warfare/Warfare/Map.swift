@@ -156,8 +156,8 @@ class Map: SKNode {
 
     func getVillage(region: [Tile]) -> Village? {
         for tile in region {
-            if tile.village != nil {
-                return tile.village
+            if tile.owner != nil {
+                return tile.owner
             }
         }
         return nil

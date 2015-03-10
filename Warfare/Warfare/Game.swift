@@ -95,8 +95,8 @@ class Game {
         for village in currentPlayer.villages {
             if contains(village.controlledTiles, { $0 === from }) {
                 // Knight cannot clear tiles
-                if from.unit?.type == Constants.Types.Unit.Knight
-                    && (to.land == .Tree || to.structure? == Constants.Types.Structure.Tombstone) { return }
+                if (from.unit?.type)! == Constants.Types.Unit.Knight
+                    && (to.land! == .Tree || to.structure? == Constants.Types.Structure.Tombstone) { return }
 
                 // Check if path exists.
                 // If to is in controlledTiles, find path normally
@@ -183,7 +183,7 @@ class Game {
                         // Peasant and infantry cannot invade a village
                         // Soldiers cannot invade a fort.
                         if to.village != nil && from.unit?.type.rawValue < 3
-                            || from.unit?.type.rawValue == 3 && to.village?.type.rawValue == 3 { return }
+                            || from.unit?.type.rawValue == 3 && to.owner?.type.rawValue == 3 { return }
 
 
                         // Invade enemy tile
@@ -196,8 +196,8 @@ class Game {
                         to.unit = nil
                         to.structure = nil
                         if to.village != nil {
-                            village.wood += (to.village?.wood)!
-                            village.gold += (to.village?.gold)!
+                            village.wood += (to.owner?.wood)!
+                            village.gold += (to.owner?.gold)!
                             to.village = nil
                             enemyPlayer?.removeVillage(enemyVillage!)
                         }
@@ -214,7 +214,7 @@ class Game {
                                     t.unit = nil
                                     enemyVillage?.removeTile(t)
                                     if t.village != nil {
-                                        enemyPlayer?.removeVillage(t.village!)
+                                        enemyPlayer?.removeVillage(t.owner!)
                                         t.village = nil
                                     }
                                 }
@@ -235,7 +235,7 @@ class Game {
                                 r[0].land = .Grass
                                 r[0].unit = nil
                                 r[0].structure = nil
-                                r[0].village = newHovel
+                                r[0].owner = newHovel
                             }
 
                         }
@@ -418,7 +418,7 @@ class Game {
         // NEUTRAL TILES
         if let neutral = dict["neutral"] as? NSArray {
             for t in neutral {  // t is an NSDictionary
-                let t = Tile(dict: t as NSDictionary, village: nil)
+                let t = Tile(dict: t as NSDictionary)
                 self.map.setTile(at: t.coordinates, to: t)
             }
         }
