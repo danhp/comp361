@@ -43,7 +43,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var infoButton: UIBarButtonItem!
     
     @IBAction func recruitButtonTapped(sender: AnyObject) {
-        var tileSelected = GameEngine.Instance.map?.selected
+        var tileSelected = GameEngine.Instance.map.selected
         if (tileSelected?.village == nil)
         {
             return
@@ -57,7 +57,7 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func validateButtonTapped(sender: AnyObject) {
-        var dest = GameEngine.Instance.map?.selected
+        var dest = GameEngine.Instance.map.selected
         GameEngine.Instance.game?.moveUnit(tileSource! , to: dest!)
         validateButton.hidden = true
         cancelButton.hidden = true
@@ -76,7 +76,7 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func moveButtonTapped(sender: AnyObject) {
-        tileSource = GameEngine.Instance.map?.selected
+        tileSource = GameEngine.Instance.map.selected
         if (tileSource?.unit == nil)
         {
             return

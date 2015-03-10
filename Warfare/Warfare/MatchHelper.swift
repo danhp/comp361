@@ -90,7 +90,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     
     func loadMatchData() {
         self.myMatch?.loadMatchDataWithCompletionHandler({ (matchData: NSData!, error: NSError!) -> Void in
-            
+            println("loading match data.")
             // If match data has length of 0, the game is *new*, else, decode it
             if matchData.length > 0 {
                 GameEngine.Instance.decode(matchData)

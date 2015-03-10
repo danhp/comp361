@@ -26,9 +26,11 @@ class Game {
         self.map = map
     }
 
-    init(initWithData data: NSData) {
+    init() {
         self.playerOrder = [Int](count: 3, repeatedValue: 0)
-
+    }
+    
+    func importData(data: NSData) {
         if let dict = self.decode(data) {
             self.deserialize(dict)
         } else {

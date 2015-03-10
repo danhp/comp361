@@ -170,7 +170,7 @@ class Map: SKNode {
 		let horiz = width
 
 		// Go row by row
-		for (i, row) in enumerate(tiles.rows) {
+		for (i, row) in enumerate(self.tiles.rows) {
 			let x_offset = i % 2 == 0 ? 0 : width/2
 
 			// Add the tiles for the current row.

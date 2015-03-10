@@ -11,11 +11,11 @@ import Darwin
 struct Constants {
 
     struct Map {
-        static let dimension = 18	// 18x18 maps
+        static let dimension = 6	// 18x18 maps
     }
 
     struct Tile {
-        static let size = 40	// Distance from center to a corner
+        static let size = 60	// Distance from center to a corner
     }
 
     struct Types {

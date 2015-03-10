@@ -6,8 +6,8 @@ private let _instance = GameEngine()
 class GameEngine {
     class var Instance: GameEngine { return _instance }
 
-    var game: Game?
-    var map: Map? { return self.game?.map }
+    var game: Game!
+    var map: Map { return self.game.map }
 
     init() { }
     
@@ -29,7 +29,8 @@ class GameEngine {
     }
     
     func decode(matchData: NSData) {
-        self.game = Game(initWithData: matchData)
+        self.game = Game()
+        self.game.importData(matchData)
     }
     
     func encodeMatchData() -> NSData {

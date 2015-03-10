@@ -162,7 +162,7 @@ class Tile: SKShapeNode, Hashable {
         }
 
         // Add tile to Map
-        GameEngine.Instance.game?.map.setTile(at:self.coordinates, to: self)
+        GameEngine.Instance.map.setTile(at:self.coordinates, to: self)
     }
 
     // MARK - Drawing
