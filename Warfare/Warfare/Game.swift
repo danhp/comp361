@@ -271,6 +271,7 @@ class Game {
                 to.update()
 
                 // Completed operations
+                Hud.Instance.update()
                 return
             }
         }
@@ -282,6 +283,7 @@ class Game {
 
         tile.owner.upgradeVillage()
         tile.update()
+        Hud.Instance.update()
     }
 
     func upgradeUnit(unit: Unit, newLevel: Constants.Types.Unit) {
@@ -311,7 +313,7 @@ class Game {
         // Fort can also recruit knight (rawValue: 4)
         if type.rawValue > village.type.rawValue + 1 { return }
 
-        let cost = type.rawValue * Constants.Cost.Upgrade.Unit.rawValue
+        let cost = (type.rawValue + 1) * Constants.Cost.Upgrade.Unit.rawValue
         if village.gold < cost || !tile.isWalkable() { return }
 
         village.gold -= cost
@@ -320,6 +322,7 @@ class Game {
         newUnit.currentAction = .Moved
         tile.unit = newUnit
         tile.update()
+        Hud.Instance.update()
     }
 
     func buildTower(village: Village, on: Tile) {
