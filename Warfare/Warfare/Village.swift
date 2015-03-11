@@ -28,7 +28,7 @@ class Village {
 	}
 
 	func upgradeVillage() {
-		if self.type.rawValue < 3 && self.wood >= Constants.Cost.Upgrade.Village.rawValue {
+		if self.type.rawValue < 2 && self.wood >= Constants.Cost.Upgrade.Village.rawValue {
 			self.wood -= Constants.Cost.Upgrade.Village.rawValue
 			self.type = Constants.Types.Village(rawValue: self.type.rawValue + 1)!
 		}

@@ -264,7 +264,7 @@ class Game {
                 }
 
                 // Move the unit
-                //from.unit?.currentAction = Constants.Unit.Action.Moved
+                from.unit?.currentAction = Constants.Unit.Action.Moved
                 to.unit = from.unit
                 from.unit = nil
                 from.update()
