@@ -35,8 +35,8 @@
                "villages":[
                            {
                            "type":0,
-                           "gold":3,
-                           "wood":1,
+                           "gold":30,
+                           "wood":20,
                            "controlledTiles":[
                                               {
                                               "position":[5,0],
@@ -65,8 +65,8 @@
                "villages":[
                            {
                            "type":0,
-                           "gold":2,
-                           "wood":2,
+                           "gold":40,
+                           "wood":35,
                            "controlledTiles":[
                                               {
                                               "position":[-1,5],

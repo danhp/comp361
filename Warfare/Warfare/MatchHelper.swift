@@ -77,6 +77,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
             self.userAuthenticated = true
             GKLocalPlayer.localPlayer().unregisterAllListeners()
             GKLocalPlayer.localPlayer().registerListener(self)
+            println("Registered GKLocalPlayer listener")
         } else if !GKLocalPlayer.localPlayer().authenticated && self.userAuthenticated {
             self.userAuthenticated = false
         }
@@ -235,7 +236,9 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func player(player: GKPlayer!,
         receivedTurnEventForMatch match: GKTurnBasedMatch!,
         didBecomeActive: Bool) {
-        self.myMatch = match
-        
+            if didBecomeActive {
+                self.myMatch = match
+                self.loadMatchData()
+            }
     }
 }

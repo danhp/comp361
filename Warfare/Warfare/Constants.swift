@@ -79,7 +79,7 @@ struct Constants {
                 case .Town:
                     return "town"
                 case .Fort:
-                    return "fort"
+                    return "tower"
                 }
             }
         }
