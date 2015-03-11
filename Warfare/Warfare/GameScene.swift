@@ -36,6 +36,11 @@ class GameScene: SKScene {
         
         if let touchedNode = nodeAtPoint(touchLocation) as? Tile {
             self.map?.selected = touchedNode
+			if (self.map?.selected)?.owner != nil {
+				Hud.Instance.displayRegionalData((self.map?.selected)!)
+			} else {
+				Hud.Instance.update()
+			}
         }
     }
 	
