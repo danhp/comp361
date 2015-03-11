@@ -37,7 +37,7 @@ class GameEngine {
         return (self.game?.encodeMatchData())!
     }
     
-    func encodeAll() -> (NSData, NSArray, String) {
-        return ((self.game?.encodeMatchData())!, (self.game?.encodePlayerOrder())!, (self.game?.matchTurnMessage())!)
+    func encodeTurnMessage() -> String {
+        return self.game?.matchTurnMessage() ?? "No message."
     }
 }
