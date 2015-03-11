@@ -16,10 +16,16 @@ class Hud: SKNode {
 
 	func update() {
 		self.removeAllChildren()
+		let indexLabel = SKLabelNode(text: "Current: " + String(MatchHelper.sharedInstance().currentParticipantIndex()))
+		indexLabel.position = CGPoint(x: 430, y: 250)
+		self.addChild(indexLabel)
+
 		self.displayPlayerData()
 	}
 
 	func displayPlayerData() {
+		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+
 		//create gold label
 		let goldLabel = SKLabelNode(fontNamed: "Courier")
 		goldLabel.name = "gold"
@@ -52,6 +58,8 @@ class Hud: SKNode {
 	}
 
 	func displayRegionalData(tile: Tile) {
+		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+
 		self.update()
 
 		if tile.owner.player !== GameEngine.Instance.game.currentPlayer { return }

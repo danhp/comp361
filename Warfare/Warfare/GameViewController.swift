@@ -43,6 +43,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var infoButton: UIBarButtonItem!
     
     @IBAction func recruitButtonTapped(sender: AnyObject) {
+		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
         var tileSelected = GameEngine.Instance.map.selected
 		if tileSelected?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
 
@@ -79,6 +80,8 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func moveButtonTapped(sender: AnyObject) {
+		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+
         tileSource = GameEngine.Instance.map.selected
         if tileSource?.unit == nil { return }
 		if self.tileSource?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
@@ -93,6 +96,8 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func upgradeButtonTapped(sender: AnyObject) {
+		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+
 		let selectedTile = GameEngine.Instance.map.selected
 		if selectedTile?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
 
@@ -112,7 +117,10 @@ class GameViewController: UIViewController {
 
     
     @IBAction func skipButtonTapped(sender: AnyObject) {
+		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+
         MatchHelper.sharedInstance().advanceTurn()
+		Hud.Instance.update()
     }
     
     override func viewDidLoad() {
