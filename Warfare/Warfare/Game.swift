@@ -11,26 +11,22 @@ import GameKit
 
 class Game {
     var players = [Player]()
-    var playerOrder: [Int]
-    var currentPlayer: Player { return self.players[self.playerOrder[0]] }
+    var currentPlayer: Player { return self.players[MatchHelper.sharedInstance().currentParticipantIndex()] }
   
     let map = Map()
     var neutralTiles = [Tile]()
     
-    var isCurrentPlayer: Bool { return GKLocalPlayer.localPlayer().playerID == MatchHelper.sharedInstance().myMatch?.currentParticipant.playerID}
+    var localIsCurrentPlayer: Bool { return GKLocalPlayer.localPlayer().playerID == MatchHelper.sharedInstance().myMatch?.currentParticipant.playerID}
 
     var currentPlayerGold: Int { return self.currentPlayer.gold }
     var currentPlayerWood: Int { return self.currentPlayer.wood }
 
-    init(players: [Player], playerOrder: [Int], map: Map) {
+    init(players: [Player], map: Map) {
         self.players = players
-        self.playerOrder = playerOrder
         self.map = map
     }
 
-    init() {
-        self.playerOrder = [Int](count: 3, repeatedValue: 0)
-    }
+    init() { }
     
     func importData(data: NSData) {
         if let dict = self.decode(data) {
@@ -75,15 +71,6 @@ class Game {
                 self.currentPlayer.clearVillages(village)
             }
         }
-    }
-
-    // Set the turn to the next player.
-    func endTurn() {
-        // TODO check if player outcome is none
-        let tmp = self.playerOrder[0]
-        self.playerOrder[0] = self.playerOrder[1]
-        self.playerOrder[1] = self.playerOrder[2]
-        self.playerOrder[2] = tmp
     }
 
     // Move a unit and update all affected tiles in path.
@@ -389,11 +376,6 @@ class Game {
         return matchData!
     }
 
-    // Encodes the player order in a sendable format
-    func encodePlayerOrder() -> NSArray {
-        return NSArray(array: self.playerOrder)
-    }
-
     // Get relevant message for turn
     func matchTurnMessage() -> String {
         // TODO
@@ -416,9 +398,7 @@ class Game {
         if let players = dict["players"] as? NSArray {
             for p in players {
                 let p = Player(dict: p as NSDictionary)
-
                 self.players.append(p)
-                self.playerOrder.append(p.order)
             }
         }
 
