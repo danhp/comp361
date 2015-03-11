@@ -91,9 +91,11 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
             request.minPlayers = 3
             request.maxPlayers = 3
             request.defaultNumberOfPlayers = 3
+    
             
             let mmvc = GKTurnBasedMatchmakerViewController(matchRequest: request)
             mmvc.turnBasedMatchmakerDelegate = self
+            
             self.vc?.presentViewController(mmvc, animated: true, completion: nil)
         }
     }
@@ -233,6 +235,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func player(player: GKPlayer!,
         receivedTurnEventForMatch match: GKTurnBasedMatch!,
         didBecomeActive: Bool) {
-            
+        self.myMatch = match
+        
     }
 }

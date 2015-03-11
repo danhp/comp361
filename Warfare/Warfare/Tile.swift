@@ -55,9 +55,14 @@ class Tile: SKShapeNode, Hashable {
     func draw() {
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
-
-		if self.structure != nil {
-			var v: Int = (self.structure?.rawValue)!
+        
+        if self.owner?.player != nil {
+            self.lineWidth = 2
+            self.glowWidth = 2
+        }
+        
+		if let s = self.structure {
+			var v: Int = s.rawValue
 
 			switch v {
 			case 0:
@@ -74,14 +79,20 @@ class Tile: SKShapeNode, Hashable {
 			self.addChild((self.owner?.draw())!)
 
 		}
-		if self.unit != nil {
-			self.addChild((self.unit?.draw())!)
+		if let u = self.unit {
+			self.addChild(u.draw())
 		}
 
         if let order = self.owner?.player?.order {
             self.strokeColor = Utilities.Colors.colorForPlayer(order)
         } else {
             self.strokeColor = Utilities.Colors.colorForPlayer(-1)
+        }
+        
+        if self.land == Constants.Types.Land.Tree {
+            let sprite = SKSpriteNode(imageNamed: "tree")
+            sprite.setScale(0.5)
+            self.addChild(sprite)
         }
     }
 

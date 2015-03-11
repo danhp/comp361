@@ -41,6 +41,19 @@ struct Constants {
                     return 0
                 }
             }
+            
+            func name() -> String {
+                switch self {
+                case .Grass:
+                    return "grass"
+                case .Tree:
+                    return "tree"
+                case .Meadow:
+                    return "meadow"
+                case .Sea:
+                    return "sea"
+                }
+            }
 
             static func random() -> Land {
                 switch arc4random_uniform(14) {
@@ -58,6 +71,17 @@ struct Constants {
 
         enum Village: Int {
             case Hovel = 0, Town, Fort
+
+            func name() -> String {
+                switch self {
+                case .Hovel:
+                    return "hovel"
+                case .Town:
+                    return "town"
+                case .Fort:
+                    return "fort"
+                }
+            }
         }
 
         enum Unit: Int {
@@ -73,6 +97,19 @@ struct Constants {
                     return 18
                 case .Knight:
                     return 54
+                }
+            }
+            
+            func name() -> String {
+                switch self {
+                case .Peasant:
+                    return "peasant"
+                case .Infantry:
+                    return "infantry"
+                case .Soldier:
+                    return "soldier"
+                case .Knight:
+                    return "knight"
                 }
             }
         }

@@ -1,4 +1,13 @@
 TODO
 
-- Remove Tile.Village has tile's owner - should instead be village on tile
-- Tile.Structure should be a variable, not an object
+- TEST 3 PLAYERs
+- CREATE the 3 players
+J
+- Sprites (design and add)
+- Handle events (invite possibly and become active for sure)
+
+D
+- local current player (prevent not current form action)
+- disable buttons on endturn (+ toast?)
+- village gold on select (hud) (make sure it updates on recruit/wood gathering)
+ 

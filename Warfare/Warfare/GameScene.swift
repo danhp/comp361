@@ -22,7 +22,7 @@ class GameScene: SKScene {
             m.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
             self.addChild(m)
         }
-
+        
 		Hud.Instance.update()
 		self.addChild(Hud.Instance)
 
@@ -36,10 +36,7 @@ class GameScene: SKScene {
         
         if let touchedNode = nodeAtPoint(touchLocation) as? Tile {
             self.map?.selected = touchedNode
-        } else if let touchedNode = nodeAtPoint(touchLocation) as? SKLabelNode {
-            MatchHelper.sharedInstance().joinMatch()
         }
-        
     }
 	
 	override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {

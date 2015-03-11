@@ -2,7 +2,7 @@ import SpriteKit
 import Foundation
 
 class Unit {
-    var node: SKLabelNode?
+    var node: SKSpriteNode?
     var type: Constants.Types.Unit
 	var currentAction = Constants.Unit.Action.ReadyForOrders
 
@@ -22,17 +22,10 @@ class Unit {
 		self.currentAction = .ReadyForOrders
 	}
 
-    func draw() -> SKLabelNode {
-        switch self.type {
-        case .Peasant:
-            node = SKLabelNode(text: "Peasant")
-        case .Infantry:
-            node = SKLabelNode(text: "Infantry")
-        case .Soldier:
-            node = SKLabelNode(text: "Soldier")
-        case .Knight:
-            node = SKLabelNode(text: "Knight")
-        }
+    func draw() -> SKNode {
+        self.node = SKSpriteNode(imageNamed: self.type.name())
+        self.node?.setScale(0.5)
+        self.node?.position = CGPoint(x: 0, y: CGFloat(Constants.Tile.size)/2.2)
         return node!
     }
     

@@ -10,11 +10,7 @@
                            "controlledTiles":[
                                               {
                                               "position":[0,0],
-                                              "land":0,
-                                              "unit":{
-                                              "type":0,
-                                              "currentAction":0
-                                              }
+                                              "land":0
                                               },
                                               {
                                               "position":[1,0],
@@ -53,11 +49,7 @@
                                               },
                                               {
                                               "position":[4,2],
-                                              "land":1,
-                                              "unit":{
-                                              "type":0,
-                                              "currentAction":0
-                                              }
+                                              "land":1
                                               },
                                               {
                                               "position":[4,1],
@@ -78,11 +70,7 @@
                            "controlledTiles":[
                                               {
                                               "position":[-1,5],
-                                              "land":0,
-                                              "unit":{
-                                              "type":0,
-                                              "currentAction":0
-                                              }
+                                              "land":0
                                               },
                                               {
                                               "position":[0,5],
@@ -130,7 +118,7 @@
                },
                {
                "position":[0,2],
-               "land":0
+               "land":2
                },
                {
                "position":[1,2],
@@ -199,6 +187,6 @@
                {
                "position":[3,5],
                "land":3
-                }
-    ]
+               }
+               ]
 }

@@ -41,6 +41,11 @@ class Hud: SKNode {
 		woodLabel.position = CGPoint(x: -250, y: 250)
 		woodLabel.text = "Wood: " + String((GameEngine.Instance.game?.currentPlayerWood)!)
 		addChild(woodLabel)
+        
+        let indexLabel = SKLabelNode(text: "Particioant: " + String(MatchHelper.sharedInstance().currentParticipantIndex()))
+        indexLabel.position = CGPoint(x: -430, y: 200)
+        self.addChild(indexLabel)
+        
 	}
 
 	

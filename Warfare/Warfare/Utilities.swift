@@ -9,6 +9,17 @@
 import Foundation
 import SpriteKit
 
+extension UIColor {
+    convenience init(rgb: UInt) {
+        self.init(
+            red: CGFloat((rgb & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgb & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgb & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+}
+
 class Utilities {
     class func arrayToAxialCoordinates(#row: Int, col: Int) -> (x: Int, y: Int) {
         return (col - (row-(row&1)) / 2, row)
@@ -19,10 +30,8 @@ class Utilities {
             switch l {
             case .Sea:
                 return UIColor.blueColor()
-            case .Grass:
-                return UIColor.greenColor()
-            case .Tree:
-                return UIColor.brownColor()
+            case .Grass, .Tree:
+                return UIColor(rgb: 0x1b4001)
             case .Meadow:
                 return UIColor.yellowColor()
             }

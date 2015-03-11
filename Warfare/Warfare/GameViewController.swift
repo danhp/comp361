@@ -45,8 +45,10 @@ class GameViewController: UIViewController {
     @IBAction func recruitButtonTapped(sender: AnyObject) {
         var tileSelected = GameEngine.Instance.map.selected
 
-        GameEngine.Instance.game?.recruitUnit((tileSelected?.owner)!, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
-		Hud.Instance.update()
+        if let t = tileSelected?.owner {
+            GameEngine.Instance.game?.recruitUnit(t, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
+            Hud.Instance.update()
+        }
     }
     
 
@@ -115,9 +117,9 @@ class GameViewController: UIViewController {
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
             let skView = self.view as SKView
-            skView.showsFPS = true
-            skView.showsNodeCount = true
-            skView.showsDrawCount = true
+//            skView.showsFPS = true
+//            skView.showsNodeCount = true
+//            skView.showsDrawCount = true
             
             validateButton.hidden = true
             cancelButton.hidden = true

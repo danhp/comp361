@@ -169,6 +169,8 @@ class Map: SKNode {
 		let vert = height * 3/4
 		let horiz = width
 
+        self.scroller.removeAllChildren()
+        
 		// Go row by row
 		for (i, row) in enumerate(self.tiles.rows) {
 			let x_offset = i % 2 == 0 ? 0 : width/2
@@ -180,9 +182,9 @@ class Map: SKNode {
 				let tile = tiles[coord.x, coord.y]!
 				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
 
-				let s:String = coord.x.description + "," + coord.y.description
-				let label = SKLabelNode(text: s)
-				tile.addChild(label)
+//				let s:String = coord.x.description + "," + coord.y.description
+//				let label = SKLabelNode(text: s)
+//				tile.addChild(label)
 				self.scroller.addChild(tile)
 			}
 		}
