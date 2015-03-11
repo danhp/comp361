@@ -276,10 +276,12 @@ class Game {
         }
     }
 
-    func upgradeVillage(village: Village) {
-        if !contains(self.currentPlayer.villages, {$0 === village}) { return }
+    func upgradeVillage(tile: Tile) {
+        if !contains(self.currentPlayer.villages, {$0 === tile.owner}) { return }
+        if tile.village == nil { return }
 
-        village.upgradeVillage()
+        tile.owner.upgradeVillage()
+        tile.update()
     }
 
     func upgradeUnit(unit: Unit, newLevel: Constants.Types.Unit) {

@@ -85,7 +85,10 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func upgradeButtonTapped(sender: AnyObject) {
-//        GameEngine.Instance.upgradeUnit(<#unit: Unit#>, newLevel: <#Constants.Types.Unit#>)
+		let selectedTile = GameEngine.Instance.map.selected
+		if (selectedTile?.village == nil) { return }
+
+		GameEngine.Instance.game.upgradeVillage(selectedTile!)
     }
     
     @IBAction func combineButtonTapped(sender: AnyObject) {

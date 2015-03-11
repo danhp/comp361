@@ -5,8 +5,8 @@
                "villages":[
                            {
                            "type":0,
-                           "gold":5,
-                           "wood":2,
+                           "gold":60,
+                           "wood":50,
                            "controlledTiles":[
                                               {
                                               "position":[0,0],

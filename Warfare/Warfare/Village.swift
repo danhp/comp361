@@ -78,7 +78,7 @@ class Village {
 		case .Town:
 			node = SKLabelNode(text: "Town")
 		case .Fort:
-			node = SKLabelNode(text: "Frot")
+			node = SKLabelNode(text: "Fort")
 		}
 		return node!
 	}
