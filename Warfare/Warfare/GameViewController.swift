@@ -46,7 +46,7 @@ class GameViewController: UIViewController {
         var tileSelected = GameEngine.Instance.map.selected
 
         GameEngine.Instance.game?.recruitUnit((tileSelected?.owner)!, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
-        
+		Hud.Instance.update()
     }
     
 
@@ -56,6 +56,7 @@ class GameViewController: UIViewController {
     @IBAction func validateButtonTapped(sender: AnyObject) {
         var dest = GameEngine.Instance.map.selected
         GameEngine.Instance.game?.moveUnit(tileSource! , to: dest!)
+		Hud.Instance.update()
         validateButton.hidden = true
         cancelButton.hidden = true
     }
@@ -89,6 +90,7 @@ class GameViewController: UIViewController {
 		if (selectedTile?.village == nil) { return }
 
 		GameEngine.Instance.game.upgradeVillage(selectedTile!)
+		Hud.Instance.update()
     }
     
     @IBAction func combineButtonTapped(sender: AnyObject) {

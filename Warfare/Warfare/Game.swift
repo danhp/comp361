@@ -271,7 +271,6 @@ class Game {
                 to.update()
 
                 // Completed operations
-                Hud.Instance.update()
                 return
             }
         }
@@ -283,7 +282,6 @@ class Game {
 
         tile.owner.upgradeVillage()
         tile.update()
-        Hud.Instance.update()
     }
 
     func upgradeUnit(unit: Unit, newLevel: Constants.Types.Unit) {
@@ -322,7 +320,6 @@ class Game {
         newUnit.currentAction = .Moved
         tile.unit = newUnit
         tile.update()
-        Hud.Instance.update()
     }
 
     func buildTower(village: Village, on: Tile) {
