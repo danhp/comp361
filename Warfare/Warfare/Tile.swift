@@ -56,17 +56,28 @@ class Tile: SKShapeNode, Hashable {
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
 
-		if self.unit != nil {
-			self.addChild((self.unit?.draw())!)
-		}
 		if self.structure != nil {
-			self.addChild(SKLabelNode(text: "sturct"))
+			var v: Int = (self.structure?.rawValue)!
+
+			switch v {
+			case 0:
+				self.addChild(SKLabelNode(text: "Tower"))
+			case 1:
+				self.addChild(SKLabelNode(text: "Road"))
+			case 2:
+				self.addChild(SKLabelNode(text: "Tomb"))
+			default:
+				println("Swift wants something here. Shouldn't be printing")
+			}
 		}
 		if self.village != nil {
 			self.addChild((self.owner?.draw())!)
 
 		}
-        
+		if self.unit != nil {
+			self.addChild((self.unit?.draw())!)
+		}
+
         if let order = self.owner?.player?.order {
             self.strokeColor = Utilities.Colors.colorForPlayer(order)
         } else {
