@@ -44,10 +44,12 @@ class GameViewController: UIViewController {
     
     @IBAction func recruitButtonTapped(sender: AnyObject) {
         var tileSelected = GameEngine.Instance.map.selected
+		if tileSelected?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
 
         if let t = tileSelected?.owner {
             GameEngine.Instance.game?.recruitUnit(t, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
             Hud.Instance.update()
+			GameEngine.Instance.map.draw()
         }
     }
     
@@ -59,6 +61,7 @@ class GameViewController: UIViewController {
         var dest = GameEngine.Instance.map.selected
         GameEngine.Instance.game?.moveUnit(tileSource! , to: dest!)
 		Hud.Instance.update()
+		GameEngine.Instance.map.draw()
         validateButton.hidden = true
         cancelButton.hidden = true
     }
@@ -77,7 +80,9 @@ class GameViewController: UIViewController {
     
     @IBAction func moveButtonTapped(sender: AnyObject) {
         tileSource = GameEngine.Instance.map.selected
-        if (tileSource?.unit == nil) { return }
+        if tileSource?.unit == nil { return }
+		if self.tileSource?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
+		if (self.tileSource?.unit)?.currentAction == Constants.Unit.Action.Moved { return }
         
         validateButton.hidden = false
         cancelButton.hidden = false
@@ -89,14 +94,20 @@ class GameViewController: UIViewController {
     
     @IBAction func upgradeButtonTapped(sender: AnyObject) {
 		let selectedTile = GameEngine.Instance.map.selected
-		if (selectedTile?.village == nil) { return }
+		if selectedTile?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
 
-		GameEngine.Instance.game.upgradeVillage(selectedTile!)
+		if selectedTile?.village != nil {
+			GameEngine.Instance.game.upgradeVillage(selectedTile!)
+		} else if selectedTile?.unit != nil {
+			GameEngine.Instance.game.upgradeUnit(selectedTile!, newLevel: Constants.Types.Unit.Infantry)
+		}
+
 		Hud.Instance.update()
+		GameEngine.Instance.map.draw()
     }
     
     @IBAction func combineButtonTapped(sender: AnyObject) {
-//        GameEngine.Instance.combineUnit(<#tileA: Tile#>, tileB: <#Tile#>)
+
     }
 
     

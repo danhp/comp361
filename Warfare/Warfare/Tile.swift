@@ -53,6 +53,8 @@ class Tile: SKShapeNode, Hashable {
     }
 
     func draw() {
+		self.removeAllChildren()
+
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
         
@@ -95,11 +97,6 @@ class Tile: SKShapeNode, Hashable {
             self.addChild(sprite)
         }
     }
-
-	func update() {
-		self.removeAllChildren()
-		self.draw()
-	}
 
     // MARK - Public functions
 

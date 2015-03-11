@@ -63,7 +63,7 @@ class Game {
                 village.gold += tile.goldValue()
 
                 // Payout wages
-                village.gold += tile.wage()
+                village.gold -= tile.wage()
             }
 
             // Delete the Village
@@ -75,6 +75,7 @@ class Game {
 
     // Move a unit and update all affected tiles in path.
     func moveUnit(from: Tile, to: Tile) {
+        if !contains(self.currentPlayer.villages, {$0 === from.owner}) { return }
         if from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders { return }
 
         var path = [Tile]()
@@ -254,8 +255,6 @@ class Game {
                 from.unit?.currentAction = Constants.Unit.Action.Moved
                 to.unit = from.unit
                 from.unit = nil
-                from.update()
-                to.update()
 
                 // Completed operations
                 return
@@ -264,39 +263,34 @@ class Game {
     }
 
     func upgradeVillage(tile: Tile) {
-        if !contains(self.currentPlayer.villages, {$0 === tile.owner}) { return }
+        if tile.owner.player !== self.currentPlayer { return }
         if tile.village == nil { return }
 
         tile.owner.upgradeVillage()
-        tile.update()
     }
 
-    func upgradeUnit(unit: Unit, newLevel: Constants.Types.Unit) {
-        for village in self.currentPlayer.villages {
-            if village.containsUnit(unit) {
-                village.upgradeUnit(unit, newType: newLevel)
-                return
-            }
-        }
+    func upgradeUnit(tile: Tile, newLevel: Constants.Types.Unit) {
+        if tile.owner.player !== self.currentPlayer { return }
+
+        let village = tile.owner!
+        village.upgradeUnit(tile.unit!, newType: newLevel)
     }
 
     func combineUnit(tileA: Tile, tileB: Tile) {
-        for village in self.currentPlayer.villages {
-            if contains(village.controlledTiles, {$0 === tileA}) { return }
-            if contains(village.controlledTiles, {$0 === tileB}) { return }
+        if tileA.owner !== tileB.owner { return }
+        if tileA.owner.player !== self.currentPlayer { return }
 
-            tileA.unit?.combine(tileB.unit!)
-            tileB.unit = nil
-        }
+        tileA.unit?.combine(tileB.unit!)
+        tileB.unit = nil
     }
 
     func recruitUnit(village: Village, type: Constants.Types.Unit, tile: Tile) {
-        if !contains(self.currentPlayer.villages, {$0 === village}) { return }
+        if tile.owner.player !== self.currentPlayer { return }
 
         // Hovel can only recruit peasants and infantry (rawVaue: 1 & 2)
         // Town can also recruit soldiers (rawValue: 3)
         // Fort can also recruit knight (rawValue: 4)
-        if type.rawValue > village.type.rawValue + 1 { return }
+        if type.rawValue > village.type.rawValue + 2 { return }
 
         let cost = (type.rawValue + 1) * Constants.Cost.Upgrade.Unit.rawValue
         if village.gold < cost || !tile.isWalkable() { return }
@@ -304,9 +298,8 @@ class Game {
         village.gold -= cost
 
         var newUnit = Unit(type: type)
-        newUnit.currentAction = .Moved
+//        newUnit.currentAction = .Moved
         tile.unit = newUnit
-        tile.update()
     }
 
     func buildTower(village: Village, on: Tile) {
