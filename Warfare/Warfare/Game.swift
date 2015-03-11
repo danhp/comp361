@@ -317,6 +317,7 @@ class Game {
         var newUnit = Unit(type: type)
         newUnit.currentAction = .Moved
         tile.unit = newUnit
+        tile.update()
     }
 
     func buildTower(village: Village, on: Tile) {

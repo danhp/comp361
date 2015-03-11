@@ -44,10 +44,7 @@ class GameViewController: UIViewController {
     
     @IBAction func recruitButtonTapped(sender: AnyObject) {
         var tileSelected = GameEngine.Instance.map.selected
-        if (tileSelected?.village == nil)
-        {
-            return
-        }
+
         GameEngine.Instance.game?.recruitUnit((tileSelected?.owner)!, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
         
     }
@@ -77,14 +74,10 @@ class GameViewController: UIViewController {
     
     @IBAction func moveButtonTapped(sender: AnyObject) {
         tileSource = GameEngine.Instance.map.selected
-        if (tileSource?.unit == nil)
-        {
-            return
-        }
+        if (tileSource?.unit == nil) { return }
         
         validateButton.hidden = false
         cancelButton.hidden = false
-//        GameEngine.Instance.moveUnit(... )
         
     }
     
