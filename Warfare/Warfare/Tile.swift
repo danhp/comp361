@@ -55,13 +55,40 @@ class Tile: SKShapeNode, Hashable {
     func draw() {
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
-        
+
+		if self.structure != nil {
+			var v: Int = (self.structure?.rawValue)!
+
+			switch v {
+			case 0:
+				self.addChild(SKLabelNode(text: "Tower"))
+			case 1:
+				self.addChild(SKLabelNode(text: "Road"))
+			case 2:
+				self.addChild(SKLabelNode(text: "Tomb"))
+			default:
+				println("Swift wants something here. Shouldn't be printing")
+			}
+		}
+		if self.village != nil {
+			self.addChild((self.owner?.draw())!)
+
+		}
+		if self.unit != nil {
+			self.addChild((self.unit?.draw())!)
+		}
+
         if let order = self.owner?.player?.order {
             self.strokeColor = Utilities.Colors.colorForPlayer(order)
         } else {
             self.strokeColor = Utilities.Colors.colorForPlayer(-1)
         }
     }
+
+	func update() {
+		self.removeAllChildren()
+		self.draw()
+	}
 
     // MARK - Public functions
 
@@ -83,6 +110,13 @@ class Tile: SKShapeNode, Hashable {
             self.land = .Tree
         }
     }
+
+	func removeUnit() {
+		if self.unit != nil {
+			self.unit?.node?.removeFromParent()
+			self.unit = nil
+		}
+	}
 
     // Builds a road or finishes cultivating a meadow if the required conditions are met
     //
@@ -115,7 +149,7 @@ class Tile: SKShapeNode, Hashable {
     func isProtected(againt: Unit) -> Bool {
         return againt.type.rawValue < self.unit?.type.rawValue
             || (self.structure? == Constants.Types.Structure.Tower && againt.type.rawValue < Constants.Types.Unit.Soldier.rawValue)
-            || (self.owner?.type == Constants.Types.Village.Fort && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
+            || (self.village? == Constants.Types.Village.Fort && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
     }
 
     func isBuildable() -> Bool {

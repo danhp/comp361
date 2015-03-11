@@ -22,8 +22,10 @@ class GameScene: SKScene {
             m.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
             self.addChild(m)
         }
-        
-        setupHud()
+
+		Hud.Instance.update()
+		self.addChild(Hud.Instance)
+
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -53,36 +55,4 @@ class GameScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
-    
-    func setupHud() {
-        
-        //create gold label
-        let goldLabel = SKLabelNode(fontNamed: "Courier")
-        goldLabel.name = kGoldHudName
-        goldLabel.fontSize = 25
-        
-        goldLabel.fontColor = SKColor.blackColor()
-        goldLabel.text = "Gold: " + String((GameEngine.Instance.game?.currentPlayerGold)!)
-        
-        //Note need to position relative and scalable - not hard coded
-        goldLabel.position = CGPoint(x: -430, y: 250 )
-        addChild(goldLabel)
-        
-        //create wood label
-        let woodLabel = SKLabelNode(fontNamed: "Courier")
-        woodLabel.name = kWoodHudName
-        woodLabel.fontSize   = 25
-        
-        woodLabel.fontColor = SKColor.redColor()
-        //Note need to poisiton relative and scalable - not hard coded
-        woodLabel.text = NSString(format: "Wood: %02u", 100.0)
-        
-        woodLabel.position = CGPoint(x: -250, y: 250)
-        woodLabel.text = "Wood: " + String((GameEngine.Instance.game?.currentPlayerWood)!)
-        addChild(woodLabel)
-        
-    }
-    
-    let kGoldHudName = "Gold"
-    let kWoodHudName = "Wood"
 }

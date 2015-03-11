@@ -44,12 +44,9 @@ class GameViewController: UIViewController {
     
     @IBAction func recruitButtonTapped(sender: AnyObject) {
         var tileSelected = GameEngine.Instance.map.selected
-        if (tileSelected?.village == nil)
-        {
-            return
-        }
+
         GameEngine.Instance.game?.recruitUnit((tileSelected?.owner)!, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
-        
+		Hud.Instance.update()
     }
     
 
@@ -59,6 +56,7 @@ class GameViewController: UIViewController {
     @IBAction func validateButtonTapped(sender: AnyObject) {
         var dest = GameEngine.Instance.map.selected
         GameEngine.Instance.game?.moveUnit(tileSource! , to: dest!)
+		Hud.Instance.update()
         validateButton.hidden = true
         cancelButton.hidden = true
     }
@@ -77,14 +75,10 @@ class GameViewController: UIViewController {
     
     @IBAction func moveButtonTapped(sender: AnyObject) {
         tileSource = GameEngine.Instance.map.selected
-        if (tileSource?.unit == nil)
-        {
-            return
-        }
+        if (tileSource?.unit == nil) { return }
         
         validateButton.hidden = false
         cancelButton.hidden = false
-//        GameEngine.Instance.moveUnit(... )
         
     }
     
@@ -92,7 +86,11 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func upgradeButtonTapped(sender: AnyObject) {
-//        GameEngine.Instance.upgradeUnit(<#unit: Unit#>, newLevel: <#Constants.Types.Unit#>)
+		let selectedTile = GameEngine.Instance.map.selected
+		if (selectedTile?.village == nil) { return }
+
+		GameEngine.Instance.game.upgradeVillage(selectedTile!)
+		Hud.Instance.update()
     }
     
     @IBAction func combineButtonTapped(sender: AnyObject) {

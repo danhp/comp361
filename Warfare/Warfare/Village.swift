@@ -1,6 +1,8 @@
+import SpriteKit
 import Foundation
 
 class Village {
+	var node: SKLabelNode?
     var player: Player?
 	var type = Constants.Types.Village.Hovel
 	var gold: Int = 0
@@ -17,14 +19,16 @@ class Village {
 
 	func addTile(tile: Tile) {
 		controlledTiles.append(tile)
+		tile.owner = self
 	}
 
 	func removeTile(tile: Tile) {
 		controlledTiles = controlledTiles.filter({ $0 !== tile })
+		tile.owner = nil
 	}
 
 	func upgradeVillage() {
-		if self.type.rawValue < 3 && self.wood >= Constants.Cost.Upgrade.Village.rawValue {
+		if self.type.rawValue < 2 && self.wood >= Constants.Cost.Upgrade.Village.rawValue {
 			self.wood -= Constants.Cost.Upgrade.Village.rawValue
 			self.type = Constants.Types.Village(rawValue: self.type.rawValue + 1)!
 		}
@@ -64,7 +68,21 @@ class Village {
             t.clear()
         }
     }
-    
+
+	// MARK - Drawing
+
+	func draw() -> SKLabelNode {
+		switch self.type {
+		case .Hovel:
+			node = SKLabelNode(text: "Hovel")
+		case .Town:
+			node = SKLabelNode(text: "Town")
+		case .Fort:
+			node = SKLabelNode(text: "Fort")
+		}
+		return node!
+	}
+
     // MARK - Serialization
     
     func serialize() -> NSDictionary {

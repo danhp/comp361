@@ -172,7 +172,7 @@ class Game {
                         // Peasant and infantry cannot invade a village
                         // Soldiers cannot invade a fort.
                         if to.village != nil && from.unit?.type.rawValue < 3
-                            || from.unit?.type.rawValue == 3 && to.owner?.type.rawValue == 3 { return }
+                            || from.unit?.type.rawValue == 3 && to.village?.rawValue == 3 { return }
 
 
                         // Invade enemy tile
@@ -254,6 +254,8 @@ class Game {
                 from.unit?.currentAction = Constants.Unit.Action.Moved
                 to.unit = from.unit
                 from.unit = nil
+                from.update()
+                to.update()
 
                 // Completed operations
                 return
@@ -261,10 +263,12 @@ class Game {
         }
     }
 
-    func upgradeVillage(village: Village) {
-        if !contains(self.currentPlayer.villages, {$0 === village}) { return }
+    func upgradeVillage(tile: Tile) {
+        if !contains(self.currentPlayer.villages, {$0 === tile.owner}) { return }
+        if tile.village == nil { return }
 
-        village.upgradeVillage()
+        tile.owner.upgradeVillage()
+        tile.update()
     }
 
     func upgradeUnit(unit: Unit, newLevel: Constants.Types.Unit) {
@@ -294,7 +298,7 @@ class Game {
         // Fort can also recruit knight (rawValue: 4)
         if type.rawValue > village.type.rawValue + 1 { return }
 
-        let cost = type.rawValue * Constants.Cost.Upgrade.Unit.rawValue
+        let cost = (type.rawValue + 1) * Constants.Cost.Upgrade.Unit.rawValue
         if village.gold < cost || !tile.isWalkable() { return }
 
         village.gold -= cost
@@ -302,6 +306,7 @@ class Game {
         var newUnit = Unit(type: type)
         newUnit.currentAction = .Moved
         tile.unit = newUnit
+        tile.update()
     }
 
     func buildTower(village: Village, on: Tile) {
