@@ -1,5 +1,6 @@
 import Foundation
 import GameKit
+import SpriteKit
 
 private let _instance = GameEngine()
 
@@ -8,7 +9,8 @@ class GameEngine {
 
     var game: Game!
     var map: Map { return self.game.map }
-
+    var scene: GameScene?
+    
     init() { }
     
     func newGame() {

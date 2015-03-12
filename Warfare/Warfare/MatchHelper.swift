@@ -110,6 +110,8 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
                 GameEngine.Instance.newGame()
                 self.updateMatchData()
             }
+            
+            GameEngine.Instance.scene?.resetMap()
         })
     }
     
@@ -239,9 +241,15 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func player(player: GKPlayer!,
         receivedTurnEventForMatch match: GKTurnBasedMatch!,
         didBecomeActive: Bool) {
-            if didBecomeActive {
                 self.myMatch = match
                 self.loadMatchData()
+            
+            if didBecomeActive {
+                self.vc?.dismissViewControllerAnimated(true, completion: ({() in
+                    // Create GameViewController and move to it
+                    if let mmvc = self.vc as? MainMenuViewController {
+                        mmvc.segueToGameViewController()
+                    }}))
             }
     }
 }

@@ -25,7 +25,6 @@ class Unit {
     func draw() -> SKNode {
         self.node = SKSpriteNode(imageNamed: self.type.name())
         self.node?.setScale(0.5)
-        self.node?.position = CGPoint(x: 0, y: CGFloat(Constants.Tile.size)/2.2)
         return node!
     }
     

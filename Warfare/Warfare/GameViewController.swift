@@ -45,7 +45,8 @@ class GameViewController: UIViewController {
     @IBAction func recruitButtonTapped(sender: AnyObject) {
 		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
         var tileSelected = GameEngine.Instance.map.selected
-		if tileSelected?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
+        
+		if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
 
         if let t = tileSelected?.owner {
             GameEngine.Instance.game?.recruitUnit(t, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
@@ -152,6 +153,8 @@ class GameViewController: UIViewController {
             scene.scaleMode = .AspectFill
             
             skView.presentScene(scene)
+            
+            GameEngine.Instance.scene = scene
         }
     }
     
