@@ -136,20 +136,23 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
             let updatedMatchData = GameEngine.Instance.encodeMatchData()
             self.myMatch?.message = GameEngine.Instance.encodeTurnMessage()
             
-            let current = self.currentParticipantIndex()
-    
-            let nextParticipants = NSMutableArray(capacity: 3)
-            nextParticipants[0] = (self.myMatch?.participants[(current+1)%3])!
-            nextParticipants[1] = (self.myMatch?.participants[(current+2)%3])!
-            nextParticipants[2] = (self.myMatch?.participants[current])! // should be current participant
-            
-            self.myMatch?.endTurnWithNextParticipants(nextParticipants, turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
+            self.myMatch?.endTurnWithNextParticipants(nextParticipants(), turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
                 if ((error) != nil) {
                     println(error)
                 }
             })
 
         }
+    }
+    
+    // TODO also take care of match outcome
+    func nextParticipants() -> NSArray {
+        let current = self.currentParticipantIndex()
+        let nextParticipants = NSMutableArray(capacity: 3)
+        nextParticipants[0] = (self.myMatch?.participants[(current+1)%3])!
+        nextParticipants[1] = (self.myMatch?.participants[(current+2)%3])!
+        nextParticipants[2] = (self.myMatch?.participants[current])! // should be current participant
+        return nextParticipants
     }
     
     func endMatch() {
@@ -190,14 +193,14 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         for p in participants {
              if p.playerID! != nil && p.playerID! == GKLocalPlayer.localPlayer().playerID {
                 nextParticipants.append(p as GKTurnBasedParticipant)
-             } else {
+             } else if p.matchOutcome == .None {
                 nextParticipants.insert(p as GKTurnBasedParticipant, atIndex: 0)
             }
         }
         
         // Send quit
         // TODO matchData mught not be the most up to date
-        match.participantQuitInTurnWithOutcome(.Quit, nextParticipants: nextParticipants, turnTimeout: GKTurnTimeoutDefault, matchData: match.matchData, completionHandler: nil)
+        match.participantQuitInTurnWithOutcome(.Quit, nextParticipants: nextParticipants, turnTimeout: GKTurnTimeoutDefault, matchData: match.matchData, completionHandler: ({(e: NSError!) in println(e)}))
     }
     
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, didFailWithError: NSError!) {
