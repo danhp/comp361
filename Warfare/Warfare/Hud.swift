@@ -71,6 +71,14 @@ class Hud: SKNode {
 
 	}
 
+	func displayUnitDebugger(tile: Tile) {
+		if let unit = tile.unit? {
+			let uAction = SKLabelNode(text: "Unit State: " + unit.currentAction.name())
+			uAction.position = CGPoint(x: -400, y: 100)
+			self.addChild(uAction)
+		}
+	}
+
 	
 
 }

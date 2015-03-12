@@ -40,7 +40,7 @@ class Game {
 
     // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
-        for village in currentPlayer.villages {
+        for village in self.currentPlayer.villages {
             for tile in village.controlledTiles {
 
                 // Replace tombstones
