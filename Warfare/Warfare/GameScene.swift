@@ -49,6 +49,9 @@ class GameScene: SKScene {
 			} else {
 				Hud.Instance.update()
 			}
+
+			// Debugger uncomment to run 
+			Hud.Instance.displayUnitDebugger((self.map?.selected)!)
         }
     }
 	

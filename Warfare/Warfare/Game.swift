@@ -40,7 +40,7 @@ class Game {
 
     // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
-        for village in currentPlayer.villages {
+        for village in self.currentPlayer.villages {
             for tile in village.controlledTiles {
 
                 // Replace tombstones
@@ -98,7 +98,7 @@ class Game {
                     if to.unit != nil || to.village != nil || to.structure == .Tower { return }
                 } else {
                     for n in map.neighbors(tile: to) {
-                        if contains(village.controlledTiles, { $0 === n }) {
+                        if n.owner === village && n.isWalkable() {
                             path = map.getPath(from: from, to: n, accessible: village.controlledTiles)
                             if !path.isEmpty { break }
                         }

@@ -133,6 +133,27 @@ struct Constants {
     struct Unit {
         enum Action: Int {
             case ReadyForOrders = 0, Moved, BuildingRoad, ChoppingTree, ClearingTombstone, UpgradingCombining, StartCultivating, FinishCultivating
+
+            func name() -> String {
+                switch self {
+                case .ReadyForOrders:
+                    return "ready"
+                case .Moved:
+                    return "moved"
+                case .BuildingRoad:
+                    return "roadb"
+                case .ChoppingTree:
+                    return "treec"
+                case .ClearingTombstone:
+                    return "tomb"
+                case .UpgradingCombining:
+                    return "upgraded"
+                case .StartCultivating:
+                    return "cultivate 1"
+                case .FinishCultivating:
+                    return "cultivate 2"
+                }
+            }
         }
     }
 
