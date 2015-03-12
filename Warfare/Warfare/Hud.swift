@@ -16,10 +16,16 @@ class Hud: SKNode {
 
 	func update() {
 		self.removeAllChildren()
+		let indexLabel = SKLabelNode(text: "Current: " + String(MatchHelper.sharedInstance().currentParticipantIndex()))
+		indexLabel.position = CGPoint(x: 430, y: 250)
+		self.addChild(indexLabel)
+
 		self.displayPlayerData()
 	}
 
 	func displayPlayerData() {
+		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+
 		//create gold label
 		let goldLabel = SKLabelNode(fontNamed: "Courier")
 		goldLabel.name = "gold"
@@ -44,25 +50,22 @@ class Hud: SKNode {
 		woodLabel.position = CGPoint(x: -250, y: 250)
 		woodLabel.text = "Wood: " + String((GameEngine.Instance.game?.currentPlayerWood)!)
 		addChild(woodLabel)
-        
-        let indexLabel = SKLabelNode(text: "Participant: " + String(MatchHelper.sharedInstance().currentParticipantIndex()))
-        indexLabel.position = CGPoint(x: -430, y: 200)
-        self.addChild(indexLabel)
-        
 	}
 
 	func displayRegionalData(tile: Tile) {
+		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+
 		self.update()
 
 		if tile.owner.player !== GameEngine.Instance.game.currentPlayer { return }
 
 		let regGold = SKLabelNode(text: "Region Gold: " + String(tile.owner.gold))
-		regGold.position = CGPoint(x: -400, y: 150)
+		regGold.position = CGPoint(x: -400, y: 200)
 		regGold.name = "rGold"
 		self.addChild(regGold)
 
 		let regWood = SKLabelNode(text: "Region Wood: " + String(tile.owner.wood))
-		regWood.position = CGPoint(x: -390, y: 100)
+		regWood.position = CGPoint(x: -390, y: 150)
 		regWood.name = "rGold"
 		self.addChild(regWood)
 

@@ -142,6 +142,7 @@ class Game {
                     if enemyPlayer == nil {
                         // TakeOver neutral tile
                         village.addTile(to)
+                        self.neutralTiles = self.neutralTiles.filter({ $0 !== to })
 
                         // Check if regions join.
                         var mainVillage: Village = village
