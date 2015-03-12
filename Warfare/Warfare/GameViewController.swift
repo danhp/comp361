@@ -120,9 +120,10 @@ class GameViewController: UIViewController {
     @IBAction func skipButtonTapped(sender: AnyObject) {
 //		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
 
+        GameEngine.Instance.game.beginTurn()
+
         MatchHelper.sharedInstance().advanceTurn()
 
-		GameEngine.Instance.game.beginTurn()
 		GameEngine.Instance.map.draw()
 		Hud.Instance.update()
     }
