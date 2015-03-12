@@ -11,7 +11,7 @@ import SpriteKit
 
 class GameScene: SKScene {
     var map: Map?
-	
+
     override func didMoveToView(view: SKView) {
 		self.anchorPoint = CGPointMake(0.5, 0.5)
 
@@ -24,8 +24,8 @@ class GameScene: SKScene {
         }
         
 		Hud.Instance.update()
-		self.addChild(Hud.Instance)
-
+        Hud.Instance.removeFromParent()
+        self.addChild(Hud.Instance)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
