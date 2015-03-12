@@ -1,13 +1,16 @@
 TODO
 
-- TEST 3 PLAYERs
-- CREATE the 3 players
 J
-x Sprites (design and add)
-- Handle events (invite possibly and become active for sure)
+- more designs
+- Invite?
+- Turn event (game not active)
 
 D
-- local current player (prevent not current form action)
-- disable buttons on endturn (+ toast?)
-- village gold on select (hud) (make sure it updates on recruit/wood gathering)
- 
+- fix invade (display and save)
+- check offensive rules
+- Clear village
+- Morph the menu
+
+General
+- Place beginTurn() at the right place
+- Limit scroll distance.
