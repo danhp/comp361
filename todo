@@ -1,9 +1,10 @@
 TODO
 
 J
-- more designs
+- more character designs
 - Invite?
 - Turn event (game not active)
+- Map selection back end
 
 D
 - fix invade (display and save)
@@ -11,6 +12,17 @@ D
 - Clear village
 - Morph the menu
 
+H&P
+- Main menu design and layout
+- Game Menu and HUD design
+- Music, sound effects
+- Map selection view controller (allow local user to choose a map from a selection of maps + remember that choice)
+- UI Assistance (see game requirement doc for description)
+
 General
 - Place beginTurn() at the right place
 - Limit scroll distance.
+- Maps with 300 tiles
+
+Requirements
+- 7 gold per village initially
