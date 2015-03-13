@@ -163,6 +163,16 @@ class Map: SKNode {
         return nil
     }
 
+	func isDistanceOfTwo(from: Tile, to: Tile) -> Bool {
+		for n1 in self.neighbors(tile: from) {
+			if n1 === to { return true }
+			for n2 in self.neighbors(tile: n1) {
+				if n2 === to { return true }
+			}
+		}
+		return false
+	}
+
 	func draw() {
 		let height = Constants.Tile.size * 2
 		let width = sqrt(3)/2.0 * Double(height)

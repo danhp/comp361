@@ -85,7 +85,7 @@ struct Constants {
         }
 
         enum Village: Int {
-            case Hovel = 0, Town, Fort
+            case Hovel = 0, Town, Fort, Castle
 
             func name() -> String {
                 switch self {
@@ -95,12 +95,52 @@ struct Constants {
                     return "town"
                 case .Fort:
                     return "tower"
+                case .Castle:
+                    return "castle"
+                }
+            }
+
+            func wage() -> Int {
+                switch self {
+                case .Castle:
+                    return 80
+                default:
+                    return 0
+                }
+            }
+
+            func health() -> Int {
+                switch self {
+                case .Hovel:
+                    return 1
+                case .Town:
+                    return 2
+                case .Fort:
+                    return 5
+                case .Castle:
+                    return 10
                 }
             }
         }
 
         enum Unit: Int {
-            case Peasant = 0, Infantry, Soldier, Knight
+            case Peasant = 0, Infantry, Soldier, Knight, Canon
+
+            // Cost in (Gold, Wood)
+            func cost() -> (Int, Int) {
+                switch self {
+                case .Peasant:
+                    return (10, 0)
+                case .Infantry:
+                    return (20, 0)
+                case .Soldier:
+                    return (30, 0)
+                case .Knight:
+                    return (40, 0)
+                case .Canon:
+                    return (35, 12)
+                }
+            }
 
             func wage() -> Int {
                 switch self {
@@ -112,6 +152,8 @@ struct Constants {
                     return 18
                 case .Knight:
                     return 54
+                case .Canon:
+                    return 5
                 }
             }
             
@@ -125,6 +167,8 @@ struct Constants {
                     return "soldier"
                 case .Knight:
                     return "knight"
+                case .Canon:
+                    return "canon"
                 }
             }
         }

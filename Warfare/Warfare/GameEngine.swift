@@ -108,9 +108,14 @@ class GameEngine {
         // Simple move rules
         if from.unit == nil { return }
         if from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders { return }
-        if (from.unit?.type)! == Constants.Types.Unit.Knight
-                    && (to.land! == .Tree || to.structure? == Constants.Types.Structure.Tombstone) { return }
+        if from.unit?.type == Constants.Types.Unit.Knight && !to.isWalkable() { return }
         if to.land == .Sea { return }
+
+        // Canon rules
+        if from.unit?.type == Constants.Types.Unit.Canon {
+            if !contains(self.map.neighbors(tile: from), { $0 === to }) || !to.isWalkable() { return }
+            if to.owner.player !== self.game.currentPlayer { return }
+        }
 
         // Check if path exists.
         if to.owner === village {
@@ -264,6 +269,33 @@ class GameEngine {
 
     func attack(from: Tile, to: Tile) {
         if from.owner.player !== self.game.currentPlayer { return }
+        if from.unit?.type != Constants.Types.Unit.Canon { return }
+        if !self.map.isDistanceOfTwo(from, to: to) { return }
+
+        to.structure = nil
+        to.land = .Grass
+        if to.unit != nil {
+            to.unit = nil
+            to.structure = .Tombstone
+        }
+        if to.village != nil {
+            to.owner.attacked()
+            if to.owner.health == 0 {
+                let newHovel = Village()
+                to.owner.player?.addVillage(newHovel)
+                // TODO: Not sure this will work
+                newHovel.controlledTiles = to.owner.controlledTiles
+                to.owner.player?.removeVillage(to.owner)
+
+                let newLocation = newHovel.controlledTiles[0]
+                newLocation.land = .Grass
+                newLocation.unit = nil
+                newLocation.structure = nil
+                newLocation.village = newHovel.type
+            }
+        }
+
+        from.unit?.currentAction = Constants.Unit.Action.Moved
     }
 
     func upgradeVillage(tile: Tile) {
@@ -293,15 +325,17 @@ class GameEngine {
 
         let village = tile.owner
 
-        // Hovel can only recruit peasants and infantry (rawVaue: 1 & 2)
-        // Town can also recruit soldiers (rawValue: 3)
-        // Fort can also recruit knight (rawValue: 4)
-        if type.rawValue > tile.owner.type.rawValue + 2 { return }
+        // Hovel can only recruit peasants and infantry (rawVaue: 0 & 1)
+        // Town can also recruit soldiers (rawValue: 2)
+        // Fort can also recruit knight and canond (rawValue: 3 & 4)
+        if type.rawValue > min(tile.owner.type.rawValue + 1, Constants.Types.Village.Fort.rawValue) { return }
 
-        let cost = (type.rawValue + 1) * Constants.Cost.Upgrade.Unit.rawValue
-        if village.gold < cost || !tile.isWalkable() { return }
+        let costGold = type.cost().0
+        let costWood = type.cost().1
+        if village.gold < costGold || village.wood < costWood || !tile.isWalkable() { return }
 
-        village.gold -= cost
+        village.gold -= costGold
+        village.wood -= costWood
 
         var newUnit = Unit(type: type)
         newUnit.currentAction = .Moved

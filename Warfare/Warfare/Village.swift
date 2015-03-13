@@ -8,6 +8,8 @@ class Village {
 	var gold: Int = 0
 	var wood: Int = 0
 
+	var health: Int = 1
+
     var controlledTiles: [Tile] = [Tile]()
 
     init() { }
@@ -31,11 +33,13 @@ class Village {
 		if self.type.rawValue < 2 && self.wood >= Constants.Cost.Upgrade.Village.rawValue {
 			self.wood -= Constants.Cost.Upgrade.Village.rawValue
 			self.type = Constants.Types.Village(rawValue: self.type.rawValue + 1)!
+			self.health = self.type.health()
 		}
 	}
 
 	func upgradeUnit(unit: Unit, newType: Constants.Types.Unit) {
 		if !self.containsUnit(unit) { return }
+		if unit.type == .Knight { return }
 
 		let upgradeInterval = newType.rawValue - unit.type.rawValue
 
@@ -62,6 +66,10 @@ class Village {
 			return false
 		}
 	}
+
+	func attacked() {
+		self.health -= 1
+	}
     
     func clearRegion() {
         for t in self.controlledTiles {
@@ -85,6 +93,7 @@ class Village {
         dict["type"] = self.type.rawValue
         dict["gold"] = self.gold
         dict["wood"] = self.wood
+		dict["health"] = self.health
         dict["controlledTiles"] = self.controlledTiles.map({$0.serialize()})
         
         return dict
@@ -94,6 +103,7 @@ class Village {
         self.type = Constants.Types.Village(rawValue: dict["type"] as Int)!
         self.gold = dict["gold"] as Int
         self.wood = dict["wood"] as Int
+		self.health = dict["health"] as Int
         
         // TILES
         if let controlled = dict["controlledTiles"] as? NSArray {

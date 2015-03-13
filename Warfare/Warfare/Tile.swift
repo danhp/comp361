@@ -126,25 +126,6 @@ class Tile: SKShapeNode, Hashable {
 		}
 	}
 
-    // Builds a road or finishes cultivating a meadow if the required conditions are met
-    //
-    // @returns True if a meadow was done being cultivated (in which case, according to the requirements, a new meadow should be produce
-    //
-    func makeRoadOrMeadow() -> Bool {
-        if let action: Constants.Unit.Action = self.unit?.currentAction {
-            if action == .BuildingRoad {
-                self.structure = .Road
-                self.unit?.currentAction = Constants.Unit.Action.ReadyForOrders
-            } else if action == .FinishCultivating && self.land! == .Meadow {
-                self.land = .Grass
-                self.unit?.currentAction = .ReadyForOrders
-                return true
-            }
-        }
-
-        return false
-    }
-
     func isWalkable() -> Bool {
         return (self.land == .Grass || self.land == .Meadow)
                 && self.structure != .Tombstone
@@ -152,6 +133,7 @@ class Tile: SKShapeNode, Hashable {
 
     // Check if self can prevent enemy from invading neighbouring tile.
     // @returns True if againt unit is outclassed by tile content.
+	// TODO: Check the edges cases
     func isProtected(againt: Unit) -> Bool {
         return againt.type.rawValue < self.unit?.type.rawValue
             || (self.structure? == Constants.Types.Structure.Tower && againt.type.rawValue < Constants.Types.Unit.Soldier.rawValue)
