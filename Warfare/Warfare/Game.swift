@@ -73,192 +73,165 @@ class Game {
         }
     }
 
-    // Move a unit and update all affected tiles in path.
     func moveUnit(from: Tile, to: Tile) {
-        if !contains(self.currentPlayer.villages, {$0 === from.owner}) { return }
-        if from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders { return }
+        if from.owner.player !== self.currentPlayer { return }
 
         var path = [Tile]()
-        var enemyPlayer: Player?
-        var enemyVillage: Village?
+        var village = from.owner
 
-        for village in currentPlayer.villages {
-            if contains(village.controlledTiles, { $0 === from }) {
-                // Knight cannot clear tiles
-                if (from.unit?.type)! == Constants.Types.Unit.Knight
+        // Simple move rules
+        if from.unit == nil { return }
+        if from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders { return }
+        if (from.unit?.type)! == Constants.Types.Unit.Knight
                     && (to.land! == .Tree || to.structure? == Constants.Types.Structure.Tombstone) { return }
+        if to.land == .Sea { return }
 
-                // Check if path exists.
-                // If to is in controlledTiles, find path normally
-                // Else find path to one of its neighbours that must be a controlledTile
-                if contains(village.controlledTiles, { $0 === to }) {
-                    path = map.getPath(from: from, to: to, accessible: village.controlledTiles)
+        // Check if path exists.
+        if to.owner === village {
+            // Cannot destroy object within controlled region
+            if to.unit != nil || to.village != nil || to.structure == .Tower { return }
 
-                    // Cannot destroy onject within controlled region.
-                    if to.unit != nil || to.village != nil || to.structure == .Tower { return }
+            path = self.map.getPath(from: from, to: to, accessible: village.controlledTiles)
+        } else {
+            for n in self.map.neighbors(tile: to) {
+                if n.owner === village && n.isWalkable() {
+                    path = self.map.getPath(from: from, to: n, accessible: village.controlledTiles)
+                    if !path.isEmpty { break }
+                }
+            }
+        }
+        if path.isEmpty { return }
+
+        //===== UPDATE THE GAME STATE =====
+
+        // To tile is outside the controlled region.
+        if to.owner !== village {
+            // Check offensive rules
+            if to.isProtected(from.unit!) { return }
+            for n in self.map.neighbors(tile: to) {
+                if n.owner.player !== self.currentPlayer {
+                    if n.isProtected(from.unit!) { return }
+                }
+            }
+
+            if to.owner == nil {
+                self.invadeNeutral(village, unit: from.unit!, to: to)
+            } else {
+                self.invadeEnemy(village, unit: from.unit!, to: to)
+            }
+        }
+
+        // Update tiles in the path
+        path.append(to)
+        for t in path {
+            if (from.unit?.type == Constants.Types.Unit.Knight || from.unit?.type == Constants.Types.Unit.Soldier)
+                        && t.land == .Meadow
+                        && t.structure != .Road {
+                t.land = .Grass
+            }
+        }
+
+        // Update the destination tile
+        if to.structure? == Constants.Types.Structure.Tombstone {
+            to.structure = nil
+        }
+        if to.land == .Tree {
+            to.land = .Grass
+            village.wood += 1
+        }
+
+        // Move the unit
+        to.unit = from.unit
+        from.unit = nil
+        to.unit?.currentAction = Constants.Unit.Action.Moved
+    }
+
+    private func invadeNeutral(village: Village, unit: Unit, to: Tile) {
+        var mainVillage = village
+        var mergeVillage: Village
+
+        // Update the state.
+        mainVillage.addTile(to)
+        self.neutralTiles = self.neutralTiles.filter({ $0 !== to })
+
+        // Merge connected regions
+        for n in self.map.neighbors(tile: to) {
+            if n.owner.player === mainVillage.player {
+                if n.owner === mainVillage { continue }
+
+                if mainVillage.compareTo(n.owner) {
+                    mergeVillage = n.owner
                 } else {
-                    for n in map.neighbors(tile: to) {
-                        if n.owner === village && n.isWalkable() {
-                            path = map.getPath(from: from, to: n, accessible: village.controlledTiles)
-                            if !path.isEmpty { break }
-                        }
-                    }
-                }
-                if path.isEmpty { return }
-
-                // Execute if tile is outside controlled region
-                if !contains(village.controlledTiles, {$0 === to}) {
-                    //Check if tile in unprotected
-                    if to.isProtected(from.unit!) { return }
-                    for n in map.neighbors(tile: to) {
-                        // TODO: hackish temp fix
-                        var a: Bool = false
-                        for v in self.currentPlayer.villages {
-                            if contains(v.controlledTiles, {$0 === n}) {
-                                a = true
-                                break
-                            }
-                        }
-
-                        if !a && n.isProtected(from.unit!) { return }
-                    }
-
-                    // Find player and village for to tile.
-                    // nil if tile is neutral
-                    for p in self.players {
-                        if p === self.currentPlayer { continue }
-                        for v in p.villages {
-                            if contains(v.controlledTiles, { $0 === to }) {
-                                // Peasant can only invade neutral
-                                if from.unit?.type == Constants.Types.Unit.Peasant { return }
-
-                                enemyPlayer = p
-                                enemyVillage = v
-                                break
-                            }
-                        }
-                    }
-
-                    if enemyPlayer == nil {
-                        // TakeOver neutral tile
-                        village.addTile(to)
-                        self.neutralTiles = self.neutralTiles.filter({ $0 !== to })
-
-                        // Check if regions join.
-                        var mainVillage: Village = village
-                        var mergedVillage: Village = Village()
-
-                        for n in self.map.neighbors(tile: to) {
-                            for v in self.currentPlayer.villages {
-                                if v === mainVillage || v === village { continue }
-                                if contains(v.controlledTiles, {$0 === n}) {
-                                    if mainVillage.compareTo(v) {
-                                        mergedVillage = v
-                                    } else {
-                                        mergedVillage = mainVillage
-                                        mainVillage = v
-                                    }
-
-                                    mainVillage.wood += mergedVillage.wood
-                                    mainVillage.gold += mergedVillage.gold
-
-                                    for t in mergedVillage.controlledTiles {
-                                        mainVillage.addTile(t)
-                                        t.village = nil
-                                    }
-                                    self.currentPlayer.removeVillage(mergedVillage)
-                                }
-                            }
-                        }
-                    } else {
-                        // Peasant and infantry cannot invade a village
-                        // Soldiers cannot invade a fort.
-                        if to.village != nil && from.unit?.type.rawValue < 3
-                            || from.unit?.type.rawValue == 3 && to.village?.rawValue == 3 { return }
-
-
-                        // Invade enemy tile
-                        village.addTile(to)
-                        enemyVillage?.removeTile(to)
-
-                        let regions = self.map.getRegions((enemyVillage?.controlledTiles)!)
-
-                        // Update destination tile.
-                        to.unit = nil
-                        to.structure = nil
-                        if to.village != nil {
-                            village.wood += (to.owner?.wood)!
-                            village.gold += (to.owner?.gold)!
-                            to.village = nil
-                            enemyPlayer?.removeVillage(enemyVillage!)
-                        }
-
-
-                        for r in regions {
-                            // Region is too small
-                            if r.count < 3 {
-                                for t in r {
-                                    t.structure = nil
-                                    if t.unit != nil {
-                                        t.structure = Constants.Types.Structure.Tombstone
-                                    }
-                                    t.unit = nil
-                                    enemyVillage?.removeTile(t)
-                                    if t.village != nil {
-                                        enemyPlayer?.removeVillage(t.owner!)
-                                        t.village = nil
-                                    }
-                                }
-                                continue
-                            }
-
-                            // Region can still support a village.
-                            if map.getVillage(r) == nil {
-                                let newHovel = Village()
-                                for t in r {
-                                    newHovel.addTile(t)
-                                    enemyVillage?.removeTile(t)
-                                }
-
-                                enemyPlayer?.addVillage(newHovel)
-
-                                // TODO: Actually place it somewhere legal.
-                                r[0].land = .Grass
-                                r[0].unit = nil
-                                r[0].structure = nil
-                                r[0].owner = newHovel
-                            }
-
-                        }
-                    }
+                    mergeVillage = mainVillage
+                    mainVillage = n.owner
                 }
 
-                // Update tiles in path
-                path.append(to)
-                for tile in path {
-                    if (from.unit?.type == Constants.Types.Unit.Knight || from.unit?.type == Constants.Types.Unit.Soldier)
-                        && tile.land == .Meadow
-                        && tile.structure != .Road {
-                            tile.land = .Grass
+                for t in mergeVillage.controlledTiles {
+                    mainVillage.addTile(t)
+                    t.village = nil
+                }
+
+                self.currentPlayer.removeVillage(mergeVillage)
+            }
+        }
+    }
+
+    private func invadeEnemy(village: Village, unit: Unit, to: Tile) {
+        var enemyPlayer = to.owner.player
+        var enemyVillage = to.owner
+
+        // Check specific offensive rules
+        if to.village != nil && unit.type.rawValue < 2
+                    || unit.type.rawValue == 2 && to.village?.rawValue == 2 { return }
+
+        // Invade enemy tile
+        to.owner?.removeTile(to)
+        village.addTile(to)
+
+        // Update destination tile
+        to.unit = nil
+        to.structure = nil
+        if to.village != nil {
+            village.wood = (to.owner?.wood)!
+            village.gold = (to.owner?.wood)!
+            to.village = nil
+            to.owner.removeTile(to)
+        }
+
+        let regions = self.map.getRegions(enemyVillage.controlledTiles)
+        for r in regions {
+            // Region is too small
+            if r.count < 3 {
+                for t in r {
+                    t.structure = nil
+                    if t.unit != nil {
+                        t.unit = nil
+                        t.structure = .Tombstone
+                    }
+                    t.owner.removeTile(t)
+                    self.neutralTiles.append(t)
+                    if t.village != nil {
+                        t.owner.player?.removeVillage(t.owner)
+                        t.village = nil
                     }
                 }
+                continue
+            }
 
-                // Update destination tile.
-                if to.structure? == Constants.Types.Structure.Tombstone {
-                    to.structure = nil
+            // Region can still support a village
+            if self.map.getVillage(r) == nil {
+                let newHovel = Village()
+                for t in r {
+                    enemyVillage.removeTile(t)
+                    newHovel.addTile(t)
                 }
-                if to.land == .Tree {
-                    to.land = .Grass
-                    village.wood += 1
-                }
 
-                // Move the unit
-                from.unit?.currentAction = Constants.Unit.Action.Moved
-                to.unit = from.unit
-                from.unit = nil
+                enemyPlayer?.addVillage(newHovel)
 
-                // Completed operations
-                return
+                r[0].land = .Grass
+                r[0].unit = nil
+                r[0].structure = nil
+                r[0].village = newHovel.type
             }
         }
     }
@@ -285,13 +258,15 @@ class Game {
         tileB.unit = nil
     }
 
-    func recruitUnit(village: Village, type: Constants.Types.Unit, tile: Tile) {
+    func recruitUnit(tile: Tile, type: Constants.Types.Unit) {
         if tile.owner.player !== self.currentPlayer { return }
+
+        let village = tile.owner
 
         // Hovel can only recruit peasants and infantry (rawVaue: 1 & 2)
         // Town can also recruit soldiers (rawValue: 3)
         // Fort can also recruit knight (rawValue: 4)
-        if type.rawValue > village.type.rawValue + 2 { return }
+        if type.rawValue > tile.owner.type.rawValue + 2 { return }
 
         let cost = (type.rawValue + 1) * Constants.Cost.Upgrade.Unit.rawValue
         if village.gold < cost || !tile.isWalkable() { return }
@@ -299,65 +274,75 @@ class Game {
         village.gold -= cost
 
         var newUnit = Unit(type: type)
-//        newUnit.currentAction = .Moved
+        newUnit.currentAction = .Moved
         tile.unit = newUnit
     }
 
-    func buildTower(village: Village, on: Tile) {
-        // Hovels cannot build Towers.
-        if village.type == .Hovel { return }
-        if !contains(self.currentPlayer.villages, {$0 === village}) { return }
+    func buildTower(on: Tile) {
+        if on.owner.player !== self.currentPlayer { return }
 
+        let village = on.owner
+
+        // Check tower construction rules
+        if village.type == .Hovel { return }
         let tower = Constants.Types.Structure.Tower
         if village.wood < tower.cost() || !on.isBuildable() { return }
 
+        // Update the state
         village.wood -= tower.cost()
         on.structure = tower
     }
 
     // Moves unit from -> on, instruct unit to start building road.
     func buildRoad(on: Tile, from: Tile) {
-        // TODO: Change with implementation of tile (loop)
-        for village in self.currentPlayer.villages {
-            // Check tiles are both in the same region and connected
-            let path = self.map.getPath(from: from, to: on, accessible: village.controlledTiles)
-            if path.isEmpty { continue }
+        if from.owner.player !== self.currentPlayer { return }
 
-            let road = Constants.Types.Structure.Road
-            if village.wood < road.cost()
-                || !on.isBuildable()
-                || from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders
-                || from.unit?.type != Constants.Types.Unit.Peasant{ return }
+        let village = from.owner
 
-            village.wood -= road.cost()
-            on.unit = from.unit
-            from.unit = nil
-            on.unit?.currentAction = Constants.Unit.Action.BuildingRoad
+        // Tiles must be connected and in the same region
+        if village !== on.owner { return }
 
-            return
-        }
+        let path = self.map.getPath(from: from, to: on, accessible: village.controlledTiles)
+        if path.isEmpty { return }
+
+        // Check road building rules
+        let road = Constants.Types.Structure.Road
+        if village.wood < road.cost()
+                    || !on.isBuildable()
+                    || from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders
+                    || from.unit?.type != Constants.Types.Unit.Peasant{ return }
+
+        // Change the state.
+        village.wood -= road.cost()
+        on.unit = from.unit
+        from.unit = nil
+        on.unit?.currentAction = Constants.Unit.Action.BuildingRoad
     }
 
     // Moves unit from -> on, instruct unit to start creating meadow for 2 turns
     func startCultivating(on: Tile, from: Tile) {
-        for village in self.currentPlayer.villages {
-            // Check tiles are both in the same region and connected
-            let path = self.map.getPath(from: from, to: on, accessible: village.controlledTiles)
-            if path.isEmpty { continue }
+        if from.owner.player !== self.currentPlayer { return }
 
-            let cost = Constants.Types.Land.Meadow.cost()
-            if village.wood < cost
-                || !on.isBuildable()
-                || from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders
-                || from.unit?.type != Constants.Types.Unit.Peasant{ return }
+        let village = from.owner
 
-            village.wood -= cost
-            on.unit = from.unit
-            from.unit = nil
-            on.unit?.currentAction = Constants.Unit.Action.StartCultivating
+        //Tiles must be connected and in the same region
+        if village !== on.owner { return }
 
-            return
-        }
+        let path = self.map.getPath(from: from, to: on, accessible: village.controlledTiles)
+        if path.isEmpty { return }
+
+        // Check cultivation rules
+        let cost = Constants.Types.Land.Meadow.cost()
+        if village.wood < cost
+                    || !on.isBuildable()
+                    || from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders
+                    || from.unit?.type != Constants.Types.Unit.Peasant{ return }
+
+        // Change the state
+        village.wood -= cost
+        on.unit = from.unit
+        from.unit = nil
+        on.unit?.currentAction = Constants.Unit.Action.StartCultivating
     }
     
     // MARK: - Encoding
