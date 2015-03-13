@@ -120,6 +120,7 @@ class GameViewController: UIViewController {
     @IBAction func skipButtonTapped(sender: AnyObject) {
 //		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
 
+        // TODO move to the beginnig of the turn
         GameEngine.Instance.game.beginTurn()
 
         MatchHelper.sharedInstance().advanceTurn()
