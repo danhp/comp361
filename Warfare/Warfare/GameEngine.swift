@@ -10,9 +10,9 @@ class GameEngine {
     var game: Game!
     var map: Map { return self.game.map }
     var scene: GameScene?
-    
+
     init() { }
-    
+
     func newGame() {
         self.loadMap(number: "1")
     }
@@ -57,15 +57,18 @@ class GameEngine {
 
                 // Produce constructions and set unit actions.
                 // ReadyForOrders for all except first phase cultivation
-                if tile.unit?.currentAction == Constants.Unit.Action.StartCultivating {
-                    tile.unit?.currentAction = Constants.Unit.Action.FinishCultivating
-                } else {
-                    if tile.unit?.currentAction == Constants.Unit.Action.FinishCultivating {
-                        tile.land = .Meadow
-                    } else if tile.unit?.currentAction == Constants.Unit.Action.BuildingRoad {
-                        tile.structure = .Road
+                if let action = tile.unit?.currentAction {
+                    if action == .StartCultivating {
+                        tile.unit?.currentAction = .FinishCultivating
+                    } else {
+                        if action == .FinishCultivating {
+                            tile.land = .Meadow
+                        } else if action == .BuildingRoad {
+                            tile.structure = .Road
+                        }
+
+                        tile.unit?.currentAction = Constants.Unit.Action.ReadyForOrders
                     }
-                    tile.unit?.currentAction = Constants.Unit.Action.ReadyForOrders
                 }
 
                 // Add gold value to village.
@@ -100,7 +103,7 @@ class GameEngine {
         if from.owner.player !== self.game.currentPlayer { return }
 
         var path = [Tile]()
-        var village = from.owner
+        let village = from.owner
 
         // Simple move rules
         if from.unit == nil { return }
@@ -248,9 +251,9 @@ class GameEngine {
                     enemyVillage.removeTile(t)
                     newHovel.addTile(t)
                 }
-                
+
                 enemyPlayer?.addVillage(newHovel)
-                
+
                 r[0].land = .Grass
                 r[0].unit = nil
                 r[0].structure = nil
@@ -384,16 +387,16 @@ class GameEngine {
             }
         }
     }
-    
+
     func decode(matchData: NSData) {
         self.game = Game()
         self.game.importData(matchData)
     }
-    
+
     func encodeMatchData() -> NSData {
         return (self.game?.encodeMatchData())!
     }
-    
+
     func encodeTurnMessage() -> String {
         return self.game?.matchTurnMessage() ?? "No message."
     }

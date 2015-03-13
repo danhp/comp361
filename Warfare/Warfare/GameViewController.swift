@@ -48,11 +48,9 @@ class GameViewController: UIViewController {
 
         if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
 
-        if let t = tileSelected?.owner {
-            GameEngine.Instance.recruitUnit(tileSelected!, type: Constants.Types.Unit.Peasant)
-            Hud.Instance.update()
-            GameEngine.Instance.map.draw()
-        }
+        GameEngine.Instance.recruitUnit(tileSelected!, type: Constants.Types.Unit.Peasant)
+        Hud.Instance.update()
+        GameEngine.Instance.map.draw()
     }
 
 
