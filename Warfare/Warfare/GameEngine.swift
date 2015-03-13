@@ -19,6 +19,33 @@ class GameEngine {
 
     // MARK: - Operations
 
+    // Should get called once a cycle (after all player have played their turn
+    func growTrees() {
+        let allTiles = self.map.tiles.rows.reduce([], combine: +)
+        var seen = [Tile]()
+
+        for t in allTiles {
+            // Only visit unseen tiles
+            if contains(seen, { $0 === t}) { continue }
+            seen.append(t)
+
+            // Only consider tiles with trees
+            if t.land != .Tree { continue }
+
+            for n in self.map.neighbors(tile: t) {
+                if contains(seen, { $0 === n }) { continue }
+                seen.append(n)
+
+                if n.isGrowable() {
+                    let random = Int(arc4random_uniform(2))
+                    if random == 0 {
+                        n.land = .Tree
+                    }
+                    break
+                }
+            }
+        }
+    }
 
     // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
@@ -232,6 +259,9 @@ class GameEngine {
         }
     }
 
+    func attack(from: Tile, to: Tile) {
+        if from.owner.player !== self.game.currentPlayer { return }
+    }
 
     func upgradeVillage(tile: Tile) {
         if tile.owner.player !== self.game.currentPlayer { return }

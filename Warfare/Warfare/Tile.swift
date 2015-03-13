@@ -165,6 +165,14 @@ class Tile: SKShapeNode, Hashable {
                     && self.land == .Grass
     }
 
+	func isGrowable() -> Bool {
+		return self.unit == nil
+					&& self.village == nil
+					&& self.structure == nil
+					&& self.land != .Sea
+					&& self.land != .Tree
+	}
+
     func clear() {
         unit = nil
         village = nil
