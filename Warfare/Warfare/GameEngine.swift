@@ -50,9 +50,23 @@ class GameEngine {
 
             // Delete the Village
             if village.gold <= 0 {
-                self.game.currentPlayer.clearVillages(village)
+                self.killVillage(village)
             }
         }
+    }
+
+    private func killVillage(village: Village) {
+        for tile in village.controlledTiles {
+            tile.structure = nil
+            if tile.unit != nil {
+                tile.unit = nil
+                tile.structure = .Tombstone
+            }
+            tile.village = nil
+            tile.owner.removeTile(tile)
+            self.game.neutralTiles.append(tile)
+        }
+        self.game.currentPlayer.removeVillage(village)
     }
 
     func moveUnit(from: Tile, to: Tile) {
