@@ -51,7 +51,22 @@ struct Constants {
                 case .Meadow:
                     return "meadow"
                 case .Sea:
-                    return "sea"
+                    return ["mountain", "mountain2"][Int(arc4random_uniform(2))]
+                }
+            }
+            
+            func scale() -> Float {
+                switch self {
+                case .Grass:
+                    return 1
+                case .Tree:
+                    return 0.5
+                case .Meadow:
+                    return 1
+                case .Sea:
+                    return 0.4
+                default:
+                    return 1
                 }
             }
 
