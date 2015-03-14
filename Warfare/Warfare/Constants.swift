@@ -109,6 +109,15 @@ struct Constants {
                 }
             }
 
+            func upgradeCost() -> Int {
+                switch self {
+                case .Castle:
+                    return 12
+                default:
+                    return 8
+                }
+            }
+
             func health() -> Int {
                 switch self {
                 case .Hovel:
@@ -218,7 +227,6 @@ struct Constants {
 
     struct Cost {
         enum Upgrade: Int {
-            case Village = 8
             case Unit = 10
         }
     }

@@ -138,9 +138,11 @@ class GameEngine {
         // To tile is outside the controlled region.
         if to.owner !== village {
             // Check offensive rules
+            if to.village == Constants.Types.Village.Castle { return }
             if to.isProtected(from.unit!) { return }
             for n in self.map.neighbors(tile: to) {
                 if n.owner.player !== self.game.currentPlayer {
+                    if n.unit?.type == Constants.Types.Unit.Canon { continue }
                     if n.isProtected(from.unit!) { return }
                 }
             }
@@ -148,6 +150,10 @@ class GameEngine {
             if to.owner == nil {
                 self.invadeNeutral(village, unit: from.unit!, to: to)
             } else {
+                // Peasant & Canon cannot invade enemy tiles
+                if from.unit?.type == Constants.Types.Unit.Peasant { return }
+                if from.unit?.type == Constants.Types.Unit.Canon { return }
+
                 self.invadeEnemy(village, unit: from.unit!, to: to)
             }
         }
@@ -155,7 +161,7 @@ class GameEngine {
         // Update tiles in the path
         path.append(to)
         for t in path {
-            if (from.unit?.type == Constants.Types.Unit.Knight || from.unit?.type == Constants.Types.Unit.Soldier)
+            if (from.unit?.type.rawValue >= Constants.Types.Unit.Soldier.rawValue)
                         && t.land == .Meadow
                         && t.structure != .Road {
                 t.land = .Grass
@@ -270,6 +276,8 @@ class GameEngine {
     func attack(from: Tile, to: Tile) {
         if from.owner.player !== self.game.currentPlayer { return }
         if from.unit?.type != Constants.Types.Unit.Canon { return }
+        if from.owner.player === to.owner.player { return }
+        if to.land == .Sea { return }
         if !self.map.isDistanceOfTwo(from, to: to) { return }
 
         to.structure = nil

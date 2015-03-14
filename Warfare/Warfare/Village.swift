@@ -30,9 +30,14 @@ class Village {
 	}
 
 	func upgradeVillage() {
-		if self.type.rawValue < 2 && self.wood >= Constants.Cost.Upgrade.Village.rawValue {
-			self.wood -= Constants.Cost.Upgrade.Village.rawValue
-			self.type = Constants.Types.Village(rawValue: self.type.rawValue + 1)!
+		if self.type == Constants.Types.Village.Castle { return }
+
+		let newLevel = Constants.Types.Village(rawValue: self.type.rawValue + 1)
+		let cost = newLevel?.upgradeCost()
+
+		if self.wood >= cost {
+			self.wood -= cost!
+			self.type = newLevel!
 			self.health = self.type.health()
 		}
 	}
@@ -46,6 +51,7 @@ class Village {
 		if upgradeInterval >= 1 && self.gold >= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue {
 			self.gold -= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue
 			unit.type = newType
+			unit.currentAction = .UpgradingCombining
 		}
 	}
 

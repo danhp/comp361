@@ -108,6 +108,9 @@ class Tile: SKShapeNode, Hashable {
         if let u = self.unit {
             return u.type.wage()
         }
+		if let v = self.village {
+			return v.wage()
+		}
 
         return 0
     }
@@ -135,9 +138,9 @@ class Tile: SKShapeNode, Hashable {
     // @returns True if againt unit is outclassed by tile content.
 	// TODO: Check the edges cases
     func isProtected(againt: Unit) -> Bool {
-        return againt.type.rawValue < self.unit?.type.rawValue
+        return againt.type.rawValue = min(self.unit?.type.rawValue, Constants.Types.Unit.Knight.rawValue)
             || (self.structure? == Constants.Types.Structure.Tower && againt.type.rawValue < Constants.Types.Unit.Soldier.rawValue)
-            || (self.village? == Constants.Types.Village.Fort && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
+            || (self.village?.rawValue >= Constants.Types.Village.Fort.rawValue && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
     }
 
     func isBuildable() -> Bool {
