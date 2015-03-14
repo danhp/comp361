@@ -91,9 +91,9 @@ class Tile: SKShapeNode, Hashable {
             self.strokeColor = Utilities.Colors.colorForPlayer(-1)
         }
         
-        if self.land == Constants.Types.Land.Tree {
-            let sprite = SKSpriteNode(imageNamed: "tree")
-            sprite.setScale(0.5)
+        if self.land == Constants.Types.Land.Tree || self.land == Constants.Types.Land.Sea {
+            let sprite = SKSpriteNode(imageNamed: self.land.name())
+            sprite.setScale(CGFloat(self.land.scale()))
             self.addChild(sprite)
         }
     }

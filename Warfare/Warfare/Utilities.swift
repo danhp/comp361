@@ -29,7 +29,7 @@ class Utilities {
         class func colorForLandType(l: Constants.Types.Land) -> UIColor {
             switch l {
             case .Sea:
-                return UIColor.blueColor()
+                return UIColor.grayColor()
             case .Grass, .Tree:
                 return UIColor(rgb: 0x1b4001)
             case .Meadow:

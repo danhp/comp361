@@ -92,7 +92,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
             request.minPlayers = 3
             request.maxPlayers = 3
             request.defaultNumberOfPlayers = 3
-    
+            
             
             let mmvc = GKTurnBasedMatchmakerViewController(matchRequest: request)
             mmvc.turnBasedMatchmakerDelegate = self
@@ -115,8 +115,8 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         })
     }
     
-    // If the player takes an action that is irrevocable 
-    // (but control is not yet passed to another player), 
+    // If the player takes an action that is irrevocable
+    // (but control is not yet passed to another player),
     // encode the updated match data and send it to Game Center
     //
     func updateMatchData() {
@@ -129,7 +129,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         })
     }
     
-    //  the current player takes an action that either ends 
+    //  the current player takes an action that either ends
     // the match or requires another participant to act
     //
     func advanceTurn() {
@@ -143,7 +143,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
                     println(error)
                 }
             })
-
+            
         }
     }
     
@@ -193,9 +193,9 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         // Make next participant array
         var nextParticipants = [GKTurnBasedParticipant]()
         for p in participants {
-             if p.playerID! != nil && p.playerID! == GKLocalPlayer.localPlayer().playerID {
+            if p.playerID! != nil && p.playerID! == GKLocalPlayer.localPlayer().playerID {
                 nextParticipants.append(p as GKTurnBasedParticipant)
-             } else if p.matchOutcome == .None {
+            } else if p.matchOutcome == .None {
                 nextParticipants.insert(p as GKTurnBasedParticipant, atIndex: 0)
             }
         }
@@ -212,7 +212,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     // Mark: - GKTurnBasedEventListener
     
     // Mark: Handling Exchanges
-       func player(player: GKPlayer!, receivedExchangeCancellation exchange: GKTurnBasedExchange!, forMatch match: GKTurnBasedMatch!) {
+    func player(player: GKPlayer!, receivedExchangeCancellation exchange: GKTurnBasedExchange!, forMatch match: GKTurnBasedMatch!) {
         // Do nothing
     }
     
@@ -223,7 +223,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func player(player: GKPlayer!,
         receivedExchangeRequest exchange: GKTurnBasedExchange!,
         forMatch match: GKTurnBasedMatch!) {
-        // Do nothing
+            // Do nothing
     }
     
     // Mark: Handling Match Related Events
@@ -241,15 +241,13 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func player(player: GKPlayer!,
         receivedTurnEventForMatch match: GKTurnBasedMatch!,
         didBecomeActive: Bool) {
-                self.myMatch = match
-                self.loadMatchData()
+            self.myMatch = match
+            self.loadMatchData()
             
             if didBecomeActive {
-                self.vc?.dismissViewControllerAnimated(true, completion: ({() in
-                    // Create GameViewController and move to it
-                    if let mmvc = self.vc as? MainMenuViewController {
-                        mmvc.segueToGameViewController()
-                    }}))
+                if let mmvc = self.vc as? MainMenuViewController {
+                    mmvc.segueToGameViewController()
+                } else { println("huh... current view controller should be MainMenuViewController but is" + (self.vc?.description)!) }
             }
     }
 }
