@@ -103,15 +103,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     
     func loadMatchData() {
         self.myMatch?.loadMatchDataWithCompletionHandler({ (matchData: NSData!, error: NSError!) -> Void in
-            // If match data has length of 0, the game is *new*, else, decode it
-            if matchData.length > 0 {
-                GameEngine.Instance.decode(matchData)
-            } else {
-                GameEngine.Instance.newGame()
-                self.updateMatchData()
-            }
-            
-            GameEngine.Instance.scene?.resetMap()
+            GameEngine.Instance.decode(matchData)
         })
     }
     
@@ -129,21 +121,33 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         })
     }
     
-    //  the current player takes an action that either ends
-    // the match or requires another participant to act
-    //
-    func advanceTurn() {
+    //  Te current player takes an action that either ends
+    //  the match or requires another participant to act
+    //  NOTE: the function takes care of extracting the match data
+    func advanceMatchTurn() {
         if let match = self.myMatch {
             
             let updatedMatchData = GameEngine.Instance.encodeMatchData()
-            self.myMatch?.message = GameEngine.Instance.encodeTurnMessage()
+            match.message = GameEngine.Instance.encodeTurnMessage()
             
-            self.myMatch?.endTurnWithNextParticipants(nextParticipants(), turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
+            match.endTurnWithNextParticipants(nextParticipants(), turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
                 if ((error) != nil) {
                     println(error)
                 }
             })
             
+        }
+    }
+    
+    // The current player has selected a map
+    // NOTE: the function requires match data
+    func advanceSelectionTurn(data: NSData) {
+        if let match = self.myMatch {
+            match.endTurnWithNextParticipants(nextParticipants(), turnTimeout: GKTurnTimeoutDefault, matchData: data, completionHandler: {(error: NSError!) -> Void in
+                if ((error) != nil) {
+                    println(error)
+                }
+            })
         }
     }
     

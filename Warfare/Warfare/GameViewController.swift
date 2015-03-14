@@ -123,7 +123,7 @@ class GameViewController: UIViewController {
         // TODO move to the beginnig of the turn
         GameEngine.Instance.game.beginTurn()
 
-        MatchHelper.sharedInstance().advanceTurn()
+        MatchHelper.sharedInstance().advanceMatchTurn()
 
 		GameEngine.Instance.map.draw()
 		Hud.Instance.update()

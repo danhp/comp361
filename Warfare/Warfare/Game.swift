@@ -28,12 +28,8 @@ class Game {
 
     init() { }
     
-    func importData(data: NSData) {
-        if let dict = self.decode(data) {
-            self.deserialize(dict)
-        } else {
-            println("Error while decoding match data")
-        }
+    func importDictionary(dict: NSDictionary) {
+        self.deserialize(dict)
     }
 
     // MARK: - Operations
@@ -374,14 +370,6 @@ class Game {
     func matchTurnMessage() -> String {
         // TODO
         return ""
-    }
-
-    // Decodes match data into a dictionary
-    func decode(data: NSData) -> NSDictionary? {
-        var parseError: NSError?
-        let parsedObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parseError)
-
-        return parsedObject as? NSDictionary
     }
 
     // MARK: - Serialization
