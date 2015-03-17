@@ -137,10 +137,12 @@ class Tile: SKShapeNode, Hashable {
     // Check if self can prevent enemy from invading neighbouring tile.
     // @returns True if againt unit is outclassed by tile content.
 	// TODO: Check the edges cases
-    func isProtected(againt: Unit) -> Bool {
-        return againt.type.rawValue == min((self.unit?.type.rawValue)!, Constants.Types.Unit.Knight.rawValue)
-            || (self.structure? == Constants.Types.Structure.Tower && againt.type.rawValue < Constants.Types.Unit.Soldier.rawValue)
-            || (self.village?.rawValue >= Constants.Types.Village.Fort.rawValue && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
+    func isProtected(against: Unit) -> Bool {
+		let attackingType = against.type.rawValue
+
+        return attackingType < min((self.unit?.type.rawValue)!, Constants.Types.Unit.Knight.rawValue)
+					|| self.structure? == Constants.Types.Structure.Tower && attackingType < Constants.Types.Unit.Soldier.rawValue
+					|| self.village?.rawValue >= Constants.Types.Village.Fort.rawValue && attackingType < Constants.Types.Unit.Knight.rawValue
     }
 
     func isBuildable() -> Bool {
