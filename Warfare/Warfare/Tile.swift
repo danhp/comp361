@@ -53,44 +53,44 @@ class Tile: SKShapeNode, Hashable {
     }
 
     func draw() {
-		self.removeAllChildren()
+        self.removeAllChildren()
 
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
-        
+
         if self.owner?.player != nil {
             self.lineWidth = 2
             self.glowWidth = 2
         }
-        
-		if let s = self.structure {
-			var v: Int = s.rawValue
 
-			switch v {
-			case 0:
-				self.addChild(SKLabelNode(text: "Tower"))
-			case 1:
-				self.addChild(SKLabelNode(text: "Road"))
-			case 2:
-				self.addChild(SKLabelNode(text: "Tomb"))
-			default:
-				println("Swift wants something here. Shouldn't be printing")
-			}
-		}
-		if self.village != nil {
-			self.addChild((self.owner?.draw())!)
+        if let s = self.structure {
+            var v: Int = s.rawValue
 
-		}
-		if let u = self.unit {
-			self.addChild(u.draw())
-		}
+            switch v {
+            case 0:
+                self.addChild(SKLabelNode(text: "Tower"))
+            case 1:
+                self.addChild(SKLabelNode(text: "Road"))
+            case 2:
+                self.addChild(SKLabelNode(text: "Tomb"))
+            default:
+                println("Swift wants something here. Shouldn't be printing")
+            }
+        }
+        if self.village != nil {
+            self.addChild((self.owner?.draw())!)
+
+        }
+        if let u = self.unit {
+            self.addChild(u.draw())
+        }
 
         if let order = self.owner?.player?.order {
             self.strokeColor = Utilities.Colors.colorForPlayer(order)
         } else {
             self.strokeColor = Utilities.Colors.colorForPlayer(-1)
         }
-        
+
         if self.land == Constants.Types.Land.Tree || self.land == Constants.Types.Land.Sea {
             let sprite = SKSpriteNode(imageNamed: self.land.name())
             sprite.setScale(CGFloat(self.land.scale()))
@@ -108,9 +108,9 @@ class Tile: SKShapeNode, Hashable {
         if let u = self.unit {
             return u.type.wage()
         }
-		if let v = self.village {
-			return v.wage()
-		}
+        if let v = self.village {
+            return v.wage()
+        }
 
         return 0
     }
@@ -122,12 +122,12 @@ class Tile: SKShapeNode, Hashable {
         }
     }
 
-	func removeUnit() {
-		if self.unit != nil {
-			self.unit?.node?.removeFromParent()
-			self.unit = nil
-		}
-	}
+    func removeUnit() {
+        if self.unit != nil {
+            self.unit?.node?.removeFromParent()
+            self.unit = nil
+        }
+    }
 
     func isWalkable() -> Bool {
         return (self.land == .Grass || self.land == .Meadow)
@@ -136,13 +136,13 @@ class Tile: SKShapeNode, Hashable {
 
     // Check if self can prevent enemy from invading neighbouring tile.
     // @returns True if againt unit is outclassed by tile content.
-	// TODO: Check the edges cases
+    // TODO: Check the edges cases
     func isProtected(against: Unit) -> Bool {
-		let attackingType = against.type.rawValue
+        let attackingType = against.type.rawValue
 
         return attackingType < min((self.unit?.type.rawValue)!, Constants.Types.Unit.Knight.rawValue)
-					|| self.structure? == Constants.Types.Structure.Tower && attackingType < Constants.Types.Unit.Soldier.rawValue
-					|| self.village?.rawValue >= Constants.Types.Village.Fort.rawValue && attackingType < Constants.Types.Unit.Knight.rawValue
+                    || self.structure? == Constants.Types.Structure.Tower && attackingType < Constants.Types.Unit.Soldier.rawValue
+                    || self.village?.rawValue >= Constants.Types.Village.Fort.rawValue && attackingType < Constants.Types.Unit.Knight.rawValue
     }
 
     func isBuildable() -> Bool {
@@ -152,13 +152,13 @@ class Tile: SKShapeNode, Hashable {
                     && self.land == .Grass
     }
 
-	func isGrowable() -> Bool {
-		return self.unit == nil
-					&& self.village == nil
-					&& self.structure == nil
-					&& self.land != .Sea
-					&& self.land != .Tree
-	}
+    func isGrowable() -> Bool {
+        return self.unit == nil
+                    && self.village == nil
+                    && self.structure == nil
+                    && self.land != .Sea
+                    && self.land != .Tree
+    }
 
     func clear() {
         unit = nil
@@ -176,7 +176,7 @@ class Tile: SKShapeNode, Hashable {
         dict["structure"] = self.structure?.rawValue
         dict["village"] = self.village?.rawValue
         dict["land"] = self.land.rawValue
-        
+
         return dict
     }
 
@@ -195,12 +195,12 @@ class Tile: SKShapeNode, Hashable {
         if let s = dict["structure"] as? Int {
             self.structure = Constants.Types.Structure(rawValue: s)
         }
-        
+
         // Village
         if let v = dict["village"] as? Int {
             self.village = Constants.Types.Village(rawValue: v)
         }
- 
+
         // Add tile to Map
         GameEngine.Instance.map.setTile(at:self.coordinates, to: self)
     }

@@ -81,7 +81,7 @@
 		137101521A701096009B807C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		137101531A701096009B807C /* hexGridTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hexGridTests.swift; sourceTree = "<group>"; };
 		1371015D1A7010CE009B807C /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; usesTabs = 0; };
-		1371015F1A701411009B807C /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		1371015F1A701411009B807C /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; usesTabs = 0; };
 		137101611A701B80009B807C /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		13AF2AA51A7803E100B4C67B /* mapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = mapTests.swift; path = WarfareTests/mapTests.swift; sourceTree = SOURCE_ROOT; };
 		13CDF0CB1A8AA4D300E6AB9D /* TileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileTests.swift; path = WarfareTests/TileTests.swift; sourceTree = SOURCE_ROOT; };
