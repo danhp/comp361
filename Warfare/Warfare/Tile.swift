@@ -135,7 +135,7 @@ class Tile: SKShapeNode, Hashable {
     }
 
     // Check if self can prevent enemy from invading neighbouring tile.
-    // @returns True if againt unit is outclassed by tile content.
+    // @returns True if against unit is outclassed by tile content.
     // TODO: Check the edges cases
     func isProtected(against: Unit) -> Bool {
         let attackingType = against.type.rawValue
