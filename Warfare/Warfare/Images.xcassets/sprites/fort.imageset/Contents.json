@@ -2,16 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "fort.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "fort@2X.png"
+      "filename" : "fort@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "fort@3x.png"
     }
   ],
   "info" : {
