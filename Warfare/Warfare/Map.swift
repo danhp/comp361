@@ -9,6 +9,15 @@
 import SpriteKit
 import Darwin
 
+extension Array {
+	mutating func shuffle() {
+		for i in 0..<(count - 1) {
+			let j = Int(arc4random_uniform(UInt32(count - i))) + i
+			swap(&self[i], &self[j])
+		}
+	}
+}
+
 class Map: SKNode {
 	let tiles: HexGrid
 	let scroller = SKNode()
@@ -56,10 +65,12 @@ class Map: SKNode {
 	func neighbors(#x: Int, y: Int) -> [Tile] {
 		var neighbors = [Tile]()
 
-		let directions: [[Int]] = [
+		var directions: [[Int]] = [
 			[+1,  0], [+1, -1], [ 0, -1],
 			[-1,  0], [-1, +1], [ 0, +1]
 		]
+
+		directions.shuffle()
 
 		for i in 0..<directions.count {
 			let d = directions[i]
