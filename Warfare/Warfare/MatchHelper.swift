@@ -148,24 +148,44 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     }
     
     // TODO also take care of match outcome
-    func nextParticipants() -> NSArray {
-        let current = self.currentParticipantIndex()
+    func nextParticipants(current: Int = self.currentParticipantIndex) -> NSArray {
+        // Too pretty to eliminate
+        //        var playing = [GKTurnBasedParticipant]()
+        //        var eliminated = [GKTurnBasedParticipant]()
+        //
+        //        self.myMatch?.participants.map({($0.matchOutcome == .None) ? playing.append($0) : eliminated.append($0)})
+        
         let nextParticipants = NSMutableArray(capacity: 3)
         nextParticipants[0] = (self.myMatch?.participants[(current+1)%3])!
         nextParticipants[1] = (self.myMatch?.participants[(current+2)%3])!
         nextParticipants[2] = (self.myMatch?.participants[current])! // should be current participant
         return nextParticipants
     }
+
+    func removeParticipant(index: Int) {
+        // Retrieve participant and set match outcome to lost
+        let p = self.myMatch?.participants[index]
+        p.matchOutcome = GKTurnBasedMatchOutcome.Lost
+        
+        // End the match if 2 participant have lost
+        if !didEndMatch() {
+            // Send the update to Game Center
+            self.updatedMatchData()
+        }
+    }
     
-    func endMatch() {
-        // Set match outcome for each participant
-        // TODO
-        for p in self.myMatch?.participants as [GKTurnBasedParticipant] {
-            if p.matchOutcome == .None {
-                p.matchOutcome == .Tied
-            }
+    func didEndMatch() -> Bool {
+        // End the match if 2 participant have lost
+        if self.myMatch?.participants.reduce(0, combine: ({$0 += $1.matchOutcome == .None ? 0 : 1 })) == 2 {
+            self.endMatch()
+            return true
         }
         
+        return false
+    }
+    
+    // TODO right now, called only after removeParticipant() but not player quit
+    func endMatch() {
         let finalMatchData = GameEngine.Instance.encodeMatchData()
         self.myMatch?.endMatchInTurnWithMatchData(finalMatchData, completionHandler: {(error: NSError!) -> Void in})
     }
