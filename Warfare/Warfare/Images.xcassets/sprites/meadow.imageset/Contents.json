@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "farm.png"
+      "filename" : "meadow.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "farm@2x.png"
+      "filename" : "meadow@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "farm@3x.png"
+      "filename" : "meadow@3x.png"
     }
   ],
   "info" : {
