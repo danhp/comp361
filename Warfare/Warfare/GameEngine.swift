@@ -96,7 +96,7 @@ class GameEngine {
             tile.owner.removeTile(tile)
             self.game.neutralTiles.append(tile)
         }
-        self.game.currentPlayer.removeVillage(village)
+        village.player?.removeVillage(village)
     }
 
     func moveUnit(from: Tile, to: Tile) {

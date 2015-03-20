@@ -18,6 +18,11 @@ extension Array {
 	}
 }
 
+struct Node {
+    let priority: Int
+    let tile: Tile
+}
+
 class Map: SKNode {
 	let tiles: HexGrid
 	let scroller = SKNode()
@@ -86,22 +91,24 @@ class Map: SKNode {
     // Get the set of tiles in the shortest path
     // @return [Tile] if path exists, else return empty set.
     func getPath(#from: Tile, to: Tile, accessible: [Tile]) -> [Tile] {
-        var queue = [Tile]()
+        var queue = PriorityQueue<Node>({$0.priority < $1.priority})
         var seen = [Tile]()
         var cameFrom = [Tile: Tile]()
+        var costSoFar = [Tile: Int]()
 
         // Conditions to walk on a tile:
         //      1 - Tile is owned by Village
         //      2 - Tile is empty
 
-        queue.append(from)
+        queue.push(Node(priority: 0, tile: from))
+        costSoFar[from] = 0
         seen.append(from)
 
         while !queue.isEmpty {
-            let tile = queue.removeLast()
+            let node = queue.pop()
 
-            // Visit the tile
-            if tile == to {
+            // Return the path
+            if node?.tile == to {
                 var current = to
                 var finalPath = [Tile]()
                 finalPath.append(current)
@@ -115,11 +122,16 @@ class Map: SKNode {
             }
 
             // Add unvisited neighbors to the queue
-            for t in neighbors(tile: tile) {
-                if t.isWalkable() && contains(accessible, { $0 === t }) && !contains(seen, {$0 === t})
+            for t in neighbors(tile: (node?.tile)!) {
+                let newCost = costSoFar[(node?.tile)!]! + t.land.priority()
+
+                if t.isWalkable()
+                            && contains(accessible, { $0 === t })
+                            && (newCost < costSoFar[t] || !contains(seen, {$0 === t}))
                             || (t === to  && t.land != .Sea) {
-                    queue += [t]
-                    cameFrom[t] = tile
+                    queue.push(Node(priority: newCost, tile: t))
+                    costSoFar[t] = newCost
+                    cameFrom[t] = node?.tile
                 }
                 seen += [t]
             }

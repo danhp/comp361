@@ -41,6 +41,15 @@ struct Constants {
                     return 0
                 }
             }
+
+            func priority() -> Int {
+                switch self {
+                case .Meadow:
+                    return 5
+                default:
+                    return 1
+                }
+            }
             
             func name() -> String {
                 switch self {
