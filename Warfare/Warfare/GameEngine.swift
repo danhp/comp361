@@ -7,8 +7,8 @@ private let _instance = GameEngine()
 class GameEngine {
     class var Instance: GameEngine { return _instance }
     
-    var game: Game!
-    var map: Map { return self.game.map }
+    var game: Game?
+    var map: Map? { return self.game?.map }
     var scene: GameScene?
     
     init() { }
@@ -47,7 +47,8 @@ class GameEngine {
         if let path = NSBundle.mainBundle().pathForResource(number, ofType: "json") {
             if let json = NSString(contentsOfFile:path, encoding:NSUTF8StringEncoding, error:&e) {
                 if let data = (json as NSString).dataUsingEncoding(NSUTF8StringEncoding) {
-                    self.decode(data)
+                    self.game = Game()
+                    self.game?.importDictionary(self.dataToDict(data)!)
                 }
             }
         }
@@ -78,7 +79,7 @@ class GameEngine {
                 // MATCH IN PROGRESS
                 } else {
                     self.game = Game()
-                    self.game.importDictionary(dict)
+                    self.game?.importDictionary(dict)
                     self.scene?.resetMap()
                 }
             }

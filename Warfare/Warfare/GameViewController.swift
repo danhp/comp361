@@ -43,15 +43,15 @@ class GameViewController: UIViewController {
     @IBOutlet weak var infoButton: UIBarButtonItem!
     
     @IBAction func recruitButtonTapped(sender: AnyObject) {
-		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
-        var tileSelected = GameEngine.Instance.map.selected
+		if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+        var tileSelected = GameEngine.Instance.map?.selected
         
-		if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
+		if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
 
         if let t = tileSelected?.owner {
             GameEngine.Instance.game?.recruitUnit(t, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
             Hud.Instance.update()
-			GameEngine.Instance.map.draw()
+			GameEngine.Instance.map?.draw()
         }
     }
     
@@ -60,10 +60,10 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func validateButtonTapped(sender: AnyObject) {
-        var dest = GameEngine.Instance.map.selected
+        var dest = GameEngine.Instance.map?.selected
         GameEngine.Instance.game?.moveUnit(tileSource! , to: dest!)
 		Hud.Instance.update()
-		GameEngine.Instance.map.draw()
+		GameEngine.Instance.map?.draw()
         validateButton.hidden = true
         cancelButton.hidden = true
     }
@@ -81,11 +81,11 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func moveButtonTapped(sender: AnyObject) {
-		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+		if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
 
-        tileSource = GameEngine.Instance.map.selected
+        tileSource = GameEngine.Instance.map?.selected
         if tileSource?.unit == nil { return }
-		if self.tileSource?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
+		if self.tileSource?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
 		if (self.tileSource?.unit)?.currentAction == Constants.Unit.Action.Moved { return }
         
         validateButton.hidden = false
@@ -97,19 +97,19 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func upgradeButtonTapped(sender: AnyObject) {
-		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+		if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
 
-		let selectedTile = GameEngine.Instance.map.selected
-		if selectedTile?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
+		let selectedTile = GameEngine.Instance.map?.selected
+		if selectedTile?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
 
 		if selectedTile?.village != nil {
-			GameEngine.Instance.game.upgradeVillage(selectedTile!)
+			GameEngine.Instance.game?.upgradeVillage(selectedTile!)
 		} else if selectedTile?.unit != nil {
-			GameEngine.Instance.game.upgradeUnit(selectedTile!, newLevel: Constants.Types.Unit.Infantry)
+			GameEngine.Instance.game?.upgradeUnit(selectedTile!, newLevel: Constants.Types.Unit.Infantry)
 		}
 
 		Hud.Instance.update()
-		GameEngine.Instance.map.draw()
+		GameEngine.Instance.map?.draw()
     }
     
     @IBAction func combineButtonTapped(sender: AnyObject) {
@@ -118,14 +118,14 @@ class GameViewController: UIViewController {
 
     
     @IBAction func skipButtonTapped(sender: AnyObject) {
-//		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+//		if !GameEngine.Instance.game?.localIsCurrentPlayer { return }
 
         // TODO move to the beginnig of the turn
-        GameEngine.Instance.game.beginTurn()
+        GameEngine.Instance.game?.beginTurn()
 
         MatchHelper.sharedInstance().advanceMatchTurn()
 
-		GameEngine.Instance.map.draw()
+		GameEngine.Instance.map?.draw()
 		Hud.Instance.update()
     }
     

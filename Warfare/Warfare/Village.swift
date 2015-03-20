@@ -73,7 +73,6 @@ class Village {
 
 	func draw() -> SKNode {
         node = SKSpriteNode(imageNamed: self.type.name())
-        node?.setScale(0.5)
         return node!
 	}
 

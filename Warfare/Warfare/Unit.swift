@@ -6,11 +6,7 @@ class Unit {
     var type: Constants.Types.Unit
 	var currentAction = Constants.Unit.Action.ReadyForOrders
 
-    var disabled: Bool {
-        get {
-            return self.currentAction != .ReadyForOrders
-        }
-    }
+    var disabled: Bool { return self.currentAction != .ReadyForOrders }
     
     init(dict: NSDictionary, position: Tile) {
         self.type = .Infantry
@@ -24,7 +20,6 @@ class Unit {
 
     func draw() -> SKNode {
         self.node = SKSpriteNode(imageNamed: self.type.name())
-        self.node?.setScale(0.5)
         return node!
     }
     

@@ -57,43 +57,38 @@ class Tile: SKShapeNode, Hashable {
 
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
-        
+
         if self.owner?.player != nil {
             self.lineWidth = 2
             self.glowWidth = 2
         }
         
+        // Structure
 		if let s = self.structure {
-			var v: Int = s.rawValue
-
-			switch v {
-			case 0:
-				self.addChild(SKLabelNode(text: "Tower"))
-			case 1:
-				self.addChild(SKLabelNode(text: "Road"))
-			case 2:
-				self.addChild(SKLabelNode(text: "Tomb"))
-			default:
-				println("Swift wants something here. Shouldn't be printing")
-			}
-		}
+            let sprite = SKSpriteNode(imageNamed: s.name())
+            self.addChild(sprite)
+        }
+        
+        // Village
 		if self.village != nil {
 			self.addChild((self.owner?.draw())!)
-
 		}
+        
+        // Unit
 		if let u = self.unit {
 			self.addChild(u.draw())
 		}
 
+        // Player color
         if let order = self.owner?.player?.order {
             self.strokeColor = Utilities.Colors.colorForPlayer(order)
         } else {
             self.strokeColor = Utilities.Colors.colorForPlayer(-1)
         }
         
-        if self.land == Constants.Types.Land.Tree || self.land == Constants.Types.Land.Sea {
+        // Land
+        if self.land != .Grass {
             let sprite = SKSpriteNode(imageNamed: self.land.name())
-            sprite.setScale(CGFloat(self.land.scale()))
             self.addChild(sprite)
         }
     }
@@ -207,7 +202,7 @@ class Tile: SKShapeNode, Hashable {
         }
  
         // Add tile to Map
-        GameEngine.Instance.map.setTile(at:self.coordinates, to: self)
+        GameEngine.Instance.map?.setTile(at:self.coordinates, to: self)
     }
 
     // MARK - Drawing

@@ -11,7 +11,7 @@ import Darwin
 struct Constants {
 
     struct Map {
-        static let dimension = 6	// 18x18 maps
+        static let dimension = 18	// 18x18 maps
     }
 
     struct Tile {
@@ -54,21 +54,6 @@ struct Constants {
                     return ["mountain", "mountain2"][Int(arc4random_uniform(2))]
                 }
             }
-            
-            func scale() -> Float {
-                switch self {
-                case .Grass:
-                    return 1
-                case .Tree:
-                    return 0.5
-                case .Meadow:
-                    return 1
-                case .Sea:
-                    return 0.4
-                default:
-                    return 1
-                }
-            }
 
             static func random() -> Land {
                 switch arc4random_uniform(14) {
@@ -94,7 +79,7 @@ struct Constants {
                 case .Town:
                     return "town"
                 case .Fort:
-                    return "tower"
+                    return "fort"
                 }
             }
         }
@@ -118,9 +103,9 @@ struct Constants {
             func name() -> String {
                 switch self {
                 case .Peasant:
-                    return "peasant"
+                    return "soldier"
                 case .Infantry:
-                    return "infantry"
+                    return "knight"
                 case .Soldier:
                     return "soldier"
                 case .Knight:
@@ -140,6 +125,17 @@ struct Constants {
                     return 10
                 case .Tombstone:
                     return 0
+                }
+            }
+            
+            func name() -> String {
+                switch self {
+                case .Tower:
+                    return "tower"
+                case .Road:
+                    return "road"
+                case .Tombstone:
+                    return "tombstone"
                 }
             }
         }

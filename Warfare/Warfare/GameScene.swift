@@ -10,28 +10,31 @@ import UIKit
 import SpriteKit
 
 class GameScene: SKScene {
-    var map = Map()
+    var map: Map?
 
     override func didMoveToView(view: SKView) {
 		self.anchorPoint = CGPointMake(0.5, 0.5)
 
         self.map = GameEngine.Instance.map
-        self.map.draw()
-        self.map.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
-        self.map.removeFromParent()
-        self.addChild(self.map)
         
+        if let m = self.map {
+            m.draw()
+            m.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
+            m.removeFromParent()
+            self.addChild(m)
+        }
+
 		Hud.Instance.update()
         Hud.Instance.removeFromParent()
         self.addChild(Hud.Instance)
     }
     
     func resetMap() {
-        self.map.removeFromParent()
+        self.map?.removeFromParent()
         self.map = GameEngine.Instance.map
-        self.map.draw()
-        self.map.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
-        self.addChild(self.map)
+        self.map?.draw()
+        self.map?.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
+        self.addChild(self.map!)
         
         Hud.Instance.update()
     }
@@ -43,9 +46,9 @@ class GameScene: SKScene {
         let touchLocation = touch.locationInNode(self)
         
         if let touchedNode = nodeAtPoint(touchLocation) as? Tile {
-            self.map.selected = touchedNode
-			if (self.map.selected)?.owner != nil {
-				Hud.Instance.displayRegionalData((self.map.selected)!)
+            self.map?.selected = touchedNode
+			if (self.map?.selected)?.owner != nil {
+				Hud.Instance.displayRegionalData((self.map?.selected)!)
 			} else {
 				Hud.Instance.update()
 			}
@@ -62,7 +65,7 @@ class GameScene: SKScene {
         
         let translation = CGPointMake(current.x - prev.x, current.y - prev.y)
         
-        map.scroll(translation)
+        map?.scroll(translation)
 	}
    
     override func update(currentTime: CFTimeInterval) {

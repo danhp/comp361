@@ -24,7 +24,7 @@ class Hud: SKNode {
 	}
 
 	func displayPlayerData() {
-		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+		if !(GameEngine.Instance.game?.localIsCurrentPlayer ?? false)! { return }
 
 		//create gold label
 		let goldLabel = SKLabelNode(fontNamed: "Courier")
@@ -53,11 +53,11 @@ class Hud: SKNode {
 	}
 
 	func displayRegionalData(tile: Tile) {
-		if !GameEngine.Instance.game.localIsCurrentPlayer { return }
+		if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
 
 		self.update()
 
-		if tile.owner.player !== GameEngine.Instance.game.currentPlayer { return }
+		if tile.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
 
 		let regGold = SKLabelNode(text: "Region Gold: " + String(tile.owner.gold))
 		regGold.position = CGPoint(x: -400, y: 200)
