@@ -10,11 +10,12 @@ class GameEngine {
     var game: Game!
     var map: Map { return self.game.map }
     var scene: GameScene?
+    var selectedMap: Int = 1
     
     init() { }
     
     func newGame() {
-        self.loadMap(number: "1")
+        self.loadMap(number: String(selectedMap))
     }
 
     // MARK: - Serialization
