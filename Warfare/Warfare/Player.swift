@@ -12,7 +12,13 @@ import GameKit
 class Player {
     var order: Int!
     
-    var villages = [Village]()
+    var villages: [Village] = [Village]() {
+        didSet {
+            if self.villages.count == 0 {
+                MatchHelper.sharedInstance().removeParticipant(self.order)
+            }
+        }
+    }
     var gold: Int { return self.villages.reduce(0) {$0 + $1.gold} }
     var wood: Int { return self.villages.reduce(0) {$0 + $1.wood} }
     

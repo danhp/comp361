@@ -10,6 +10,7 @@ class GameEngine {
     var game: Game?
     var map: Map? { return self.game?.map }
     var scene: GameScene?
+    var selectedMap: Int = 1
     
     init() { }
     
