@@ -5,6 +5,7 @@ class Village {
 	var node: SKNode?
     var player: Player?
 	var type = Constants.Types.Village.Hovel
+	var state = Constants.Village.Action.ReadyForOrders
 	var gold: Int = 0
 	var wood: Int = 0
 
@@ -31,6 +32,7 @@ class Village {
 
 	func upgradeVillage() {
 		if self.type == Constants.Types.Village.Castle { return }
+		if self.state != .ReadyForOrders { return }
 
 		let newLevel = Constants.Types.Village(rawValue: self.type.rawValue + 1)
 		let cost = newLevel?.upgradeCost()
@@ -40,6 +42,8 @@ class Village {
 			self.type = newLevel!
 			self.health = self.type.health()
 		}
+
+		self.state = .Upgrading1
 	}
 
 	func upgradeUnit(unit: Unit, newType: Constants.Types.Unit) {

@@ -50,6 +50,14 @@ class GameEngine {
     // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
         for village in self.game.currentPlayer.villages {
+            // Update the village's state
+            if village.state == .Upgrading1 {
+                village.state = .Upgrading2
+            } else {
+                village.state = .ReadyForOrders
+            }
+
+            // Update states for all the tiles.
             for tile in village.controlledTiles {
 
                 // Replace tombstones

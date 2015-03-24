@@ -234,6 +234,23 @@ struct Constants {
         }
     }
 
+    struct Village {
+        enum Action: Int {
+            case ReadyForOrders = 0, Upgrading1, Upgrading2
+
+            func name() -> String {
+                switch self {
+                case .ReadyForOrders:
+                    return "Ready"
+                case .Upgraded1:
+                    return "Updrading"
+                case .Upgraded2:
+                    return "Finishing Upgrade"
+                }
+            }
+        }
+    }
+
     struct Cost {
         enum Upgrade: Int {
             case Unit = 10
