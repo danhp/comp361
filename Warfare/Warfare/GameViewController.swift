@@ -49,7 +49,7 @@ class GameViewController: UIViewController {
 		if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
 
         if let t = tileSelected {
-            GameEngine.Instance.game?.recruitUnit(t, type: Constants.Types.Unit.Peasant, tile: tileSelected!)
+            GameEngine.Instance.recruitUnit(t, type: Constants.Types.Unit.Peasant)
             Hud.Instance.update()
 			GameEngine.Instance.map?.draw()
         }
@@ -62,7 +62,7 @@ class GameViewController: UIViewController {
     @IBAction func validateButtonTapped(sender: AnyObject) {
 
         var dest = GameEngine.Instance.map?.selected
-        GameEngine.Instance.game?.moveUnit(tileSource! , to: dest!)
+        GameEngine.Instance.moveUnit(tileSource! , to: dest!)
 		Hud.Instance.update()
 		GameEngine.Instance.map?.draw()
         validateButton.hidden = true
@@ -82,7 +82,7 @@ class GameViewController: UIViewController {
     }
 
     @IBAction func moveButtonTapped(sender: AnyObject) {
-        if !GameEngine.Instance.game?.localIsCurrentPlayer { return }
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer != nil) { return }
 
         if let tileSource = GameEngine.Instance.map?.selected  {
             if let unit = tileSource.unit {
@@ -105,9 +105,9 @@ class GameViewController: UIViewController {
 		if selectedTile?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
 
 		if selectedTile?.village != nil {
-			GameEngine.Instance.game?.upgradeVillage(selectedTile!)
+			GameEngine.Instance.upgradeVillage(selectedTile!)
 		} else if selectedTile?.unit != nil {
-			GameEngine.Instance.game?.upgradeUnit(selectedTile!, newLevel: Constants.Types.Unit.Infantry)
+			GameEngine.Instance.upgradeUnit(selectedTile!, newLevel: Constants.Types.Unit.Infantry)
 		}
 
 		Hud.Instance.update()
@@ -123,7 +123,7 @@ class GameViewController: UIViewController {
 //		if !GameEngine.Instance.game?.localIsCurrentPlayer { return }
 
         // TODO move to the beginnig of the turn
-        GameEngine.Instance.game?.beginTurn()
+        GameEngine.Instance.beginTurn()
 
         MatchHelper.sharedInstance().advanceMatchTurn()
 

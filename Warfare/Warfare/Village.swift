@@ -118,7 +118,7 @@ class Village {
         self.type = Constants.Types.Village(rawValue: dict["type"] as Int)!
         self.gold = dict["gold"] as Int
         self.wood = dict["wood"] as Int
-        self.health = dict["health"] as Int
+        self.health = dict["health"] as? Int ?? self.type.health()
 
         // TILES
         if let controlled = dict["controlledTiles"] as? NSArray {
