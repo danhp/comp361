@@ -23,6 +23,7 @@ class villageTest: XCTestCase {
 		village.wood += 6
 		XCTAssertEqual(village.wood, 8)
 
+        village.state = .ReadyForOrders
 		village.upgradeVillage()
 		XCTAssertEqual(village.type, Constants.Types.Village.Fort)
 		XCTAssertEqual(village.wood, 0)

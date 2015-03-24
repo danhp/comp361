@@ -115,7 +115,7 @@ class GameEngine {
 
         // Simple move rules
         if from.unit == nil { return }
-        if from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders { return }
+        if (from.unit?.disabled)! { return }
         if from.unit?.type == Constants.Types.Unit.Knight && !to.isWalkable() { return }
         if to.land == .Sea { return }
 
@@ -323,6 +323,7 @@ class GameEngine {
 
     func upgradeUnit(tile: Tile, newLevel: Constants.Types.Unit) {
         if tile.owner.player !== self.game.currentPlayer { return }
+        if (tile.unit?.disabled)! { return }
 
         let village = tile.owner!
         village.upgradeUnit(tile.unit!, newType: newLevel)
@@ -331,6 +332,7 @@ class GameEngine {
     func combineUnit(tileA: Tile, tileB: Tile) {
         if tileA.owner !== tileB.owner { return }
         if tileA.owner.player !== self.game.currentPlayer { return }
+        if (tileA.unit?.disabled)! || (tileB.unit?.disabled)! { return }
 
         tileA.unit?.combine(tileB.unit!)
         tileB.unit = nil
@@ -340,6 +342,7 @@ class GameEngine {
         if tile.owner.player !== self.game.currentPlayer { return }
 
         let village = tile.owner
+        if village.disaled { return }
 
         // Hovel can only recruit peasants and infantry (rawVaue: 0 & 1)
         // Town can also recruit soldiers (rawValue: 2)
@@ -362,6 +365,7 @@ class GameEngine {
         if on.owner.player !== self.game.currentPlayer { return }
 
         let village = on.owner
+        if village.disaled { return }
 
         // Check tower construction rules
         if village.type == .Hovel { return }
@@ -389,7 +393,7 @@ class GameEngine {
         let road = Constants.Types.Structure.Road
         if village.wood < road.cost()
                     || !on.isBuildable()
-                    || from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders
+                    || (from.unit?.disabled)!
                     || from.unit?.type != Constants.Types.Unit.Peasant{ return }
 
         // Change the state.
@@ -415,7 +419,7 @@ class GameEngine {
         let cost = Constants.Types.Land.Meadow.cost()
         if village.wood < cost
                     || !on.isBuildable()
-                    || from.unit?.currentAction != Constants.Unit.Action.ReadyForOrders
+                    || (from.unit?.disabled)!
                     || from.unit?.type != Constants.Types.Unit.Peasant{ return }
 
         // Change the state

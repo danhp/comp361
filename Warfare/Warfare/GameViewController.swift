@@ -81,14 +81,15 @@ class GameViewController: UIViewController {
     @IBAction func moveButtonTapped(sender: AnyObject) {
         if !GameEngine.Instance.game.localIsCurrentPlayer { return }
 
-        tileSource = GameEngine.Instance.map.selected
-        if tileSource?.unit == nil { return }
-        if self.tileSource?.owner.player !== GameEngine.Instance.game.currentPlayer { return }
-        if (self.tileSource?.unit)?.currentAction == Constants.Unit.Action.Moved { return }
-
-        validateButton.hidden = false
-        cancelButton.hidden = false
-
+        if let tileSource = GameEngine.Instance.map.selected  {
+            if let unit = tileSource.unit {
+                if tileSource.owner.player === GameEngine.Instance.game.currentPlayer
+                            && unit.disabled {
+                    validateButton.hidden = false
+                    cancelButton.hidden = false
+                }
+            }
+        }
     }
 
     @IBAction func buildButtonTapped(sender: AnyObject) {

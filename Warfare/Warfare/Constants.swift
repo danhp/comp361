@@ -242,9 +242,9 @@ struct Constants {
                 switch self {
                 case .ReadyForOrders:
                     return "Ready"
-                case .Upgraded1:
+                case .Upgrading1:
                     return "Updrading"
-                case .Upgraded2:
+                case .Upgrading2:
                     return "Finishing Upgrade"
                 }
             }
