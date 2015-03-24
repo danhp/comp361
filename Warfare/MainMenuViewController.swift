@@ -33,6 +33,14 @@ class MainMenuViewController: UIViewController {
         self.performSegueWithIdentifier("gameViewControllerSegue", sender: self)
     }
     
+    func segueToMapSelectionViewController() {
+        self.performSegueWithIdentifier("mapSelectionViewControllerSegue", sender: self)
+    }
+    
+    func dismissViewController() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

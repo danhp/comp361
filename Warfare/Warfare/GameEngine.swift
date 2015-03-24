@@ -12,6 +12,9 @@ class GameEngine {
     var scene: GameScene?
     var selectedMap: Int = 1
     
+    // Map selection
+    private var currentChoices: [Int]?
+    
     init() { }
     
     // Starts a (completely) new match
@@ -19,23 +22,39 @@ class GameEngine {
         self.loadMap(number: String(map))
     }
     
-    // Show screen so player can choose a map
-    func mapSelection(current: [Int]?) {
-        // Present the map selection controller
-        // TODO
-        // let selection = myController.seleciton
-        let selection = 0
-        
-        var choices: [Int]
+    // Show map selection so player can
+    //  i. make a selection
+    //  ii. wait until everyone has chosen a map
+    func showMapSelection() {
+        MatchHelper.sharedInstance().vc?.dismissViewControllerAnimated(true, completion: ({() in
+            // Present the map selection controller
+            if let mmvc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
+                mmvc.segueToMapSelectionViewController()
+            }}))
+    }
     
-        if let cur = current {
-            choices = cur + [selection] // append selection to previous ones
+    func showGameScene() {
+        // Dismiss any controller and then show Game View Controller
+        MatchHelper.sharedInstance().vc?.dismissViewControllerAnimated(true, completion: ({() in
+            // Present the game view controller
+            if let mmvc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
+                mmvc.segueToGameViewController()
+            }}))
+    }
+    
+    // User has selected a choice: Int, process it
+    func processMapSelection(choice: Int) {
+        // TODO put the game in a "waiting for map selection..." state
+        
+        // Add choice to choices array
+        if let cur = self.currentChoices {
+            self.currentChoices = cur + [choice]    // append selection to previous ones
         } else {
-            choices = [selection]   // new array with first selection
+            self.currentChoices = [choice]          // new array with first selection
         }
         
         // Send info to GameCenter
-        let dict = ["choices": choices]
+        let dict = ["choices": self.currentChoices!]
         var error:NSError?
         let matchData = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
         MatchHelper.sharedInstance().advanceSelectionTurn(matchData!)
@@ -64,17 +83,18 @@ class GameEngine {
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data
-                if let choices = dict["choice"] as? [Int] {    // choice is only present during map selection
+                if let choices = dict["choices"] as? [Int] {    // choice is only present during map selection
                     
                     // MAP SELECTION SEQUENCE ENDED
-                    if choices.count == 3 {
+                    if choices.count == 3 && MatchHelper.sharedInstance().currentParticipantIndex() == 0  { // make sure current player is first one
                         let finalChoice = choices[Int(arc4random_uniform(3))]
                         GameEngine.Instance.startGameWithMap(finalChoice)   // replace match data with a new game loaded with map number
                         MatchHelper.sharedInstance().updateMatchData()      // send update to every one
-                        
+                        self.showGameScene()
                     // MAP SELECTION SEQUENCE IN PROGRESS
-                    } else {
-                        self.mapSelection(choices) // current player will select a map
+                    } else { // TODO pass a bool saying userShouldSelect or userShouldwait
+                        self.currentChoices = choices
+                        self.showMapSelection() // current player will select a map
                     }
                     
                 // MATCH IN PROGRESS
@@ -82,12 +102,13 @@ class GameEngine {
                     self.game = Game()
                     self.game?.importDictionary(dict)
                     self.scene?.resetMap()
+                    self.showGameScene()
                 }
             }
         
         // NEW MATCH - initiate map selection sequence
         } else {
-            self.mapSelection(nil)
+            self.showMapSelection()
         }
     }
     

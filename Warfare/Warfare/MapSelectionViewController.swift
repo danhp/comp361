@@ -1,5 +1,5 @@
 //
-//  MainMenuViewController.swift
+//  MapSelectionViewController.swift
 //  Warfare
 //
 //  Created by Harry Simmonds on 2015-03-03.
@@ -13,7 +13,7 @@ class MapSelectionViewController: UIViewController {
     
     @IBOutlet weak var confirmationButton: UIButton!
     
-    var selectedIndex: Int = 0
+    var selectedIndex: Int = 2
     
     @IBOutlet weak var map1: UIImageView!
     @IBOutlet weak var map2: UIImageView!
@@ -26,7 +26,10 @@ class MapSelectionViewController: UIViewController {
             selectMistakeLabel.hidden = false
             return
         }
-        GameEngine.Instance.selectedMap = selectedIndex
+        
+        // GameEngine will take care of dismissing this view controller
+        // as well as processing the map selection
+        GameEngine.Instance.processMapSelection(selectedIndex)
     }
     
     override func viewDidLoad() {
@@ -79,9 +82,4 @@ class MapSelectionViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func segueToGameViewController() {
-        self.performSegueWithIdentifier("gameViewControllerSegue", sender: self)
-    }
-    
 }
