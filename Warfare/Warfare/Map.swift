@@ -9,6 +9,20 @@
 import SpriteKit
 import Darwin
 
+extension Array {
+	mutating func shuffle() {
+		for i in 0..<(count - 1) {
+			let j = Int(arc4random_uniform(UInt32(count - i))) + i
+			swap(&self[i], &self[j])
+		}
+	}
+}
+
+struct Node {
+    let priority: Int
+    let tile: Tile
+}
+
 class Map: SKNode {
 	let tiles: HexGrid
 	let scroller = SKNode()
@@ -56,10 +70,12 @@ class Map: SKNode {
 	func neighbors(#x: Int, y: Int) -> [Tile] {
 		var neighbors = [Tile]()
 
-		let directions: [[Int]] = [
+		var directions: [[Int]] = [
 			[+1,  0], [+1, -1], [ 0, -1],
 			[-1,  0], [-1, +1], [ 0, +1]
 		]
+
+		directions.shuffle()
 
 		for i in 0..<directions.count {
 			let d = directions[i]
@@ -75,22 +91,24 @@ class Map: SKNode {
     // Get the set of tiles in the shortest path
     // @return [Tile] if path exists, else return empty set.
     func getPath(#from: Tile, to: Tile, accessible: [Tile]) -> [Tile] {
-        var queue = [Tile]()
+        var queue = PriorityQueue<Node>({$0.priority < $1.priority})
         var seen = [Tile]()
         var cameFrom = [Tile: Tile]()
+        var costSoFar = [Tile: Int]()
 
         // Conditions to walk on a tile:
         //      1 - Tile is owned by Village
         //      2 - Tile is empty
 
-        queue.append(from)
+        queue.push(Node(priority: 0, tile: from))
+        costSoFar[from] = 0
         seen.append(from)
 
         while !queue.isEmpty {
-            let tile = queue.removeLast()
+            let node = queue.pop()
 
-            // Visit the tile
-            if tile == to {
+            // Return the path
+            if node?.tile == to {
                 var current = to
                 var finalPath = [Tile]()
                 finalPath.append(current)
@@ -104,11 +122,16 @@ class Map: SKNode {
             }
 
             // Add unvisited neighbors to the queue
-            for t in neighbors(tile: tile) {
-                if t.isWalkable() && contains(accessible, { $0 === t }) && !contains(seen, {$0 === t})
+            for t in neighbors(tile: (node?.tile)!) {
+                let newCost = costSoFar[(node?.tile)!]! + t.land.priority()
+
+                if t.isWalkable()
+                            && contains(accessible, { $0 === t })
+                            && (newCost < costSoFar[t] || !contains(seen, {$0 === t}))
                             || (t === to  && t.land != .Sea) {
-                    queue += [t]
-                    cameFrom[t] = tile
+                    queue.push(Node(priority: newCost, tile: t))
+                    costSoFar[t] = newCost
+                    cameFrom[t] = node?.tile
                 }
                 seen += [t]
             }
@@ -156,12 +179,22 @@ class Map: SKNode {
 
     func getVillage(region: [Tile]) -> Village? {
         for tile in region {
-            if tile.owner != nil {
+            if tile.village != nil {
                 return tile.owner
             }
         }
         return nil
     }
+
+	func isDistanceOfTwo(from: Tile, to: Tile) -> Bool {
+		for n1 in self.neighbors(tile: from) {
+			if n1 === to { return true }
+			for n2 in self.neighbors(tile: n1) {
+				if n2 === to { return true }
+			}
+		}
+		return false
+	}
 
 	func draw() {
 		let height = Constants.Tile.size * 2

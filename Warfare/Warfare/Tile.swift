@@ -53,7 +53,7 @@ class Tile: SKShapeNode, Hashable {
     }
 
     func draw() {
-		self.removeAllChildren()
+        self.removeAllChildren()
 
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land)
@@ -103,6 +103,9 @@ class Tile: SKShapeNode, Hashable {
         if let u = self.unit {
             return u.type.wage()
         }
+        if let v = self.village {
+            return v.wage()
+        }
 
         return 0
     }
@@ -114,30 +117,11 @@ class Tile: SKShapeNode, Hashable {
         }
     }
 
-	func removeUnit() {
-		if self.unit != nil {
-			self.unit?.node?.removeFromParent()
-			self.unit = nil
-		}
-	}
-
-    // Builds a road or finishes cultivating a meadow if the required conditions are met
-    //
-    // @returns True if a meadow was done being cultivated (in which case, according to the requirements, a new meadow should be produce
-    //
-    func makeRoadOrMeadow() -> Bool {
-        if let action: Constants.Unit.Action = self.unit?.currentAction {
-            if action == .BuildingRoad {
-                self.structure = .Road
-                self.unit?.currentAction = Constants.Unit.Action.ReadyForOrders
-            } else if action == .FinishCultivating && self.land! == .Meadow {
-                self.land = .Grass
-                self.unit?.currentAction = .ReadyForOrders
-                return true
-            }
+    func removeUnit() {
+        if self.unit != nil {
+            self.unit?.node?.removeFromParent()
+            self.unit = nil
         }
-
-        return false
     }
 
     func isWalkable() -> Bool {
@@ -146,11 +130,14 @@ class Tile: SKShapeNode, Hashable {
     }
 
     // Check if self can prevent enemy from invading neighbouring tile.
-    // @returns True if againt unit is outclassed by tile content.
-    func isProtected(againt: Unit) -> Bool {
-        return againt.type.rawValue < self.unit?.type.rawValue
-            || (self.structure? == Constants.Types.Structure.Tower && againt.type.rawValue < Constants.Types.Unit.Soldier.rawValue)
-            || (self.village? == Constants.Types.Village.Fort && againt.type.rawValue < Constants.Types.Unit.Knight.rawValue)
+    // @returns True if against unit is outclassed by tile content.
+    // TODO: Check the edges cases
+    func isProtected(against: Unit) -> Bool {
+        let attackingType = against.type.rawValue
+
+        return attackingType < min((self.unit?.type.rawValue)!, Constants.Types.Unit.Knight.rawValue)
+                    || self.structure? == Constants.Types.Structure.Tower && attackingType < Constants.Types.Unit.Soldier.rawValue
+                    || self.village?.rawValue >= Constants.Types.Village.Fort.rawValue && attackingType < Constants.Types.Unit.Knight.rawValue
     }
 
     func isBuildable() -> Bool {
@@ -158,6 +145,14 @@ class Tile: SKShapeNode, Hashable {
                     && self.village == nil
                     && self.structure == nil
                     && self.land == .Grass
+    }
+
+    func isGrowable() -> Bool {
+        return self.unit == nil
+                    && self.village == nil
+                    && self.structure == nil
+                    && self.land != .Sea
+                    && self.land != .Tree
     }
 
     func clear() {
@@ -176,7 +171,7 @@ class Tile: SKShapeNode, Hashable {
         dict["structure"] = self.structure?.rawValue
         dict["village"] = self.village?.rawValue
         dict["land"] = self.land.rawValue
-        
+
         return dict
     }
 
@@ -195,12 +190,12 @@ class Tile: SKShapeNode, Hashable {
         if let s = dict["structure"] as? Int {
             self.structure = Constants.Types.Structure(rawValue: s)
         }
-        
+
         // Village
         if let v = dict["village"] as? Int {
             self.village = Constants.Types.Village(rawValue: v)
         }
- 
+
         // Add tile to Map
         GameEngine.Instance.map?.setTile(at:self.coordinates, to: self)
     }

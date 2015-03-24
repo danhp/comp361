@@ -41,6 +41,15 @@ struct Constants {
                     return 0
                 }
             }
+
+            func priority() -> Int {
+                switch self {
+                case .Meadow:
+                    return 5
+                default:
+                    return 1
+                }
+            }
             
             func name() -> String {
                 switch self {
@@ -70,7 +79,7 @@ struct Constants {
         }
 
         enum Village: Int {
-            case Hovel = 0, Town, Fort
+            case Hovel = 0, Town, Fort, Castle
 
             func name() -> String {
                 switch self {
@@ -80,12 +89,61 @@ struct Constants {
                     return "town"
                 case .Fort:
                     return "fort"
+                case .Castle:
+                    return "castle"
+                }
+            }
+
+            func wage() -> Int {
+                switch self {
+                case .Castle:
+                    return 80
+                default:
+                    return 0
+                }
+            }
+
+            func upgradeCost() -> Int {
+                switch self {
+                case .Castle:
+                    return 12
+                default:
+                    return 8
+                }
+            }
+
+            func health() -> Int {
+                switch self {
+                case .Hovel:
+                    return 1
+                case .Town:
+                    return 2
+                case .Fort:
+                    return 5
+                case .Castle:
+                    return 10
                 }
             }
         }
 
         enum Unit: Int {
-            case Peasant = 0, Infantry, Soldier, Knight
+            case Peasant = 0, Infantry, Soldier, Knight, Canon
+
+            // Cost in (Gold, Wood)
+            func cost() -> (Int, Int) {
+                switch self {
+                case .Peasant:
+                    return (10, 0)
+                case .Infantry:
+                    return (20, 0)
+                case .Soldier:
+                    return (30, 0)
+                case .Knight:
+                    return (40, 0)
+                case .Canon:
+                    return (35, 12)
+                }
+            }
 
             func wage() -> Int {
                 switch self {
@@ -97,6 +155,8 @@ struct Constants {
                     return 18
                 case .Knight:
                     return 54
+                case .Canon:
+                    return 5
                 }
             }
             
@@ -110,6 +170,8 @@ struct Constants {
                     return "soldier"
                 case .Knight:
                     return "knight"
+                case .Canon:
+                    return "canon"
                 }
             }
         }
@@ -168,9 +230,25 @@ struct Constants {
         }
     }
 
+    struct Village {
+        enum Action: Int {
+            case ReadyForOrders = 0, Upgrading1, Upgrading2
+
+            func name() -> String {
+                switch self {
+                case .ReadyForOrders:
+                    return "Ready"
+                case .Upgrading1:
+                    return "Updrading"
+                case .Upgrading2:
+                    return "Finishing Upgrade"
+                }
+            }
+        }
+    }
+
     struct Cost {
         enum Upgrade: Int {
-            case Village = 8
             case Unit = 10
         }
     }
