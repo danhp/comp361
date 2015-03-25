@@ -11,6 +11,8 @@ class GameEngine {
     var map: Map? { return self.game?.map }
     var scene: GameScene?
     
+    var matchEnded: Bool { return MatchHelper.sharedInstance().myMatch?.status == GKTurnBasedMatchStatus.Ended  ?? false }
+    
     // Map selection
     private var currentChoices: [Int]?
     
