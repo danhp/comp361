@@ -177,6 +177,52 @@ class Map: SKNode {
         return regions
     }
 
+    // Get the region that a unit can move to
+    func getAccessibleRegion(seed: Tile) -> [Tile] {
+        var result = [Tile]()
+        var seen = [Tile]()
+        var queue = [Tile]()
+
+        if seed.unit == nil { return result }
+        if seed.owner.player !== GameEngine.Instance.game?.currentPlayer { return result }
+
+        queue.append(seed)
+        result.append(seed)
+        seen.append(seed)
+
+        if let unitType = seed.unit?.type {
+            if unitType == .Canon {
+                for t in neighbors(tile: seed) {
+                    if (t.owner === seed.owner || t.owner == nil) && t.isWalkable() {
+                        result.append(t)
+                    }
+                }
+            } else {
+                while !queue.isEmpty {
+                    var newSeed = queue.removeLast()
+
+                    for t in neighbors(tile: newSeed) {
+                        if contains(seen, { $0 === t}) { continue }
+
+                        if t.owner === seed.owner {
+                            if t.isWalkable() {
+                                queue.append(t)
+                            }
+                            result.append(t)
+                        } else {
+                            if t.land != .Sea && !t.isProtected(seed.unit!) {
+                                result.append(t)
+                            }
+                        }
+                        seen.append(t)
+                    }
+                }
+            }
+        }
+
+        return result
+    }
+
     func getVillage(region: [Tile]) -> Village? {
         for tile in region {
             if tile.village != nil {
