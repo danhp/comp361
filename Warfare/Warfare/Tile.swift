@@ -27,7 +27,7 @@ class Tile: SKShapeNode, Hashable {
     var selected: Bool = false {
         didSet {
             if selected {
-                self.fillColor = UIColor.blackColor()
+                self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: true)
             } else {
                 self.fillColor = Utilities.Colors.colorForLandType(self.land)
             }

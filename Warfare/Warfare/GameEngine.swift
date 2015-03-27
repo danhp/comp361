@@ -10,7 +10,7 @@ class GameEngine {
     var game: Game?
     var map: Map? { return self.game?.map }
     var scene: GameScene?
-
+    
     // List of unit awaiting orders
     var availableUnits: [Tile] = []
     var availableVillages: [Tile] = []
@@ -99,7 +99,7 @@ class GameEngine {
     func beginTurn() {
         self.availableUnits = []
         self.availableVillages = []
-
+        
         for village in (self.game?.currentPlayer.villages)! {
             // Update the village's state
             if village.state == .Upgrading1 {
@@ -130,7 +130,7 @@ class GameEngine {
                         self.availableUnits.append(tile)
                     }
                 }
-
+                
                 if tile.village != nil {
                     if tile.owner.state == .ReadyForOrders {
                         self.availableVillages.append(tile)
@@ -163,7 +163,7 @@ class GameEngine {
                 tile.village = nil
             }
             tile.owner.removeTile(tile)
-
+            
             self.game?.neutralTiles.append(tile)
             self.availableUnits = self.availableUnits.filter({ $0 !== tile })
         }
@@ -254,7 +254,7 @@ class GameEngine {
         to.unit?.currentAction = Constants.Unit.Action.Moved
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
-
+    
     private func invadeNeutral(village: Village, unit: Unit, to: Tile) {
         var mainVillage = village
         var mergeVillage: Village
@@ -381,7 +381,7 @@ class GameEngine {
         from.unit?.currentAction = Constants.Unit.Action.Moved
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
-
+    
     func upgradeVillage(tile: Tile) {
         if tile.owner.player !== self.game?.currentPlayer { return }
         if tile.village == nil { return }
@@ -398,7 +398,7 @@ class GameEngine {
         village.upgradeUnit(tile.unit!, newType: newLevel)
         self.availableUnits = self.availableUnits.filter({ $0 !== tile })
     }
-
+    
     func combineUnit(tileA: Tile, tileB: Tile) {
         if tileA.owner !== tileB.owner { return }
         if tileA.owner.player !== self.game?.currentPlayer { return }
@@ -408,7 +408,7 @@ class GameEngine {
         tileB.unit = nil
         self.availableUnits = self.availableUnits.filter({ $0 !== tileA || $0 !== tileB })
     }
-
+    
     func recruitUnit(tile: Tile, type: Constants.Types.Unit) {
         if tile.owner.player !== self.game?.currentPlayer { return }
         
@@ -474,7 +474,7 @@ class GameEngine {
         on.unit?.currentAction = Constants.Unit.Action.BuildingRoad
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
-
+    
     // Moves unit from -> on, instruct unit to start creating meadow for 2 turns
     func startCultivating(on: Tile, from: Tile) {
         if from.owner.player !== self.game?.currentPlayer { return }
@@ -501,24 +501,24 @@ class GameEngine {
         on.unit?.currentAction = Constants.Unit.Action.StartCultivating
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
-
+    
     // MARK: - UI Helper
-
+    
     func getNextAvailableUnit() -> Tile? {
         if self.availableUnits.count <= 0 { return nil }
-
+        
         let nextTile = self.availableUnits.removeAtIndex(0)
         self.availableUnits.append(nextTile)
-
+        
         return nextTile
     }
-
+    
     func getNextAvailableVillage() -> Tile? {
         if self.availableVillages.count <= 0 { return nil }
-
+        
         let nextTile = self.availableVillages.removeAtIndex(0)
         self.availableVillages.append(nextTile)
-
+        
         return nextTile
     }
     

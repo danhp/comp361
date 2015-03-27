@@ -10,12 +10,12 @@ import Foundation
 import SpriteKit
 
 extension UIColor {
-    convenience init(rgb: UInt) {
+    convenience init(rgb: UInt, alpha: CGFloat) {
         self.init(
             red: CGFloat((rgb & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgb & 0x00FF00) >> 8) / 255.0,
             blue: CGFloat(rgb & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
+            alpha: CGFloat(alpha)
         )
     }
 }
@@ -26,14 +26,16 @@ class Utilities {
     }
     
     class Colors {
-        class func colorForLandType(l: Constants.Types.Land) -> UIColor {
+        class func colorForLandType(l: Constants.Types.Land, lighten: Bool = false) -> UIColor {
+            let alpha: CGFloat = lighten ? 0.5 : 1
+            
             switch l {
             case .Sea:
-                return UIColor(rgb: 0x588c7e)
+                return UIColor(rgb: 0x588c7e, alpha: alpha)
             case .Grass, .Tree:
-                return UIColor(rgb: 0x1b4001)
+                return UIColor(rgb: 0x1b4001, alpha: alpha)
             case .Meadow:
-                return UIColor(rgb: 0xffe6c5)
+                return UIColor(rgb: 0xffe6c5, alpha: alpha)
             }
         }
         
