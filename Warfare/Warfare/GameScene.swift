@@ -30,6 +30,7 @@ class GameScene: SKScene {
     }
     
     func resetMap() {
+        // TODO remember position as well
         self.map?.removeFromParent()
         self.map = GameEngine.Instance.map
         self.map?.draw()
@@ -45,17 +46,26 @@ class GameScene: SKScene {
         let touch = touches.anyObject() as UITouch
         let touchLocation = touch.locationInNode(self)
         
-        if let touchedNode = nodeAtPoint(touchLocation) as? Tile {
-            self.map?.selected = touchedNode
-			if (self.map?.selected)?.owner != nil {
-				Hud.Instance.displayRegionalData((self.map?.selected)!)
-			} else {
-				Hud.Instance.update()
-			}
-
-			// Debugger uncomment to run 
-			Hud.Instance.displayUnitDebugger((self.map?.selected)!)
+        if let touchedTile = nodeAtPoint(touchLocation) as? Tile {
+            self.map?.selected = touchedTile
+            self.newSelection()
+        } else if let touchedNode = nodeAtPoint(touchLocation) as? SKSpriteNode {
+            if let tile = touchedNode.parent as? Tile {
+                self.map?.selected = tile
+                self.newSelection()
+            }
         }
+    }
+    
+    private func newSelection() {
+        if (self.map?.selected)?.owner != nil {
+            Hud.Instance.displayRegionalData((self.map?.selected)!)
+        } else {
+            Hud.Instance.update()
+        }
+        
+        // Debugger uncomment to run 
+        Hud.Instance.displayUnitDebugger((self.map?.selected)!)
     }
 	
 	override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {

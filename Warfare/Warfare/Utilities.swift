@@ -27,7 +27,7 @@ class Utilities {
 
     class Colors {
         class func colorForLandType(l: Constants.Types.Land, lighten: Bool = false) -> UIColor {
-            let alpha: CGFloat = lighten ? 0.5 : 1
+            let alpha: CGFloat = lighten ? 0.8 : 1
             
             switch l {
             case .Sea:
