@@ -58,14 +58,27 @@ class GameScene: SKScene {
     }
     
     private func newSelection() {
-        if (self.map?.selected)?.owner != nil {
-            Hud.Instance.displayRegionalData((self.map?.selected)!)
-        } else {
-            Hud.Instance.update()
+        if let map = self.map? {
+            if map.selected?.owner != nil {
+                Hud.Instance.displayRegionalData(map.selected!)
+            } else {
+                Hud.Instance.update()
+            }
+            
+            // Debugger uncomment to run 
+            Hud.Instance.displayUnitDebugger(map.selected!)
+            
+            self.centerAroundSelected(map.selected!)
         }
-        
-        // Debugger uncomment to run 
-        Hud.Instance.displayUnitDebugger((self.map?.selected)!)
+    }
+    
+    func centerAroundSelected(centerAround: Tile) {
+        if let map = self.map? {
+            let positionInScene = convertPoint(centerAround.position, fromNode: map.scroller)
+            let centerInScene = CGPoint(x: self.size.width/2, y: self.size.height/2)
+            let delta = CGPoint(x:  -positionInScene.x , y:  -positionInScene.y )
+            map.scroll(delta)
+        }
     }
 	
 	override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
