@@ -12,6 +12,10 @@ class GameEngine {
     var scene: GameScene?
     
     var matchEnded: Bool { return MatchHelper.sharedInstance().myMatch?.status == GKTurnBasedMatchStatus.Ended  ?? false }
+
+    // List of unit awaiting orders
+    var availableUnits: [Tile] = []
+    var availableVillages: [Tile] = []
     
     // Map selection
     private var currentChoices: [Int]?
@@ -95,6 +99,9 @@ class GameEngine {
     
     // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
+        self.availableUnits = []
+        self.availableVillages = []
+        
         for village in (self.game?.currentPlayer.villages)! {
             // Update the village's state
             if village.state == .Upgrading1 {
@@ -122,6 +129,13 @@ class GameEngine {
                         }
                         
                         tile.unit?.currentAction = Constants.Unit.Action.ReadyForOrders
+                        self.availableUnits.append(tile)
+                    }
+                }
+                
+                if tile.village != nil {
+                    if tile.owner.state == .ReadyForOrders {
+                        self.availableVillages.append(tile)
                     }
                 }
                 
@@ -146,9 +160,14 @@ class GameEngine {
                 tile.unit = nil
                 tile.structure = .Tombstone
             }
-            tile.village = nil
+            if tile.village != nil {
+                self.availableVillages = self.availableVillages.filter({ $0 !== tile})
+                tile.village = nil
+            }
             tile.owner.removeTile(tile)
+            
             self.game?.neutralTiles.append(tile)
+            self.availableUnits = self.availableUnits.filter({ $0 !== tile })
         }
         village.player?.removeVillage(village)
     }
@@ -235,6 +254,7 @@ class GameEngine {
         to.unit = from.unit
         from.unit = nil
         to.unit?.currentAction = Constants.Unit.Action.Moved
+        self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
     
     private func invadeNeutral(village: Village, unit: Unit, to: Tile) {
@@ -259,7 +279,10 @@ class GameEngine {
                 
                 for t in mergeVillage.controlledTiles {
                     mainVillage.addTile(t)
-                    t.village = nil
+                    if t.village != nil {
+                        t.village = nil
+                        self.availableVillages = self.availableVillages.filter({$0 !== t})
+                    }
                 }
                 
                 self.game?.currentPlayer.removeVillage(mergeVillage)
@@ -358,6 +381,7 @@ class GameEngine {
         }
         
         from.unit?.currentAction = Constants.Unit.Action.Moved
+        self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
     
     func upgradeVillage(tile: Tile) {
@@ -365,6 +389,7 @@ class GameEngine {
         if tile.village == nil { return }
         
         tile.owner.upgradeVillage()
+        self.availableVillages = self.availableVillages.filter({ $0 !== tile})
     }
     
     func upgradeUnit(tile: Tile, newLevel: Constants.Types.Unit) {
@@ -373,6 +398,7 @@ class GameEngine {
         
         let village = tile.owner!
         village.upgradeUnit(tile.unit!, newType: newLevel)
+        self.availableUnits = self.availableUnits.filter({ $0 !== tile })
     }
     
     func combineUnit(tileA: Tile, tileB: Tile) {
@@ -382,6 +408,7 @@ class GameEngine {
         
         tileA.unit?.combine(tileB.unit!)
         tileB.unit = nil
+        self.availableUnits = self.availableUnits.filter({ $0 !== tileA || $0 !== tileB })
     }
     
     func recruitUnit(tile: Tile, type: Constants.Types.Unit) {
@@ -447,6 +474,7 @@ class GameEngine {
         on.unit = from.unit
         from.unit = nil
         on.unit?.currentAction = Constants.Unit.Action.BuildingRoad
+        self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
     
     // Moves unit from -> on, instruct unit to start creating meadow for 2 turns
@@ -473,6 +501,27 @@ class GameEngine {
         on.unit = from.unit
         from.unit = nil
         on.unit?.currentAction = Constants.Unit.Action.StartCultivating
+        self.availableUnits = self.availableUnits.filter({ $0 !== from })
+    }
+    
+    // MARK: - UI Helper
+    
+    func getNextAvailableUnit() -> Tile? {
+        if self.availableUnits.count <= 0 { return nil }
+        
+        let nextTile = self.availableUnits.removeAtIndex(0)
+        self.availableUnits.append(nextTile)
+        
+        return nextTile
+    }
+    
+    func getNextAvailableVillage() -> Tile? {
+        if self.availableVillages.count <= 0 { return nil }
+        
+        let nextTile = self.availableVillages.removeAtIndex(0)
+        self.availableVillages.append(nextTile)
+        
+        return nextTile
     }
     
     // MARK: - Serialization

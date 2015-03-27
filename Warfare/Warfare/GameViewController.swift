@@ -44,6 +44,8 @@ class GameViewController: UIViewController {
 
     @IBAction func recruitButtonTapped(sender: AnyObject) {
 		if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+        GameEngine.Instance.map?.resetColor()
+
         var tileSelected = GameEngine.Instance.map?.selected
         
 		if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
@@ -51,8 +53,9 @@ class GameViewController: UIViewController {
         if let t = tileSelected {
             GameEngine.Instance.recruitUnit(t, type: Constants.Types.Unit.Peasant)
             Hud.Instance.update()
-			GameEngine.Instance.map?.draw()
         }
+
+        GameEngine.Instance.map?.draw()
     }
 
 
@@ -60,18 +63,20 @@ class GameViewController: UIViewController {
     }
 
     @IBAction func validateButtonTapped(sender: AnyObject) {
-
-        var dest = GameEngine.Instance.map?.selected
+        GameEngine.Instance.map?.resetColor()
+        let dest = GameEngine.Instance.map?.selected
         GameEngine.Instance.moveUnit(tileSource! , to: dest!)
-		Hud.Instance.update()
-		GameEngine.Instance.map?.draw()
+        Hud.Instance.update()
         validateButton.hidden = true
         cancelButton.hidden = true
+        GameEngine.Instance.map?.draw()
     }
 
     @IBAction func cancelButtonTapped(sender: AnyObject) {
+        GameEngine.Instance.map?.resetColor()
         validateButton.hidden = true
         cancelButton.hidden = true
+        GameEngine.Instance.map?.draw()
     }
 
     @IBAction func menuButtonTapped(sender: AnyObject) {
@@ -83,23 +88,36 @@ class GameViewController: UIViewController {
 
     @IBAction func moveButtonTapped(sender: AnyObject) {
         if !(GameEngine.Instance.game?.localIsCurrentPlayer != nil) { return }
+        GameEngine.Instance.map?.resetColor()
 
-        if let tileSource = GameEngine.Instance.map?.selected  {
-            if let unit = tileSource.unit {
-                if tileSource.owner.player === GameEngine.Instance.game?.currentPlayer
-                            && unit.disabled {
-                    validateButton.hidden = false
-                    cancelButton.hidden = false
+        tileSource = GameEngine.Instance.map?.selected
+
+        if let unit = (tileSource)!.unit {
+            if (tileSource)!.owner.player === GameEngine.Instance.game?.currentPlayer
+                        && !unit.disabled {
+                if let tiles = GameEngine.Instance.map?.getAccessibleRegion(tileSource!) {
+                    for t in tiles {
+                        t.lighten = Constants.Tile.Alpha.flood.rawValue
+                    }
                 }
+
+                validateButton.hidden = false
+                cancelButton.hidden = false
             }
         }
+
+        GameEngine.Instance.map?.draw()
     }
 
     @IBAction func buildButtonTapped(sender: AnyObject) {
+        GameEngine.Instance.map?.resetColor()
+
+        GameEngine.Instance.map?.draw()
     }
 
     @IBAction func upgradeButtonTapped(sender: AnyObject) {
 		if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+        GameEngine.Instance.map?.resetColor()
 
 		let selectedTile = GameEngine.Instance.map?.selected
 		if selectedTile?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
@@ -115,21 +133,24 @@ class GameViewController: UIViewController {
     }
 
     @IBAction func combineButtonTapped(sender: AnyObject) {
+        GameEngine.Instance.map?.resetColor()
 
+        GameEngine.Instance.map?.draw()
     }
 
 
     @IBAction func skipButtonTapped(sender: AnyObject) {
-//		if !GameEngine.Instance.game?.localIsCurrentPlayer { return }
+		if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+        GameEngine.Instance.map?.resetColor()
 
-        // TODO move to the beginnig of the turn
         GameEngine.Instance.beginTurn()
 
         MatchHelper.sharedInstance().advanceMatchTurn()
 
-		GameEngine.Instance.map?.draw()
+        GameEngine.Instance.map?.resetColor()
+        GameEngine.Instance.map?.draw()
 		Hud.Instance.update()
-
+        GameEngine.Instance.map?.draw()
     }
 
     override func viewDidLoad() {

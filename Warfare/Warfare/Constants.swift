@@ -7,6 +7,7 @@
 //
 
 import Darwin
+import SpriteKit
 
 struct Constants {
 
@@ -16,6 +17,10 @@ struct Constants {
 
     struct Tile {
         static let size = 60	// Distance from center to a corner
+
+        enum Alpha: CGFloat {
+            case normal = 1, flood = 0.5, selected = 0.8
+        }
     }
 
     struct Types {
