@@ -76,7 +76,7 @@ class GameScene: SKScene {
         if let map = self.map? {
             let positionInScene = convertPoint(centerAround.position, fromNode: map.scroller)
             let centerInScene = CGPoint(x: self.size.width/2, y: self.size.height/2)
-            let delta = CGPoint(x:  -positionInScene.x , y:  -positionInScene.y )
+            let delta = CGVector(dx:  -positionInScene.x , dy:  -positionInScene.y )
             map.scroll(delta)
         }
     }
@@ -86,7 +86,7 @@ class GameScene: SKScene {
         let current = touch.locationInNode(self)
         let prev = touch.previousLocationInNode(self)
         
-        let translation = CGPointMake(current.x - prev.x, current.y - prev.y)
+        let translation = CGVector(dx: current.x - prev.x, dy: current.y - prev.y)
         
         map?.scroll(translation)
 	}
