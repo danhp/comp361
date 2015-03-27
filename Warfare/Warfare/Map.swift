@@ -204,7 +204,7 @@ class Map: SKNode {
                     for t in neighbors(tile: newSeed) {
                         if contains(seen, { $0 === t}) { continue }
                         if unitType.rawValue > 3 && !t.isWalkable() { continue }
-                        if t.land != .Sea { continue }
+                        if t.land == .Sea { continue }
 
                         if t.owner === seed.owner {
                             if t.isWalkable() {
@@ -279,7 +279,7 @@ class Map: SKNode {
         let tileList: [Tile] = tiles.rows.reduce([], +)
 
         for t in tileList {
-            t.lighten = false
+            t.lighten = Constants.Tile.Alpha.normal.rawValue
         }
     }
 

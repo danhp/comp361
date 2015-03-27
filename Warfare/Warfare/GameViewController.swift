@@ -97,7 +97,7 @@ class GameViewController: UIViewController {
                         && !unit.disabled {
                 if let tiles = GameEngine.Instance.map?.getAccessibleRegion(tileSource!) {
                     for t in tiles {
-                        t.lighten = true
+                        t.lighten = Constants.Tile.Alpha.flood.rawValue
                     }
                 }
 

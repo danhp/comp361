@@ -20,7 +20,7 @@ class Tile: SKShapeNode, Hashable {
     var structure: Constants.Types.Structure?
     var land: Constants.Types.Land!
     var owner: Village!
-    var lighten: Bool = false
+    var lighten: CGFloat = Constants.Tile.Alpha.normal.rawValue
     override var hashValue: Int {
         return "\(self.coordinates.0), \(self.coordinates.1)".hashValue
     }
@@ -28,7 +28,7 @@ class Tile: SKShapeNode, Hashable {
     var selected: Bool = false {
         didSet {
             if selected {
-                self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: true)
+                self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: Constants.Tile.Alpha.selected.rawValue)
             } else {
                 self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: self.lighten)
             }
