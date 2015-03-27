@@ -24,7 +24,7 @@ class Utilities {
     class func arrayToAxialCoordinates(#row: Int, col: Int) -> (x: Int, y: Int) {
         return (col - (row-(row&1)) / 2, row)
     }
-    
+
     class Colors {
         class func colorForLandType(l: Constants.Types.Land, lighten: Bool = false) -> UIColor {
             let alpha: CGFloat = lighten ? 0.5 : 1
@@ -38,7 +38,7 @@ class Utilities {
                 return UIColor(rgb: 0xffe6c5, alpha: alpha)
             }
         }
-        
+
         class func colorForPlayer(id: Int) -> UIColor {
             switch id {
             case 0:
@@ -51,7 +51,7 @@ class Utilities {
                 return UIColor.whiteColor()
             }
         }
-        
+
         struct Tile {
             static let strokeColor = UIColor.whiteColor()
         }

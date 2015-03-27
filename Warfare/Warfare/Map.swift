@@ -203,14 +203,18 @@ class Map: SKNode {
 
                     for t in neighbors(tile: newSeed) {
                         if contains(seen, { $0 === t}) { continue }
+                        if unitType.rawValue > 3 && !t.isWalkable() { continue }
+                        if t.land != .Sea { continue }
 
                         if t.owner === seed.owner {
                             if t.isWalkable() {
                                 queue.append(t)
                             }
-                            result.append(t)
+                            if t.structure != .Tower && t.village == nil {
+                                result.append(t)
+                            }
                         } else {
-                            if t.land != .Sea && !t.isProtected(seed.unit!) {
+                            if !t.isProtected(seed.unit!) {
                                 result.append(t)
                             }
                         }
@@ -270,6 +274,14 @@ class Map: SKNode {
 			}
 		}
 	}
+
+    func resetColor() {
+        let tileList: [Tile] = tiles.rows.reduce([], +)
+
+        for t in tileList {
+            t.lighten = false
+        }
+    }
 
 	func scroll(delta: CGPoint) {
 		scroller.position = CGPointMake(scroller.position.x + delta.x, scroller.position.y + delta.y)
