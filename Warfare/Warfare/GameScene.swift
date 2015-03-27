@@ -75,7 +75,6 @@ class GameScene: SKScene {
     func centerAroundSelected(centerAround: Tile) {
         if let map = self.map? {
             let positionInScene = convertPoint(centerAround.position, fromNode: map.scroller)
-            let centerInScene = CGPoint(x: self.size.width/2, y: self.size.height/2)
             let delta = CGVector(dx:  -positionInScene.x , dy:  -positionInScene.y )
             map.scroll(delta)
         }
