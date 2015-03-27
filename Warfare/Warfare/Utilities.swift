@@ -24,19 +24,23 @@ class Utilities {
     class func arrayToAxialCoordinates(#row: Int, col: Int) -> (x: Int, y: Int) {
         return (col - (row-(row&1)) / 2, row)
     }
-    
+
     class Colors {
-        class func colorForLandType(l: Constants.Types.Land) -> UIColor {
-            switch l {
-            case .Sea:
-                return UIColor(rgb: 0x588c7e)
-            case .Grass, .Tree:
-                return UIColor(rgb: 0x1b4001)
-            case .Meadow:
-                return UIColor(rgb: 0xffe6c5)
+        class func colorForLandType(l: Constants.Types.Land, lighten: Bool) -> UIColor {
+            if lighten {
+                return UIColor.purpleColor()
+            } else {
+                switch l {
+                case .Sea:
+                    return UIColor(rgb: 0x588c7e)
+                case .Grass, .Tree:
+                    return UIColor(rgb: 0x1b4001)
+                case .Meadow:
+                    return UIColor(rgb: 0xffe6c5)
+                }
             }
         }
-        
+
         class func colorForPlayer(id: Int) -> UIColor {
             switch id {
             case 0:
@@ -49,7 +53,7 @@ class Utilities {
                 return UIColor.whiteColor()
             }
         }
-        
+
         struct Tile {
             static let strokeColor = UIColor.whiteColor()
         }

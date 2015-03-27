@@ -20,6 +20,7 @@ class Tile: SKShapeNode, Hashable {
     var structure: Constants.Types.Structure?
     var land: Constants.Types.Land!
     var owner: Village!
+    var lighten: Bool = false
     override var hashValue: Int {
         return "\(self.coordinates.0), \(self.coordinates.1)".hashValue
     }
@@ -29,7 +30,7 @@ class Tile: SKShapeNode, Hashable {
             if selected {
                 self.fillColor = UIColor.blackColor()
             } else {
-                self.fillColor = Utilities.Colors.colorForLandType(self.land)
+                self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: self.lighten)
             }
         }
     }
@@ -56,7 +57,7 @@ class Tile: SKShapeNode, Hashable {
         self.removeAllChildren()
 
         self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
-        self.fillColor = Utilities.Colors.colorForLandType(self.land)
+        self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: self.lighten)
 
         if self.owner?.player != nil {
             self.lineWidth = 2
@@ -135,8 +136,11 @@ class Tile: SKShapeNode, Hashable {
     func isProtected(against: Unit) -> Bool {
         let attackingType = against.type.rawValue
 
-        return attackingType < min((self.unit?.type.rawValue)!, Constants.Types.Unit.Knight.rawValue)
-                    || self.structure? == Constants.Types.Structure.Tower && attackingType < Constants.Types.Unit.Soldier.rawValue
+        if let defendingUnitType = self.unit?.type {
+            return attackingType < min(defendingUnitType.rawValue, Constants.Types.Unit.Knight.rawValue)
+        }
+
+        return self.structure? == Constants.Types.Structure.Tower && attackingType < Constants.Types.Unit.Soldier.rawValue
                     || self.village?.rawValue >= Constants.Types.Village.Fort.rawValue && attackingType < Constants.Types.Unit.Knight.rawValue
     }
 

@@ -271,6 +271,14 @@ class Map: SKNode {
 		}
 	}
 
+    func resetColor() {
+        let tileList: [Tile] = tiles.rows.reduce([], +)
+
+        for t in tileList {
+            t.lighten = false
+        }
+    }
+
 	func scroll(delta: CGPoint) {
 		scroller.position = CGPointMake(scroller.position.x + delta.x, scroller.position.y + delta.y)
 	}
