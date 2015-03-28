@@ -15,6 +15,7 @@ func == (lhs: Tile, rhs: Tile) -> Bool {
 
 class Tile: SKShapeNode, Hashable {
     var coordinates: (Int, Int)!
+    var node: SKSpriteNode!
     var unit: Unit?
     var village: Constants.Types.Village?
     var structure: Constants.Types.Structure?
@@ -39,6 +40,7 @@ class Tile: SKShapeNode, Hashable {
 
     init(dict: NSDictionary, ownerVillage village: Village? = nil) {
         super.init()
+        self.node = SKSpriteNode(imageNamed: "road")
 
         self.owner = village
         self.deserialize(dict)
@@ -49,6 +51,7 @@ class Tile: SKShapeNode, Hashable {
     init(coordinates: (Int, Int), landType: Constants.Types.Land = .Grass) {
         self.coordinates = coordinates
         self.land = landType
+        self.node = SKSpriteNode(imageNamed: "road")
 
         super.init()
     }
@@ -56,8 +59,9 @@ class Tile: SKShapeNode, Hashable {
     func draw() {
         self.removeAllChildren()
 
-        self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
+//        self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
         self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: self.lighten)
+        self.addChild(node)
 
         if self.owner?.player != nil {
             self.lineWidth = 2
