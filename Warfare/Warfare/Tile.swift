@@ -55,15 +55,7 @@ class Tile: SKNode, Hashable {
     func draw() {
         self.removeAllChildren()
 
-        if selected {
-            self.background = SKSpriteNode(imageNamed: "selected")
-        } else {
-            if lighten {
-                self.background = SKSpriteNode(imageNamed: "flood")
-            } else {
-                self.background = SKSpriteNode(imageNamed: "background")
-            }
-        }
+        self.background.alpha = selected ? 0.8 : (lighten ? 0.5 : 1)
         self.addChild(background)
 
         // Structure
