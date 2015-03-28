@@ -55,7 +55,9 @@ class Tile: SKNode, Hashable {
     func draw() {
         self.removeAllChildren()
 
-        self.background.alpha = selected ? 0.8 : (lighten ? 0.5 : 1)
+        let alpha = selected ? Constants.Tile.Alpha.selected.rawValue: (lighten ? Constants.Tile.Alpha.flood.rawValue : Constants.Tile.Alpha.normal.rawValue)
+        self.background.color = Utilities.Colors.colorForLandType(self.land, alpha: alpha)
+        self.background.colorBlendFactor = 1
         self.addChild(background)
 
         // Structure
