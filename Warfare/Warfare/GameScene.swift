@@ -67,12 +67,10 @@ class GameScene: SKScene {
 
             // Debugger uncomment to run
             Hud.Instance.displayUnitDebugger(map.selected!)
-
-            self.centerAroundSelected(map.selected!)
         }
     }
 
-    func centerAroundSelected(centerAround: Tile) {
+    func centerAround(centerAround: Tile) {
         if let map = self.map? {
             let positionInScene = convertPoint(centerAround.position, fromNode: map.scroller)
             let delta = CGVector(dx:  -positionInScene.x , dy:  -positionInScene.y )
@@ -85,7 +83,7 @@ class GameScene: SKScene {
         let current = touch.locationInNode(self)
         let prev = touch.previousLocationInNode(self)
 
-        let translation = CGVector(dx: current.x - prev.x, dy: current.y - prev.y)
+        let translation = CGPoint(x: current.x - prev.x, y: current.y - prev.y)
 
         map?.scroll(translation)
     }

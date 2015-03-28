@@ -286,7 +286,10 @@ class Map: SKNode {
     func scroll(delta: CGVector) {
         let move = SKAction.moveBy(delta, duration: 1)
         self.scroller.runAction(move)
-//      scroller.position = CGPointMake(scroller.position.x + delta.x, scroller.position.y + delta.y)
+    }
+
+    func scroll(delta: CGPoint) {
+        scroller.position = CGPointMake(scroller.position.x + delta.x, scroller.position.y + delta.y)
     }
 
     required init?(coder aDecoder: NSCoder) {
