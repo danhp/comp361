@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "strokeRed.png"
+      "filename" : "stroke.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "strokeRed@2x.png"
+      "filename" : "stroke@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "strokeRed@3x.png"
+      "filename" : "stroke@3x.png"
     }
   ],
   "info" : {

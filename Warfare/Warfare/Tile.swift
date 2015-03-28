@@ -76,8 +76,9 @@ class Tile: SKNode, Hashable {
 
         // Player color
         if let order = self.owner?.player?.order {
-            let name = "stroke" + String(order)
-            let stroke = SKSpriteNode(imageNamed: name)
+            let stroke = SKSpriteNode(imageNamed: "stroke")
+            stroke.color = Utilities.Colors.colorForPlayer(order)
+            stroke.colorBlendFactor = 1
             self.addChild(stroke)
         }
 
