@@ -53,6 +53,7 @@
 		52A68BBB1AAFD47800F747CE /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A68BB91AAFD1F000F747CE /* Hud.swift */; };
 		52ADD5541A91372C00F5307D /* gameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ADD5531A91372C00F5307D /* gameTests.swift */; };
 		B841AEAC1AA6CFDA00D2A542 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */; };
+		B880B3771AC73A9B007050A9 /* 3.json in Resources */ = {isa = PBXBuildFile; fileRef = B880B3761AC73A9B007050A9 /* 3.json */; };
 		B882D0921ABE0C70006EA5F2 /* MapSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +101,7 @@
 		52A68BB91AAFD1F000F747CE /* Hud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Hud.swift; path = Warfare/Hud.swift; sourceTree = SOURCE_ROOT; };
 		52ADD5531A91372C00F5307D /* gameTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = gameTests.swift; path = WarfareTests/gameTests.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = ../MainMenuViewController.swift; sourceTree = "<group>"; };
+		B880B3761AC73A9B007050A9 /* 3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 3.json; path = Warfare/3.json; sourceTree = SOURCE_ROOT; };
 		B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapSelectionViewController.swift; path = Warfare/MapSelectionViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -127,6 +129,7 @@
 			children = (
 				13C428651ABB623E008E35BD /* 2.json */,
 				132A65AA1A8EAAD300D588B2 /* 1.json */,
+				B880B3761AC73A9B007050A9 /* 3.json */,
 			);
 			name = Maps;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				13F60EC41ABA30BE008E4BF3 /* 1.json in Resources */,
 				137101481A701096009B807C /* LaunchScreen.xib in Resources */,
 				13C428661ABB623E008E35BD /* 2.json in Resources */,
+				B880B3771AC73A9B007050A9 /* 3.json in Resources */,
 				137101451A701096009B807C /* Images.xcassets in Resources */,
 				1371013C1A701096009B807C /* GameScene.sks in Resources */,
 				137101431A701096009B807C /* Main.storyboard in Resources */,
