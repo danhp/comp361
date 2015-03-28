@@ -97,7 +97,7 @@ class GameViewController: UIViewController {
                         && !unit.disabled {
                 if let tiles = GameEngine.Instance.map?.getAccessibleRegion(tileSource!) {
                     for t in tiles {
-                        t.lighten = Constants.Tile.Alpha.flood.rawValue
+                        t.lighten = true
                     }
                 }
 
@@ -166,7 +166,7 @@ class GameViewController: UIViewController {
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
             let skView = self.view as SKView
-//            skView.showsFPS = true
+            skView.showsFPS = true
 //            skView.showsNodeCount = true
 //            skView.showsDrawCount = true
 
