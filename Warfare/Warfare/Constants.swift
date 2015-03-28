@@ -12,11 +12,11 @@ import SpriteKit
 struct Constants {
 
     struct Map {
-        static let dimension = 18	// 18x18 maps
+        static let dimension = 18   // 18x18 maps
     }
 
     struct Tile {
-        static let size = 60	// Distance from center to a corner
+        static let size = 60    // Distance from center to a corner
 
         enum Alpha: CGFloat {
             case normal = 1, flood = 0.5, selected = 0.8

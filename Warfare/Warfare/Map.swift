@@ -266,10 +266,10 @@ class Map: SKNode {
                 tile.draw()
                 tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
 
-//				let s:String = coord.x.description + "," + coord.y.description
-//				let label = SKLabelNode(text: s)
+//              let s:String = coord.x.description + "," + coord.y.description
+//              let label = SKLabelNode(text: s)
 //                label.fontSize = 16.0
-//				tile.addChild(label)
+//              tile.addChild(label)
                 self.scroller.addChild(tile)
             }
         }
@@ -286,7 +286,7 @@ class Map: SKNode {
     func scroll(delta: CGVector) {
         let move = SKAction.moveBy(delta, duration: 1)
         self.scroller.runAction(move)
-//		scroller.position = CGPointMake(scroller.position.x + delta.x, scroller.position.y + delta.y)
+//      scroller.position = CGPointMake(scroller.position.x + delta.x, scroller.position.y + delta.y)
     }
 
     required init?(coder aDecoder: NSCoder) {
