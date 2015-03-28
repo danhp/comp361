@@ -15,6 +15,7 @@
                                               { "position":[5,1], "land":2 },
                                               { "position":[5,2], "land":0 }
                                               
+                           ]
                            }
                            ]
                },
@@ -141,7 +142,7 @@
                {"position":[19,4], "land":0},
                {"position":[20,4], "land":0},
                
-               {"position":[0,5], "land"3},
+               {"position":[0,5], "land":3},
                {"position":[1,5], "land":0},
                {"position":[2,5], "land":1},
                {"position":[3,5], "land":1},
