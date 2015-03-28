@@ -279,7 +279,7 @@ class Map: SKNode {
         let tileList: [Tile] = tiles.rows.reduce([], +)
 
         for t in tileList {
-            t.lighten = Constants.Tile.Alpha.normal.rawValue
+            t.lighten = false
         }
     }
 

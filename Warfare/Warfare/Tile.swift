@@ -13,25 +13,22 @@ func == (lhs: Tile, rhs: Tile) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
 
-class Tile: SKShapeNode, Hashable {
+class Tile: SKNode, Hashable {
     var coordinates: (Int, Int)!
+    var background: SKSpriteNode!
     var unit: Unit?
     var village: Constants.Types.Village?
     var structure: Constants.Types.Structure?
     var land: Constants.Types.Land!
     var owner: Village!
-    var lighten: CGFloat = Constants.Tile.Alpha.normal.rawValue
+    var lighten: Bool = false
     override var hashValue: Int {
         return "\(self.coordinates.0), \(self.coordinates.1)".hashValue
     }
 
     var selected: Bool = false {
         didSet {
-            if selected {
-                self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: Constants.Tile.Alpha.selected.rawValue)
-            } else {
-                self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: self.lighten)
-            }
+            self.draw()
         }
     }
 
@@ -39,6 +36,7 @@ class Tile: SKShapeNode, Hashable {
 
     init(dict: NSDictionary, ownerVillage village: Village? = nil) {
         super.init()
+        self.background = SKSpriteNode(imageNamed: "background")
 
         self.owner = village
         self.deserialize(dict)
@@ -49,6 +47,7 @@ class Tile: SKShapeNode, Hashable {
     init(coordinates: (Int, Int), landType: Constants.Types.Land = .Grass) {
         self.coordinates = coordinates
         self.land = landType
+        self.background = SKSpriteNode(imageNamed: "background")
 
         super.init()
     }
@@ -56,13 +55,10 @@ class Tile: SKShapeNode, Hashable {
     func draw() {
         self.removeAllChildren()
 
-        self.path = makeHexagonalPath(CGFloat(Constants.Tile.size))
-        self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: self.lighten)
-
-        if self.owner?.player != nil {
-            self.lineWidth = 2
-            self.glowWidth = 2
-        }
+        let alpha = selected ? Constants.Tile.Alpha.selected.rawValue: (lighten ? Constants.Tile.Alpha.flood.rawValue : Constants.Tile.Alpha.normal.rawValue)
+        self.background.color = Utilities.Colors.colorForLandType(self.land, alpha: alpha)
+        self.background.colorBlendFactor = 1
+        self.addChild(background)
 
         // Structure
         if let s = self.structure {
@@ -82,9 +78,10 @@ class Tile: SKShapeNode, Hashable {
 
         // Player color
         if let order = self.owner?.player?.order {
-            self.strokeColor = Utilities.Colors.colorForPlayer(order)
-        } else {
-            self.strokeColor = Utilities.Colors.colorForPlayer(-1)
+            let stroke = SKSpriteNode(imageNamed: "stroke")
+            stroke.color = Utilities.Colors.colorForPlayer(order)
+            stroke.colorBlendFactor = 1
+            self.addChild(stroke)
         }
 
         // Land
