@@ -266,10 +266,10 @@ class Map: SKNode {
 				tile.draw()
 				tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
 
-//				let s:String = coord.x.description + "," + coord.y.description
-//				let label = SKLabelNode(text: s)
-//                label.fontSize = 16.0
-//				tile.addChild(label)
+				let s:String = coord.x.description + "," + coord.y.description
+				let label = SKLabelNode(text: s)
+                label.fontSize = 16.0
+				tile.addChild(label)
 				self.scroller.addChild(tile)
 			}
 		}

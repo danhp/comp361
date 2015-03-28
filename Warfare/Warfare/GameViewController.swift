@@ -69,7 +69,7 @@ class GameViewController: UIViewController {
         Hud.Instance.update()
         validateButton.hidden = true
         cancelButton.hidden = true
-        GameEngine.Instance.map?.draw()
+//        GameEngine.Instance.map?.draw()
     }
 
     @IBAction func cancelButtonTapped(sender: AnyObject) {
