@@ -13,10 +13,10 @@ class GameScene: SKScene {
     var map: Map?
 
     override func didMoveToView(view: SKView) {
-		self.anchorPoint = CGPointMake(0.5, 0.5)
+        self.anchorPoint = CGPointMake(0.5, 0.5)
 
         self.map = GameEngine.Instance.map
-        
+
         if let m = self.map {
             m.draw()
             m.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
@@ -24,11 +24,11 @@ class GameScene: SKScene {
             self.addChild(m)
         }
 
-		Hud.Instance.update()
+        Hud.Instance.update()
         Hud.Instance.removeFromParent()
         self.addChild(Hud.Instance)
     }
-    
+
     func resetMap() {
         // TODO remember position as well
         self.map?.removeFromParent()
@@ -36,16 +36,16 @@ class GameScene: SKScene {
         self.map?.draw()
         self.map?.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
         self.addChild(self.map!)
-        
+
         Hud.Instance.update()
     }
-    
+
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         /* Called when a touch begins */
-        
+
         let touch = touches.anyObject() as UITouch
         let touchLocation = touch.locationInNode(self)
-        
+
         if let touchedTile = nodeAtPoint(touchLocation) as? Tile {
             self.map?.selected = touchedTile
             self.newSelection()
@@ -56,7 +56,7 @@ class GameScene: SKScene {
             }
         }
     }
-    
+
     private func newSelection() {
         if let map = self.map? {
             if map.selected?.owner != nil {
@@ -64,14 +64,14 @@ class GameScene: SKScene {
             } else {
                 Hud.Instance.update()
             }
-            
-            // Debugger uncomment to run 
+
+            // Debugger uncomment to run
             Hud.Instance.displayUnitDebugger(map.selected!)
-            
+
             self.centerAroundSelected(map.selected!)
         }
     }
-    
+
     func centerAroundSelected(centerAround: Tile) {
         if let map = self.map? {
             let positionInScene = convertPoint(centerAround.position, fromNode: map.scroller)
@@ -79,17 +79,17 @@ class GameScene: SKScene {
             map.scroll(delta)
         }
     }
-	
-	override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
         let touch = touches.anyObject()! as UITouch
         let current = touch.locationInNode(self)
         let prev = touch.previousLocationInNode(self)
-        
+
         let translation = CGVector(dx: current.x - prev.x, dy: current.y - prev.y)
-        
+
         map?.scroll(translation)
-	}
-   
+    }
+
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }

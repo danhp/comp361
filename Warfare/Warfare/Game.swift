@@ -12,10 +12,10 @@ import GameKit
 class Game {
     var players = [Player]()
     var currentPlayer: Player { return self.players[MatchHelper.sharedInstance().currentParticipantIndex()] }
-  
+
     let map = Map()
     var neutralTiles = [Tile]()
-    
+
     var localIsCurrentPlayer: Bool { return GKLocalPlayer.localPlayer().playerID == MatchHelper.sharedInstance().myMatch?.currentParticipant.playerID}
 
     var currentPlayerGold: Int { return self.currentPlayer.gold }
@@ -27,13 +27,13 @@ class Game {
     }
 
     init() { }
-    
+
     func importDictionary(dict: NSDictionary) {
         self.deserialize(dict)
     }
-    
+
     // MARK: - Encoding
-    
+
     // Encodes the match data in a sendable format
     func encodeMatchData() -> NSData {
         let dict = self.serialize()
@@ -49,7 +49,7 @@ class Game {
     }
 
     // MARK: - Serialization
-    
+
     // Populates the current Game with match data
     func deserialize(dict: NSDictionary) {
         // PLAYERS
@@ -79,14 +79,14 @@ class Game {
 
         return dict
     }
-    
+
     func toJSON(dict: NSDictionary) -> String {
         // Make JSON
         var error:NSError?
         var data = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
-        
+
         // Return as a String
         return NSString(data: data!, encoding: NSUTF8StringEncoding)!
     }
-    
+
 }

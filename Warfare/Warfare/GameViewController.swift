@@ -43,12 +43,12 @@ class GameViewController: UIViewController {
     @IBOutlet weak var infoButton: UIBarButtonItem!
 
     @IBAction func recruitButtonTapped(sender: AnyObject) {
-		if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
         GameEngine.Instance.map?.resetColor()
 
         var tileSelected = GameEngine.Instance.map?.selected
-        
-		if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
+
+        if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
 
         if let t = tileSelected {
             GameEngine.Instance.recruitUnit(t, type: Constants.Types.Unit.Peasant)
@@ -116,20 +116,20 @@ class GameViewController: UIViewController {
     }
 
     @IBAction func upgradeButtonTapped(sender: AnyObject) {
-		if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
         GameEngine.Instance.map?.resetColor()
 
-		let selectedTile = GameEngine.Instance.map?.selected
-		if selectedTile?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
+        let selectedTile = GameEngine.Instance.map?.selected
+        if selectedTile?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
 
-		if selectedTile?.village != nil {
-			GameEngine.Instance.upgradeVillage(selectedTile!)
-		} else if selectedTile?.unit != nil {
-			GameEngine.Instance.upgradeUnit(selectedTile!, newLevel: Constants.Types.Unit.Infantry)
-		}
+        if selectedTile?.village != nil {
+            GameEngine.Instance.upgradeVillage(selectedTile!)
+        } else if selectedTile?.unit != nil {
+            GameEngine.Instance.upgradeUnit(selectedTile!, newLevel: Constants.Types.Unit.Infantry)
+        }
 
-		Hud.Instance.update()
-		GameEngine.Instance.map?.draw()
+        Hud.Instance.update()
+        GameEngine.Instance.map?.draw()
     }
 
     @IBAction func combineButtonTapped(sender: AnyObject) {
@@ -140,7 +140,7 @@ class GameViewController: UIViewController {
 
 
     @IBAction func skipButtonTapped(sender: AnyObject) {
-		if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
         GameEngine.Instance.map?.resetColor()
 
         GameEngine.Instance.beginTurn()
@@ -149,7 +149,7 @@ class GameViewController: UIViewController {
 
         GameEngine.Instance.map?.resetColor()
         GameEngine.Instance.map?.draw()
-		Hud.Instance.update()
+        Hud.Instance.update()
         GameEngine.Instance.map?.draw()
     }
 

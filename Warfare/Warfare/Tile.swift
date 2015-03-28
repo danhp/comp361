@@ -63,22 +63,22 @@ class Tile: SKShapeNode, Hashable {
             self.lineWidth = 2
             self.glowWidth = 2
         }
-        
+
         // Structure
-		if let s = self.structure {
+        if let s = self.structure {
             let sprite = SKSpriteNode(imageNamed: s.name())
             self.addChild(sprite)
         }
-        
+
         // Village
-		if self.village != nil {
-			self.addChild((self.owner?.draw())!)
-		}
-        
+        if self.village != nil {
+            self.addChild((self.owner?.draw())!)
+        }
+
         // Unit
-		if let u = self.unit {
-			self.addChild(u.draw())
-		}
+        if let u = self.unit {
+            self.addChild(u.draw())
+        }
 
         // Player color
         if let order = self.owner?.player?.order {
@@ -86,7 +86,7 @@ class Tile: SKShapeNode, Hashable {
         } else {
             self.strokeColor = Utilities.Colors.colorForPlayer(-1)
         }
-        
+
         // Land
         if self.land != .Grass {
             let sprite = SKSpriteNode(imageNamed: self.land.name())

@@ -55,7 +55,7 @@ struct Constants {
                     return 1
                 }
             }
-            
+
             func name() -> String {
                 switch self {
                 case .Grass:
@@ -164,7 +164,7 @@ struct Constants {
                     return 5
                 }
             }
-            
+
             func name() -> String {
                 switch self {
                 case .Peasant:
@@ -194,7 +194,7 @@ struct Constants {
                     return 0
                 }
             }
-            
+
             func name() -> String {
                 switch self {
                 case .Tower:

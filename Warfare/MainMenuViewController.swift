@@ -9,10 +9,10 @@
 import UIKit
 
 class MainMenuViewController: UIViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
 
@@ -23,7 +23,7 @@ class MainMenuViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     @IBAction func joinMatch(sender: AnyObject) {
         // Show join match screen
         MatchHelper.sharedInstance().joinMatch()
@@ -32,15 +32,15 @@ class MainMenuViewController: UIViewController {
     func segueToGameViewController() {
         self.performSegueWithIdentifier("gameViewControllerSegue", sender: self)
     }
-    
+
     func segueToMapSelectionViewController() {
         self.performSegueWithIdentifier("mapSelectionViewControllerSegue", sender: self)
     }
-    
+
     func dismissViewController() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+
     /*
     // MARK: - Navigation
 

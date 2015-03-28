@@ -10,43 +10,43 @@ import Foundation
 import UIKit
 
 class MapSelectionViewController: UIViewController {
-    
+
     @IBOutlet weak var confirmationButton: UIButton!
-    
+
     var selectedIndex: Int = 2
-    
+
     @IBOutlet weak var map1: UIImageView!
     @IBOutlet weak var map2: UIImageView!
     @IBOutlet weak var map3: UIImageView!
-    
+
     @IBOutlet weak var selectMistakeLabel: UILabel!
-    
+
     @IBAction func confirmationAction(sender: AnyObject) {
         if selectedIndex == 0 {
             selectMistakeLabel.hidden = false
             return
         }
-        
+
         // GameEngine will take care of dismissing this view controller
         // as well as processing the map selection
         GameEngine.Instance.processMapSelection(selectedIndex)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
-        
+
         // add tap gesture to images
         map1.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "map1Tapped:"))
         map2.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "map2Tapped:"))
         map3.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "map3Tapped:"))
-        
+
         selectMistakeLabel.hidden = true
-        
+
     }
-    
+
     func map1Tapped(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
             mapTapped(1)
@@ -55,7 +55,7 @@ class MapSelectionViewController: UIViewController {
             map3.highlighted = false
         }
     }
-    
+
     func map2Tapped(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
             mapTapped(2)
@@ -64,7 +64,7 @@ class MapSelectionViewController: UIViewController {
             map3.highlighted = false
         }
     }
-    
+
     func map3Tapped(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
             mapTapped(3)
@@ -73,11 +73,11 @@ class MapSelectionViewController: UIViewController {
             map3.highlighted = true
         }
     }
-    
+
     func mapTapped(index: Int) {
         selectedIndex = index
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
