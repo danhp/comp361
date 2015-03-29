@@ -416,27 +416,36 @@ class GameEngine {
         self.availableUnits = self.availableUnits.filter({ $0 !== tileA || $0 !== tileB })
     }
 
-    func recruitUnit(tile: Tile, type: Constants.Types.Unit) {
-        if tile.owner.player !== self.game?.currentPlayer { return }
+    func recruitUnit(villageTile: Tile, type: Constants.Types.Unit) {
+        if villageTile.owner.player !== self.game?.currentPlayer { return }
 
-        let village = tile.owner
+        let village = villageTile.owner
         if village.disaled { return }
+
+        var destination: Tile?
+        for n in (self.map?)!.neighbors(tile: villageTile) {
+            if n.isWalkable() && n.unit == nil && n.structure == nil {
+                destination = n
+                break
+            }
+        }
+        if destination == nil { return }
 
         // Hovel can only recruit peasants and infantry (rawVaue: 0 & 1)
         // Town can also recruit soldiers (rawValue: 2)
         // Fort can also recruit knight and canond (rawValue: 3 & 4)
-        if type.rawValue > min(tile.owner.type.rawValue + 1, Constants.Types.Village.Fort.rawValue) { return }
+        if type.rawValue > min(villageTile.owner.type.rawValue + 1, Constants.Types.Village.Fort.rawValue) { return }
 
         let costGold = type.cost().0
         let costWood = type.cost().1
-        if village.gold < costGold || village.wood < costWood || !tile.isWalkable() { return }
+        if village.gold < costGold || village.wood < costWood || villageTile.isWalkable() { return }
 
         village.gold -= costGold
         village.wood -= costWood
 
         var newUnit = Unit(type: type)
         newUnit.currentAction = .Moved
-        tile.unit = newUnit
+        destination!.unit = newUnit
     }
 
     func buildTower(on: Tile) {
