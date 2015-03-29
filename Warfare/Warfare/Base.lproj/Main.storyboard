@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Iq-47-Qvh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Iq-47-Qvh">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -65,12 +65,16 @@
                                             <segue destination="1Iq-47-Qvh" kind="show" id="fVV-hq-Mco"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Info" id="et7-Fj-wl1">
+                                    <barButtonItem title="Next Unit" id="iKs-2h-D1Q">
                                         <connections>
-                                            <action selector="infoButtonTapped:" destination="LVB-YS-i5n" id="8O1-hF-F8H"/>
+                                            <action selector="nextUnitButtonTapped:" destination="LVB-YS-i5n" id="hwm-gB-kW8"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="RY6-dZ-g6z"/>
+                                    <barButtonItem title="Next Village" id="lRg-bQ-2da">
+                                        <connections>
+                                            <action selector="nextVillageButtonTapped:" destination="LVB-YS-i5n" id="4hu-Dx-jrP"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem title="Move" id="DnP-xL-XJG">
                                         <connections>
                                             <action selector="moveButtonTapped:" destination="LVB-YS-i5n" id="ivc-DF-Ghj"/>
@@ -125,21 +129,9 @@
                                     <action selector="recruitButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="0bj-m9-gCP"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="law-KU-HRD">
-                                <rect key="frame" x="584" y="226" width="48" height="30"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="cancel2ButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="dXR-ma-1rr"/>
-                                    <action selector="cancelButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="Wwx-29-khk"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="SyT-za-Flx" firstAttribute="top" secondItem="law-KU-HRD" secondAttribute="bottom" constant="17" id="0iB-OL-tCL"/>
-                            <constraint firstItem="law-KU-HRD" firstAttribute="leading" secondItem="SyT-za-Flx" secondAttribute="leading" id="A2X-8z-tC2"/>
                             <constraint firstItem="MOD-Nf-7Hs" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leading" id="JDT-tN-Ce2"/>
                             <constraint firstItem="MOD-Nf-7Hs" firstAttribute="top" secondItem="01a-Yn-L7o" secondAttribute="bottom" constant="28" id="VcH-4D-ZqU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="SyT-za-Flx" secondAttribute="trailing" constant="19" id="c9o-eH-C7c"/>
@@ -156,11 +148,10 @@
                     <connections>
                         <outlet property="buildButton" destination="FOt-5m-LFk" id="oS1-h1-H5C"/>
                         <outlet property="cancelButton" destination="SyT-za-Flx" id="85b-IK-pfq"/>
-                        <outlet property="cancelButton2" destination="law-KU-HRD" id="YE8-w4-sGP"/>
                         <outlet property="combineButton" destination="YBW-OR-u0Q" id="qB4-8K-JIf"/>
-                        <outlet property="infoButton" destination="et7-Fj-wl1" id="cnW-CK-HvL"/>
                         <outlet property="menuButton" destination="rCH-Kg-Xcf" id="0L3-iT-Fro"/>
                         <outlet property="moveButton" destination="DnP-xL-XJG" id="qfn-ve-52f"/>
+                        <outlet property="nextUnitButton" destination="iKs-2h-D1Q" id="DDl-nh-8yE"/>
                         <outlet property="recruitButton" destination="dLO-SS-pGv" id="FQc-tk-FX2"/>
                         <outlet property="skipButton" destination="hTB-Og-xl3" id="aVN-Qh-7h2"/>
                         <outlet property="upgradeButton" destination="4WM-Dr-20Z" id="SMy-hU-5bw"/>
@@ -242,8 +233,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="gD8-oU-YBZ"/>
                                 <exclude reference="UbX-52-B2J"/>
+                                <exclude reference="gD8-oU-YBZ"/>
                             </mask>
                         </variation>
                     </view>

@@ -34,6 +34,23 @@ class Map: SKNode {
 
             // Select new tile
             newValue?.selected = true
+            var vc = MatchHelper.sharedInstance().vc?.presentedViewController as GameViewController
+            if vc && GameEngine.Instance().game?.localIsCurrentPlayer {
+                if !GameEngine.Instance().game?.localIsCurrentPlayer {
+                    vc.hidePlayerButtons()
+                }
+                else if newValue?.structure != nil {
+                    vc.structureSelected()
+                }
+                
+                else if newValue?.unit != nil {
+                    vc.unitSelected()
+                }
+                else {
+                    vc.neutralSelected()
+                }
+            }
+            
         }
     }
 

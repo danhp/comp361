@@ -27,10 +27,9 @@ extension SKNode {
 }
 
 class GameViewController: UIViewController {
-
+    
     var tileSource : Tile?
 
-    @IBOutlet weak var cancelButton2: UIButton!
     @IBOutlet weak var recruitButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var validateButton: UIButton!
@@ -40,8 +39,18 @@ class GameViewController: UIViewController {
     @IBOutlet weak var upgradeButton: UIBarButtonItem!
     @IBOutlet weak var buildButton: UIBarButtonItem!
     @IBOutlet weak var moveButton: UIBarButtonItem!
-    @IBOutlet weak var infoButton: UIBarButtonItem!
-
+    @IBOutlet weak var nextUnitButton: UIBarButtonItem!
+    @IBOutlet weak var nextVillageButton: UIBarButtonItem!
+    
+    
+    @IBAction func nextUnitButtonTapped(sender: AnyObject) {
+        var tile = GameEngine.Instance.getNextAvailableUnit()
+    }
+    
+    @IBAction func nextVillageButtonTapped(sender: AnyObject) {
+        var tile = GameEngine.Instance.getNextAvailableVillage()
+    }
+    
     @IBAction func recruitButtonTapped(sender: AnyObject) {
         if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
         GameEngine.Instance.map?.resetColor()
@@ -56,10 +65,6 @@ class GameViewController: UIViewController {
         }
 
         GameEngine.Instance.map?.draw()
-    }
-
-
-    @IBAction func cancel2ButtonTapped(sender: AnyObject) {
     }
 
     @IBAction func validateButtonTapped(sender: AnyObject) {
@@ -81,9 +86,6 @@ class GameViewController: UIViewController {
 
     @IBAction func menuButtonTapped(sender: AnyObject) {
 
-    }
-
-    @IBAction func infoButtonTapped(sender: AnyObject) {
     }
 
     @IBAction func moveButtonTapped(sender: AnyObject) {
@@ -134,7 +136,6 @@ class GameViewController: UIViewController {
 
     @IBAction func combineButtonTapped(sender: AnyObject) {
         GameEngine.Instance.map?.resetColor()
-
         GameEngine.Instance.map?.draw()
     }
 
@@ -173,7 +174,6 @@ class GameViewController: UIViewController {
             validateButton.hidden = true
             cancelButton.hidden = true
             recruitButton.hidden = false
-            cancelButton2.hidden = true
 
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = true
@@ -185,6 +185,34 @@ class GameViewController: UIViewController {
 
             GameEngine.Instance.scene = scene
         }
+    }
+    
+    func unitSelected() {
+        buildButton.enabled = false
+        upgradeButton.enabled = true
+        moveButton.enabled = true
+        combineButton.enabled = true
+    }
+    
+    func structureSelected() {
+        buildButton.enabled = false
+        upgradeButton.enabled = true
+        moveButton.enabled = false
+        combineButton.enabled = false
+    }
+    
+    func neutralSelected() {
+        upgradeButton.enabled = false
+        combineButton.enabled = false
+    }
+    
+    func hidePlayerButtons() {
+        buildButton.enabled = false
+        upgradeButton.enabled = false
+        moveButton.enabled = false
+        combineButton.enabled = false
+        skipButton.enabled = false
+        
     }
 
     override func shouldAutorotate() -> Bool {

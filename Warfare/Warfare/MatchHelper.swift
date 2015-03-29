@@ -279,4 +279,5 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
                 } else { println("huh... current view controller should be MainMenuViewController but is" + (self.vc?.description)!) }
             }*/
     }
+    
 }

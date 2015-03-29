@@ -36,6 +36,8 @@ class GameEngine {
             if let mmvc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
                 mmvc.segueToMapSelectionViewController()
             }}))
+        
+        var vc = MatchHelper.sharedInstance().vc?.presentedViewController as GameViewController
     }
 
     func showGameScene() {

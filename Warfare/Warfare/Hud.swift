@@ -68,6 +68,8 @@ class Hud: SKNode {
         regWood.position = CGPoint(x: -390, y: 150)
         regWood.name = "rGold"
         self.addChild(regWood)
+        
+        let upkeep = SKLabelNode(text: "Upkeep:  " + String(tile.unit.
 
     }
 
@@ -78,6 +80,7 @@ class Hud: SKNode {
             self.addChild(uAction)
         }
     }
+    
 
 
 
