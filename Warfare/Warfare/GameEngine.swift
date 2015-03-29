@@ -396,16 +396,19 @@ class GameEngine {
 
     func upgradeUnit(tile: Tile, newLevel: Constants.Types.Unit) {
         if tile.owner.player !== self.game?.currentPlayer { return }
-        if (tile.unit?.disabled)! { return }
+        if let unit = tile.unit {
+            if unit.type == .Knight || unit.type == .Canon { return }
 
-        let village = tile.owner!
-        village.upgradeUnit(tile.unit!, newType: newLevel)
-        self.availableUnits = self.availableUnits.filter({ $0 !== tile })
+            let village = tile.owner!
+            village.upgradeUnit(tile.unit!, newType: newLevel)
+            self.availableUnits = self.availableUnits.filter({ $0 !== tile })
+        }
     }
 
     func combineUnit(tileA: Tile, tileB: Tile) {
         if tileA.owner !== tileB.owner { return }
         if tileA.owner.player !== self.game?.currentPlayer { return }
+        if tileA.unit == nil || tileB.unit == nil { return }
         if (tileA.unit?.disabled)! || (tileB.unit?.disabled)! { return }
 
         tileA.unit?.combine(tileB.unit!)
