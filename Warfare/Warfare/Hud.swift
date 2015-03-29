@@ -69,7 +69,6 @@ class Hud: SKNode {
         regWood.name = "rGold"
         self.addChild(regWood)
         
-        let upkeep = SKLabelNode(text: "Upkeep:  " + String(tile.unit.
 
     }
 

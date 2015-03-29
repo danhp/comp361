@@ -70,14 +70,6 @@ class GameScene: SKScene {
         }
     }
 
-    func centerAround(centerAround: Tile) {
-        if let map = self.map? {
-            let positionInScene = convertPoint(centerAround.position, fromNode: map.scroller)
-            let delta = CGVector(dx:  -positionInScene.x , dy:  -positionInScene.y )
-            map.scroll(delta)
-        }
-    }
-
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
         let touch = touches.anyObject()! as UITouch
         let current = touch.locationInNode(self)

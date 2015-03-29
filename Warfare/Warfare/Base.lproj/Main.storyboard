@@ -56,54 +56,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="bottom" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="MOD-Nf-7Hs">
-                                <rect key="frame" x="0.0" y="331" width="667" height="44"/>
-                                <items>
-                                    <barButtonItem title="Menu" id="rCH-Kg-Xcf">
-                                        <connections>
-                                            <action selector="menuButtonTapped:" destination="LVB-YS-i5n" id="iC4-zn-WxQ"/>
-                                            <segue destination="1Iq-47-Qvh" kind="show" id="fVV-hq-Mco"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Next Unit" id="iKs-2h-D1Q">
-                                        <connections>
-                                            <action selector="nextUnitButtonTapped:" destination="LVB-YS-i5n" id="hwm-gB-kW8"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Next Village" id="lRg-bQ-2da">
-                                        <connections>
-                                            <action selector="nextVillageButtonTapped:" destination="LVB-YS-i5n" id="4hu-Dx-jrP"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Move" id="DnP-xL-XJG">
-                                        <connections>
-                                            <action selector="moveButtonTapped:" destination="LVB-YS-i5n" id="ivc-DF-Ghj"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Build" id="FOt-5m-LFk">
-                                        <connections>
-                                            <action selector="buildButtonTapped:" destination="LVB-YS-i5n" id="L4s-Fh-a4N"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Upgrade" id="4WM-Dr-20Z">
-                                        <connections>
-                                            <action selector="upgradeButtonTapped:" destination="LVB-YS-i5n" id="Nyi-un-exl"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Combine" id="YBW-OR-u0Q">
-                                        <connections>
-                                            <action selector="combineButtonTapped:" destination="LVB-YS-i5n" id="fr4-mP-qkz"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="EndTurn" id="hTB-Og-xl3">
-                                        <connections>
-                                            <action selector="skipButtonTapped:" destination="LVB-YS-i5n" id="ROe-Zo-mlu"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="01a-Yn-L7o">
-                                <rect key="frame" x="39" y="273" width="54" height="30"/>
+                                <rect key="frame" x="600" y="295" width="54" height="30"/>
                                 <state key="normal" title="Validate">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -112,7 +66,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SyT-za-Flx">
-                                <rect key="frame" x="584" y="273" width="48" height="30"/>
+                                <rect key="frame" x="603" y="333" width="48" height="30"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -120,47 +74,164 @@
                                     <action selector="cancelButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="X9S-0u-h27"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dLO-SS-pGv">
-                                <rect key="frame" x="39" y="235" width="49" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ah6-Mf-wdE">
+                                <rect key="frame" x="72" y="295" width="65" height="30"/>
+                                <state key="normal" title="Next Unit">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="nextUnitButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="Dae-wf-YNc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejv-Lo-dQZ">
+                                <rect key="frame" x="72" y="333" width="81" height="30"/>
+                                <state key="normal" title="Next Village">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="nextVillageButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="3jv-3N-3xR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pJx-Pa-zhK">
+                                <rect key="frame" x="364" y="333" width="38" height="30"/>
+                                <state key="normal" title="Move">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="moveButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="HbC-k2-X13"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0s-Ji-zhq">
+                                <rect key="frame" x="417" y="295" width="60" height="30"/>
+                                <state key="normal" title="Upgrade">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="upgradeButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="Mdu-yJ-MNp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SZb-y9-aJF">
+                                <rect key="frame" x="417" y="333" width="62" height="30"/>
+                                <state key="normal" title="Combine">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="combineButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="NMf-8c-U9c"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9U-M9-D4u">
+                                <rect key="frame" x="495" y="333" width="57" height="30"/>
+                                <state key="normal" title="EndTurn">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="endTurnButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="OYO-sv-HNh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MwL-rC-JPL">
+                                <rect key="frame" x="16" y="316" width="39" height="30"/>
+                                <state key="normal" title="Menu">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="1Iq-47-Qvh" kind="show" id="VjX-au-YHF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qdv-yO-Nq9">
+                                <rect key="frame" x="495" y="295" width="49" height="30"/>
                                 <state key="normal" title="Recruit">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="recruitButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="0bj-m9-gCP"/>
+                                    <action selector="recruitButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="55h-Tc-ZnQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FUX-lM-tvq">
+                                <rect key="frame" x="181" y="295" width="37" height="30"/>
+                                <state key="normal" title="Road">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="roadButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="lRr-aN-Sjg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAl-tQ-u4u">
+                                <rect key="frame" x="177" y="333" width="41" height="30"/>
+                                <state key="normal" title="Tower">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="towerButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="efy-CX-YmI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZQ-nP-JgT">
+                                <rect key="frame" x="364" y="295" width="35" height="30"/>
+                                <state key="normal" title="Build">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buildButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="API-tL-9Ky"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="MOD-Nf-7Hs" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leading" id="JDT-tN-Ce2"/>
-                            <constraint firstItem="MOD-Nf-7Hs" firstAttribute="top" secondItem="01a-Yn-L7o" secondAttribute="bottom" constant="28" id="VcH-4D-ZqU"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="SyT-za-Flx" secondAttribute="trailing" constant="19" id="c9o-eH-C7c"/>
-                            <constraint firstItem="dLO-SS-pGv" firstAttribute="leading" secondItem="01a-Yn-L7o" secondAttribute="leading" id="hq4-Tw-Mw2"/>
-                            <constraint firstAttribute="trailing" secondItem="MOD-Nf-7Hs" secondAttribute="trailing" id="lhs-aX-5p3"/>
-                            <constraint firstItem="01a-Yn-L7o" firstAttribute="top" secondItem="dLO-SS-pGv" secondAttribute="bottom" constant="8" symbolic="YES" id="nOU-eS-0hX"/>
-                            <constraint firstItem="01a-Yn-L7o" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="23" id="o3f-uB-6Gw"/>
-                            <constraint firstItem="MOD-Nf-7Hs" firstAttribute="bottom" secondItem="b3d-qh-BLL" secondAttribute="top" id="sNa-0t-ySj"/>
-                            <constraint firstItem="SyT-za-Flx" firstAttribute="baseline" secondItem="01a-Yn-L7o" secondAttribute="baseline" id="uNj-nf-Biy"/>
+                            <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="ejv-Lo-dQZ" secondAttribute="bottom" constant="12" id="623-r5-TYp"/>
+                            <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="R9U-M9-D4u" secondAttribute="bottom" constant="12" id="7g4-fw-JWU"/>
+                            <constraint firstItem="ejv-Lo-dQZ" firstAttribute="top" secondItem="Ah6-Mf-wdE" secondAttribute="bottom" constant="8" id="9Nb-FH-VqF"/>
+                            <constraint firstItem="Qdv-yO-Nq9" firstAttribute="leading" secondItem="c0s-Ji-zhq" secondAttribute="trailing" constant="18" id="Aqs-9d-K7x"/>
+                            <constraint firstItem="01a-Yn-L7o" firstAttribute="top" secondItem="PCf-gQ-wO7" secondAttribute="bottom" constant="275" id="BNY-gR-4xX"/>
+                            <constraint firstItem="SZb-y9-aJF" firstAttribute="top" secondItem="c0s-Ji-zhq" secondAttribute="bottom" constant="8" id="DwL-Cz-ljq"/>
+                            <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="SyT-za-Flx" secondAttribute="bottom" constant="12" id="EDu-nT-Y3c"/>
+                            <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="MwL-rC-JPL" secondAttribute="bottom" constant="29" id="EFM-4m-sEw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="01a-Yn-L7o" secondAttribute="trailing" constant="-3" id="GBM-7F-8sr"/>
+                            <constraint firstItem="R9U-M9-D4u" firstAttribute="top" secondItem="Qdv-yO-Nq9" secondAttribute="bottom" constant="8" id="HV6-TQ-qXD"/>
+                            <constraint firstItem="pJx-Pa-zhK" firstAttribute="leading" secondItem="ejv-Lo-dQZ" secondAttribute="trailing" constant="211" id="JbF-7x-1Jg"/>
+                            <constraint firstItem="pJx-Pa-zhK" firstAttribute="top" secondItem="XZQ-nP-JgT" secondAttribute="bottom" constant="8" id="K5f-oQ-z6M"/>
+                            <constraint firstItem="SyT-za-Flx" firstAttribute="trailing" secondItem="bdc-N1-crn" secondAttribute="trailingMargin" id="KSQ-gS-wdg"/>
+                            <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="pJx-Pa-zhK" secondAttribute="bottom" constant="12" id="LZV-wV-Yfu"/>
+                            <constraint firstItem="FUX-lM-tvq" firstAttribute="leading" secondItem="Ah6-Mf-wdE" secondAttribute="trailing" constant="44" id="OG8-fK-VVg"/>
+                            <constraint firstItem="gAl-tQ-u4u" firstAttribute="leading" secondItem="ejv-Lo-dQZ" secondAttribute="trailing" constant="24" id="Pad-09-6f9"/>
+                            <constraint firstItem="pJx-Pa-zhK" firstAttribute="leading" secondItem="gAl-tQ-u4u" secondAttribute="trailing" constant="146" id="Quo-QA-ix0"/>
+                            <constraint firstItem="01a-Yn-L7o" firstAttribute="leading" secondItem="Qdv-yO-Nq9" secondAttribute="trailing" constant="56" id="TdD-29-eVc"/>
+                            <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="gAl-tQ-u4u" secondAttribute="bottom" constant="12" id="TlG-qo-9Qx"/>
+                            <constraint firstItem="MwL-rC-JPL" firstAttribute="top" secondItem="PCf-gQ-wO7" secondAttribute="bottom" constant="296" id="Zeb-cr-C0A"/>
+                            <constraint firstItem="Ah6-Mf-wdE" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="56" id="d2Y-69-vUV"/>
+                            <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="SZb-y9-aJF" secondAttribute="bottom" constant="12" id="epP-Qg-Vg1"/>
+                            <constraint firstItem="gAl-tQ-u4u" firstAttribute="top" secondItem="FUX-lM-tvq" secondAttribute="bottom" constant="8" id="gvE-GA-cmG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="01a-Yn-L7o" secondAttribute="trailing" constant="-3" id="i91-IV-QnT"/>
+                            <constraint firstItem="SyT-za-Flx" firstAttribute="trailing" secondItem="bdc-N1-crn" secondAttribute="trailingMargin" id="jgt-cS-nA6"/>
+                            <constraint firstItem="MwL-rC-JPL" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" id="kcc-p6-IjE"/>
+                            <constraint firstItem="c0s-Ji-zhq" firstAttribute="leading" secondItem="XZQ-nP-JgT" secondAttribute="trailing" constant="18" id="owW-cs-ejG"/>
+                            <constraint firstItem="SZb-y9-aJF" firstAttribute="leading" secondItem="pJx-Pa-zhK" secondAttribute="trailing" constant="15" id="w8V-CX-lvD"/>
+                            <constraint firstItem="ejv-Lo-dQZ" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="56" id="yDc-Hl-JbO"/>
+                            <constraint firstItem="R9U-M9-D4u" firstAttribute="leading" secondItem="SZb-y9-aJF" secondAttribute="trailing" constant="16" id="yGw-aI-ew8"/>
+                            <constraint firstItem="XZQ-nP-JgT" firstAttribute="leading" secondItem="Ah6-Mf-wdE" secondAttribute="trailing" constant="227" id="yt5-fm-bBw"/>
+                            <constraint firstItem="XZQ-nP-JgT" firstAttribute="leading" secondItem="FUX-lM-tvq" secondAttribute="trailing" constant="146" id="zLn-7T-bgj"/>
+                            <constraint firstItem="SyT-za-Flx" firstAttribute="leading" secondItem="R9U-M9-D4u" secondAttribute="trailing" constant="51" id="zja-iT-eXw"/>
                         </constraints>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="buildButton" destination="FOt-5m-LFk" id="oS1-h1-H5C"/>
+                        <outlet property="buildButton" destination="XZQ-nP-JgT" id="dNX-Qv-2hm"/>
                         <outlet property="cancelButton" destination="SyT-za-Flx" id="85b-IK-pfq"/>
-                        <outlet property="combineButton" destination="YBW-OR-u0Q" id="qB4-8K-JIf"/>
-                        <outlet property="menuButton" destination="rCH-Kg-Xcf" id="0L3-iT-Fro"/>
-                        <outlet property="moveButton" destination="DnP-xL-XJG" id="qfn-ve-52f"/>
-                        <outlet property="nextUnitButton" destination="iKs-2h-D1Q" id="DDl-nh-8yE"/>
-                        <outlet property="recruitButton" destination="dLO-SS-pGv" id="FQc-tk-FX2"/>
-                        <outlet property="skipButton" destination="hTB-Og-xl3" id="aVN-Qh-7h2"/>
-                        <outlet property="upgradeButton" destination="4WM-Dr-20Z" id="SMy-hU-5bw"/>
+                        <outlet property="combineButton" destination="SZb-y9-aJF" id="o3e-Gb-1eb"/>
+                        <outlet property="endTurnButton" destination="R9U-M9-D4u" id="foE-Ra-bUb"/>
+                        <outlet property="menuButton" destination="MwL-rC-JPL" id="GDK-yg-0We"/>
+                        <outlet property="moveButton" destination="pJx-Pa-zhK" id="nZH-bU-RHR"/>
+                        <outlet property="nextUnitButton" destination="Ah6-Mf-wdE" id="Zb9-1f-Zbp"/>
+                        <outlet property="nextVillageButton" destination="ejv-Lo-dQZ" id="fOX-ro-MIS"/>
+                        <outlet property="recruitButton" destination="Qdv-yO-Nq9" id="TkF-qc-ztU"/>
+                        <outlet property="roadButton" destination="FUX-lM-tvq" id="Ndd-7S-8xO"/>
+                        <outlet property="towerButton" destination="gAl-tQ-u4u" id="X9r-uT-7mu"/>
+                        <outlet property="upgradeButton" destination="c0s-Ji-zhq" id="rc6-nC-3En"/>
                         <outlet property="validateButton" destination="01a-Yn-L7o" id="enr-BA-xef"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="653.5" y="778.5"/>
+            <point key="canvasLocation" x="613.5" y="699.5"/>
         </scene>
         <!--MapSelectionViewController-->
         <scene sceneID="KEF-Ff-qs5">

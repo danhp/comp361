@@ -34,9 +34,9 @@ class Map: SKNode {
 
             // Select new tile
             newValue?.selected = true
-            var vc = MatchHelper.sharedInstance().vc?.presentedViewController as GameViewController
-            if vc && GameEngine.Instance().game?.localIsCurrentPlayer {
-                if !GameEngine.Instance().game?.localIsCurrentPlayer {
+            
+            if let vc = MatchHelper.sharedInstance().vc?.presentedViewController as? GameViewController {
+                if !(GameEngine.Instance.game?.localIsCurrentPlayer)! {
                     vc.hidePlayerButtons()
                 }
                 else if newValue?.structure != nil {
@@ -103,6 +103,12 @@ class Map: SKNode {
         }
 
         return neighbors
+    }
+    
+    func centerAround(centerAround: Tile) {
+            let positionInScene = convertPoint(centerAround.position, fromNode: self.scroller)
+            let delta = CGVector(dx:  -positionInScene.x , dy:  -positionInScene.y )
+            self.scroll(delta)
     }
 
     // Get the set of tiles in the shortest path

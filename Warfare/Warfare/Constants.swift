@@ -131,6 +131,7 @@ struct Constants {
             }
         }
 
+        
         enum Unit: Int {
             case Peasant = 0, Infantry, Soldier, Knight, Canon
 
