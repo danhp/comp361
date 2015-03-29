@@ -94,6 +94,7 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func moveButtonTapped(sender: AnyObject) {
+        state = State.MovePressed
         if !(GameEngine.Instance.game?.localIsCurrentPlayer != nil) { return }
         GameEngine.Instance.map?.resetColor()
         
