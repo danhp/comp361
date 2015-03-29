@@ -67,15 +67,7 @@ class GameViewController: UIViewController {
         roadButton.hidden = false
         towerButton.hidden = false
         
-        cancelButton.enabled = true
-        nextUnitButton.enabled = false
-        nextVillageButton.enabled = false
-        moveButton.enabled = false
-        upgradeButton.enabled = false
-        recruitButton.enabled = false
-        endTurnButton.enabled = false
-        buildButton.enabled = false
-        combineButton.enabled = false
+        betweenPresses()
         
         tileSource = GameEngine.Instance.map?.selected
         
@@ -113,15 +105,7 @@ class GameViewController: UIViewController {
                     cancelButton.hidden = false
             }
         }
-        nextUnitButton.enabled = false
-        nextVillageButton.enabled = false
-        moveButton.enabled = false
-        upgradeButton.enabled = false
-        recruitButton.enabled = false
-        endTurnButton.enabled = false
-        buildButton.enabled = false
-        combineButton.enabled = false
-
+        betweenPresses()
         
         GameEngine.Instance.map?.draw()
 
@@ -145,6 +129,23 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func combineButtonTapped(sender: AnyObject) {
+        
+        tileSource = GameEngine.Instance.map?.selected
+        
+        if tileSource?.owner.player !== GameEngine.Instance.game?.currentPlayer {
+            return
+        }
+        
+        if tileSource?.village != nil {
+            return
+        }
+        
+        if tileSource?.unit != nil {
+            state = State.CombinePressed
+            betweenPresses()
+
+        }
+        
         GameEngine.Instance.map?.resetColor()
         GameEngine.Instance.map?.draw()
     }
@@ -191,6 +192,14 @@ class GameViewController: UIViewController {
         
         else if state == State.MovePressed {
             GameEngine.Instance.moveUnit(tileSource! , to: dest!)
+        }
+        
+        else if state == State.CombinePressed {
+            let dest = GameEngine.Instance.map?.selected
+            if dest?.unit != nil {
+                GameEngine.Instance.combineUnit(tileSource!, tileB: dest!)
+            }
+            
         }
         
         Hud.Instance.update()
@@ -274,6 +283,19 @@ class GameViewController: UIViewController {
         combineButton.enabled = false
         endTurnButton.enabled = false
         
+    }
+    
+    func betweenPresses() {
+        cancelButton.enabled = true
+        validateButton.enabled = true
+        nextUnitButton.enabled = false
+        nextVillageButton.enabled = false
+        moveButton.enabled = false
+        upgradeButton.enabled = false
+        recruitButton.enabled = false
+        endTurnButton.enabled = false
+        buildButton.enabled = false
+        combineButton.enabled = false
     }
     
     func finishButtonPress() {
