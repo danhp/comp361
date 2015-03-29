@@ -354,6 +354,7 @@ class GameEngine {
         if from.owner.player !== self.game?.currentPlayer { return }
         if from.unit?.type != Constants.Types.Unit.Canon { return }
         if from.owner.player === to.owner.player { return }
+        if from.owner.wood < 1 { return }
         if to.land == .Sea { return }
         if !(self.map?.isDistanceOfTwo(from, to: to))! { return }
 
@@ -381,6 +382,7 @@ class GameEngine {
         }
 
         from.unit?.currentAction = Constants.Unit.Action.Moved
+        from.owner.wood -= 1
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
 
