@@ -216,7 +216,8 @@ class GameEngine {
             if to.village == Constants.Types.Village.Castle { return }
             if to.isProtected(from.unit!) { return }
             for n in (self.map?.neighbors(tile: to))! {
-                if n.owner.player !== self.game?.currentPlayer {
+                if n.owner == nil { continue }
+                if n.owner.player? !== self.game?.currentPlayer {
                     if n.unit?.type == Constants.Types.Unit.Canon { continue }
                     if n.isProtected(from.unit!) { return }
                 }
@@ -269,6 +270,7 @@ class GameEngine {
 
         // Merge connected regions
         for n in (self.map?.neighbors(tile: to))! {
+            if n.owner == nil { continue }
             if n.owner.player === mainVillage.player {
                 if n.owner === mainVillage { continue }
 
