@@ -422,10 +422,10 @@ class GameEngine {
         let village = tile.owner
         if village.disaled { return }
 
-        // Hovel can only recruit peasants and infantry (rawVaue: 1 & 2)
-        // Town can also recruit soldiers (rawValue: 2)
-        // Fort can also recruit knight and canond (rawValue: 3 & 4)
-        if type.rawValue > min(tile.owner.type.rawValue + 2, Constants.Types.Village.Fort.rawValue) { return }
+        // Hovel (value: 0) can only recruit peasants and infantry (rawVaue: 1 & 2)
+        // Town (value: 1) can also recruit soldiers (rawValue: 3)
+        // Fort (value: 2) can also recruit knight and canon (rawValue: 4 & 5)
+        if type.rawValue > min(tile.owner.type.rawValue + 2, Constants.Types.Village.Fort.rawValue + 1) { return }
 
         let costGold = type.cost().0
         let costWood = type.cost().1
