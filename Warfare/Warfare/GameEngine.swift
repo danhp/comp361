@@ -426,6 +426,8 @@ class GameEngine {
 
     func recruitUnit(villageTile: Tile, type: Constants.Types.Unit) {
         if villageTile.owner.player !== self.game?.currentPlayer { return }
+        // Can only be called on a village
+        if villageTile.village == nil { return }
 
         let village = villageTile.owner
         if village.disaled { return }
@@ -433,7 +435,7 @@ class GameEngine {
         // Hovel (value: 0) can only recruit peasants and infantry (rawVaue: 1 & 2)
         // Town (value: 1) can also recruit soldiers (rawValue: 3)
         // Fort (value: 2) can also recruit knight and canon (rawValue: 4 & 5)
-        if type.rawValue > min(tile.owner.type.rawValue + 2, Constants.Types.Village.Fort.rawValue + 1) { return }
+        if type.rawValue > min(villageTile.owner.type.rawValue + 2, Constants.Types.Village.Fort.rawValue + 1) { return }
 
         var destination: Tile?
         for n in (self.map?)!.neighbors(tile: villageTile) {
@@ -446,7 +448,7 @@ class GameEngine {
 
         let costGold = type.cost().0
         let costWood = type.cost().1
-        if village.gold < costGold || village.wood < costWood || villageTile.isWalkable() { return }
+        if village.gold < costGold || village.wood < costWood { return }
 
         village.gold -= costGold
         village.wood -= costWood
