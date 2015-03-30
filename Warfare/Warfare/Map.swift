@@ -230,7 +230,7 @@ class Map: SKNode {
                             if t.isWalkable() {
                                 queue.append(t)
                             }
-                            if t.structure != .Tower && t.village == nil {
+                            if t.structure != .Tower && t.village == nil && t.unit == nil {
                                 result.append(t)
                             }
                         } else {
