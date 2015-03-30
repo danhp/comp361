@@ -406,9 +406,12 @@ class GameEngine {
     func combineUnit(tileA: Tile, tileB: Tile) {
         if tileA.owner !== tileB.owner { return }
         if tileA.owner.player !== self.game?.currentPlayer { return }
-        if (tileA.unit?.disabled)! || (tileB.unit?.disabled)! { return }
+        if tileA.unit?.type.rawValue >= Constants.Types.Unit.Knight.rawValue
+                    || tileB.unit?.type.rawValue >= Constants.Types.Unit.Knight.rawValue { return }
+        if (tileA.unit?.disabled)! { return }
 
         tileA.unit?.combine(tileB.unit!)
+        tileA.unit?.currentAction = Constants.Unit.Action.UpgradingCombining
         tileB.unit = nil
         self.availableUnits = self.availableUnits.filter({ $0 !== tileA || $0 !== tileB })
     }
@@ -419,10 +422,10 @@ class GameEngine {
         let village = tile.owner
         if village.disaled { return }
 
-        // Hovel can only recruit peasants and infantry (rawVaue: 0 & 1)
+        // Hovel can only recruit peasants and infantry (rawVaue: 1 & 2)
         // Town can also recruit soldiers (rawValue: 2)
         // Fort can also recruit knight and canond (rawValue: 3 & 4)
-        if type.rawValue > min(tile.owner.type.rawValue + 1, Constants.Types.Village.Fort.rawValue) { return }
+        if type.rawValue > min(tile.owner.type.rawValue + 2, Constants.Types.Village.Fort.rawValue) { return }
 
         let costGold = type.cost().0
         let costWood = type.cost().1
@@ -432,7 +435,8 @@ class GameEngine {
         village.wood -= costWood
 
         var newUnit = Unit(type: type)
-        newUnit.currentAction = .Moved
+        // For testing purposes this is uncommented at times.
+//        newUnit.currentAction = .Moved
         tile.unit = newUnit
     }
 

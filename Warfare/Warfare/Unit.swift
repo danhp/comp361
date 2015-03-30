@@ -38,6 +38,7 @@ class Unit {
     }
 
     func combine(with: Unit) {
+
         let newLevel = min(self.type.rawValue + with.type.rawValue, 4)
         self.type = Constants.Types.Unit(rawValue: newLevel)!
     }

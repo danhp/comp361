@@ -133,7 +133,7 @@ struct Constants {
 
         
         enum Unit: Int {
-            case Peasant = 0, Infantry, Soldier, Knight, Canon
+            case Peasant = 1, Infantry, Soldier, Knight, Canon
 
             // Cost in (Gold, Wood)
             func cost() -> (Int, Int) {
@@ -169,9 +169,9 @@ struct Constants {
             func name() -> String {
                 switch self {
                 case .Peasant:
-                    return "soldier"
+                    return "peasant"
                 case .Infantry:
-                    return "knight"
+                    return "infantry"
                 case .Soldier:
                     return "soldier"
                 case .Knight:
