@@ -388,6 +388,7 @@ class GameEngine {
 
     func upgradeVillage(tile: Tile) {
         if tile.owner.player !== self.game?.currentPlayer { return }
+        if tile.owner.disaled { return }
         if tile.village == nil { return }
 
         tile.owner.upgradeVillage()
@@ -396,6 +397,7 @@ class GameEngine {
 
     func upgradeUnit(tile: Tile, newLevel: Constants.Types.Unit) {
         if tile.owner.player !== self.game?.currentPlayer { return }
+        if tile.unit?.type.rawValue >= Constants.Types.Unit.Knight.rawValue { return }
         if (tile.unit?.disabled)! { return }
 
         let village = tile.owner!
