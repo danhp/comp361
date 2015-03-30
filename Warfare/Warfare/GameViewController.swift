@@ -287,7 +287,10 @@ class GameViewController: UIViewController {
     
     func betweenPresses() {
         cancelButton.enabled = true
+        cancelButton.hidden = false
         validateButton.enabled = true
+        validateButton.hidden = false
+
         nextUnitButton.enabled = false
         nextVillageButton.enabled = false
         moveButton.enabled = false
