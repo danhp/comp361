@@ -1,11 +1,3 @@
-//
-//  GameViewController.swift
-//  warfare
-//
-//  Created by Justin Domingue on 2015-01-21.
-//  Copyright (c) 2015 Justin Domingue. All rights reserved.
-//
-
 import UIKit
 import SpriteKit
 import GameKit
@@ -54,13 +46,15 @@ class GameViewController: UIViewController {
     
     
     @IBAction func nextUnitButtonTapped(sender: AnyObject) {
-        var tile = GameEngine.Instance.getNextAvailableUnit()
-        GameEngine.Instance.map?.centerAround(tile!)
+        if let tile = GameEngine.Instance.getNextAvailableUnit() {
+            GameEngine.Instance.map?.centerAround(tile)
+        }
     }
 
     @IBAction func nextVillageButtonTapped(sender: AnyObject) {
-        var tile = GameEngine.Instance.getNextAvailableVillage()
-        GameEngine.Instance.map?.centerAround(tile!)
+        if let tile = GameEngine.Instance.getNextAvailableVillage() {
+            GameEngine.Instance.map?.centerAround(tile)
+        }
     }
     
     @IBAction func buildButtonTapped(sender: AnyObject) {
@@ -153,8 +147,6 @@ class GameViewController: UIViewController {
     @IBAction func endTurnButtonTapped(sender: AnyObject) {
         if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
         GameEngine.Instance.map?.resetColor()
-        
-        GameEngine.Instance.beginTurn()
         
         MatchHelper.sharedInstance().advanceMatchTurn()
         

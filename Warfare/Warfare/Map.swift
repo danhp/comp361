@@ -39,10 +39,6 @@ class Map: SKNode {
                 if !(GameEngine.Instance.game?.localIsCurrentPlayer)! {
                     vc.hidePlayerButtons()
                 }
-                else if newValue?.structure != nil {
-                    vc.structureSelected()
-                }
-                
                 else if newValue?.unit != nil {
                     vc.unitSelected()
                 }
@@ -106,9 +102,10 @@ class Map: SKNode {
     }
     
     func centerAround(centerAround: Tile) {
-            let positionInScene = convertPoint(centerAround.position, fromNode: self.scroller)
-            let delta = CGVector(dx:  -positionInScene.x , dy:  -positionInScene.y )
-            self.scroll(delta)
+        let positionInScene = convertPoint(centerAround.position, fromNode: self.scroller)
+        println(positionInScene)
+        let delta = CGVector(dx: -positionInScene.x , dy: -positionInScene.y )
+        self.scroll(delta)
     }
 
     // Get the set of tiles in the shortest path
