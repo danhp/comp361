@@ -29,15 +29,13 @@ class Hud: SKNode {
     }
 
     func displayPlayerData() {
-        let localIndex = MatchHelper.sharedInstance().localParticipantIndex()
-
         //create gold label
         let goldLabel = SKLabelNode(fontNamed: "Courier")
         goldLabel.name = "gold"
         goldLabel.fontSize = 25
 
         goldLabel.fontColor = SKColor.blackColor()
-        goldLabel.text = "Gold: " + String((GameEngine.Instance.game?.players[localIndex].gold)!)
+        goldLabel.text = "Gold: " + String((GameEngine.Instance.game?.localPlayer.wood)!)
 
         //Note need to position relative and scalable - not hard coded
         goldLabel.position = CGPoint(x: -430, y: 250 )
@@ -53,7 +51,7 @@ class Hud: SKNode {
         woodLabel.text = NSString(format: "Wood: %02u", 100.0)
 
         woodLabel.position = CGPoint(x: -250, y: 250)
-        woodLabel.text = "Wood: " + String((GameEngine.Instance.game?.players[localIndex].wood)!)
+        woodLabel.text = "Wood: " + String((GameEngine.Instance.game?.localPlayer.wood)!)
         addChild(woodLabel)
     }
 
