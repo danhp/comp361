@@ -21,10 +21,15 @@ class Hud: SKNode {
         self.addChild(indexLabel)
 
         self.displayPlayerData()
+        if let tile = GameEngine.Instance.map?.selected {
+            self.displayRegionalData(tile)
+            self.displayUnitData(tile)
+            self.displayVillageData(tile)
+        }
     }
 
     func displayPlayerData() {
-        if !(GameEngine.Instance.game?.localIsCurrentPlayer ?? false)! { return }
+        let localIndex = MatchHelper.sharedInstance().localParticipantIndex()
 
         //create gold label
         let goldLabel = SKLabelNode(fontNamed: "Courier")
@@ -32,7 +37,7 @@ class Hud: SKNode {
         goldLabel.fontSize = 25
 
         goldLabel.fontColor = SKColor.blackColor()
-        goldLabel.text = "Gold: " + String((GameEngine.Instance.game?.currentPlayerGold)!)
+        goldLabel.text = "Gold: " + String((GameEngine.Instance.game?.players[localIndex].gold)!)
 
         //Note need to position relative and scalable - not hard coded
         goldLabel.position = CGPoint(x: -430, y: 250 )
@@ -48,16 +53,13 @@ class Hud: SKNode {
         woodLabel.text = NSString(format: "Wood: %02u", 100.0)
 
         woodLabel.position = CGPoint(x: -250, y: 250)
-        woodLabel.text = "Wood: " + String((GameEngine.Instance.game?.currentPlayerWood)!)
+        woodLabel.text = "Wood: " + String((GameEngine.Instance.game?.players[localIndex].wood)!)
         addChild(woodLabel)
     }
 
     func displayRegionalData(tile: Tile) {
-        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
-
-        self.update()
-
-        if tile.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
+        if tile.owner == nil { return }
+        if tile.owner.player !== GameEngine.Instance.game?.localPlayer { return }
 
         let regGold = SKLabelNode(text: "Region Gold: " + String(tile.owner.gold))
         regGold.position = CGPoint(x: -400, y: 200)
@@ -72,15 +74,30 @@ class Hud: SKNode {
 
     }
 
-    func displayUnitDebugger(tile: Tile) {
+    func displayUnitData(tile: Tile) {
+        if tile.owner == nil { return }
+        if tile.owner.player !== GameEngine.Instance.game?.localPlayer { return }
+
         if let unit = tile.unit? {
             let uAction = SKLabelNode(text: "Unit State: " + unit.currentAction.name())
             uAction.position = CGPoint(x: -400, y: 100)
             self.addChild(uAction)
         }
     }
-    
 
+    func displayVillageData(tile: Tile) {
+        if tile.owner == nil { return }
 
+        if tile.village != nil {
+            if tile.owner.player === GameEngine.Instance.game?.localPlayer {
+                let vState = SKLabelNode(text: "Village State: " + tile.owner.state.name())
+                vState.position = CGPoint(x: -375, y: 100)
+                self.addChild(vState)
+            }
 
+            let vHealth = SKLabelNode(text: "Village Health: " + String(tile.owner.health))
+            vHealth.position = CGPoint(x: -400, y: 50)
+            self.addChild(vHealth)
+        }
+    }
 }

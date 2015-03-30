@@ -59,14 +59,7 @@ class GameScene: SKScene {
 
     private func newSelection() {
         if let map = self.map? {
-            if map.selected?.owner != nil {
-                Hud.Instance.displayRegionalData(map.selected!)
-            } else {
-                Hud.Instance.update()
-            }
-
-            // Debugger uncomment to run
-            Hud.Instance.displayUnitDebugger(map.selected!)
+            Hud.Instance.update()
         }
     }
 
