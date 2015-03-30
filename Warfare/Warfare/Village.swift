@@ -54,7 +54,7 @@ class Village {
 
     func upgradeUnit(unit: Unit, newType: Constants.Types.Unit) {
         if !self.containsUnit(unit) { return }
-        if unit.type == .Knight { return }
+        if unit.type == .Knight || unit.type == .Canon { return }
 
         let upgradeInterval = newType.rawValue - unit.type.rawValue
 

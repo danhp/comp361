@@ -36,7 +36,7 @@ class GameEngine {
             if let mmvc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
                 mmvc.segueToMapSelectionViewController()
             }}))
-        
+
         var vc = MatchHelper.sharedInstance().vc?.presentedViewController as GameViewController
     }
 
@@ -356,6 +356,7 @@ class GameEngine {
         if from.owner.player !== self.game?.currentPlayer { return }
         if from.unit?.type != Constants.Types.Unit.Canon { return }
         if from.owner.player === to.owner.player { return }
+        if from.owner.wood < 1 { return }
         if to.land == .Sea { return }
         if !(self.map?.isDistanceOfTwo(from, to: to))! { return }
 
@@ -383,6 +384,7 @@ class GameEngine {
         }
 
         from.unit?.currentAction = Constants.Unit.Action.Moved
+        from.owner.wood -= 1
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
 
@@ -400,9 +402,13 @@ class GameEngine {
         if tile.unit?.type.rawValue >= Constants.Types.Unit.Knight.rawValue { return }
         if (tile.unit?.disabled)! { return }
 
-        let village = tile.owner!
-        village.upgradeUnit(tile.unit!, newType: newLevel)
-        self.availableUnits = self.availableUnits.filter({ $0 !== tile })
+        if let unit = tile.unit {
+            if unit.type == .Knight || unit.type == .Canon { return }
+
+            let village = tile.owner!
+            village.upgradeUnit(tile.unit!, newType: newLevel)
+            self.availableUnits = self.availableUnits.filter({ $0 !== tile })
+        }
     }
 
     func combineUnit(tileA: Tile, tileB: Tile) {
@@ -418,10 +424,10 @@ class GameEngine {
         self.availableUnits = self.availableUnits.filter({ $0 !== tileA || $0 !== tileB })
     }
 
-    func recruitUnit(tile: Tile, type: Constants.Types.Unit) {
-        if tile.owner.player !== self.game?.currentPlayer { return }
+    func recruitUnit(villageTile: Tile, type: Constants.Types.Unit) {
+        if villageTile.owner.player !== self.game?.currentPlayer { return }
 
-        let village = tile.owner
+        let village = villageTile.owner
         if village.disaled { return }
 
         // Hovel (value: 0) can only recruit peasants and infantry (rawVaue: 1 & 2)
@@ -429,17 +435,27 @@ class GameEngine {
         // Fort (value: 2) can also recruit knight and canon (rawValue: 4 & 5)
         if type.rawValue > min(tile.owner.type.rawValue + 2, Constants.Types.Village.Fort.rawValue + 1) { return }
 
+        var destination: Tile?
+        for n in (self.map?)!.neighbors(tile: villageTile) {
+            if n.isWalkable() && n.unit == nil && n.structure == nil {
+                destination = n
+                break
+            }
+        }
+        if destination == nil { return }
+
         let costGold = type.cost().0
         let costWood = type.cost().1
-        if village.gold < costGold || village.wood < costWood || !tile.isWalkable() { return }
+        if village.gold < costGold || village.wood < costWood || villageTile.isWalkable() { return }
 
         village.gold -= costGold
         village.wood -= costWood
 
         var newUnit = Unit(type: type)
+
         // For testing purposes this is uncommented at times.
 //        newUnit.currentAction = .Moved
-        tile.unit = newUnit
+        destination!.unit = newUnit
     }
 
     func buildTower(on: Tile) {
