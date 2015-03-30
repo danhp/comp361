@@ -162,6 +162,15 @@ class Tile: SKNode, Hashable {
         structure = nil
     }
 
+    func isBelongsToLocal() -> Bool {
+        if self.owner == nil { return false }
+        if self.owner.player === GameEngine.Instance.game?.localPlayer {
+            return true
+        } else {
+            return false
+        }
+    }
+
     // MARK - Serialize
 
     func serialize() -> NSDictionary {

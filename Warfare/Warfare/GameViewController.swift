@@ -41,6 +41,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var validateButton: UIButton!
     @IBOutlet weak var roadButton: UIButton!
     @IBOutlet weak var towerButton: UIButton!
+    @IBOutlet weak var meadowButton: UIButton!
     
     var state : State = State.NothingPressed
     
@@ -58,9 +59,15 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func buildButtonTapped(sender: AnyObject) {
-        roadButton.hidden = false
-        towerButton.hidden = false
-        
+        if let tile = GameEngine.Instance.map?.selected {
+            if tile.village != nil {
+                self.showButton(towerButton)
+            }
+            else if tile.unit != nil {
+                self.showButton(roadButton)
+            }
+        }
+
         betweenPresses()
         
         tileSource = GameEngine.Instance.map?.selected
@@ -198,6 +205,8 @@ class GameViewController: UIViewController {
         validateButton.hidden = true
         cancelButton.hidden = true
         GameEngine.Instance.map?.draw()
+
+        self.state = .NothingPressed
         
         finishButtonPress()
     }
@@ -247,58 +256,92 @@ class GameViewController: UIViewController {
             GameEngine.Instance.scene = scene
         }
     }
-    
+
+    func update(tile: Tile) {
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! {
+            self.hidePlayerButtons()
+        } else if !tile.isBelongsToLocal() {
+            self.neutralSelected()
+            return
+        } else if tile.village != nil {
+            if !tile.owner.disaled {
+                self.villageSelected()
+            } else {
+                self.neutralSelected()
+            }
+        } else if let unit = tile.unit {
+            if !unit.disabled {
+                self.unitSelected()
+                if unit.type == .Canon {
+
+                }
+            } else {
+                self.neutralSelected()
+            }
+        }
+        else {
+            self.neutralSelected()
+        }
+    }
+
     // buttons that are shown after certain selection
     func unitSelected() {
-        buildButton.enabled = false
-        upgradeButton.enabled = true
-        moveButton.enabled = true
-        combineButton.enabled = true
+        if self.state.rawValue != 0 { return }
+
+        self.showButton(buildButton)
+        self.showButton(upgradeButton)
+        self.showButton(moveButton)
+        self.showButton(combineButton)
+
+        self.hideButton(recruitButton)
     }
     
-    func structureSelected() {
-        buildButton.enabled = false
-        upgradeButton.enabled = true
-        moveButton.enabled = false
-        combineButton.enabled = false
+    func villageSelected() {
+        if self.state.rawValue != 0 { return }
+
+        self.showButton(buildButton)
+        self.showButton(recruitButton)
+        self.showButton(upgradeButton)
+
+        self.hideButton(moveButton)
+        self.hideButton(combineButton)
     }
     
     func neutralSelected() {
-        upgradeButton.enabled = false
-        combineButton.enabled = false
+        self.hideButton(buildButton)
+        self.hideButton(combineButton)
+        self.hideButton(moveButton)
+        self.hideButton(recruitButton)
+        self.hideButton(upgradeButton)
     }
     
     func hidePlayerButtons() {
-        buildButton.enabled = false
-        upgradeButton.enabled = false
-        moveButton.enabled = false
-        combineButton.enabled = false
-        endTurnButton.enabled = false
-        
+        self.hideButton(buildButton)
+        self.hideButton(combineButton)
+        self.hideButton(moveButton)
+        self.hideButton(recruitButton)
+        self.hideButton(upgradeButton)
+
+        self.hideButton(nextUnitButton)
+        self.hideButton(nextVillageButton)
+        self.hideButton(endTurnButton)
     }
     
     func betweenPresses() {
-        cancelButton.enabled = true
-        cancelButton.hidden = false
-        validateButton.enabled = true
-        validateButton.hidden = false
+        self.showButton(cancelButton)
+        self.showButton(validateButton)
 
-        nextUnitButton.enabled = false
-        nextVillageButton.enabled = false
-        moveButton.enabled = false
-        upgradeButton.enabled = false
-        recruitButton.enabled = false
-        endTurnButton.enabled = false
-        buildButton.enabled = false
-        combineButton.enabled = false
+        self.hideButton(buildButton)
+        self.hideButton(combineButton)
+        self.hideButton(moveButton)
+        self.hideButton(recruitButton)
+        self.hideButton(upgradeButton)
     }
-    
+
     func finishButtonPress() {
-        towerButton.hidden = true
-        roadButton.hidden = true
-        
-        nextUnitButton.enabled = true
-        nextVillageButton.enabled = true
+        self.hideButton(towerButton)
+        self.hideButton(roadButton)
+
         moveButton.enabled = true
         upgradeButton.enabled = true
         recruitButton.enabled = true
@@ -307,6 +350,17 @@ class GameViewController: UIViewController {
         combineButton.enabled = true
         cancelButton.enabled = false
         validateButton.enabled = false
+    }
+
+    // MARK: Visual helpers
+    func showButton(button: UIButton) {
+        button.hidden = false
+        button.enabled = true
+    }
+
+    func hideButton(button: UIButton) {
+        button.hidden = true
+        button.enabled = false
     }
 
     override func shouldAutorotate() -> Bool {

@@ -35,7 +35,7 @@ class Hud: SKNode {
         goldLabel.fontSize = 25
 
         goldLabel.fontColor = SKColor.blackColor()
-        goldLabel.text = "Gold: " + String((GameEngine.Instance.game?.localPlayer.wood)!)
+        goldLabel.text = "Gold: " + String((GameEngine.Instance.game?.localPlayer.gold)!)
 
         //Note need to position relative and scalable - not hard coded
         goldLabel.position = CGPoint(x: -430, y: 250 )
