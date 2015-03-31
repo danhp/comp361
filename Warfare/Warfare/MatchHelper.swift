@@ -186,7 +186,13 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func didEndMatch() -> Bool {
         // End the match if 2 participant have lost
         if let m = self.myMatch {
-            if (m.participants.reduce(0) {$0 + ($1.matchOutcome == .None ? 0 : 1) }) == 2 {
+            var playing = [GKTurnBasedParticipant]()
+            var eliminated = [GKTurnBasedParticipant]()
+
+            self.myMatch?.participants.map({($0.matchOutcome == .None) ? playing.append($0 as GKTurnBasedParticipant) : eliminated.append($0 as GKTurnBasedParticipant)})
+
+            if eliminated.count == 2 {
+                playing[0].matchOutcome = .Won
                 self.endMatch()
                 return true
             }
@@ -213,6 +219,8 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     }
 
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, playerQuitForMatch match: GKTurnBasedMatch!) {
+
+        if didEndMatch() { return }
 
         let participants = match.participants!
 
