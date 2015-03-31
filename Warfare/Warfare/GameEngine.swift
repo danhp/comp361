@@ -6,27 +6,27 @@ private let _instance = GameEngine()
 
 class GameEngine {
     class var Instance: GameEngine { return _instance }
-
+    
     var game: Game?
     var map: Map? { return self.game?.map }
     var scene: GameScene?
-
+    
     var matchEnded: Bool { return MatchHelper.sharedInstance().myMatch?.status == GKTurnBasedMatchStatus.Ended  ?? false }
-
+    
     // List of unit awaiting orders
     var availableUnits: [Tile] = []
     var availableVillages: [Tile] = []
-
+    
     // Map selection
     private var currentChoices: [Int]?
-
+    
     init() { }
-
+    
     // Starts a (completely) new match
     func startGameWithMap(map: Int) {
         self.loadMap(number: String(map))
     }
-
+    
     // Show map selection so player can
     //  i. make a selection
     //  ii. wait until everyone has chosen a map
@@ -37,7 +37,7 @@ class GameEngine {
                 mmvc.segueToMapSelectionViewController()
             }}))
     }
-
+    
     func showGameScene() {
         // Dismiss any controller and then show Game View Controller
         MatchHelper.sharedInstance().vc?.dismissViewControllerAnimated(true, completion: ({() in
@@ -46,45 +46,45 @@ class GameEngine {
                 mmvc.segueToGameViewController()
             }}))
     }
-
+    
     // User has selected a choice: Int, process it
     func processMapSelection(choice: Int) {
         // TODO put the game in a "waiting for map selection..." state
-
+        
         // Add choice to choices array
         if let cur = self.currentChoices {
             self.currentChoices = cur + [choice]    // append selection to previous ones
         } else {
             self.currentChoices = [choice]          // new array with first selection
         }
-
+        
         // Send info to GameCenter
         let dict = ["choices": self.currentChoices!]
         var error:NSError?
         let matchData = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
         MatchHelper.sharedInstance().advanceSelectionTurn(matchData!)
     }
-
+    
     // MARK: - Operations
-
+    
     // Should get called once a cycle (after all player have played their turn
     func growTrees() {
         if let rows = self.map?.tiles.rows {
             let allTiles = rows.reduce([], combine: +)
             var seen = [Tile]()
-
+            
             for t in allTiles {
                 // Only visit unseen tiles
                 if contains(seen, { $0 === t}) { continue }
                 seen.append(t)
-
+                
                 // Only consider tiles with trees
                 if t.land != .Tree { continue }
-
+                
                 for n in (self.map?.neighbors(tile: t))! {
                     if contains(seen, { $0 === n }) { continue }
                     seen.append(n)
-
+                    
                     if n.isGrowable() {
                         let random = Int(arc4random_uniform(2))
                         if random == 0 {
@@ -96,12 +96,12 @@ class GameEngine {
             }
         }
     }
-
+    
     // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
         self.availableUnits = []
         self.availableVillages = []
-
+        
         for village in (self.game?.currentPlayer.villages)! {
             // Update the village's state
             if village.state == .Upgrading1 {
@@ -109,13 +109,13 @@ class GameEngine {
             } else {
                 village.state = .ReadyForOrders
             }
-
+            
             // Update states for all the tiles.
             for tile in village.controlledTiles {
-
+                
                 // Replace tombstones
                 tile.replaceTombstone()
-
+                
                 // Produce constructions and set unit actions.
                 // ReadyForOrders for all except first phase cultivation
                 if let action = tile.unit?.currentAction {
@@ -127,32 +127,32 @@ class GameEngine {
                         } else if action == .BuildingRoad {
                             tile.structure = .Road
                         }
-
+                        
                         tile.unit?.currentAction = Constants.Unit.Action.ReadyForOrders
                         self.availableUnits.append(tile)
                     }
                 }
-
+                
                 if tile.village != nil {
                     if tile.owner.state == .ReadyForOrders {
                         self.availableVillages.append(tile)
                     }
                 }
-
+                
                 // Add gold value to village.
                 village.gold += tile.goldValue()
-
+                
                 // Payout wages
                 village.gold -= tile.wage()
             }
-
+            
             // Delete the Village
             if village.gold <= 0 {
                 self.killVillage(village)
             }
         }
     }
-
+    
     private func killVillage(village: Village) {
         for tile in village.controlledTiles {
             tile.structure = nil
@@ -165,36 +165,36 @@ class GameEngine {
                 tile.village = nil
             }
             tile.owner.removeTile(tile)
-
+            
             self.game?.neutralTiles.append(tile)
             self.availableUnits = self.availableUnits.filter({ $0 !== tile })
         }
         village.player?.removeVillage(village)
     }
-
+    
     func moveUnit(from: Tile, to: Tile) {
         if from.owner.player !== self.game?.currentPlayer { return }
-
+        
         var path = [Tile]()
         let village = from.owner
-
+        
         // Simple move rules
         if from.unit == nil { return }
         if (from.unit?.disabled)! { return }
         if from.unit?.type == Constants.Types.Unit.Knight && !to.isWalkable() { return }
         if to.land == .Sea { return }
-
+        
         // Canon rules
         if from.unit?.type == Constants.Types.Unit.Canon {
             if !contains((self.map?.neighbors(tile: from))!, { $0 === to }) || !to.isWalkable() { return }
             if to.owner.player !== self.game?.currentPlayer { return }
         }
-
+        
         // Check if path exists.
         if to.owner === village {
             // Cannot destroy object within controlled region
             if to.unit != nil || to.village != nil || to.structure == .Tower { return }
-
+            
             path = (self.map?.getPath(from: from, to: to, accessible: village.controlledTiles))!
         } else {
             for n in (self.map?.neighbors(tile: to))! {
@@ -205,9 +205,9 @@ class GameEngine {
             }
         }
         if path.isEmpty { return }
-
+        
         //===== UPDATE THE GAME STATE =====
-
+        
         // To tile is outside the controlled region.
         if to.owner !== village {
             // Check offensive rules
@@ -219,64 +219,87 @@ class GameEngine {
                     if n.isProtected(from.unit!) { return }
                 }
             }
-
+            
             if to.owner == nil {
                 self.invadeNeutral(village, unit: from.unit!, to: to)
             } else {
                 // Peasant & Canon cannot invade enemy tiles
                 if from.unit?.type == Constants.Types.Unit.Peasant { return }
                 if from.unit?.type == Constants.Types.Unit.Canon { return }
-
+                
                 self.invadeEnemy(village, unit: from.unit!, to: to)
             }
         }
 
+        self.moveWithAnimation(to: to, from: from, path: path)
+    }
+    
+    func moveWithAnimation(#to: Tile, from: Tile, path: [Tile]) {
+        var moveActions = [SKAction]()
+        let path = path.reverse()
+        
         // Update tiles in the path
-        path.append(to)
-        for t in path {
+        //        path.append(to)
+        for (index, t) in enumerate(path) {
+            if index+1 >= path.count { break }
+            
+            var removeGrass = SKAction.runBlock({})
+            
             if (from.unit?.type.rawValue >= Constants.Types.Unit.Soldier.rawValue)
                 && t.land == .Meadow
                 && t.structure != .Road {
-                    t.land = .Grass
+                    removeGrass = SKAction.runBlock({
+                        t.land = .Grass
+                    })
             }
+            
+            let dx = path[index+1].position.x - path[index].position.x
+            let dy = path[index+1].position.y - path[index].position.y
+            let delta = CGVector(dx: dx, dy: dy)
+            
+            let moveAction = SKAction.sequence([SKAction.moveBy(delta, duration: 0.3), removeGrass])
+            moveActions.append(moveAction)
         }
-
-        // Update the destination tile
-        if to.structure? == Constants.Types.Structure.Tombstone {
-            to.structure = nil
-        }
-        if to.land == .Tree {
-            to.land = .Grass
-            village.wood += 1
-        }
-
-        // Move the unit
-        to.unit = from.unit
-        from.unit = nil
-        to.unit?.currentAction = Constants.Unit.Action.Moved
-        self.availableUnits = self.availableUnits.filter({ $0 !== from })
+        
+        let n = ((from.unit?)!.node?)!
+        n.runAction(SKAction.sequence(moveActions), completion: {
+            // Update the destination tile
+            if to.structure? == Constants.Types.Structure.Tombstone {
+                to.structure = nil
+            }
+            if to.land == .Tree {
+                to.land = .Grass
+                from.owner.wood += 1
+            }
+            
+            // Move the unit
+            to.unit = from.unit
+            from.unit = nil
+            to.unit?.currentAction = Constants.Unit.Action.Moved
+            self.availableUnits = self.availableUnits.filter({ $0 !== from })
+        })
     }
-
+    
     private func invadeNeutral(village: Village, unit: Unit, to: Tile) {
         var mainVillage = village
         var mergeVillage: Village
-
+        
         // Update the state.
         mainVillage.addTile(to)
         self.game?.neutralTiles = (self.game?.neutralTiles)!.filter({ $0 !== to })
-
+        
         // Merge connected regions
         for n in (self.map?.neighbors(tile: to))! {
             if n.owner.player === mainVillage.player {
                 if n.owner === mainVillage { continue }
-
+                
                 if mainVillage.compareTo(n.owner) {
                     mergeVillage = n.owner
                 } else {
                     mergeVillage = mainVillage
                     mainVillage = n.owner
                 }
-
+                
                 for t in mergeVillage.controlledTiles {
                     mainVillage.addTile(t)
                     if t.village != nil {
@@ -284,24 +307,24 @@ class GameEngine {
                         self.availableVillages = self.availableVillages.filter({$0 !== t})
                     }
                 }
-
+                
                 self.game?.currentPlayer.removeVillage(mergeVillage)
             }
         }
     }
-
+    
     private func invadeEnemy(village: Village, unit: Unit, to: Tile) {
         var enemyPlayer = to.owner.player
         var enemyVillage = to.owner
-
+        
         // Check specific offensive rules
         if to.village != nil && unit.type.rawValue < 2
             || unit.type.rawValue == 2 && to.village?.rawValue == 2 { return }
-
+        
         // Invade enemy tile
         to.owner?.removeTile(to)
         village.addTile(to)
-
+        
         // Update destination tile
         to.unit = nil
         to.structure = nil
@@ -311,7 +334,7 @@ class GameEngine {
             to.village = nil
             to.owner.removeTile(to)
         }
-
+        
         let regions = (self.map?.getRegions(enemyVillage.controlledTiles))!
         for r in regions {
             // Region is too small
@@ -331,7 +354,7 @@ class GameEngine {
                 }
                 continue
             }
-
+            
             // Region can still support a village
             if self.map?.getVillage(r) == nil {
                 let newHovel = Village()
@@ -339,9 +362,9 @@ class GameEngine {
                     enemyVillage.removeTile(t)
                     newHovel.addTile(t)
                 }
-
+                
                 enemyPlayer?.addVillage(newHovel)
-
+                
                 r[0].land = .Grass
                 r[0].unit = nil
                 r[0].structure = nil
@@ -349,14 +372,14 @@ class GameEngine {
             }
         }
     }
-
+    
     func attack(from: Tile, to: Tile) {
         if from.owner.player !== self.game?.currentPlayer { return }
         if from.unit?.type != Constants.Types.Unit.Canon { return }
         if from.owner.player === to.owner.player { return }
         if to.land == .Sea { return }
         if !(self.map?.isDistanceOfTwo(from, to: to))! { return }
-
+        
         to.structure = nil
         to.land = .Grass
         if to.unit != nil {
@@ -371,7 +394,7 @@ class GameEngine {
                 // TODO: Not sure this will work
                 newHovel.controlledTiles = to.owner.controlledTiles
                 to.owner.player?.removeVillage(to.owner)
-
+                
                 let newLocation = newHovel.controlledTiles[0]
                 newLocation.land = .Grass
                 newLocation.unit = nil
@@ -379,96 +402,96 @@ class GameEngine {
                 newLocation.village = newHovel.type
             }
         }
-
+        
         from.unit?.currentAction = Constants.Unit.Action.Moved
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
-
+    
     func upgradeVillage(tile: Tile) {
         if tile.owner.player !== self.game?.currentPlayer { return }
         if tile.village == nil { return }
-
+        
         tile.owner.upgradeVillage()
         self.availableVillages = self.availableVillages.filter({ $0 !== tile})
     }
-
+    
     func upgradeUnit(tile: Tile, newLevel: Constants.Types.Unit) {
         if tile.owner.player !== self.game?.currentPlayer { return }
         if (tile.unit?.disabled)! { return }
-
+        
         let village = tile.owner!
         village.upgradeUnit(tile.unit!, newType: newLevel)
         self.availableUnits = self.availableUnits.filter({ $0 !== tile })
     }
-
+    
     func combineUnit(tileA: Tile, tileB: Tile) {
         if tileA.owner !== tileB.owner { return }
         if tileA.owner.player !== self.game?.currentPlayer { return }
         if (tileA.unit?.disabled)! || (tileB.unit?.disabled)! { return }
-
+        
         tileA.unit?.combine(tileB.unit!)
         tileB.unit = nil
         self.availableUnits = self.availableUnits.filter({ $0 !== tileA || $0 !== tileB })
     }
-
+    
     func recruitUnit(tile: Tile, type: Constants.Types.Unit) {
         if tile.owner.player !== self.game?.currentPlayer { return }
-
+        
         let village = tile.owner
         if village.disaled { return }
-
+        
         // Hovel can only recruit peasants and infantry (rawVaue: 0 & 1)
         // Town can also recruit soldiers (rawValue: 2)
         // Fort can also recruit knight and canond (rawValue: 3 & 4)
         if type.rawValue > min(tile.owner.type.rawValue + 1, Constants.Types.Village.Fort.rawValue) { return }
-
+        
         let costGold = type.cost().0
         let costWood = type.cost().1
         if village.gold < costGold || village.wood < costWood || !tile.isWalkable() { return }
-
+        
         village.gold -= costGold
         village.wood -= costWood
-
+        
         var newUnit = Unit(type: type)
-        newUnit.currentAction = .Moved
+        //        newUnit.currentAction = .Moved
         tile.unit = newUnit
     }
-
+    
     func buildTower(on: Tile) {
         if on.owner.player !== self.game?.currentPlayer { return }
-
+        
         let village = on.owner
         if village.disaled { return }
-
+        
         // Check tower construction rules
         if village.type == .Hovel { return }
         let tower = Constants.Types.Structure.Tower
         if village.wood < tower.cost() || !on.isBuildable() { return }
-
+        
         // Update the state
         village.wood -= tower.cost()
         on.structure = tower
     }
-
+    
     // Moves unit from -> on, instruct unit to start building road.
     func buildRoad(on: Tile, from: Tile) {
         if from.owner.player !== self.game?.currentPlayer { return }
-
+        
         let village = from.owner
-
+        
         // Tiles must be connected and in the same region
         if village !== on.owner { return }
-
+        
         let path = (self.map?.getPath(from: from, to: on, accessible: village.controlledTiles))!
         if path.isEmpty { return }
-
+        
         // Check road building rules
         let road = Constants.Types.Structure.Road
         if village.wood < road.cost()
             || !on.isBuildable()
             || (from.unit?.disabled)!
             || from.unit?.type != Constants.Types.Unit.Peasant{ return }
-
+        
         // Change the state.
         village.wood -= road.cost()
         on.unit = from.unit
@@ -476,26 +499,26 @@ class GameEngine {
         on.unit?.currentAction = Constants.Unit.Action.BuildingRoad
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
-
+    
     // Moves unit from -> on, instruct unit to start creating meadow for 2 turns
     func startCultivating(on: Tile, from: Tile) {
         if from.owner.player !== self.game?.currentPlayer { return }
-
+        
         let village = from.owner
-
+        
         //Tiles must be connected and in the same region
         if village !== on.owner { return }
-
+        
         let path = (self.map?.getPath(from: from, to: on, accessible: village.controlledTiles))!
         if path.isEmpty { return }
-
+        
         // Check cultivation rules
         let cost = Constants.Types.Land.Meadow.cost()
         if village.wood < cost
             || !on.isBuildable()
             || (from.unit?.disabled)!
             || from.unit?.type != Constants.Types.Unit.Peasant{ return }
-
+        
         // Change the state
         village.wood -= cost
         on.unit = from.unit
@@ -503,29 +526,29 @@ class GameEngine {
         on.unit?.currentAction = Constants.Unit.Action.StartCultivating
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
-
+    
     // MARK: - UI Helper
-
+    
     func getNextAvailableUnit() -> Tile? {
         if self.availableUnits.count <= 0 { return nil }
-
+        
         let nextTile = self.availableUnits.removeAtIndex(0)
         self.availableUnits.append(nextTile)
-
+        
         return nextTile
     }
-
+    
     func getNextAvailableVillage() -> Tile? {
         if self.availableVillages.count <= 0 { return nil }
-
+        
         let nextTile = self.availableVillages.removeAtIndex(0)
         self.availableVillages.append(nextTile)
-
+        
         return nextTile
     }
-
+    
     // MARK: - Serialization
-
+    
     func loadMap(#number: String) {
         var e: NSError?
         if let path = NSBundle.mainBundle().pathForResource(number, ofType: "json") {
@@ -537,18 +560,24 @@ class GameEngine {
             }
         }
     }
-
+    
     // SUMMARY
     // In map selection sequence:
     //      - match data only has 'choice' array, array grows from 1-2-3, at 3
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
+        //TODO TEMP
+        self.startGameWithMap(1)
+        self.showGameScene()
+        
+        return
+        
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data
                 if let choices = dict["choices"] as? [Int] {    // choice is only present during map selection
-
+                    
                     // MAP SELECTION SEQUENCE ENDED
                     if choices.count == 3 && MatchHelper.sharedInstance().currentParticipantIndex() == 0  { // make sure current player is first one
                         let finalChoice = choices[Int(arc4random_uniform(3))]
@@ -560,7 +589,7 @@ class GameEngine {
                         self.currentChoices = choices
                         self.showMapSelection() // current player will select a map
                     }
-
+                    
                     // MATCH IN PROGRESS
                 } else {
                     self.game = Game()
@@ -569,28 +598,28 @@ class GameEngine {
                     self.showGameScene()
                 }
             }
-
+            
             // NEW MATCH - initiate map selection sequence
         } else {
             self.showMapSelection()
         }
     }
-
+    
     func encodeMatchData() -> NSData {
         return (self.game?.encodeMatchData())!
     }
-
+    
     func encodeTurnMessage() -> String {
         return self.game?.matchTurnMessage() ?? "No message."
     }
-
+    
     // Decodes match data into a dictionary
     func dataToDict(data: NSData) -> NSDictionary? {
         var parseError: NSError?
         let parsedObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parseError)
-
+        
         if let e = parseError { println(e) }
-
+        
         return parsedObject as? NSDictionary
     }
 }
