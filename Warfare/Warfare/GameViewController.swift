@@ -40,6 +40,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var soldierButton: UIButton!
     @IBOutlet weak var knightButton: UIButton!
     @IBOutlet weak var canonButton: UIButton!
+    @IBOutlet weak var upgradeUnitContainer: UIVisualEffectView!
 
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var validateButton: UIButton!
@@ -47,8 +48,54 @@ class GameViewController: UIViewController {
     @IBOutlet weak var roadButton: UIButton!
     @IBOutlet weak var towerButton: UIButton!
     @IBOutlet weak var meadowButton: UIButton!
+    @IBOutlet weak var upgradeStructureContainer: UIVisualEffectView!
 
     @IBOutlet weak var endTurnButton: UIButton!
+
+    // MARK: Information
+
+    @IBOutlet weak var regionVillage: UIImageView!
+    @IBOutlet weak var regionGold: UILabel!
+    @IBOutlet weak var regionWood: UILabel!
+    @IBOutlet weak var regionHP: UILabel!
+    @IBOutlet weak var regionState: UILabel!
+    @IBOutlet weak var characterImage: UIImageView!
+    @IBOutlet weak var characterName: UILabel!
+    @IBOutlet weak var characterWage: UILabel!
+    @IBOutlet weak var characterState: UILabel!
+
+
+    func showNeutralInfo(tile: Tile?) {
+        if let t = tile {
+            self.regionVillage.image = (t.land == Constants.Types.Land.Grass) ? nil : (UIImage(named: t.land.name()))
+        } else { self.regionVillage.image = nil }
+        self.regionVillage.backgroundColor = Utilities.Colors.colorForLandType(tile?.land ?? Constants.Types.Land.Grass, alpha: 1 )
+        self.regionGold.text = ""
+        self.regionWood.text = ""
+        self.regionHP.text = ""
+        self.regionState.text = ""
+        self.characterImage.image = nil
+        self.characterName.text = ""
+        self.characterWage.text = ""
+        self.characterState.text = ""
+    }
+
+    func showVillageInfo(village: Village) {
+        self.regionVillage.image = UIImage(named: village.type.name())
+        self.regionGold.text = "Gold: " + String(village.gold)
+        self.regionWood.text = "Wood: " + String(village.wood)
+        self.regionHP.text =  "HP: " + String(village.health)
+        self.regionState.text = village.state.name()
+    }
+
+    func showUnitInfo(unit: Unit) {
+        self.characterImage.image = UIImage(named: unit.type.name())
+        self.characterName.text = unit.type.name()
+        self.characterWage.text = "Wage: " + String(unit.type.wage())
+        self.characterState.text = unit.currentAction.name()
+    }
+    
+    func removeUnitInfo() { }
 
     var state : Constants.UI.State = .NothingPressed
 
@@ -77,6 +124,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.showNeutralInfo(nil)
         self.hideBuildOptions()
         self.hideUnitSelection()
 
@@ -342,20 +390,26 @@ class GameViewController: UIViewController {
         if !(GameEngine.Instance.game?.localIsCurrentPlayer)! {
             self.hidePlayerButtons()
         } else if !tile.isBelongsToLocal() {
-            self.neutralSelected()
+            self.showNeutralInfo(tile)
+            self.neutralSelected()  // neutral or other player
         } else if tile.village != nil {
+            self.showVillageInfo(tile.owner) // update info panel
+
             if !tile.owner.disaled {
                 self.villageSelected(tile)
             } else {
                 self.neutralSelected()
             }
         } else if let unit = tile.unit {
+            self.showUnitInfo(unit) // update info panel
+
             if !unit.disabled {
                 self.unitSelected(tile)
             } else {
                 self.neutralSelected()
             }
         } else {
+            self.showVillageInfo(tile.owner) // update info panel
             self.neutralSelected()
         }
     }
@@ -437,24 +491,28 @@ class GameViewController: UIViewController {
     func showUpgradeOptions(tile: Tile) {
         if tile.unit == nil { return }
 
+        // show container
+        self.upgradeUnitContainer.hidden = false
+
         if tile.unit?.type == Constants.Types.Unit.Peasant {
-            self.showButton(infantryButton)
-            self.showButton(soldierButton)
-            self.showButton(knightButton)
+            self.infantryButton.enabled = true
+            self.soldierButton.enabled = true
+            self.knightButton.enabled = true
         } else if tile.unit?.type == Constants.Types.Unit.Infantry {
-            self.showButton(soldierButton)
-            self.showButton(knightButton)
+            self.soldierButton.enabled = true
+            self.knightButton.enabled = true
         } else if tile.unit?.type == Constants.Types.Unit.Soldier {
-            self.showButton(knightButton)
+            self.knightButton.enabled = true
         }
     }
 
     func hideUnitSelection() {
-        self.hideButton(peasantButton)
-        self.hideButton(infantryButton)
-        self.hideButton(soldierButton)
-        self.hideButton(knightButton)
-        self.hideButton(canonButton)
+        self.peasantButton.enabled = false
+        self.infantryButton.enabled = false
+        self.soldierButton.enabled = false
+        self.knightButton.enabled = false
+        self.canonButton.enabled = false
+        self.upgradeUnitContainer.hidden = true
     }
 
     func hideBuildOptions() {
