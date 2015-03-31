@@ -20,6 +20,7 @@ class Unit {
 
     func draw() -> SKNode {
         self.node = SKSpriteNode(imageNamed: self.type.name())
+        self.node?.zPosition = 10
         return node!
     }
 
