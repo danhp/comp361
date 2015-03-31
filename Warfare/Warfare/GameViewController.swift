@@ -205,26 +205,6 @@ class GameViewController: UIViewController {
         GameEngine.Instance.map?.draw()
     }
 
-    @IBAction func upgradeButtonTapped(sender: AnyObject) {
-        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
-        GameEngine.Instance.map?.resetColor()
-
-        self.tileSource = GameEngine.Instance.map?.selected
-        let selectedTile = GameEngine.Instance.map?.selected
-        if !(selectedTile?.isBelongsToLocal())! { return }
-
-        if selectedTile?.village != nil {
-            GameEngine.Instance.upgradeVillage(selectedTile!)
-        } else if selectedTile?.unit != nil {
-            self.showUpgradeOptions(selectedTile!)
-        }
-
-        Hud.Instance.update()
-        self.update(selectedTile!)
-        self.hideActionButtons()
-        GameEngine.Instance.map?.draw()
-    }
-
     @IBAction func combineButtonTapped(sender: AnyObject) {
         tileSource = GameEngine.Instance.map?.selected
 
@@ -245,49 +225,78 @@ class GameViewController: UIViewController {
         GameEngine.Instance.map?.draw()
     }
 
-    @IBAction func recruitButtonTapped(sender: AnyObject) {
+    @IBAction func upgradeButtonTapped(sender: AnyObject) {
         if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
-        GameEngine.Instance.map?.resetColor()
 
-        var tileSelected = GameEngine.Instance.map?.selected
+        self.tileSource = GameEngine.Instance.map?.selected
+        if !(tileSource?.isBelongsToLocal())! { return }
 
-        if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
+        self.update(tileSource!)
+        self.hideActionButtons()
 
-        if let t = tileSelected {
-            GameEngine.Instance.recruitUnit(t, type: Constants.Types.Unit.Peasant)
-            Hud.Instance.update()
+        if tileSource?.village != nil {
+            GameEngine.Instance.upgradeVillage(tileSource!)
+        } else if tileSource?.unit != nil {
+            self.showUpgradeOptions(tileSource!)
+            self.state = .UpgradePressed
+            self.showButton(cancelButton)
         }
 
+        Hud.Instance.update()
         GameEngine.Instance.map?.draw()
+    }
+
+    @IBAction func recruitButtonTapped(sender: AnyObject) {
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+
+        tileSource = GameEngine.Instance.map?.selected
+
+        if tileSource?.owner == nil || !(tileSource?.isBelongsToLocal())! { return }
+
+        self.state = .RecruitPressed
+        self.showRecruitOptions(tileSource!)
+        self.showButton(cancelButton)
     }
 
     @IBAction func peasantButtonTapped(sender: AnyObject) {
-        GameEngine.Instance.recruitUnit(tileSource!, type: Constants.Types.Unit.Peasant)
-        self.hideUnitSelection()
-        Hud.Instance.update()
-        GameEngine.Instance.map?.draw()
+        if self.state == .RecruitPressed {
+            GameEngine.Instance.recruitUnit(tileSource!, type: Constants.Types.Unit.Peasant)
+        }
+        self.doneWithUnit()
     }
     @IBAction func infantryButtonTapped(sender: AnyObject) {
-        GameEngine.Instance.upgradeUnit(tileSource!, newLevel: Constants.Types.Unit.Infantry)
-        self.hideUnitSelection()
-        Hud.Instance.update()
-        GameEngine.Instance.map?.draw()
+        if self.state == .RecruitPressed {
+            GameEngine.Instance.recruitUnit(tileSource!, type: Constants.Types.Unit.Infantry)
+        } else if self.state == .UpgradePressed {
+            GameEngine.Instance.upgradeUnit(tileSource!, newLevel: Constants.Types.Unit.Infantry)
+        }
+        self.doneWithUnit()
     }
     @IBAction func soldierButtonTapped(sender: AnyObject) {
-        GameEngine.Instance.upgradeUnit(tileSource!, newLevel: Constants.Types.Unit.Soldier)
-        self.hideUnitSelection()
-        Hud.Instance.update()
-        GameEngine.Instance.map?.draw()
+        if self.state == .RecruitPressed {
+            GameEngine.Instance.recruitUnit(tileSource!, type: Constants.Types.Unit.Soldier)
+        } else if self.state == .UpgradePressed {
+            GameEngine.Instance.upgradeUnit(tileSource!, newLevel: Constants.Types.Unit.Soldier)
+        }
+        self.doneWithUnit()
     }
     @IBAction func knightButtonTapped(sender: AnyObject) {
-        GameEngine.Instance.upgradeUnit(tileSource!, newLevel: Constants.Types.Unit.Knight)
-        self.hideUnitSelection()
-        Hud.Instance.update()
-        GameEngine.Instance.map?.draw()
+        if self.state == .RecruitPressed {
+            GameEngine.Instance.recruitUnit(tileSource!, type: Constants.Types.Unit.Knight)
+        } else if self.state == .UpgradePressed {
+            GameEngine.Instance.upgradeUnit(tileSource!, newLevel: Constants.Types.Unit.Knight)
+        }
+        self.doneWithUnit()
     }
     @IBAction func canonButtonTapped(sender: AnyObject) {
         GameEngine.Instance.recruitUnit(tileSource!, type: Constants.Types.Unit.Canon)
+        self.doneWithUnit()
+    }
+
+    func doneWithUnit() {
         self.hideUnitSelection()
+        self.hideButton(cancelButton)
+        self.state = .NothingPressed
         Hud.Instance.update()
         GameEngine.Instance.map?.draw()
     }
@@ -334,9 +343,13 @@ class GameViewController: UIViewController {
 
         self.update((GameEngine.Instance.map?.selected)!)
         self.hideBuildOptions()
+        self.hideUnitSelection()
     }
 
     func update(tile: Tile) {
+        if self.state == .UpgradePressed || self.state == .RecruitPressed {
+            self.doneWithUnit()
+        }
         self.hideActionButtons()
 
         if !(GameEngine.Instance.game?.localIsCurrentPlayer)! {
@@ -422,6 +435,9 @@ class GameViewController: UIViewController {
         self.hideButton(roadButton)
         self.hideButton(meadowButton)
 
+        self.hideButton(cancelButton)
+        self.hideButton(validateButton)
+
         self.update((GameEngine.Instance.map?.selected)!)
     }
 
@@ -435,17 +451,38 @@ class GameViewController: UIViewController {
     }
 
     func showUpgradeOptions(tile: Tile) {
-        if tile.unit == nil { return }
+        if let u = tile.unit {
+            switch u.type {
+            case .Peasant:
+                println("here")
+                self.showButton(infantryButton)
+                self.showButton(soldierButton)
+                self.showButton(knightButton)
+            case .Infantry:
+                self.showButton(soldierButton)
+                self.showButton(knightButton)
+            case .Soldier:
+                self.showButton(knightButton)
+            default:
+                println("wut")
+            }
+        }
+    }
 
-        if tile.unit?.type == Constants.Types.Unit.Peasant {
+    func showRecruitOptions(tile: Tile) {
+        if let v = tile.owner {
+            self.showButton(peasantButton)
             self.showButton(infantryButton)
-            self.showButton(soldierButton)
-            self.showButton(knightButton)
-        } else if tile.unit?.type == Constants.Types.Unit.Infantry {
-            self.showButton(soldierButton)
-            self.showButton(knightButton)
-        } else if tile.unit?.type == Constants.Types.Unit.Soldier {
-            self.showButton(knightButton)
+
+            if v.type.rawValue >= 1 {
+                self.showButton(soldierButton)
+            }
+            if v.type.rawValue >= 2 {
+                self.showButton(knightButton)
+            }
+            if v.type.rawValue >= 3 {
+                self.showButton(canonButton)
+            }
         }
     }
 
