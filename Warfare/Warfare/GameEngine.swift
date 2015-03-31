@@ -459,6 +459,7 @@ class GameEngine {
 
         // For testing purposes this is uncommented at times.
 //        newUnit.currentAction = .Moved
+//        self.availableUnits.append(destination!)
         destination!.unit = newUnit
     }
 

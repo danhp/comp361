@@ -182,6 +182,60 @@
                                     <action selector="meadowButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="4Rn-Fc-kdL"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfi-l5-SPh">
+                                <rect key="frame" x="364" y="264" width="44" height="30"/>
+                                <state key="normal" title="Attack">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="attackButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="UOn-pn-O7P"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xBZ-o1-JSK">
+                                <rect key="frame" x="16" y="264" width="56" height="30"/>
+                                <state key="normal" title="Peasant">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="peasantButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="Ong-sC-ggw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GG3-UJ-lTO">
+                                <rect key="frame" x="91" y="264" width="52" height="30"/>
+                                <state key="normal" title="Infantry">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="infantryButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="nmW-pc-EJE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qo4-YA-vEs">
+                                <rect key="frame" x="167" y="264" width="48" height="30"/>
+                                <state key="normal" title="Soldier">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="soldierButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="uJc-7A-MkF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hT3-tY-JPm">
+                                <rect key="frame" x="248" y="264" width="45" height="30"/>
+                                <state key="normal" title="Knight">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="knightButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="F7o-fV-Vez"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X6Q-FI-4Iu">
+                                <rect key="frame" x="301" y="264" width="45" height="30"/>
+                                <state key="normal" title="Canon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="canonButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="rY8-bp-svh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -221,17 +275,23 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="attackButton" destination="qfi-l5-SPh" id="Z8s-Hr-GGO"/>
                         <outlet property="buildButton" destination="XZQ-nP-JgT" id="dNX-Qv-2hm"/>
                         <outlet property="cancelButton" destination="SyT-za-Flx" id="85b-IK-pfq"/>
+                        <outlet property="canonButton" destination="X6Q-FI-4Iu" id="V3F-CJ-hpc"/>
                         <outlet property="combineButton" destination="SZb-y9-aJF" id="o3e-Gb-1eb"/>
                         <outlet property="endTurnButton" destination="R9U-M9-D4u" id="foE-Ra-bUb"/>
+                        <outlet property="infantryButton" destination="GG3-UJ-lTO" id="4sF-Nq-cGG"/>
+                        <outlet property="knightButton" destination="hT3-tY-JPm" id="EpX-Ul-p1M"/>
                         <outlet property="meadowButton" destination="LYI-G3-B6m" id="nQ4-gy-Gzp"/>
                         <outlet property="menuButton" destination="MwL-rC-JPL" id="GDK-yg-0We"/>
                         <outlet property="moveButton" destination="pJx-Pa-zhK" id="nZH-bU-RHR"/>
                         <outlet property="nextUnitButton" destination="Ah6-Mf-wdE" id="Zb9-1f-Zbp"/>
                         <outlet property="nextVillageButton" destination="ejv-Lo-dQZ" id="fOX-ro-MIS"/>
+                        <outlet property="peasantButton" destination="xBZ-o1-JSK" id="fz7-kL-01a"/>
                         <outlet property="recruitButton" destination="Qdv-yO-Nq9" id="TkF-qc-ztU"/>
                         <outlet property="roadButton" destination="FUX-lM-tvq" id="Ndd-7S-8xO"/>
+                        <outlet property="soldierButton" destination="Qo4-YA-vEs" id="qr7-c0-TvT"/>
                         <outlet property="towerButton" destination="gAl-tQ-u4u" id="X9r-uT-7mu"/>
                         <outlet property="upgradeButton" destination="c0s-Ji-zhq" id="rc6-nC-3En"/>
                         <outlet property="validateButton" destination="01a-Yn-L7o" id="enr-BA-xef"/>

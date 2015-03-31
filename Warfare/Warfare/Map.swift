@@ -275,6 +275,31 @@ class Map: SKNode {
         return result
     }
 
+    func getAttackableRegion(seed: Tile) -> [Tile] {
+        var result = [Tile]()
+        var seen = [Tile]()
+        var queue = [Tile]()
+
+        if seed.unit?.type != Constants.Types.Unit.Canon { return result }
+
+        queue.append(seed)
+        seen.append(seed)
+
+        for n in neighbors(tile: seed) {
+            for n2 in neighbors(tile: n) {
+                if n2.owner !== seed.owner {
+                    result.append(n2)
+                }
+            }
+
+            if n.owner !== seed.owner {
+                result.append(n)
+            }
+        }
+
+        return result
+    }
+
     func getVillage(region: [Tile]) -> Village? {
         for tile in region {
             if tile.village != nil {
