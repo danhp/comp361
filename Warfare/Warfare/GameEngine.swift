@@ -234,30 +234,56 @@ class GameEngine {
             }
         }
 
+        self.moveWithAnimation(to: to, from: from, path: path)
+    }
+
+    func moveWithAnimation(#to: Tile, from: Tile, path: [Tile]) {
+        var moveActions = [SKAction]()
+        let path = path.reverse()
+
         // Update tiles in the path
-        path.append(to)
-        for t in path {
+        //        path.append(to)
+        for (index, t) in enumerate(path) {
+            if index+1 >= path.count { break }
+
+            var removeGrass = SKAction.runBlock({})
+
             if (from.unit?.type.rawValue >= Constants.Types.Unit.Soldier.rawValue)
                 && t.land == .Meadow
                 && t.structure != .Road {
-                    t.land = .Grass
+                    removeGrass = SKAction.runBlock({
+                        t.land = .Grass
+                    })
             }
+
+            let dx = path[index+1].position.x - path[index].position.x
+            let dy = path[index+1].position.y - path[index].position.y
+            let delta = CGVector(dx: dx, dy: dy)
+
+            let moveAction = SKAction.sequence([SKAction.moveBy(delta, duration: 0.3), removeGrass])
+            moveActions.append(moveAction)
         }
 
-        // Update the destination tile
-        if to.structure? == Constants.Types.Structure.Tombstone {
-            to.structure = nil
-        }
-        if to.land == .Tree {
-            to.land = .Grass
-            village.wood += 1
-        }
+        let n = ((from.unit?)!.node?)!
+        n.runAction(SKAction.sequence(moveActions), completion: {
+            // Update the destination tile
+            if to.structure? == Constants.Types.Structure.Tombstone {
+                to.structure = nil
+            }
+            if to.land == .Tree {
+                to.land = .Grass
+                from.owner.wood += 1
+            }
 
-        // Move the unit
-        to.unit = from.unit
-        from.unit = nil
-        to.unit?.currentAction = Constants.Unit.Action.Moved
-        self.availableUnits = self.availableUnits.filter({ $0 !== from })
+            // Move the unit
+            to.unit = from.unit
+            from.unit = nil
+            to.unit?.currentAction = Constants.Unit.Action.Moved
+            self.availableUnits = self.availableUnits.filter({ $0 !== from })
+
+            GameEngine.Instance.map?.resetColor()
+            GameEngine.Instance.map?.draw()
+        })
     }
 
     private func invadeNeutral(village: Village, unit: Unit, to: Tile) {
@@ -418,8 +444,7 @@ class GameEngine {
         if tileA.owner.player !== self.game?.currentPlayer { return }
         if tileA.unit?.type.rawValue >= Constants.Types.Unit.Knight.rawValue
                     || tileB.unit?.type.rawValue >= Constants.Types.Unit.Knight.rawValue { return }
-        if (tileA.unit?.disabled)! { return }
-
+        if (tileA.unit?.disabled)! || (tileB.unit?.disabled)! { return }
         tileA.unit?.combine(tileB.unit!)
         tileA.unit?.currentAction = Constants.Unit.Action.UpgradingCombining
         tileB.unit = nil
@@ -452,6 +477,7 @@ class GameEngine {
         let costWood = type.cost().1
         if village.gold < costGold || village.wood < costWood { return }
 
+
         village.gold -= costGold
         village.wood -= costWood
 
@@ -483,7 +509,6 @@ class GameEngine {
     func buildRoad(from: Tile, on: Tile) {
         if from.owner.player !== self.game?.currentPlayer { return }
         if from.unit == nil { return }
-
         let village = from.owner
 
         // Tiles must be connected and in the same region
@@ -593,6 +618,12 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
+        //TODO TEMP
+        self.startGameWithMap(1)
+        self.showGameScene()
+
+        return
+
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data

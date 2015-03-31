@@ -58,6 +58,7 @@ class Tile: SKNode, Hashable {
         let alpha = selected ? Constants.Tile.Alpha.selected.rawValue: (lighten ? Constants.Tile.Alpha.flood.rawValue : Constants.Tile.Alpha.normal.rawValue)
         self.background.color = Utilities.Colors.colorForLandType(self.land, alpha: alpha)
         self.background.colorBlendFactor = 1
+
         self.addChild(background)
 
         // Structure

@@ -327,7 +327,9 @@ class GameViewController: UIViewController {
         Hud.Instance.update()
         validateButton.hidden = true
         cancelButton.hidden = true
-        GameEngine.Instance.map?.draw()
+        if self.state != .MovePressed {
+            GameEngine.Instance.map?.draw()
+        }
 
         self.state = .NothingPressed
         self.update(dest!)
