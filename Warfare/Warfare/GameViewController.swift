@@ -63,13 +63,13 @@ class GameViewController: UIViewController {
     }
 
     @IBAction func validateButtonTapped(sender: AnyObject) {
-        GameEngine.Instance.map?.resetColor()
+//        GameEngine.Instance.map?.resetColor REMOVED FOR ANIMATION
         let dest = GameEngine.Instance.map?.selected
         GameEngine.Instance.moveUnit(tileSource! , to: dest!)
         Hud.Instance.update()
         validateButton.hidden = true
         cancelButton.hidden = true
-//        GameEngine.Instance.map?.draw()
+//        GameEngine.Instance.map?.draw() REMOVE FOR ANIMATION
     }
 
     @IBAction func cancelButtonTapped(sender: AnyObject) {

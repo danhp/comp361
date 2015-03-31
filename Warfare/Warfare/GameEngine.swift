@@ -277,6 +277,9 @@ class GameEngine {
             from.unit = nil
             to.unit?.currentAction = Constants.Unit.Action.Moved
             self.availableUnits = self.availableUnits.filter({ $0 !== from })
+
+            GameEngine.Instance.map?.resetColor()
+            GameEngine.Instance.map?.draw()
         })
     }
     

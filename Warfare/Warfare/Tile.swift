@@ -28,19 +28,7 @@ class Tile: SKNode, Hashable {
 
     var selected: Bool = false {
         didSet {
-<<<<<<< HEAD
             self.draw()
-=======
-            if selected {
-//                self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: Constants.Tile.Alpha.selected.rawValue)
-                self.background = SKSpriteNode(imageNamed: "selected")
-                self.draw()
-            } else {
-//                self.fillColor = Utilities.Colors.colorForLandType(self.land, lighten: self.lighten)
-                self.background = SKSpriteNode(imageNamed: "background")
-                self.draw()
-            }
->>>>>>> speed_up
         }
     }
 
