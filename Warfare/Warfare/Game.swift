@@ -18,6 +18,10 @@ class Game {
 
     var localIsCurrentPlayer: Bool { return GKLocalPlayer.localPlayer().playerID == MatchHelper.sharedInstance().myMatch?.currentParticipant.playerID}
 
+    var nameOfActivePlayer: String {
+        return self.localIsCurrentPlayer ? "Your turn" : ("Player " + String(MatchHelper.sharedInstance().currentParticipantIndex()) + "'s turn")
+    }
+
     var currentPlayerGold: Int { return self.currentPlayer.gold }
     var currentPlayerWood: Int { return self.currentPlayer.wood }
 
