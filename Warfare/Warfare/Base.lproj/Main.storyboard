@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Iq-47-Qvh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Iq-47-Qvh">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -173,6 +173,15 @@
                                     <action selector="buildButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="API-tL-9Ky"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYI-G3-B6m">
+                                <rect key="frame" x="248" y="295" width="59" height="30"/>
+                                <state key="normal" title="Meadow">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="meadowButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="4Rn-Fc-kdL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -192,7 +201,6 @@
                             <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="pJx-Pa-zhK" secondAttribute="bottom" constant="12" id="LZV-wV-Yfu"/>
                             <constraint firstItem="FUX-lM-tvq" firstAttribute="leading" secondItem="Ah6-Mf-wdE" secondAttribute="trailing" constant="44" id="OG8-fK-VVg"/>
                             <constraint firstItem="gAl-tQ-u4u" firstAttribute="leading" secondItem="ejv-Lo-dQZ" secondAttribute="trailing" constant="24" id="Pad-09-6f9"/>
-                            <constraint firstItem="pJx-Pa-zhK" firstAttribute="leading" secondItem="gAl-tQ-u4u" secondAttribute="trailing" constant="146" id="Quo-QA-ix0"/>
                             <constraint firstItem="01a-Yn-L7o" firstAttribute="leading" secondItem="Qdv-yO-Nq9" secondAttribute="trailing" constant="56" id="TdD-29-eVc"/>
                             <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="gAl-tQ-u4u" secondAttribute="bottom" constant="12" id="TlG-qo-9Qx"/>
                             <constraint firstItem="MwL-rC-JPL" firstAttribute="top" secondItem="PCf-gQ-wO7" secondAttribute="bottom" constant="296" id="Zeb-cr-C0A"/>
@@ -207,7 +215,6 @@
                             <constraint firstItem="ejv-Lo-dQZ" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="56" id="yDc-Hl-JbO"/>
                             <constraint firstItem="R9U-M9-D4u" firstAttribute="leading" secondItem="SZb-y9-aJF" secondAttribute="trailing" constant="16" id="yGw-aI-ew8"/>
                             <constraint firstItem="XZQ-nP-JgT" firstAttribute="leading" secondItem="Ah6-Mf-wdE" secondAttribute="trailing" constant="227" id="yt5-fm-bBw"/>
-                            <constraint firstItem="XZQ-nP-JgT" firstAttribute="leading" secondItem="FUX-lM-tvq" secondAttribute="trailing" constant="146" id="zLn-7T-bgj"/>
                             <constraint firstItem="SyT-za-Flx" firstAttribute="leading" secondItem="R9U-M9-D4u" secondAttribute="trailing" constant="51" id="zja-iT-eXw"/>
                         </constraints>
                     </view>
@@ -218,6 +225,7 @@
                         <outlet property="cancelButton" destination="SyT-za-Flx" id="85b-IK-pfq"/>
                         <outlet property="combineButton" destination="SZb-y9-aJF" id="o3e-Gb-1eb"/>
                         <outlet property="endTurnButton" destination="R9U-M9-D4u" id="foE-Ra-bUb"/>
+                        <outlet property="meadowButton" destination="LYI-G3-B6m" id="nQ4-gy-Gzp"/>
                         <outlet property="menuButton" destination="MwL-rC-JPL" id="GDK-yg-0We"/>
                         <outlet property="moveButton" destination="pJx-Pa-zhK" id="nZH-bU-RHR"/>
                         <outlet property="nextUnitButton" destination="Ah6-Mf-wdE" id="Zb9-1f-Zbp"/>

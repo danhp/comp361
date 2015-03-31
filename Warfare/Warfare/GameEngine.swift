@@ -479,55 +479,75 @@ class GameEngine {
     }
 
     // Moves unit from -> on, instruct unit to start building road.
-    func buildRoad(on: Tile, from: Tile) {
+    func buildRoad(from: Tile, on: Tile) {
         if from.owner.player !== self.game?.currentPlayer { return }
+        if from.unit == nil { return }
 
         let village = from.owner
 
         // Tiles must be connected and in the same region
         if village !== on.owner { return }
 
-        let path = (self.map?.getPath(from: from, to: on, accessible: village.controlledTiles))!
-        if path.isEmpty { return }
+        if from !== on {
+            let path = (self.map?.getPath(from: from, to: on, accessible: village.controlledTiles))!
+            if path.isEmpty { return }
+            if !on.isBuildable() { return }
+        } else {
+            if on.structure != nil { return }
+        }
 
         // Check road building rules
         let road = Constants.Types.Structure.Road
         if village.wood < road.cost()
-            || !on.isBuildable()
             || (from.unit?.disabled)!
             || from.unit?.type != Constants.Types.Unit.Peasant{ return }
 
         // Change the state.
         village.wood -= road.cost()
-        on.unit = from.unit
-        from.unit = nil
+
+        // Move the unit
+        if from !== on {
+            on.unit = from.unit
+            from.unit = nil
+        }
+
         on.unit?.currentAction = Constants.Unit.Action.BuildingRoad
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
 
     // Moves unit from -> on, instruct unit to start creating meadow for 2 turns
-    func startCultivating(on: Tile, from: Tile) {
+    func startCultivating(from: Tile, on: Tile) {
         if from.owner.player !== self.game?.currentPlayer { return }
+        if from.unit == nil { return }
+        if on.land != .Grass{ return }
 
         let village = from.owner
 
         //Tiles must be connected and in the same region
         if village !== on.owner { return }
 
-        let path = (self.map?.getPath(from: from, to: on, accessible: village.controlledTiles))!
-        if path.isEmpty { return }
+        if from !== on {
+            let path = (self.map?.getPath(from: from, to: on, accessible: village.controlledTiles))!
+            if path.isEmpty { return }
+            if !on.isBuildable() { return }
+        } else {
+            if on.structure != nil { return }
+        }
 
         // Check cultivation rules
         let cost = Constants.Types.Land.Meadow.cost()
         if village.wood < cost
-            || !on.isBuildable()
             || (from.unit?.disabled)!
             || from.unit?.type != Constants.Types.Unit.Peasant{ return }
 
         // Change the state
         village.wood -= cost
-        on.unit = from.unit
-        from.unit = nil
+
+        // Move the unit
+        if from !== on {
+            on.unit = from.unit
+            from.unit = nil
+        }
         on.unit?.currentAction = Constants.Unit.Action.StartCultivating
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }

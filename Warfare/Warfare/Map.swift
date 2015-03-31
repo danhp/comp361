@@ -205,7 +205,7 @@ class Map: SKNode {
         if let unitType = seed.unit?.type {
             if unitType == .Canon {
                 for t in neighbors(tile: seed) {
-                    if (t.owner === seed.owner || t.owner == nil) && t.isWalkable() {
+                    if (t.owner === seed.owner || t.owner == nil) && t.isWalkable() && t.unit == nil && t.village == nil {
                         result.append(t)
                     }
                 }
@@ -236,6 +236,42 @@ class Map: SKNode {
             }
         }
 
+        return result
+    }
+
+    func getBuildableRegion(seed: Tile) -> [Tile] {
+        var result = [Tile]()
+        var seen = [Tile]()
+        var queue = [Tile]()
+
+        if seed.unit?.type != Constants.Types.Unit.Peasant { return result }
+
+        queue.append(seed)
+        seen.append(seed)
+        if seed.structure == nil {
+            result.append(seed)
+        }
+
+        while !queue.isEmpty {
+            var newSeed = queue.removeLast()
+
+            for t in neighbors(tile: newSeed) {
+                if contains(seen, { $0 === t}) { continue }
+                if !t.isWalkable() { continue }
+                if t.land == .Sea { continue }
+
+                if t.owner === seed.owner {
+                    if t.isWalkable() {
+                        queue.append(t)
+                    }
+                    if t.isBuildable() {
+                        result.append(t)
+                    }
+                }
+                seen.append(t)
+
+            }
+        }
         return result
     }
 

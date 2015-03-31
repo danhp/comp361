@@ -216,21 +216,21 @@ struct Constants {
             func name() -> String {
                 switch self {
                 case .ReadyForOrders:
-                    return "ready"
+                    return "Ready"
                 case .Moved:
-                    return "moved"
+                    return "Moved"
                 case .BuildingRoad:
-                    return "roadb"
+                    return "Building Road"
                 case .ChoppingTree:
-                    return "treec"
+                    return "Chopping Tree"
                 case .ClearingTombstone:
-                    return "tomb"
+                    return "Clearing Tombstone"
                 case .UpgradingCombining:
-                    return "upgraded"
+                    return "Upgraded"
                 case .StartCultivating:
-                    return "cultivate 1"
+                    return "Cultivating"
                 case .FinishCultivating:
-                    return "cultivate 2"
+                    return "Cultivating"
                 }
             }
         }
@@ -256,6 +256,12 @@ struct Constants {
     struct Cost {
         enum Upgrade: Int {
             case Unit = 10
+        }
+    }
+
+    struct UI {
+        enum State {
+            case NothingPressed, BuildRoadPressed, BuildTowerPressed, BuildMeadowPressed, MovePressed, CombinePressed, AttackPressed
         }
     }
 }

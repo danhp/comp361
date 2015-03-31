@@ -2,11 +2,6 @@ import UIKit
 import SpriteKit
 import GameKit
 
-
-enum State: Int {
-    case NothingPressed = 0, BuildPressed, MovePressed, CombinePressed
-}
-
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
@@ -24,226 +19,41 @@ extension SKNode {
 }
 
 class GameViewController: UIViewController {
-    
+
     var tileSource : Tile?
     var tileDest : Tile?
 
     @IBOutlet weak var menuButton: UIButton!
+
     @IBOutlet weak var nextUnitButton: UIButton!
     @IBOutlet weak var nextVillageButton: UIButton!
+
     @IBOutlet weak var buildButton: UIButton!
-    @IBOutlet weak var moveButton: UIButton!
-    @IBOutlet weak var upgradeButton: UIButton!
-    @IBOutlet weak var endTurnButton: UIButton!
     @IBOutlet weak var combineButton: UIButton!
+    @IBOutlet weak var moveButton: UIButton!
     @IBOutlet weak var recruitButton: UIButton!
+    @IBOutlet weak var upgradeButton: UIButton!
+
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var validateButton: UIButton!
+
     @IBOutlet weak var roadButton: UIButton!
     @IBOutlet weak var towerButton: UIButton!
     @IBOutlet weak var meadowButton: UIButton!
-    
-    var state : State = State.NothingPressed
-    
-    
-    @IBAction func nextUnitButtonTapped(sender: AnyObject) {
-        if let tile = GameEngine.Instance.getNextAvailableUnit() {
-            GameEngine.Instance.map?.centerAround(tile)
-        }
-    }
 
-    @IBAction func nextVillageButtonTapped(sender: AnyObject) {
-        if let tile = GameEngine.Instance.getNextAvailableVillage() {
-            GameEngine.Instance.map?.centerAround(tile)
-        }
-    }
-    
-    @IBAction func buildButtonTapped(sender: AnyObject) {
-        if let tile = GameEngine.Instance.map?.selected {
-            if tile.village != nil {
-                self.showButton(towerButton)
-            }
-            else if tile.unit != nil {
-                self.showButton(roadButton)
-            }
-        }
+    @IBOutlet weak var endTurnButton: UIButton!
 
-        betweenPresses()
-        
-        tileSource = GameEngine.Instance.map?.selected
-        
-        GameEngine.Instance.map?.resetColor()
-        GameEngine.Instance.map?.draw()
-
-    }
-    
-    @IBAction func towerButtonTapped(sender: AnyObject) {
-        GameEngine.Instance.buildTower(tileSource!)
-        finishButtonPress()
-    }
-    
-    @IBAction func roadButtonTapped(sender: AnyObject) {
-        state = State.BuildPressed
-    }
-    
-    @IBAction func moveButtonTapped(sender: AnyObject) {
-        state = State.MovePressed
-        if !(GameEngine.Instance.game?.localIsCurrentPlayer != nil) { return }
-        GameEngine.Instance.map?.resetColor()
-        
-        tileSource = GameEngine.Instance.map?.selected
-        
-        if let unit = (tileSource)!.unit {
-            if (tileSource)!.owner.player === GameEngine.Instance.game?.currentPlayer
-                && !unit.disabled {
-                    if let tiles = GameEngine.Instance.map?.getAccessibleRegion(tileSource!) {
-                        for t in tiles {
-                            t.lighten = true
-                        }
-                    }
-                    
-                    validateButton.hidden = false
-                    cancelButton.hidden = false
-            }
-        }
-        betweenPresses()
-        
-        GameEngine.Instance.map?.draw()
-
-    }
-    
-    @IBAction func upgradeButtonTapped(sender: AnyObject) {
-        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
-        GameEngine.Instance.map?.resetColor()
-        
-        let selectedTile = GameEngine.Instance.map?.selected
-        if selectedTile?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
-        
-        if selectedTile?.village != nil {
-            GameEngine.Instance.upgradeVillage(selectedTile!)
-        } else if selectedTile?.unit != nil {
-            GameEngine.Instance.upgradeUnit(selectedTile!, newLevel: Constants.Types.Unit.Infantry)
-        }
-        
-        Hud.Instance.update()
-        GameEngine.Instance.map?.draw()
-    }
-    
-    @IBAction func combineButtonTapped(sender: AnyObject) {
-        
-        tileSource = GameEngine.Instance.map?.selected
-        
-        if tileSource?.owner.player !== GameEngine.Instance.game?.currentPlayer {
-            return
-        }
-        
-        if tileSource?.village != nil {
-            return
-        }
-        
-        if tileSource?.unit != nil {
-            state = State.CombinePressed
-            betweenPresses()
-
-        }
-        
-        GameEngine.Instance.map?.resetColor()
-        GameEngine.Instance.map?.draw()
-    }
-    
-    @IBAction func endTurnButtonTapped(sender: AnyObject) {
-        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
-        GameEngine.Instance.map?.resetColor()
-        
-        MatchHelper.sharedInstance().advanceMatchTurn()
-        
-        GameEngine.Instance.map?.resetColor()
-        GameEngine.Instance.map?.draw()
-        Hud.Instance.update()
-        GameEngine.Instance.map?.draw()
-    }
-    
-    @IBAction func recruitButtonTapped(sender: AnyObject) {
-        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
-        GameEngine.Instance.map?.resetColor()
-        
-        var tileSelected = GameEngine.Instance.map?.selected
-        
-        if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
-        
-        if let t = tileSelected {
-            GameEngine.Instance.recruitUnit(t, type: Constants.Types.Unit.Peasant)
-            Hud.Instance.update()
-        }
-        
-        GameEngine.Instance.map?.draw()
-
-    }
-
-
-    @IBAction func validateButtonTapped(sender: AnyObject) {
-        GameEngine.Instance.map?.resetColor()
-        let dest = GameEngine.Instance.map?.selected
-        
-        if state == State.BuildPressed {
-              GameEngine.Instance.buildRoad(tileSource!, from: dest!)
-        }
-        
-        else if state == State.MovePressed {
-            GameEngine.Instance.moveUnit(tileSource! , to: dest!)
-        }
-        
-        else if state == State.CombinePressed {
-            let dest = GameEngine.Instance.map?.selected
-            if dest?.unit != nil {
-                GameEngine.Instance.combineUnit(tileSource!, tileB: dest!)
-            }
-            
-        }
-        
-        Hud.Instance.update()
-        validateButton.hidden = true
-        cancelButton.hidden = true
-        GameEngine.Instance.map?.draw()
-
-        self.state = .NothingPressed
-        
-        finishButtonPress()
-    }
-
-    @IBAction func cancelButtonTapped(sender: AnyObject) {
-        GameEngine.Instance.map?.resetColor()
-        validateButton.hidden = true
-        cancelButton.hidden = true
-        GameEngine.Instance.map?.draw()
-        finishButtonPress()
-        state = State.NothingPressed
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        roadButton.hidden = true
-        towerButton.hidden = true
-        validateButton.hidden = true
-        cancelButton.hidden = true
-
-        // Set MatchHelper's view controller
-        MatchHelper.sharedInstance().vc = self
-
-        self.showGamePlayScene()
-    }
+    var state : Constants.UI.State = .NothingPressed
 
     func showGamePlayScene() {
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
             let skView = self.view as SKView
             skView.showsFPS = true
-//            skView.showsNodeCount = true
-//            skView.showsDrawCount = true
+            //            skView.showsNodeCount = true
+            //            skView.showsDrawCount = true
 
-            validateButton.hidden = true
-            cancelButton.hidden = true
-            recruitButton.hidden = false
+            self.hideActionButtons()
 
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = true
@@ -257,7 +67,220 @@ class GameViewController: UIViewController {
         }
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.hideBuildOptions()
+
+        validateButton.hidden = true
+        cancelButton.hidden = true
+
+        // Set MatchHelper's view controller
+        MatchHelper.sharedInstance().vc = self
+
+        self.showGamePlayScene()
+    }
+
+    @IBAction func nextUnitButtonTapped(sender: AnyObject) {
+        if let tile = GameEngine.Instance.getNextAvailableUnit() {
+            GameEngine.Instance.map?.centerAround(tile)
+        }
+    }
+
+    @IBAction func nextVillageButtonTapped(sender: AnyObject) {
+        if let tile = GameEngine.Instance.getNextAvailableVillage() {
+            GameEngine.Instance.map?.centerAround(tile)
+        }
+    }
+
+    @IBAction func buildButtonTapped(sender: AnyObject) {
+        self.betweenPresses()
+        if let tile = GameEngine.Instance.map?.selected {
+            if tile.village != nil {
+                self.showButton(towerButton)
+            }
+            else if tile.unit != nil {
+                self.showButton(roadButton)
+                self.showButton(meadowButton)
+            }
+        }
+
+        self.hideButton(validateButton)
+
+        self.tileSource = GameEngine.Instance.map?.selected
+    }
+
+    @IBAction func towerButtonTapped(sender: AnyObject) {
+        self.betweenPresses()
+        self.state = .BuildTowerPressed
+        self.hideButton(towerButton)
+
+        GameEngine.Instance.map?.resetColor()
+        if let tiles = tileSource?.owner.controlledTiles {
+            for t in tiles {
+                if t.isBuildable() {
+                    t.lighten = true
+                }
+            }
+        }
+        GameEngine.Instance.map?.draw()
+    }
+
+    @IBAction func roadButtonTapped(sender: AnyObject) {
+        self.betweenPresses()
+        self.state = .BuildRoadPressed
+        self.hideButton(roadButton)
+        self.hideButton(meadowButton)
+
+        GameEngine.Instance.map?.resetColor()
+        if let tiles = GameEngine.Instance.map?.getBuildableRegion(tileSource!) {
+            for t in tiles {
+                t.lighten = true
+            }
+        }
+        GameEngine.Instance.map?.draw()
+    }
+
+    @IBAction func meadowButtonTapped(sender: AnyObject) {
+        self.betweenPresses()
+        self.state = .BuildMeadowPressed
+        self.hideButton(meadowButton)
+        self.hideButton(roadButton)
+
+        GameEngine.Instance.map?.resetColor()
+        if let tiles = GameEngine.Instance.map?.getBuildableRegion(tileSource!) {
+            for t in tiles {
+                t.lighten = true
+            }
+        }
+        GameEngine.Instance.map?.draw()
+    }
+
+    @IBAction func moveButtonTapped(sender: AnyObject) {
+        self.betweenPresses()
+        self.state = .MovePressed
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer != nil) { return }
+        GameEngine.Instance.map?.resetColor()
+
+        self.tileSource = GameEngine.Instance.map?.selected
+
+        if let unit = (tileSource)!.unit {
+            if (tileSource)!.owner.player === GameEngine.Instance.game?.currentPlayer
+                        && !unit.disabled {
+                if let tiles = GameEngine.Instance.map?.getAccessibleRegion(tileSource!) {
+                    for t in tiles {
+                        t.lighten = true
+                    }
+                }
+
+                self.validateButton.hidden = false
+                self.cancelButton.hidden = false
+            }
+        }
+
+        GameEngine.Instance.map?.draw()
+    }
+
+    @IBAction func upgradeButtonTapped(sender: AnyObject) {
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+        GameEngine.Instance.map?.resetColor()
+
+        let selectedTile = GameEngine.Instance.map?.selected
+        if !(selectedTile?.isBelongsToLocal())! { return }
+
+        if selectedTile?.village != nil {
+            GameEngine.Instance.upgradeVillage(selectedTile!)
+        } else if selectedTile?.unit != nil {
+            GameEngine.Instance.upgradeUnit(selectedTile!, newLevel: .Infantry)
+        }
+
+        Hud.Instance.update()
+        self.update(selectedTile!)
+        GameEngine.Instance.map?.draw()
+    }
+
+    @IBAction func combineButtonTapped(sender: AnyObject) {
+        tileSource = GameEngine.Instance.map?.selected
+
+        if !(tileSource?.isBelongsToLocal())! { return }
+        if tileSource?.unit == nil { return }
+
+        state = .CombinePressed
+        betweenPresses()
+    }
+
+    @IBAction func endTurnButtonTapped(sender: AnyObject) {
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+
+        MatchHelper.sharedInstance().advanceMatchTurn()
+
+        GameEngine.Instance.map?.resetColor()
+        Hud.Instance.update()
+        GameEngine.Instance.map?.draw()
+    }
+
+    @IBAction func recruitButtonTapped(sender: AnyObject) {
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
+        GameEngine.Instance.map?.resetColor()
+
+        var tileSelected = GameEngine.Instance.map?.selected
+
+        if tileSelected?.owner == nil || tileSelected?.owner.player !== GameEngine.Instance.game?.currentPlayer { return }
+
+        if let t = tileSelected {
+            GameEngine.Instance.recruitUnit(t, type: Constants.Types.Unit.Peasant)
+            Hud.Instance.update()
+        }
+
+        GameEngine.Instance.map?.draw()
+    }
+
+
+    @IBAction func validateButtonTapped(sender: AnyObject) {
+        GameEngine.Instance.map?.resetColor()
+        let dest = GameEngine.Instance.map?.selected
+
+        if self.state == .BuildRoadPressed {
+            GameEngine.Instance.buildRoad(tileSource!, on: dest!)
+        }
+        else if self.state == .BuildMeadowPressed {
+            GameEngine.Instance.startCultivating(tileSource!, on: dest!)
+        }
+        else if self.state == .BuildTowerPressed {
+            GameEngine.Instance.buildTower(dest!)
+        }
+        else if self.state == .MovePressed {
+            GameEngine.Instance.moveUnit(tileSource! , to: dest!)
+        }
+        else if self.state == .CombinePressed {
+            if dest?.unit != nil {
+                GameEngine.Instance.combineUnit(tileSource!, tileB: dest!)
+            }
+        }
+
+        Hud.Instance.update()
+        validateButton.hidden = true
+        cancelButton.hidden = true
+        GameEngine.Instance.map?.draw()
+
+        self.state = .NothingPressed
+        self.update(dest!)
+    }
+
+    @IBAction func cancelButtonTapped(sender: AnyObject) {
+        GameEngine.Instance.map?.resetColor()
+        self.hideButton(validateButton)
+        self.hideButton(cancelButton)
+        GameEngine.Instance.map?.draw()
+        state = .NothingPressed
+
+        self.update((GameEngine.Instance.map?.selected)!)
+        self.hideBuildOptions()
+    }
+
     func update(tile: Tile) {
+        self.hideActionButtons()
+
         if !(GameEngine.Instance.game?.localIsCurrentPlayer)! {
             self.hidePlayerButtons()
         } else if !tile.isBelongsToLocal() {
@@ -265,16 +288,13 @@ class GameViewController: UIViewController {
             return
         } else if tile.village != nil {
             if !tile.owner.disaled {
-                self.villageSelected()
+                self.villageSelected(tile)
             } else {
                 self.neutralSelected()
             }
         } else if let unit = tile.unit {
             if !unit.disabled {
-                self.unitSelected()
-                if unit.type == .Canon {
-
-                }
+                self.unitSelected(tile)
             } else {
                 self.neutralSelected()
             }
@@ -285,28 +305,38 @@ class GameViewController: UIViewController {
     }
 
     // buttons that are shown after certain selection
-    func unitSelected() {
-        if self.state.rawValue != 0 { return }
+    func unitSelected(tile: Tile) {
+        if self.state != .NothingPressed { return }
 
-        self.showButton(buildButton)
-        self.showButton(upgradeButton)
+        if tile.unit?.type == Constants.Types.Unit.Peasant {
+            self.showButton(buildButton)
+        } else if tile.unit?.type == Constants.Types.Unit.Canon {
+            // Show attack button
+        }
+        if tile.unit?.type.rawValue < Constants.Types.Unit.Knight.rawValue {
+            self.showButton(upgradeButton)
+            self.showButton(combineButton)
+        }
         self.showButton(moveButton)
-        self.showButton(combineButton)
 
         self.hideButton(recruitButton)
     }
-    
-    func villageSelected() {
-        if self.state.rawValue != 0 { return }
 
-        self.showButton(buildButton)
+    func villageSelected(tile: Tile) {
+        if self.state != .NothingPressed { return }
+
+        if tile.owner.type != Constants.Types.Village.Hovel {
+            self.showButton(buildButton)
+        }
+        if tile.owner.type.rawValue < Constants.Types.Village.Castle.rawValue {
+            self.showButton(upgradeButton)
+        }
         self.showButton(recruitButton)
-        self.showButton(upgradeButton)
 
         self.hideButton(moveButton)
         self.hideButton(combineButton)
     }
-    
+
     func neutralSelected() {
         self.hideButton(buildButton)
         self.hideButton(combineButton)
@@ -314,23 +344,32 @@ class GameViewController: UIViewController {
         self.hideButton(recruitButton)
         self.hideButton(upgradeButton)
     }
-    
+
     func hidePlayerButtons() {
-        self.hideButton(buildButton)
-        self.hideButton(combineButton)
-        self.hideButton(moveButton)
-        self.hideButton(recruitButton)
-        self.hideButton(upgradeButton)
+        self.hideActionButtons()
 
         self.hideButton(nextUnitButton)
         self.hideButton(nextVillageButton)
         self.hideButton(endTurnButton)
     }
-    
+
     func betweenPresses() {
         self.showButton(cancelButton)
         self.showButton(validateButton)
 
+        self.hideActionButtons()
+        self.hideBuildOptions()
+    }
+
+    func finishButtonPress() {
+        self.hideButton(towerButton)
+        self.hideButton(roadButton)
+        self.hideButton(meadowButton)
+
+        self.update((GameEngine.Instance.map?.selected)!)
+    }
+
+    func hideActionButtons() {
         self.hideButton(buildButton)
         self.hideButton(combineButton)
         self.hideButton(moveButton)
@@ -338,18 +377,10 @@ class GameViewController: UIViewController {
         self.hideButton(upgradeButton)
     }
 
-    func finishButtonPress() {
-        self.hideButton(towerButton)
+    func hideBuildOptions() {
         self.hideButton(roadButton)
-
-        moveButton.enabled = true
-        upgradeButton.enabled = true
-        recruitButton.enabled = true
-        endTurnButton.enabled = true
-        buildButton.enabled = true
-        combineButton.enabled = true
-        cancelButton.enabled = false
-        validateButton.enabled = false
+        self.hideButton(meadowButton)
+        self.hideButton(towerButton)
     }
 
     // MARK: Visual helpers
