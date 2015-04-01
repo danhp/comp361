@@ -423,6 +423,7 @@ class GameViewController: UIViewController {
 
         self.update((GameEngine.Instance.map?.selected)!)
         self.hideUnitSelection()
+        self.upgradeStructureContainer.hidden = true
     }
 
     func update(tile: Tile) {

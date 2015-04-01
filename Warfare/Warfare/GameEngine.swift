@@ -200,7 +200,10 @@ class GameEngine {
             for n in (self.map?.neighbors(tile: to))! {
                 if n.owner === village && n.isWalkable() {
                     path = (self.map?.getPath(from: from, to: n, accessible: village.controlledTiles))!
-                    if !path.isEmpty { break }
+                    if !path.isEmpty {
+                        path.append(to)
+                        break
+                    }
                 }
             }
         }
@@ -238,10 +241,8 @@ class GameEngine {
 
     func moveWithAnimation(#to: Tile, from: Tile, path: [Tile]) {
         var moveActions = [SKAction]()
-        let path = path.reverse()
 
         // Update tiles in the path
-        //        path.append(to)
         for (index, t) in enumerate(path) {
             if index+1 >= path.count { break }
 
@@ -253,6 +254,7 @@ class GameEngine {
                     removeGrass = SKAction.runBlock({
                         t.land = .Grass
                     })
+                    t.land = .Grass
             }
 
             let dx = path[index+1].position.x - path[index].position.x
@@ -272,6 +274,11 @@ class GameEngine {
             if to.land == .Tree {
                 to.land = .Grass
                 from.owner.wood += 1
+            }
+            if (from.unit?.type.rawValue >= Constants.Types.Unit.Soldier.rawValue)
+                && to.land == .Meadow
+                && to.structure != .Road {
+                    to.land = .Grass
             }
 
             // Move the unit

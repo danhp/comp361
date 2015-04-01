@@ -133,7 +133,7 @@ class Map: SKNode {
                     finalPath.append(current)
                 }
 
-                return finalPath
+                return finalPath.reverse()
             }
 
             // Add unvisited neighbors to the queue
