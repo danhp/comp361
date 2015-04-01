@@ -452,6 +452,7 @@ class GameViewController: UIViewController {
         } else {
             self.neutralSelected()
         }
+        self.updateInfoPanel(tile)
     }
 
     // buttons that are shown after certain selection

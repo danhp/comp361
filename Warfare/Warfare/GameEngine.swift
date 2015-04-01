@@ -281,6 +281,7 @@ class GameEngine {
 
             GameEngine.Instance.map?.resetColor()
             GameEngine.Instance.map?.draw()
+            self.updateInfoPanel()
         })
     }
 
@@ -577,15 +578,15 @@ class GameEngine {
     // MARK: Operation helper
 
     func updateInfoPanel() {
-            if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
-                vc.updateInfoPanel(self.game?.map.selected)
-            }
+        if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
+            vc.updateInfoPanel(self.game?.map.selected)
+        }
     }
 
     func updateTurnLabel() {
-            if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
-                vc.updateTurnLabel()
-            }
+        if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
+            vc.updateTurnLabel()
+        }
     }
 
     // MARK: - UI Helper

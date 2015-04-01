@@ -37,8 +37,11 @@ class Map: SKNode {
 
             if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
                 vc.update(newValue!)
+                GameEngine.Instance.updateInfoPanel()
             }
-            
+
+            // Added due to a weird behaviour of run action
+            self.draw()
         }
     }
 
