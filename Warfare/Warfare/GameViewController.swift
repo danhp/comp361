@@ -153,7 +153,6 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
 
         self.showNeutralInfo(nil)
-        self.hideBuildOptions()
         self.hideUnitSelection()
 
         validateButton.hidden = true
@@ -199,23 +198,25 @@ class GameViewController: UIViewController {
         self.betweenPresses()
         if let tile = GameEngine.Instance.map?.selected {
             if tile.village != nil {
-                self.showButton(towerButton)
+                self.towerButton.enabled = true
+                self.roadButton.enabled = false
+                self.meadowButton.enabled = false
             }
             else if tile.unit != nil {
-                self.showButton(roadButton)
-                self.showButton(meadowButton)
+                self.towerButton.enabled = false
+                self.roadButton.enabled = true
+                self.meadowButton.enabled = true
             }
         }
 
         self.hideButton(validateButton)
+        self.upgradeStructureContainer.hidden = false
 
         self.tileSource = GameEngine.Instance.map?.selected
     }
 
     @IBAction func towerButtonTapped(sender: AnyObject) {
-        self.betweenPresses()
         self.state = .BuildTowerPressed
-        self.hideButton(towerButton)
 
         GameEngine.Instance.map?.resetColor()
         if let tiles = tileSource?.owner.controlledTiles {
@@ -225,14 +226,10 @@ class GameViewController: UIViewController {
                 }
             }
         }
-        GameEngine.Instance.map?.draw()
+        self.doneWithBuild()
     }
-
     @IBAction func roadButtonTapped(sender: AnyObject) {
-        self.betweenPresses()
         self.state = .BuildRoadPressed
-        self.hideButton(roadButton)
-        self.hideButton(meadowButton)
 
         GameEngine.Instance.map?.resetColor()
         if let tiles = GameEngine.Instance.map?.getBuildableRegion(tileSource!) {
@@ -240,21 +237,24 @@ class GameViewController: UIViewController {
                 t.lighten = true
             }
         }
-        GameEngine.Instance.map?.draw()
+        self.doneWithBuild()
+    }
+    @IBAction func meadowButtonTapped(sender: AnyObject) {
+        self.state = .BuildMeadowPressed
+
+        GameEngine.Instance.map?.resetColor()
+        if let tiles = GameEngine.Instance.map?.getBuildableRegion(tileSource!) {
+            for t in tiles {
+                t.lighten = true
+            }
+        }
+        self.doneWithBuild()
     }
 
-    @IBAction func meadowButtonTapped(sender: AnyObject) {
+    func doneWithBuild() {
         self.betweenPresses()
-        self.state = .BuildMeadowPressed
-        self.hideButton(meadowButton)
-        self.hideButton(roadButton)
-
-        GameEngine.Instance.map?.resetColor()
-        if let tiles = GameEngine.Instance.map?.getBuildableRegion(tileSource!) {
-            for t in tiles {
-                t.lighten = true
-            }
-        }
+        self.upgradeStructureContainer.hidden = true
+        GameEngine.Instance.updateInfoPanel()
         GameEngine.Instance.map?.draw()
     }
 
@@ -422,7 +422,6 @@ class GameViewController: UIViewController {
         state = .NothingPressed
 
         self.update((GameEngine.Instance.map?.selected)!)
-        self.hideBuildOptions()
         self.hideUnitSelection()
     }
 
@@ -509,14 +508,9 @@ class GameViewController: UIViewController {
         self.showButton(validateButton)
 
         self.hideActionButtons()
-        self.hideBuildOptions()
     }
 
     func finishButtonPress() {
-        self.hideButton(towerButton)
-        self.hideButton(roadButton)
-        self.hideButton(meadowButton)
-
         self.hideButton(cancelButton)
         self.hideButton(validateButton)
 
@@ -579,12 +573,6 @@ class GameViewController: UIViewController {
         self.knightButton.enabled = false
         self.canonButton.enabled = false
         self.upgradeUnitContainer.hidden = true
-    }
-
-    func hideBuildOptions() {
-        self.hideButton(roadButton)
-        self.hideButton(meadowButton)
-        self.hideButton(towerButton)
     }
 
     // MARK: Visual helpers
