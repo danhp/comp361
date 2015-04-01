@@ -12,6 +12,7 @@ import GameKit
 class Game {
     var players = [Player]()
     var currentPlayer: Player { return self.players[MatchHelper.sharedInstance().currentParticipantIndex()] }
+    var localPlayer: Player { return self.players[MatchHelper.sharedInstance().localParticipantIndex()] }
 
     let map = Map()
     var neutralTiles = [Tile]()

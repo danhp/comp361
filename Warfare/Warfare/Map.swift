@@ -34,6 +34,11 @@ class Map: SKNode {
 
             // Select new tile
             newValue?.selected = true
+
+            if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
+                vc.update(newValue!)
+            }
+            
         }
     }
 
@@ -86,6 +91,13 @@ class Map: SKNode {
         }
 
         return neighbors
+    }
+    
+    func centerAround(centerAround: Tile) {
+        let positionInScene = convertPoint(centerAround.position, fromNode: self.scroller)
+        println(positionInScene)
+        let delta = CGVector(dx: -positionInScene.x , dy: -positionInScene.y )
+        self.scroll(delta)
     }
 
     // Get the set of tiles in the shortest path
@@ -193,7 +205,7 @@ class Map: SKNode {
         if let unitType = seed.unit?.type {
             if unitType == .Canon {
                 for t in neighbors(tile: seed) {
-                    if (t.owner === seed.owner || t.owner == nil) && t.isWalkable() {
+                    if (t.owner === seed.owner || t.owner == nil) && t.isWalkable() && t.unit == nil && t.village == nil {
                         result.append(t)
                     }
                 }
@@ -210,7 +222,7 @@ class Map: SKNode {
                             if t.isWalkable() {
                                 queue.append(t)
                             }
-                            if t.structure != .Tower && t.village == nil {
+                            if t.structure != .Tower && t.village == nil && t.unit == nil {
                                 result.append(t)
                             }
                         } else {
@@ -221,6 +233,67 @@ class Map: SKNode {
                         seen.append(t)
                     }
                 }
+            }
+        }
+
+        return result
+    }
+
+    func getBuildableRegion(seed: Tile) -> [Tile] {
+        var result = [Tile]()
+        var seen = [Tile]()
+        var queue = [Tile]()
+
+        if seed.unit?.type != Constants.Types.Unit.Peasant { return result }
+
+        queue.append(seed)
+        seen.append(seed)
+        if seed.structure == nil {
+            result.append(seed)
+        }
+
+        while !queue.isEmpty {
+            var newSeed = queue.removeLast()
+
+            for t in neighbors(tile: newSeed) {
+                if contains(seen, { $0 === t}) { continue }
+                if !t.isWalkable() { continue }
+                if t.land == .Sea { continue }
+
+                if t.owner === seed.owner {
+                    if t.isWalkable() {
+                        queue.append(t)
+                    }
+                    if t.isBuildable() {
+                        result.append(t)
+                    }
+                }
+                seen.append(t)
+
+            }
+        }
+        return result
+    }
+
+    func getAttackableRegion(seed: Tile) -> [Tile] {
+        var result = [Tile]()
+        var seen = [Tile]()
+        var queue = [Tile]()
+
+        if seed.unit?.type != Constants.Types.Unit.Canon { return result }
+
+        queue.append(seed)
+        seen.append(seed)
+
+        for n in neighbors(tile: seed) {
+            for n2 in neighbors(tile: n) {
+                if n2.owner !== seed.owner {
+                    result.append(n2)
+                }
+            }
+
+            if n.owner !== seed.owner {
+                result.append(n)
             }
         }
 

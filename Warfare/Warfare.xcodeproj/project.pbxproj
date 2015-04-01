@@ -52,6 +52,7 @@
 		52A68BBA1AAFD1F000F747CE /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A68BB91AAFD1F000F747CE /* Hud.swift */; };
 		52A68BBB1AAFD47800F747CE /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A68BB91AAFD1F000F747CE /* Hud.swift */; };
 		52ADD5541A91372C00F5307D /* gameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ADD5531A91372C00F5307D /* gameTests.swift */; };
+		52CEDA3D1AC8ED000094E011 /* unitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CEDA3C1AC8ED000094E011 /* unitTests.swift */; };
 		B841AEAC1AA6CFDA00D2A542 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */; };
 		B882D0921ABE0C70006EA5F2 /* MapSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,7 @@
 		5299B2781A8984F500EADED0 /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameEngine.swift; path = Warfare/GameEngine.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		52A68BB91AAFD1F000F747CE /* Hud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Hud.swift; path = Warfare/Hud.swift; sourceTree = SOURCE_ROOT; };
 		52ADD5531A91372C00F5307D /* gameTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = gameTests.swift; path = WarfareTests/gameTests.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
+		52CEDA3C1AC8ED000094E011 /* unitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = unitTests.swift; path = WarfareTests/unitTests.swift; sourceTree = SOURCE_ROOT; };
 		B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenuViewController.swift; path = ../MainMenuViewController.swift; sourceTree = "<group>"; };
 		B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapSelectionViewController.swift; path = Warfare/MapSelectionViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -168,8 +170,8 @@
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
 				B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */,
-				B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */,
 				1371013F1A701096009B807C /* GameViewController.swift */,
+				B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */,
 				130B0CF51A924901007A20EB /* MatchHelper.swift */,
 				5214D71C1ABCB4F500C7E26C /* PriorityQueue.swift */,
 				132A65A91A8EAAC200D588B2 /* Maps */,
@@ -196,6 +198,7 @@
 				13AF2AA51A7803E100B4C67B /* mapTests.swift */,
 				5226838F1A80765800E54870 /* villageTests.swift */,
 				13CDF0CB1A8AA4D300E6AB9D /* TileTests.swift */,
+				52CEDA3C1AC8ED000094E011 /* unitTests.swift */,
 				52ADD5531A91372C00F5307D /* gameTests.swift */,
 				137101511A701096009B807C /* Supporting Files */,
 			);
@@ -362,6 +365,7 @@
 				139527761A7714DE0019E3F4 /* Map.swift in Sources */,
 				13541BE91AAF7C9F00689C60 /* MainMenuViewController.swift in Sources */,
 				5299B27A1A89855600EADED0 /* GameEngine.swift in Sources */,
+				52CEDA3D1AC8ED000094E011 /* unitTests.swift in Sources */,
 				131C14361A7E71DC00CE386D /* Unit.swift in Sources */,
 				131C14371A7E71E000CE386D /* Village.swift in Sources */,
 				13AF2AA61A7803E100B4C67B /* mapTests.swift in Sources */,

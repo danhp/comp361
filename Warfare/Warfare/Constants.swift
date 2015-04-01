@@ -131,8 +131,9 @@ struct Constants {
             }
         }
 
+        
         enum Unit: Int {
-            case Peasant = 0, Infantry, Soldier, Knight, Canon
+            case Peasant = 1, Infantry, Soldier, Knight, Canon
 
             // Cost in (Gold, Wood)
             func cost() -> (Int, Int) {
@@ -168,9 +169,9 @@ struct Constants {
             func name() -> String {
                 switch self {
                 case .Peasant:
-                    return "soldier"
+                    return "peasant"
                 case .Infantry:
-                    return "knight"
+                    return "infantry"
                 case .Soldier:
                     return "soldier"
                 case .Knight:
@@ -215,21 +216,21 @@ struct Constants {
             func name() -> String {
                 switch self {
                 case .ReadyForOrders:
-                    return "ready"
+                    return "Ready"
                 case .Moved:
-                    return "moved"
+                    return "Moved"
                 case .BuildingRoad:
-                    return "roadb"
+                    return "Building Road"
                 case .ChoppingTree:
-                    return "treec"
+                    return "Chopping Tree"
                 case .ClearingTombstone:
-                    return "tomb"
+                    return "Clearing Tombstone"
                 case .UpgradingCombining:
-                    return "upgraded"
+                    return "Upgraded"
                 case .StartCultivating:
-                    return "cultivate 1"
+                    return "Cultivating"
                 case .FinishCultivating:
-                    return "cultivate 2"
+                    return "Cultivating"
                 }
             }
         }
@@ -255,6 +256,12 @@ struct Constants {
     struct Cost {
         enum Upgrade: Int {
             case Unit = 10
+        }
+    }
+
+    struct UI {
+        enum State {
+            case NothingPressed, BuildRoadPressed, BuildTowerPressed, BuildMeadowPressed, MovePressed, CombinePressed, AttackPressed, UpgradePressed, RecruitPressed
         }
     }
 }

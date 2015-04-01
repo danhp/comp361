@@ -55,6 +55,18 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         return 0
     }
 
+    func localParticipantIndex() -> Int {
+        let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as [GKTurnBasedParticipant]
+
+        for (index, p) in enumerate(participants) {
+            if p.player == GKLocalPlayer.localPlayer() {
+                return index
+            }
+        }
+
+        return 0
+    }
+
     // MARK: - Authentication
 
     func authenticateLocalUser() {
@@ -287,4 +299,5 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
                 } else { println("huh... current view controller should be MainMenuViewController but is" + (self.vc?.description)!) }
             }*/
     }
+    
 }

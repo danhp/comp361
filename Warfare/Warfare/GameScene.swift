@@ -59,22 +59,7 @@ class GameScene: SKScene {
 
     private func newSelection() {
         if let map = self.map? {
-            if map.selected?.owner != nil {
-                Hud.Instance.displayRegionalData(map.selected!)
-            } else {
-                Hud.Instance.update()
-            }
-
-            // Debugger uncomment to run
-            Hud.Instance.displayUnitDebugger(map.selected!)
-        }
-    }
-
-    func centerAround(centerAround: Tile) {
-        if let map = self.map? {
-            let positionInScene = convertPoint(centerAround.position, fromNode: map.scroller)
-            let delta = CGVector(dx:  -positionInScene.x , dy:  -positionInScene.y )
-            map.scroll(delta)
+            Hud.Instance.update()
         }
     }
 
