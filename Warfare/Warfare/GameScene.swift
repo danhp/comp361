@@ -24,9 +24,7 @@ class GameScene: SKScene {
             self.addChild(m)
         }
 
-        Hud.Instance.update()
-        Hud.Instance.removeFromParent()
-        self.addChild(Hud.Instance)
+        GameEngine.Instance.updateInfoPanel()
     }
 
     func resetMap() {
@@ -37,7 +35,7 @@ class GameScene: SKScene {
         self.map?.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
         self.addChild(self.map!)
 
-        Hud.Instance.update()
+        GameEngine.Instance.updateInfoPanel()
     }
 
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -59,7 +57,7 @@ class GameScene: SKScene {
 
     private func newSelection() {
         if let map = self.map? {
-            Hud.Instance.update()
+            GameEngine.Instance.updateInfoPanel()
         }
     }
 

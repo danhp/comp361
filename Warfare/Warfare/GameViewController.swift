@@ -299,7 +299,7 @@ class GameViewController: UIViewController {
         MatchHelper.sharedInstance().advanceMatchTurn()
 
         GameEngine.Instance.map?.resetColor()
-        Hud.Instance.update()
+        GameEngine.Instance.updateInfoPanel()
         GameEngine.Instance.map?.draw()
     }
 
@@ -320,7 +320,7 @@ class GameViewController: UIViewController {
             self.showButton(cancelButton)
         }
 
-        Hud.Instance.update()
+        GameEngine.Instance.updateInfoPanel()
         GameEngine.Instance.map?.draw()
     }
 
@@ -375,7 +375,7 @@ class GameViewController: UIViewController {
         self.hideUnitSelection()
         self.hideButton(cancelButton)
         self.state = .NothingPressed
-        Hud.Instance.update()
+        GameEngine.Instance.updateInfoPanel()
         GameEngine.Instance.map?.draw()
     }
 
@@ -402,7 +402,7 @@ class GameViewController: UIViewController {
             }
         }
 
-        Hud.Instance.update()
+        GameEngine.Instance.updateInfoPanel()
         validateButton.hidden = true
         cancelButton.hidden = true
         if self.state != .MovePressed {

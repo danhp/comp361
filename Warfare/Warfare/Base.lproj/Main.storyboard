@@ -372,8 +372,8 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MwL-rC-JPL">
-                                <rect key="frame" x="514" y="0.0" width="39" height="33"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MwL-rC-JPL">
+                                <rect key="frame" x="514" y="3" width="39" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="39" id="SLV-CH-0QI"/>
                                 </constraints>
@@ -386,8 +386,11 @@
                                     <segue destination="1Iq-47-Qvh" kind="show" id="VjX-au-YHF"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Gold: 10   Wood: 15" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zTL-B9-Oyo">
-                                <rect key="frame" x="10" y="9" width="123" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gold: 10   Wood: 15" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zTL-B9-Oyo">
+                                <rect key="frame" x="10" y="9" width="156" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="156" id="4Wa-yH-nKp"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -408,7 +411,9 @@
                             <constraint firstItem="sSO-VL-kLn" firstAttribute="top" secondItem="LgP-eE-bvF" secondAttribute="bottom" id="Eub-Of-VYk"/>
                             <constraint firstItem="nHv-dJ-YjP" firstAttribute="top" secondItem="LgP-eE-bvF" secondAttribute="top" id="F0z-fY-Efq"/>
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="trailing" secondItem="MwL-rC-JPL" secondAttribute="trailing" id="GZD-3E-ix9"/>
+                            <constraint firstItem="PCf-gQ-wO7" firstAttribute="top" secondItem="zTL-B9-Oyo" secondAttribute="bottom" constant="-10" id="HMB-iB-6uC"/>
                             <constraint firstItem="ejv-Lo-dQZ" firstAttribute="top" secondItem="Ah6-Mf-wdE" secondAttribute="bottom" constant="1" id="IQK-kw-Gx5"/>
+                            <constraint firstItem="MwL-rC-JPL" firstAttribute="centerY" secondItem="mZd-IH-pF4" secondAttribute="centerY" id="IeU-2f-Avb"/>
                             <constraint firstItem="MwL-rC-JPL" firstAttribute="trailing" secondItem="Ah6-Mf-wdE" secondAttribute="trailing" id="Ks5-3t-CRH"/>
                             <constraint firstItem="mZd-IH-pF4" firstAttribute="centerX" secondItem="sSO-VL-kLn" secondAttribute="centerX" id="LP2-mi-0CF"/>
                             <constraint firstItem="sSO-VL-kLn" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leading" id="O3k-tE-MK7"/>
@@ -419,16 +424,20 @@
                             <constraint firstItem="sSO-VL-kLn" firstAttribute="bottom" secondItem="b3d-qh-BLL" secondAttribute="top" id="TjU-mv-Ffr"/>
                             <constraint firstItem="MwL-rC-JPL" firstAttribute="firstBaseline" secondItem="mZd-IH-pF4" secondAttribute="baseline" id="ZUh-IS-8PQ"/>
                             <constraint firstItem="MwL-rC-JPL" firstAttribute="top" secondItem="PCf-gQ-wO7" secondAttribute="bottom" constant="296" id="Zeb-cr-C0A"/>
+                            <constraint firstItem="zTL-B9-Oyo" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="-6" id="cPZ-4X-Kxq"/>
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="trailing" secondItem="ejv-Lo-dQZ" secondAttribute="trailing" id="caE-Y9-bda"/>
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="56" id="d2Y-69-vUV"/>
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="top" secondItem="MwL-rC-JPL" secondAttribute="bottom" constant="71" id="dBZ-ig-Mn3"/>
                             <constraint firstItem="mZd-IH-pF4" firstAttribute="top" secondItem="bdc-N1-crn" secondAttribute="topMargin" constant="9" id="dsL-NF-mG5"/>
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="trailing" secondItem="MwL-rC-JPL" secondAttribute="trailing" id="fhp-5H-5Ul"/>
+                            <constraint firstItem="mZd-IH-pF4" firstAttribute="centerY" secondItem="zTL-B9-Oyo" secondAttribute="centerY" id="h6h-Gw-oaM"/>
                             <constraint firstItem="ejv-Lo-dQZ" firstAttribute="top" secondItem="Ah6-Mf-wdE" secondAttribute="bottom" constant="1" id="hyz-nS-Z0r"/>
                             <constraint firstItem="MwL-rC-JPL" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" id="kcc-p6-IjE"/>
                             <constraint firstItem="sSO-VL-kLn" firstAttribute="leading" secondItem="nHv-dJ-YjP" secondAttribute="leading" id="lmy-JA-gQS"/>
+                            <constraint firstItem="PCf-gQ-wO7" firstAttribute="top" secondItem="zTL-B9-Oyo" secondAttribute="bottom" constant="-10" id="lq6-BC-olE"/>
                             <constraint firstItem="ejv-Lo-dQZ" firstAttribute="top" secondItem="bdc-N1-crn" secondAttribute="top" constant="136" id="mlm-Xo-Jym"/>
                             <constraint firstItem="mZd-IH-pF4" firstAttribute="centerX" secondItem="bdc-N1-crn" secondAttribute="centerX" id="nAV-5Z-bpV"/>
+                            <constraint firstItem="MwL-rC-JPL" firstAttribute="trailing" secondItem="Ah6-Mf-wdE" secondAttribute="trailing" id="pGF-Im-4TP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MwL-rC-JPL" secondAttribute="trailing" constant="-1" id="r9a-5Y-nj1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ah6-Mf-wdE" secondAttribute="trailing" constant="-1" id="u12-7s-i20"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ejv-Lo-dQZ" secondAttribute="trailing" id="x2Z-65-3M1"/>
@@ -436,6 +445,11 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="1rJ-2U-S51"/>
+                                <exclude reference="3pX-3a-7yt"/>
+                                <exclude reference="HMB-iB-6uC"/>
+                                <exclude reference="lq6-BC-olE"/>
+                                <exclude reference="ATo-nA-VNM"/>
                                 <exclude reference="623-r5-TYp"/>
                                 <exclude reference="EFM-4m-sEw"/>
                                 <exclude reference="9Nb-FH-VqF"/>
@@ -446,8 +460,13 @@
                                 <exclude reference="DXD-5a-Zoe"/>
                                 <exclude reference="GZD-3E-ix9"/>
                                 <exclude reference="d2Y-69-vUV"/>
+                                <exclude reference="dBZ-ig-Mn3"/>
                                 <exclude reference="fhp-5H-5Ul"/>
+                                <exclude reference="DXG-X3-dbi"/>
+                                <exclude reference="Ks5-3t-CRH"/>
                                 <exclude reference="PkR-Ei-tUT"/>
+                                <exclude reference="TBk-Rc-Pkd"/>
+                                <exclude reference="ZUh-IS-8PQ"/>
                                 <exclude reference="Zeb-cr-C0A"/>
                                 <exclude reference="kcc-p6-IjE"/>
                                 <exclude reference="r9a-5Y-nj1"/>
@@ -494,7 +513,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="492" y="1015"/>
+            <point key="canvasLocation" x="492" y="1019"/>
         </scene>
         <!--MapSelectionViewController-->
         <scene sceneID="KEF-Ff-qs5">
