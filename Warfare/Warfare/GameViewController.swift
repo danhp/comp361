@@ -52,7 +52,7 @@ class GameViewController: UIViewController {
 
     @IBOutlet weak var endTurnButton: UIButton!
 
-    // MARK: Information
+    // MARK: Info Panel Views
 
     @IBOutlet weak var regionVillage: UIImageView!
     @IBOutlet weak var regionGold: UILabel!
@@ -64,6 +64,26 @@ class GameViewController: UIViewController {
     @IBOutlet weak var characterWage: UILabel!
     @IBOutlet weak var characterState: UILabel!
 
+    @IBOutlet weak var turnLabel: UILabel!
+    @IBOutlet weak var playerGoldWoodLabel: UILabel!
+
+    // MARK - Info Panel
+
+    func updateInfoPanel(tile: Tile?) {
+        // Update player gold/wood
+        let goldText = "Gold: " + String((GameEngine.Instance.game?.localPlayer.gold)!)
+        let woodText = "Wood: " + String((GameEngine.Instance.game?.localPlayer.wood)!)
+        self.playerGoldWoodLabel.text =  goldText + "   " + woodText
+
+        if let t = tile {
+            if let village = t.owner {
+                showVillageInfo(village)
+
+                if let unit = t.unit { showUnitInfo(unit) }
+            } else { showNeutralInfo(tile) }
+        }
+        else { showNeutralInfo(tile) }
+    }
 
     func showNeutralInfo(tile: Tile?) {
         if let t = tile {
@@ -90,12 +110,20 @@ class GameViewController: UIViewController {
 
     func showUnitInfo(unit: Unit) {
         self.characterImage.image = UIImage(named: unit.type.name())
-        self.characterName.text = unit.type.name()
+        self.characterName.text = unit.type.name().capitalizedString
         self.characterWage.text = "Wage: " + String(unit.type.wage())
         self.characterState.text = unit.currentAction.name()
     }
     
     func removeUnitInfo() { }
+
+    // MARK: - Turn label update
+
+    func updateTurnLabel() {
+//        self.turnLabel.text = GameEngine.Instance.game?.nameOfActivePlayer()
+    }
+
+    // MARK: - Initializers
 
     var state : Constants.UI.State = .NothingPressed
 
@@ -136,6 +164,8 @@ class GameViewController: UIViewController {
 
         self.showGamePlayScene()
     }
+
+    // MARK: - Button Handlers
 
     @IBAction func nextUnitButtonTapped(sender: AnyObject) {
         if let tile = GameEngine.Instance.getNextAvailableUnit() {
@@ -387,29 +417,25 @@ class GameViewController: UIViewController {
     func update(tile: Tile) {
         self.hideActionButtons()
 
+        self.updateInfoPanel(tile)
+
         if !(GameEngine.Instance.game?.localIsCurrentPlayer)! {
             self.hidePlayerButtons()
         } else if !tile.isBelongsToLocal() {
-            self.showNeutralInfo(tile)
             self.neutralSelected()  // neutral or other player
         } else if tile.village != nil {
-            self.showVillageInfo(tile.owner) // update info panel
-
             if !tile.owner.disaled {
                 self.villageSelected(tile)
             } else {
                 self.neutralSelected()
             }
         } else if let unit = tile.unit {
-            self.showUnitInfo(unit) // update info panel
-
             if !unit.disabled {
                 self.unitSelected(tile)
             } else {
                 self.neutralSelected()
             }
         } else {
-            self.showVillageInfo(tile.owner) // update info panel
             self.neutralSelected()
         }
     }

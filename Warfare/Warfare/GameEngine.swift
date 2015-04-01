@@ -36,8 +36,6 @@ class GameEngine {
             if let mmvc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
                 mmvc.segueToMapSelectionViewController()
             }}))
-
-        var vc = MatchHelper.sharedInstance().vc?.presentedViewController as GameViewController
     }
 
     func showGameScene() {
@@ -553,6 +551,20 @@ class GameEngine {
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
 
+    // MARK: Operation helper
+
+    func updateInfoPanel() {
+            if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
+                vc.updateInfoPanel(self.game?.map.selected)
+            }
+    }
+
+    func updateTurnLabel() {
+            if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
+                vc.updateTurnLabel()
+            }
+    }
+
     // MARK: - UI Helper
 
     func getNextAvailableUnit() -> Tile? {
@@ -615,6 +627,7 @@ class GameEngine {
                     self.game = Game()
                     self.game?.importDictionary(dict)
                     self.scene?.resetMap()
+                    self.updateTurnLabel()
                     self.showGameScene()
                 }
             }

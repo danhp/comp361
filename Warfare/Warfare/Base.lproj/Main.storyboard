@@ -56,17 +56,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MwL-rC-JPL">
-                                <rect key="frame" x="514" y="0.0" width="39" height="30"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="15"/>
-                                <state key="normal" title="Menu">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="1Iq-47-Qvh" kind="show" id="VjX-au-YHF"/>
-                                </connections>
-                            </button>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sSO-VL-kLn">
                                 <rect key="frame" x="0.0" y="245" width="568" height="75"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="u60-XD-bMr">
@@ -80,10 +69,11 @@
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="knight" translatesAutoresizingMaskIntoConstraints="NO" id="Cs8-Er-d2l">
                                             <rect key="frame" x="150" y="0.0" width="75" height="75"/>
                                         </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R9U-M9-D4u">
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R9U-M9-D4u">
                                             <rect key="frame" x="489" y="7" width="79" height="62"/>
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="17"/>
                                             <state key="normal" title="END TURN"/>
+                                            <state key="disabled" title="WAITING"/>
                                             <connections>
                                                 <action selector="endTurnButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="OYO-sv-HNh"/>
                                             </connections>
@@ -343,6 +333,29 @@
                                     <action selector="nextVillageButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="3jv-3N-3xR"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="YOUR TURN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZd-IH-pF4">
+                                <rect key="frame" x="223" y="9" width="123" height="21"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Gold: 10   Wood: 15" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zTL-B9-Oyo">
+                                <rect key="frame" x="6" y="8" width="123" height="21"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MwL-rC-JPL">
+                                <rect key="frame" x="514" y="4" width="39" height="30"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="15"/>
+                                <state key="normal" title="Menu">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="1Iq-47-Qvh" kind="show" id="VjX-au-YHF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -351,10 +364,12 @@
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="top" secondItem="PCf-gQ-wO7" secondAttribute="bottom" constant="85" id="Bxc-iY-Ra7"/>
                             <constraint firstItem="b3d-qh-BLL" firstAttribute="top" secondItem="MwL-rC-JPL" secondAttribute="bottom" constant="29" id="EFM-4m-sEw"/>
                             <constraint firstItem="ejv-Lo-dQZ" firstAttribute="top" secondItem="Ah6-Mf-wdE" secondAttribute="bottom" constant="1" id="IQK-kw-Gx5"/>
+                            <constraint firstAttribute="centerY" secondItem="mZd-IH-pF4" secondAttribute="centerY" constant="140.5" id="XsE-72-8hB"/>
                             <constraint firstItem="MwL-rC-JPL" firstAttribute="top" secondItem="PCf-gQ-wO7" secondAttribute="bottom" constant="296" id="Zeb-cr-C0A"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ah6-Mf-wdE" secondAttribute="trailing" id="bJT-Ph-BP0"/>
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="56" id="d2Y-69-vUV"/>
                             <constraint firstItem="MwL-rC-JPL" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" id="kcc-p6-IjE"/>
+                            <constraint firstAttribute="centerX" secondItem="mZd-IH-pF4" secondAttribute="centerX" constant="-0.5" id="nwc-eR-8xn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MwL-rC-JPL" secondAttribute="trailing" constant="-1" id="r9a-5Y-nj1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ejv-Lo-dQZ" secondAttribute="trailing" id="x2Z-65-3M1"/>
                             <constraint firstItem="ejv-Lo-dQZ" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="56" id="yDc-Hl-JbO"/>
@@ -391,6 +406,7 @@
                         <outlet property="nextUnitButton" destination="Ah6-Mf-wdE" id="Zb9-1f-Zbp"/>
                         <outlet property="nextVillageButton" destination="ejv-Lo-dQZ" id="fOX-ro-MIS"/>
                         <outlet property="peasantButton" destination="xBZ-o1-JSK" id="fz7-kL-01a"/>
+                        <outlet property="playerGoldWoodLabel" destination="zTL-B9-Oyo" id="HE4-k6-Q3w"/>
                         <outlet property="recruitButton" destination="Qdv-yO-Nq9" id="TkF-qc-ztU"/>
                         <outlet property="regionGold" destination="XTb-dU-gau" id="ugK-oO-TKN"/>
                         <outlet property="regionHP" destination="Ix0-Yq-6RM" id="m2U-dW-coO"/>
@@ -400,6 +416,7 @@
                         <outlet property="roadButton" destination="FUX-lM-tvq" id="Ndd-7S-8xO"/>
                         <outlet property="soldierButton" destination="Qo4-YA-vEs" id="qr7-c0-TvT"/>
                         <outlet property="towerButton" destination="gAl-tQ-u4u" id="X9r-uT-7mu"/>
+                        <outlet property="turnLabel" destination="mZd-IH-pF4" id="IQI-kI-fyb"/>
                         <outlet property="upgradeButton" destination="c0s-Ji-zhq" id="rc6-nC-3En"/>
                         <outlet property="upgradeStructureContainer" destination="LgP-eE-bvF" id="hkS-GB-D1b"/>
                         <outlet property="upgradeUnitContainer" destination="nHv-dJ-YjP" id="5zz-Fj-sFd"/>
@@ -408,7 +425,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="613" y="699"/>
+            <point key="canvasLocation" x="612" y="707"/>
         </scene>
         <!--MapSelectionViewController-->
         <scene sceneID="KEF-Ff-qs5">
@@ -499,6 +516,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yUJ-E3-iyz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="275" y="249"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="GCK-VH-4ye">
+            <objects>
+                <viewController id="vg0-R9-M1b" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CVY-HS-b2G"/>
+                        <viewControllerLayoutGuide type="bottom" id="CrS-v2-4cs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Dfh-AD-KK1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dbK-ob-wyP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>
