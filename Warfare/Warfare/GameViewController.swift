@@ -75,6 +75,7 @@ class GameViewController: UIViewController {
         let woodText = "Wood: " + String((GameEngine.Instance.game?.localPlayer.wood)!)
         self.playerGoldWoodLabel.text =  goldText + "   " + woodText
 
+        showNeutralInfo(tile)
         if let t = tile {
             if let village = t.owner {
                 showVillageInfo(village)
@@ -82,7 +83,6 @@ class GameViewController: UIViewController {
                 if let unit = t.unit { showUnitInfo(unit) }
             } else { showNeutralInfo(tile) }
         }
-        else { showNeutralInfo(tile) }
     }
 
     func showNeutralInfo(tile: Tile?) {
