@@ -10,7 +10,8 @@
                            "controlledTiles":[
                                               {
                                               "position":[0,0],
-                                              "land":0
+                                              "land":0,
+                                              "unit":{"type":1,"currentAction":0}
                                               },
                                               {
                                               "position":[1,0],
@@ -23,7 +24,7 @@
                                               },
                                               {
                                               "position":[1,1],
-                                              "land":1,
+                                              "land":0
                                               }
                                               ]
                            }
@@ -52,7 +53,7 @@
                                               },
                                               {
                                               "position":[4,1],
-                                              "land":1,
+                                              "land":1
                                               }
                                               ]
                            }
@@ -81,7 +82,7 @@
                                               },
                                               {
                                               "position":[2,5],
-                                              "land":1,
+                                              "land":1
                                               }
                                               ]
                            }
