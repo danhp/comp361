@@ -405,7 +405,7 @@ class GameViewController: UIViewController {
         GameEngine.Instance.updateInfoPanel()
         validateButton.hidden = true
         cancelButton.hidden = true
-        if self.state != .MovePressed {
+        if self.state != .MovePressed && self.state != .BuildRoadPressed && self.state != .BuildMeadowPressed {
             GameEngine.Instance.map?.draw()
         }
 

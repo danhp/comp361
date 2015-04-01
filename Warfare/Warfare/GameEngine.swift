@@ -232,6 +232,7 @@ class GameEngine {
             }
         }
 
+        from.unit?.currentAction = Constants.Unit.Action.Moved
         self.moveWithAnimation(to: to, from: from, path: path)
     }
 
@@ -276,7 +277,6 @@ class GameEngine {
             // Move the unit
             to.unit = from.unit
             from.unit = nil
-            to.unit?.currentAction = Constants.Unit.Action.Moved
             self.availableUnits = self.availableUnits.filter({ $0 !== from })
 
             GameEngine.Instance.map?.resetColor()
@@ -512,8 +512,8 @@ class GameEngine {
         // Tiles must be connected and in the same region
         if village !== on.owner { return }
 
+        let path = (self.map?.getPath(from: from, to: on, accessible: village.controlledTiles))!
         if from !== on {
-            let path = (self.map?.getPath(from: from, to: on, accessible: village.controlledTiles))!
             if path.isEmpty { return }
             if !on.isBuildable() { return }
         } else {
@@ -530,12 +530,11 @@ class GameEngine {
         village.wood -= road.cost()
 
         // Move the unit
+        from.unit?.currentAction = Constants.Unit.Action.BuildingRoad
         if from !== on {
-            on.unit = from.unit
-            from.unit = nil
+            self.moveWithAnimation(to: on, from: from, path: path)
         }
 
-        on.unit?.currentAction = Constants.Unit.Action.BuildingRoad
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
 
@@ -550,8 +549,8 @@ class GameEngine {
         //Tiles must be connected and in the same region
         if village !== on.owner { return }
 
+        let path = (self.map?.getPath(from: from, to: on, accessible: village.controlledTiles))!
         if from !== on {
-            let path = (self.map?.getPath(from: from, to: on, accessible: village.controlledTiles))!
             if path.isEmpty { return }
             if !on.isBuildable() { return }
         } else {
@@ -568,11 +567,10 @@ class GameEngine {
         village.wood -= cost
 
         // Move the unit
+        from.unit?.currentAction = Constants.Unit.Action.StartCultivating
         if from !== on {
-            on.unit = from.unit
-            from.unit = nil
+            self.moveWithAnimation(to: on, from: from, path: path)
         }
-        on.unit?.currentAction = Constants.Unit.Action.StartCultivating
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
 
