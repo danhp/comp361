@@ -150,7 +150,7 @@ class Tile: SKNode, Hashable {
         return self.unit == nil
                     && self.village == nil
                     && self.structure == nil
-                    && self.land == .Grass
+                    && (self.land == .Grass || self.land == .Meadow)
     }
 
     func isGrowable() -> Bool {
