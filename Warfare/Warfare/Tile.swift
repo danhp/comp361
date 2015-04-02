@@ -135,7 +135,7 @@ class Tile: SKNode, Hashable {
         let attackingType = against.type.rawValue
 
         if let defendingUnitType = self.unit?.type {
-            return attackingType < min(defendingUnitType.rawValue, Constants.Types.Unit.Knight.rawValue)
+            return attackingType <= min(defendingUnitType.rawValue, Constants.Types.Unit.Soldier.rawValue)
         }
 
         return self.structure? == Constants.Types.Structure.Tower && attackingType < Constants.Types.Unit.Soldier.rawValue

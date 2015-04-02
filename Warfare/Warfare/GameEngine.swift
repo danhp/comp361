@@ -339,8 +339,8 @@ class GameEngine {
         var enemyVillage = to.owner
 
         // Check specific offensive rules
-        if to.village != nil && unit.type.rawValue < 2
-            || unit.type.rawValue == 2 && to.village?.rawValue == 2 { return }
+        if to.village != nil && unit.type.rawValue < 3
+            || unit.type.rawValue == 3 && to.village?.rawValue == 2 { return }
 
 
         // Update destination tile
@@ -423,6 +423,7 @@ class GameEngine {
                     if t.village != nil {
                         t.owner.player?.removeVillage(t.owner)
                         t.village = nil
+                        t.land = .Tree
                     }
                     t.owner.removeTile(t)
                 }
