@@ -661,7 +661,7 @@ class GameEngine {
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
         //TODO TEMP
-        self.startGameWithMap(4)
+        self.startGameWithMap(3)
         self.showGameScene()
 
         return
