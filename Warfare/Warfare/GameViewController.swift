@@ -573,17 +573,25 @@ class GameViewController: UIViewController {
         if let v = tile.owner {
             self.upgradeUnitContainer.hidden = false
 
-            self.peasantButton.enabled = true
-            self.infantryButton.enabled = true
+            if tile.owner.gold >= Constants.Types.Unit.Peasant.cost().0 {
+                self.peasantButton.enabled = true
+            }
+            if tile.owner.gold >= Constants.Types.Unit.Infantry.cost().0 {
+                self.infantryButton.enabled = true
+            }
 
-            if v.type.rawValue >= 1 {
-            self.soldierButton.enabled = true
+            if v.type.rawValue >= 1
+                        && tile.owner.gold >= Constants.Types.Unit.Soldier.cost().0 {
+                self.soldierButton.enabled = true
             }
-            if v.type.rawValue >= 2 {
-            self.knightButton.enabled = true
+            if v.type.rawValue >= 2
+                        && tile.owner.gold >= Constants.Types.Unit.Knight.cost().0 {
+                self.knightButton.enabled = true
             }
-            if v.type.rawValue >= 3 {
-            self.canonButton.enabled = true
+            if v.type.rawValue >= 3
+                        && tile.owner.gold >= Constants.Types.Unit.Canon.cost().0
+                        && tile.owner.wood >= Constants.Types.Unit.Canon.cost().1 {
+                self.canonButton.enabled = true
             }
         }
     }
