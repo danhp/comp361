@@ -478,7 +478,7 @@ class GameEngine {
             if unit.type == .Knight || unit.type == .Canon { return }
 
             let village = tile.owner!
-            village.upgradeUnit(tile.unit!, newType: newLevel)
+            village.upgradeUnit(tile, newType: newLevel)
             self.availableUnits = self.availableUnits.filter({ $0 !== tile })
         }
     }

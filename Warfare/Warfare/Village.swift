@@ -42,37 +42,29 @@ class Village {
 
         let newLevel = Constants.Types.Village(rawValue: self.type.rawValue + 1)
         let cost = newLevel?.upgradeCost()
+        if cost > self.wood { return }
 
-        if self.wood >= cost {
-            self.wood -= cost!
-            self.type = newLevel!
-            self.health = self.type.health()
-        }
+        self.wood -= cost!
+        self.type = newLevel!
+        self.health = self.type.health()
 
         self.state = .Upgrading1
     }
 
-    func upgradeUnit(unit: Unit, newType: Constants.Types.Unit) {
-        if !self.containsUnit(unit) { return }
-        if unit.type == .Knight || unit.type == .Canon { return }
+    func upgradeUnit(unitTile: Tile, newType: Constants.Types.Unit) {
+        if let unit = unitTile.unit {
+            if unitTile.owner !== self { return }
+            if unit.type == .Knight || unit.type == .Canon { return }
 
-        let upgradeInterval = newType.rawValue - unit.type.rawValue
+            let upgradeInterval = newType.rawValue - unit.type.rawValue
 
-        if upgradeInterval >= 1 && self.gold >= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue {
+            if upgradeInterval < 1 { return }
+            if self.gold < upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue { return }
+
             self.gold -= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue
             unit.type = newType
             unit.currentAction = .UpgradingCombining
         }
-    }
-
-    func containsUnit(unit: Unit) -> Bool {
-        for tile in self.controlledTiles {
-            if tile.unit === unit {
-                return true
-            }
-        }
-
-        return false
     }
 
     func compareTo(village: Village) -> Bool {
