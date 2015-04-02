@@ -134,8 +134,12 @@ class Tile: SKNode, Hashable {
     func isProtected(against: Unit) -> Bool {
         let attackingType = against.type.rawValue
 
-        if let defendingUnitType = self.unit?.type {
-            return attackingType <= min(defendingUnitType.rawValue, Constants.Types.Unit.Soldier.rawValue)
+
+        if var defendingUnitType = self.unit?.type {
+            if defendingUnitType == .Canon {
+                defendingUnitType = .Soldier
+            }
+            return attackingType <= min(defendingUnitType.rawValue, Constants.Types.Unit.Knight.rawValue)
         }
 
         return self.structure? == Constants.Types.Structure.Tower && attackingType < Constants.Types.Unit.Soldier.rawValue
