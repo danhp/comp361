@@ -26,7 +26,7 @@
                     "controlledTiles":[
                         {"position":[2,4], "land":0 },
                         {"position":[3,4], "land":0, "unit":{"type":5,"currentAction":0} },
-                        {"position":[1,5], "land":0, "unit":{"type":5,"currentAction":0} },
+                        {"position":[1,5], "land":0, "unit":{"type":3,"currentAction":0} },
                         {"position":[2,5], "land":0, "village":3 }
                     ]
                 }
@@ -41,7 +41,7 @@
                         { "position":[1,3], "land":0 },
                         { "position":[2,3], "land":0, "village":1 },
                         { "position":[1,4], "land":0 },
-                        { "position":[0,5], "land":0 },
+                        { "position":[0,5], "land":0, "structure":0 },
                         { "position":[-1,5], "land":0 },
                         { "position":[-2,5], "land":0 },
                         { "position":[-2,6], "land":0 },

@@ -355,51 +355,18 @@ class GameEngine {
             to.owner.removeTile(to)
         }
 
-        let regions = (self.map?.getRegions(enemyVillage.controlledTiles))!
-        for r in regions {
-            // Region is too small
-            if r.count < 3 {
-                for t in r {
-                    t.structure = nil
-                    if t.unit != nil {
-                        t.unit = nil
-                        t.structure = .Tombstone
-                    }
-                    t.owner.removeTile(t)
-                    self.game?.neutralTiles.append(t)
-                    if t.village != nil {
-                        t.owner.player?.removeVillage(t.owner)
-                        t.village = nil
-                    }
-                }
-                continue
-            }
-
-            // Region can still support a village
-            if self.map?.getVillage(r) == nil {
-                let newHovel = Village()
-                for t in r {
-                    enemyVillage.removeTile(t)
-                    newHovel.addTile(t)
-                }
-
-                enemyPlayer?.addVillage(newHovel)
-
-                r[0].land = .Grass
-                r[0].unit = nil
-                r[0].structure = nil
-                r[0].village = newHovel.type
-            }
-        }
+        self.checkPostAttack(enemyVillage)
     }
 
     func attack(from: Tile, to: Tile) {
         if from.owner.player !== self.game?.currentPlayer { return }
         if from.unit?.type != Constants.Types.Unit.Canon { return }
-        if from.owner.player === to.owner.player { return }
+        if to.isBelongsToLocal() { return }
         if from.owner.wood < 1 { return }
         if to.land == .Sea { return }
         if !(self.map?.isDistanceOfTwo(from, to: to))! { return }
+
+        var enemyVillage = to.owner
 
         to.structure = nil
         to.land = .Grass
@@ -415,20 +382,68 @@ class GameEngine {
                 to.owner.player?.removeVillage(to.owner)
                 to.owner.player?.addVillage(newHovel)
                 for t in to.owner.controlledTiles {
-                    newHovel.addTile(t)
+                    if t === to {
+                        self.game?.neutralTiles.append(t)
+                        to.owner = nil
+                    } else {
+                        newHovel.addTile(t)
+                    }
                 }
-
-                let newLocation = newHovel.controlledTiles[0]
-                newLocation.land = .Grass
-                newLocation.unit = nil
-                newLocation.structure = nil
-                newLocation.village = newHovel.type
+                enemyVillage = newHovel
             }
+        } else {
+            self.game?.neutralTiles.append(to)
+            if let o = to.owner {
+                to.owner.removeTile(to)
+            }
+        }
+
+        if let v = enemyVillage {
+            self.checkPostAttack(v)
         }
 
         from.unit?.currentAction = Constants.Unit.Action.Moved
         from.owner.wood -= 1
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
+    }
+
+    private func checkPostAttack(enemyVillage: Village) {
+        let regions = (self.map?.getRegions(enemyVillage.controlledTiles))!
+        for r in regions {
+            // Region is too small
+            if r.count < 3 {
+                for t in r {
+                    t.structure = nil
+                    if t.unit != nil {
+                        t.unit = nil
+                        t.structure = .Tombstone
+                    }
+                    self.game?.neutralTiles.append(t)
+                    if t.village != nil {
+                        t.owner.player?.removeVillage(t.owner)
+                        t.village = nil
+                    }
+                    t.owner.removeTile(t)
+                }
+                continue
+            }
+
+            // Region can still support a village
+            if self.map?.getVillage(r) == nil {
+                let newHovel = Village()
+                for t in r {
+                    enemyVillage.removeTile(t)
+                    newHovel.addTile(t)
+                }
+
+                enemyVillage.player!.addVillage(newHovel)
+
+                r[0].land = .Grass
+                r[0].unit = nil
+                r[0].structure = nil
+                r[0].village = newHovel.type
+            }
+        }
     }
 
     func upgradeVillage(tile: Tile) {
