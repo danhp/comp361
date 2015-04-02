@@ -303,12 +303,12 @@ class Map: SKNode {
 
         for n in neighbors(tile: seed) {
             for n2 in neighbors(tile: n) {
-                if n2.owner !== seed.owner {
+                if n2.owner !== seed.owner && !n2.isBelongsToLocal() {
                     result.append(n2)
                 }
             }
 
-            if n.owner !== seed.owner {
+            if n.owner !== seed.owner && !n.isBelongsToLocal() {
                 result.append(n)
             }
         }

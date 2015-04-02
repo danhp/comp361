@@ -187,7 +187,9 @@ class GameEngine {
         // Canon rules
         if from.unit?.type == Constants.Types.Unit.Canon {
             if !contains((self.map?.neighbors(tile: from))!, { $0 === to }) || !to.isWalkable() { return }
-            if to.owner.player !== self.game?.currentPlayer { return }
+            if to.owner != nil {
+                if to.owner.player !== self.game!.currentPlayer { return }
+            }
         }
 
         // Check if path exists.
@@ -409,10 +411,12 @@ class GameEngine {
             to.owner.attacked()
             if to.owner.health == 0 {
                 let newHovel = Village()
-                to.owner.player?.addVillage(newHovel)
-                // TODO: Not sure this will work
-                newHovel.controlledTiles = to.owner.controlledTiles
+                to.village = nil
                 to.owner.player?.removeVillage(to.owner)
+                to.owner.player?.addVillage(newHovel)
+                for t in to.owner.controlledTiles {
+                    newHovel.addTile(t)
+                }
 
                 let newLocation = newHovel.controlledTiles[0]
                 newLocation.land = .Grass
@@ -473,7 +477,7 @@ class GameEngine {
         // Hovel (value: 0) can only recruit peasants and infantry (rawVaue: 1 & 2)
         // Town (value: 1) can also recruit soldiers (rawValue: 3)
         // Fort (value: 2) can also recruit knight and canon (rawValue: 4 & 5)
-        if type.rawValue > min(villageTile.owner.type.rawValue + 2, Constants.Types.Village.Fort.rawValue + 1) { return }
+        if villageTile.owner.type.rawValue + 2 < type.rawValue { return }
 
         var destination: Tile?
         for n in (self.map?)!.neighbors(tile: villageTile) {
