@@ -229,8 +229,21 @@ class Map: SKNode {
                                 result.append(t)
                             }
                         } else {
+                            if t.owner != nil && seed.unit?.type == Constants.Types.Unit.Peasant { continue }
                             if !t.isProtected(seed.unit!) {
-                                result.append(t)
+                                var b = false
+                                for n in self.neighbors(tile: t) {
+                                    if n.owner == nil { continue }
+                                    if n.owner.player !== seed.owner.player {
+                                        if n.unit?.type == Constants.Types.Unit.Canon { continue }
+                                        if n.isProtected(seed.unit!) {
+                                            b = true
+                                        }
+                                    }
+                                }
+                                if !b {
+                                    result.append(t)
+                                }
                             }
                         }
                         seen.append(t)

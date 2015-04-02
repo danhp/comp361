@@ -381,6 +381,7 @@ class GameViewController: UIViewController {
 
     @IBAction func validateButtonTapped(sender: AnyObject) {
         GameEngine.Instance.map?.resetColor()
+        GameEngine.Instance.map?.draw()
         let dest = GameEngine.Instance.map?.selected
         if self.state == .AttackPressed {
             GameEngine.Instance.attack(tileSource!, to: dest!)

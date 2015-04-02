@@ -6,8 +6,8 @@ class Village {
     var player: Player?
     var type = Constants.Types.Village.Hovel
     var state = Constants.Village.Action.ReadyForOrders
-    var gold: Int = 0
-    var wood: Int = 0
+    var gold: Int = 7
+    var wood: Int = 7
 
     var health: Int = 1
 
