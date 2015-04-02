@@ -47,6 +47,7 @@
 		522683901A80765800E54870 /* villageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5226838F1A80765800E54870 /* villageTests.swift */; };
 		522708541A72F148009ED4DA /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708531A72F148009ED4DA /* Unit.swift */; };
 		522708561A72F56B009ED4DA /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708551A72F56B009ED4DA /* Village.swift */; };
+		529549561ACCB6860024DBE0 /* 3.json in Resources */ = {isa = PBXBuildFile; fileRef = 529549551ACCB6860024DBE0 /* 3.json */; };
 		5299B2791A8984F500EADED0 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5299B2781A8984F500EADED0 /* GameEngine.swift */; };
 		5299B27A1A89855600EADED0 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5299B2781A8984F500EADED0 /* GameEngine.swift */; };
 		52ADD5541A91372C00F5307D /* gameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ADD5531A91372C00F5307D /* gameTests.swift */; };
@@ -95,6 +96,7 @@
 		5226838F1A80765800E54870 /* villageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = villageTests.swift; path = WarfareTests/villageTests.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		522708531A72F148009ED4DA /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unit.swift; path = Warfare/Unit.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		522708551A72F56B009ED4DA /* Village.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Village.swift; path = Warfare/Village.swift; sourceTree = SOURCE_ROOT; };
+		529549551ACCB6860024DBE0 /* 3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 3.json; path = Warfare/3.json; sourceTree = SOURCE_ROOT; };
 		5299B2781A8984F500EADED0 /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameEngine.swift; path = Warfare/GameEngine.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		52ADD5531A91372C00F5307D /* gameTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = gameTests.swift; path = WarfareTests/gameTests.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		52CEDA3C1AC8ED000094E011 /* unitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = unitTests.swift; path = WarfareTests/unitTests.swift; sourceTree = SOURCE_ROOT; };
@@ -126,6 +128,7 @@
 			children = (
 				13C428651ABB623E008E35BD /* 2.json */,
 				132A65AA1A8EAAD300D588B2 /* 1.json */,
+				529549551ACCB6860024DBE0 /* 3.json */,
 			);
 			name = Maps;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				13F60EC41ABA30BE008E4BF3 /* 1.json in Resources */,
 				137101481A701096009B807C /* LaunchScreen.xib in Resources */,
 				13C428661ABB623E008E35BD /* 2.json in Resources */,
+				529549561ACCB6860024DBE0 /* 3.json in Resources */,
 				137101451A701096009B807C /* Images.xcassets in Resources */,
 				1371013C1A701096009B807C /* GameScene.sks in Resources */,
 				137101431A701096009B807C /* Main.storyboard in Resources */,

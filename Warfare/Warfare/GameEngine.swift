@@ -313,6 +313,7 @@ class GameEngine {
                     mainVillage = n.owner
                 }
 
+                // Transfer tiles
                 for t in mergeVillage.controlledTiles {
                     mainVillage.addTile(t)
                     if t.village != nil {
@@ -320,6 +321,10 @@ class GameEngine {
                         self.availableVillages = self.availableVillages.filter({$0 !== t})
                     }
                 }
+
+                // Transfer resources
+                mainVillage.gold += mergeVillage.gold
+                mainVillage.wood += mergeVillage.wood
 
                 self.game?.currentPlayer.removeVillage(mergeVillage)
             }
@@ -472,6 +477,7 @@ class GameEngine {
 
         var destination: Tile?
         for n in (self.map?)!.neighbors(tile: villageTile) {
+            if n.owner !== villageTile.owner { continue }
             if n.isWalkable() && n.unit == nil && n.structure == nil {
                 destination = n
                 break
@@ -637,7 +643,7 @@ class GameEngine {
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
         //TODO TEMP
-        self.startGameWithMap(1)
+        self.startGameWithMap(3)
         self.showGameScene()
 
         return
