@@ -148,9 +148,21 @@ class GameEngine {
 
             // Delete the Village
             if village.gold <= 0 {
-                self.killVillage(village)
+                self.starveVillage(village)
             }
         }
+    }
+
+    private func starveVillage(village: Village) {
+        for tile in village.controlledTiles {
+            if tile.unit != nil {
+                tile.unit = nil
+                tile.structure = .Tombstone
+                tile.land = .Grass
+            }
+        }
+        village.wood = 0
+        village.gold = 0
     }
 
     private func killVillage(village: Village) {
