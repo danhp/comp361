@@ -256,7 +256,6 @@ class GameEngine {
                     removeGrass = SKAction.runBlock({
                         t.land = .Grass
                     })
-                    t.land = .Grass
             }
 
             let dx = path[index+1].position.x - path[index].position.x
@@ -662,7 +661,7 @@ class GameEngine {
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
         //TODO TEMP
-        self.startGameWithMap(3)
+        self.startGameWithMap(4)
         self.showGameScene()
 
         return
