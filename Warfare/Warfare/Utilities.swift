@@ -33,7 +33,7 @@ class Utilities {
             case .Grass, .Tree:
                 return UIColor(rgb: 0x1b4001, alpha: alpha)
             case .Meadow:
-                return UIColor(rgb: 0xffe6c5, alpha: alpha)
+                return UIColor(rgb: 0x37A603, alpha: alpha)
             }
         }
 
