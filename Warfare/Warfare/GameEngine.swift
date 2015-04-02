@@ -237,11 +237,10 @@ class GameEngine {
             }
         }
 
-        from.unit?.currentAction = Constants.Unit.Action.Moved
-        self.moveWithAnimation(to: to, from: from, path: path)
+        self.moveWithAnimation(to: to, from: from, path: path, state: .Moved)
     }
 
-    func moveWithAnimation(#to: Tile, from: Tile, path: [Tile]) {
+    func moveWithAnimation(#to: Tile, from: Tile, path: [Tile], state: Constants.Unit.Action) {
         var moveActions = [SKAction]()
 
         // Update tiles in the path
@@ -286,6 +285,9 @@ class GameEngine {
             to.unit = from.unit
             from.unit = nil
             self.availableUnits = self.availableUnits.filter({ $0 !== from })
+            if let unit = to.unit {
+                unit.currentAction = state
+            }
 
             GameEngine.Instance.map?.resetColor()
             GameEngine.Instance.map?.draw()
@@ -340,19 +342,19 @@ class GameEngine {
         if to.village != nil && unit.type.rawValue < 2
             || unit.type.rawValue == 2 && to.village?.rawValue == 2 { return }
 
-        // Invade enemy tile
-        to.owner?.removeTile(to)
-        village.addTile(to)
 
         // Update destination tile
         to.unit = nil
         to.structure = nil
         if to.village != nil {
-            village.wood = (to.owner?.wood)!
-            village.gold = (to.owner?.wood)!
+            village.wood += (to.owner?.wood)!
+            village.gold += (to.owner?.gold)!
             to.village = nil
-            to.owner.removeTile(to)
         }
+
+        // Invade enemy tile
+        to.owner?.removeTile(to)
+        village.addTile(to)
 
         self.checkPostAttack(enemyVillage)
     }
@@ -562,9 +564,8 @@ class GameEngine {
         village.wood -= road.cost()
 
         // Move the unit
-        from.unit?.currentAction = Constants.Unit.Action.BuildingRoad
         if from !== on {
-            self.moveWithAnimation(to: on, from: from, path: path)
+            self.moveWithAnimation(to: on, from: from, path: path, state: .BuildingRoad)
         }
 
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
@@ -599,9 +600,8 @@ class GameEngine {
         village.wood -= cost
 
         // Move the unit
-        from.unit?.currentAction = Constants.Unit.Action.StartCultivating
         if from !== on {
-            self.moveWithAnimation(to: on, from: from, path: path)
+            self.moveWithAnimation(to: on, from: from, path: path, state: .StartCultivating)
         }
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }

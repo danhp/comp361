@@ -230,6 +230,7 @@ class Map: SKNode {
                             }
                         } else {
                             if t.owner != nil && seed.unit?.type == Constants.Types.Unit.Peasant { continue }
+                            if t.village == Constants.Types.Village.Castle { continue }
                             if !t.isProtected(seed.unit!) {
                                 var b = false
                                 for n in self.neighbors(tile: t) {
