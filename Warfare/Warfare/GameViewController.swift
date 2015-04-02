@@ -531,19 +531,38 @@ class GameViewController: UIViewController {
 
     func showUpgradeOptions(tile: Tile) {
         if let u = tile.unit {
-        // show container
-        self.upgradeUnitContainer.hidden = false
+            // show container
+            self.upgradeUnitContainer.hidden = false
+
+            let ownerType = tile.owner.type.rawValue
 
             switch u.type {
             case .Peasant:
-            self.infantryButton.enabled = true
-            self.soldierButton.enabled = true
-            self.knightButton.enabled = true
+                if tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue {
+                    self.infantryButton.enabled = true
+                }
+                if ownerType > Constants.Types.Village.Town.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue * 2 {
+                    self.soldierButton.enabled = true
+                }
+                if ownerType > Constants.Types.Village.Fort.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue * 3 {
+                    self.knightButton.enabled = true
+                }
             case .Infantry:
-            self.soldierButton.enabled = true
-            self.knightButton.enabled = true
+                if ownerType > Constants.Types.Village.Town.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue{
+                    self.soldierButton.enabled = true
+                }
+                if ownerType > Constants.Types.Village.Fort.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue * 2 {
+                    self.knightButton.enabled = true
+                }
             case .Soldier:
-            self.knightButton.enabled = true
+                if ownerType > Constants.Types.Village.Fort.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue {
+                    self.knightButton.enabled = true
+                }
             default:
                 println("wut")
             }
