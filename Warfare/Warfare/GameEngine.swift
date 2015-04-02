@@ -636,12 +636,6 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-        //TODO TEMP
-        self.startGameWithMap(1)
-        self.showGameScene()
-
-        return
-
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data
@@ -663,6 +657,10 @@ class GameEngine {
                 } else {
                     self.game = Game()
                     self.game?.importDictionary(dict)
+                    self.beginTurn()
+                    if MatchHelper.sharedInstance().currentParticipantIndex() == 0 {
+                        self.growTrees()
+                    }
                     self.scene?.resetMap()
                     self.updateTurnLabel()
                     self.showGameScene()

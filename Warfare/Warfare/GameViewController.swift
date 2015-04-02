@@ -70,6 +70,7 @@ class GameViewController: UIViewController {
     // MARK - Info Panel
 
     func updateInfoPanel(tile: Tile?) {
+        self.updateTurnLabel()
         // Update player gold/wood
         let goldText = "Gold: " + String((GameEngine.Instance.game?.localPlayer.gold)!)
         let woodText = "Wood: " + String((GameEngine.Instance.game?.localPlayer.wood)!)
@@ -120,7 +121,7 @@ class GameViewController: UIViewController {
     // MARK: - Turn label update
 
     func updateTurnLabel() {
-//        self.turnLabel.text = GameEngine.Instance.game?.nameOfActivePlayer()
+        self.turnLabel.text = GameEngine.Instance.game?.nameOfActivePlayer
     }
 
     // MARK: - Initializers
