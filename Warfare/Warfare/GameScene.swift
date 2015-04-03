@@ -35,7 +35,7 @@ class GameScene: SKScene {
         // new map
         self.map = GameEngine.Instance.map
         self.map?.draw()
-        self.map?.position = position
+        self.map?.position = position ?? CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
         self.addChild(self.map!)
 
         GameEngine.Instance.updateInfoPanel()

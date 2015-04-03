@@ -70,7 +70,12 @@ class GameViewController: UIViewController {
     // MARK - Info Panel
 
     func updateInfoPanel(tile: Tile?) {
+        // Enable or disable end turn button
+        self.endTurnButton.enabled = (GameEngine.Instance.game?.localIsCurrentPlayer ?? false) ? false : true
+
+        // Set player label
         self.updateTurnLabel()
+
         // Update player gold/wood
         let goldText = "Gold: " + String((GameEngine.Instance.game?.localPlayer.gold)!)
         let woodText = "Wood: " + String((GameEngine.Instance.game?.localPlayer.wood)!)
