@@ -65,6 +65,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var characterState: UILabel!
 
     @IBOutlet weak var turnLabel: UILabel!
+    @IBOutlet weak var turnColorRectangle: UIView!
     @IBOutlet weak var playerGoldWoodLabel: UILabel!
 
     // MARK - Info Panel
@@ -127,6 +128,9 @@ class GameViewController: UIViewController {
 
     func updateTurnLabel() {
         self.turnLabel.text = GameEngine.Instance.game?.nameOfActivePlayer
+
+        // Show color
+        self.turnColorRectangle.backgroundColor = Utilities.Colors.colorForPlayer(MatchHelper.sharedInstance().currentParticipantIndex())
     }
 
     // MARK: - Initializers
