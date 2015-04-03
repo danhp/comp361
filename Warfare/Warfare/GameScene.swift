@@ -28,11 +28,14 @@ class GameScene: SKScene {
     }
 
     func resetMap() {
-        // TODO remember position as well
+        // remove
         self.map?.removeFromParent()
+        let position = self.map?.position // remember map position
+
+        // new map
         self.map = GameEngine.Instance.map
         self.map?.draw()
-        self.map?.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
+        self.map?.position = position
         self.addChild(self.map!)
 
         GameEngine.Instance.updateInfoPanel()
