@@ -383,7 +383,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="1Iq-47-Qvh" kind="show" id="VjX-au-YHF"/>
+                                    <segue destination="OwA-tD-SGG" kind="unwind" unwindAction="unwindFromGame:" id="I1y-Lv-bWX"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gold: 10   Wood: 15" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zTL-B9-Oyo">
@@ -489,7 +489,6 @@
                         <outlet property="infantryButton" destination="GG3-UJ-lTO" id="4sF-Nq-cGG"/>
                         <outlet property="knightButton" destination="hT3-tY-JPm" id="EpX-Ul-p1M"/>
                         <outlet property="meadowButton" destination="LYI-G3-B6m" id="nQ4-gy-Gzp"/>
-                        <outlet property="menuButton" destination="MwL-rC-JPL" id="GDK-yg-0We"/>
                         <outlet property="moveButton" destination="pJx-Pa-zhK" id="nZH-bU-RHR"/>
                         <outlet property="nextUnitButton" destination="Ah6-Mf-wdE" id="Zb9-1f-Zbp"/>
                         <outlet property="nextVillageButton" destination="ejv-Lo-dQZ" id="fOX-ro-MIS"/>
@@ -509,9 +508,11 @@
                         <outlet property="upgradeStructureContainer" destination="LgP-eE-bvF" id="hkS-GB-D1b"/>
                         <outlet property="upgradeUnitContainer" destination="nHv-dJ-YjP" id="5zz-Fj-sFd"/>
                         <outlet property="validateButton" destination="01a-Yn-L7o" id="enr-BA-xef"/>
+                        <segue destination="OwA-tD-SGG" kind="unwind" identifier="unwindFromGame" unwindAction="unwindFromGame:" id="hLi-lS-pBQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
+                <exit id="OwA-tD-SGG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="492" y="1019"/>
         </scene>
@@ -616,9 +617,11 @@
                         <outlet property="map3" destination="5Jl-Op-yqR" id="cFk-2t-luP"/>
                         <outlet property="map4" destination="MMD-O3-dqG" id="dFz-LF-HkT"/>
                         <outlet property="mapChoice" destination="X3L-ui-fC5" id="rbC-eg-60j"/>
+                        <segue destination="PKu-Rr-mLq" kind="unwind" identifier="unwindFromMap" unwindAction="unwindFromMapSelection:" id="iuA-BZ-eSe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yUJ-E3-iyz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="PKu-Rr-mLq" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="492" y="624"/>
         </scene>
@@ -628,7 +631,7 @@
         <image name="fort" width="46" height="62"/>
         <image name="infantry" width="20" height="41"/>
         <image name="knight" width="25" height="49"/>
-        <image name="meadow" width="75" height="63"/>
+        <image name="meadow" width="83" height="83"/>
         <image name="mountain" width="82" height="77"/>
         <image name="mountain2" width="82" height="65"/>
         <image name="peasant" width="23" height="41"/>
