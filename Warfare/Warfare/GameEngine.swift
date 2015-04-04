@@ -99,6 +99,8 @@ class GameEngine {
         self.availableUnits = []
         self.availableVillages = []
 
+        self.game?.roundCount++
+
         for village in (self.game?.currentPlayer.villages)! {
             // Update the village's state
             if village.state == .Upgrading1 {
@@ -692,7 +694,7 @@ class GameEngine {
                     self.game = Game()
                     self.game?.importDictionary(dict)
                     self.beginTurn()
-                    if MatchHelper.sharedInstance().currentParticipantIndex() == 0 {
+                    if (self.game?.roundCount)! % 3 == 0 {
                         self.growTrees()
                     }
                     self.scene?.resetMap()
