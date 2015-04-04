@@ -66,6 +66,9 @@ class GameViewController: UIViewController {
     @IBOutlet weak var turnColorRectangle: UIView!
     @IBOutlet weak var playerGoldWoodLabel: UILabel!
 
+    // MARK: Toast
+    @IBOutlet weak var toastLabel: UILabel!
+
     // MARK - Info Panel
 
     func updateInfoPanel(tile: Tile?) {
@@ -129,6 +132,18 @@ class GameViewController: UIViewController {
 
         // Show color
         self.turnColorRectangle.backgroundColor = Utilities.Colors.colorForPlayer(MatchHelper.sharedInstance().currentParticipantIndex())
+    }
+
+    // MARK: - Toast
+
+    func showToast(msg: String) {
+        self.toastLabel.text = msg
+        self.toastLabel.hidden = false
+        NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("hideToast"), userInfo: nil, repeats: false)
+    }
+
+    func hideToast() {
+        self.toastLabel.hidden = true
     }
 
     // MARK: - Initializers

@@ -71,6 +71,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Some message here" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uNf-mE-ZH2">
+                                <rect key="frame" x="0.0" y="224" width="568" height="21"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="16"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sSO-VL-kLn">
                                 <rect key="frame" x="0.0" y="245" width="568" height="75"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="u60-XD-bMr">
@@ -235,7 +242,7 @@
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nHv-dJ-YjP">
+                            <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nHv-dJ-YjP">
                                 <rect key="frame" x="0.0" y="170" width="375" height="75"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Af7-hv-KbH">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
@@ -522,6 +529,7 @@
                         <outlet property="regionWood" destination="c04-IG-Lyl" id="HHj-i2-FJR"/>
                         <outlet property="roadButton" destination="FUX-lM-tvq" id="Ndd-7S-8xO"/>
                         <outlet property="soldierButton" destination="Qo4-YA-vEs" id="qr7-c0-TvT"/>
+                        <outlet property="toastLabel" destination="uNf-mE-ZH2" id="sOX-L6-Kue"/>
                         <outlet property="towerButton" destination="gAl-tQ-u4u" id="X9r-uT-7mu"/>
                         <outlet property="turnColorRectangle" destination="Xtm-0C-oqS" id="Teh-14-dia"/>
                         <outlet property="turnLabel" destination="mZd-IH-pF4" id="IQI-kI-fyb"/>
