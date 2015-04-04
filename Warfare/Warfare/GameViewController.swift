@@ -23,8 +23,6 @@ class GameViewController: UIViewController {
     var tileSource : Tile?
     var tileDest : Tile?
 
-    @IBOutlet weak var menuButton: UIButton!
-
     @IBOutlet weak var nextUnitButton: UIButton!
     @IBOutlet weak var nextVillageButton: UIButton!
 
@@ -65,12 +63,18 @@ class GameViewController: UIViewController {
     @IBOutlet weak var characterState: UILabel!
 
     @IBOutlet weak var turnLabel: UILabel!
+    @IBOutlet weak var turnColorRectangle: UIView!
     @IBOutlet weak var playerGoldWoodLabel: UILabel!
 
     // MARK - Info Panel
 
     func updateInfoPanel(tile: Tile?) {
+        // Enable or disable end turn button
+//        self.endTurnButton.enabled = GameEngine.Instance.game?.localIsCurrentPlayer ?? false
+
+        // Set player label
         self.updateTurnLabel()
+
         // Update player gold/wood
         let goldText = "Gold: " + String((GameEngine.Instance.game?.localPlayer.gold)!)
         let woodText = "Wood: " + String((GameEngine.Instance.game?.localPlayer.wood)!)
@@ -122,6 +126,9 @@ class GameViewController: UIViewController {
 
     func updateTurnLabel() {
         self.turnLabel.text = GameEngine.Instance.game?.nameOfActivePlayer
+
+        // Show color
+        self.turnColorRectangle.backgroundColor = Utilities.Colors.colorForPlayer(MatchHelper.sharedInstance().currentParticipantIndex())
     }
 
     // MARK: - Initializers
@@ -153,16 +160,35 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.showNeutralInfo(nil)
+        self.updateInfoPanel(nil)
         self.hideUnitSelection()
 
         validateButton.hidden = true
         cancelButton.hidden = true
 
+        self.showGamePlayScene()
+    }
+
+    override func viewDidAppear(animated: Bool) {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
 
-        self.showGamePlayScene()
+        self.updateInfoPanel(nil)
+        self.hideUnitSelection()
+
+        validateButton.hidden = true
+        cancelButton.hidden = true
+    }
+
+    func unwind() {
+        self.performSegueWithIdentifier("unwindFromGame", sender: self)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "unwindFromGame" {
+            let vc = segue.destinationViewController as MainMenuViewController
+            MatchHelper.sharedInstance().vc = vc
+        }
     }
 
     // MARK: - Button Handlers

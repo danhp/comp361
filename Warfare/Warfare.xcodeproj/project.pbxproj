@@ -38,6 +38,7 @@
 		13AF2AA61A7803E100B4C67B /* mapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AF2AA51A7803E100B4C67B /* mapTests.swift */; };
 		13C428661ABB623E008E35BD /* 2.json in Resources */ = {isa = PBXBuildFile; fileRef = 13C428651ABB623E008E35BD /* 2.json */; };
 		13CDF0CC1A8AA4D300E6AB9D /* TileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CDF0CB1A8AA4D300E6AB9D /* TileTests.swift */; };
+		13CE45AA1ACF70F4007455F3 /* MapSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */; };
 		13D24A341AA2523B00378490 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D24A331AA2523B00378490 /* Game.swift */; };
 		13D24A351AA256B400378490 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D24A331AA2523B00378490 /* Game.swift */; };
 		13F60EC41ABA30BE008E4BF3 /* 1.json in Resources */ = {isa = PBXBuildFile; fileRef = 132A65AA1A8EAAD300D588B2 /* 1.json */; };
@@ -345,6 +346,7 @@
 			files = (
 				13D24A351AA256B400378490 /* Game.swift in Sources */,
 				13541BEC1AAF7CE000689C60 /* GameScene.swift in Sources */,
+				13CE45AA1ACF70F4007455F3 /* MapSelectionViewController.swift in Sources */,
 				131D324A1A86A7A50073310B /* Player.swift in Sources */,
 				522683901A80765800E54870 /* villageTests.swift in Sources */,
 				13CDF0CC1A8AA4D300E6AB9D /* TileTests.swift in Sources */,

@@ -31,26 +31,23 @@ class GameEngine {
     //  i. make a selection
     //  ii. wait until everyone has chosen a map
     func showMapSelection() {
-        MatchHelper.sharedInstance().vc?.dismissViewControllerAnimated(true, completion: ({() in
-            // Present the map selection controller
-            if let mmvc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
-                mmvc.segueToMapSelectionViewController()
-            }}))
+        if let vc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
+            vc.segueToMapSelectionViewController()
+        }
     }
 
     func showGameScene() {
-        // Dismiss any controller and then show Game View Controller
-        MatchHelper.sharedInstance().vc?.dismissViewControllerAnimated(true, completion: ({() in
-            // Present the game view controller
-            if let mmvc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
-                mmvc.segueToGameViewController()
-            }}))
+        // MAIN => GAME
+        // MAP  => GAME
+        if let vc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
+            vc.segueToGameViewController()
+        } else if let vc = MatchHelper.sharedInstance().vc as? MapSelectionViewController {
+            vc.segueToGameViewController()
+        }
     }
 
     // User has selected a choice: Int, process it
     func processMapSelection(choice: Int) {
-        // TODO put the game in a "waiting for map selection..." state
-
         // Add choice to choices array
         if let cur = self.currentChoices {
             self.currentChoices = cur + [choice]    // append selection to previous ones
@@ -63,6 +60,10 @@ class GameEngine {
         var error:NSError?
         let matchData = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
         MatchHelper.sharedInstance().advanceSelectionTurn(matchData!)
+
+        if self.currentChoices?.count == 3 {
+            MatchHelper.sharedInstance().loadMatchData()
+        }
     }
 
     // MARK: - Operations

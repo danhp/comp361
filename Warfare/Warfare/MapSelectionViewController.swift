@@ -23,9 +23,6 @@ class MapSelectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set MatchHelper's view controller
-        MatchHelper.sharedInstance().vc = self
 
         self.confirmationButton.enabled = true
 
@@ -36,6 +33,26 @@ class MapSelectionViewController: UIViewController {
         map2.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "mapTapped:"))
         map3.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "mapTapped:"))
         map4.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "mapTapped:"))
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        // Set MatchHelper's view controller
+        MatchHelper.sharedInstance().vc = self
+    }
+
+    func segueToGameViewController() {
+        self.performSegueWithIdentifier("mapToGameSegue", sender: self)
+    }
+
+    func unwind() {
+        self.performSegueWithIdentifier("unwindFromMap", sender: self)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "unwindFromMap" {
+            let vc = segue.destinationViewController as MainMenuViewController
+            MatchHelper.sharedInstance().vc = vc
+        }
     }
     
     @IBAction func confirmationAction(sender: AnyObject) {

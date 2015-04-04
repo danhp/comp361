@@ -10,13 +10,9 @@ import UIKit
 
 class MainMenuViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override func viewDidAppear(animated: Bool) {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,17 +26,20 @@ class MainMenuViewController: UIViewController {
     }
 
     func segueToGameViewController() {
-        self.performSegueWithIdentifier("gameViewControllerSegue", sender: self)
+        self.performSegueWithIdentifier("mainToGameSegue", sender: self)
     }
 
     func segueToMapSelectionViewController() {
-        self.performSegueWithIdentifier("mapSelectionViewControllerSegue", sender: self)
+        self.performSegueWithIdentifier("mainToMapSegue", sender: self)
     }
 
-    func dismissViewController() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func unwindFromMapSelection(sender: UIStoryboardSegue) {
+
     }
 
+    @IBAction func unwindFromGame(sender: UIStoryboardSegue) {
+        
+    }
     /*
     // MARK: - Navigation
 
