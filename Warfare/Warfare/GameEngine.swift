@@ -82,9 +82,6 @@ class GameEngine {
                 if t.land != .Tree { continue }
 
                 for n in (self.map?.neighbors(tile: t))! {
-                    if contains(seen, { $0 === n }) { continue }
-                    seen.append(n)
-
                     if n.isGrowable() {
                         let random = Int(arc4random_uniform(2))
                         if random == 0 {
