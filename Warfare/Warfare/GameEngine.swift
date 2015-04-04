@@ -31,20 +31,23 @@ class GameEngine {
     //  i. make a selection
     //  ii. wait until everyone has chosen a map
     func showMapSelection() {
-        MatchHelper.sharedInstance().vc?.dismissViewControllerAnimated(true, completion: ({() in
-            // Present the map selection controller
-            if let mmvc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
-                mmvc.segueToMapSelectionViewController()
-            }}))
+        if let vc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
+            vc.segueToMapSelectionViewController()
+        } else if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
+            vc.unwind()
+            let newVC = MatchHelper.sharedInstance().vc as? MainMenuViewController
+            newVC?.segueToMapSelectionViewController()
+        }
     }
 
     func showGameScene() {
-        // Dismiss any controller and then show Game View Controller
-        MatchHelper.sharedInstance().vc?.dismissViewControllerAnimated(true, completion: ({() in
-            // Present the game view controller
-            if let mmvc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
-                mmvc.segueToGameViewController()
-            }}))
+        if let vc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
+            vc.segueToGameViewController()
+        } else if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
+            vc.unwind()
+            let newVC = MatchHelper.sharedInstance().vc as? MainMenuViewController
+            newVC?.segueToGameViewController()
+        }
     }
 
     // User has selected a choice: Int, process it

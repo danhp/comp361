@@ -23,8 +23,6 @@ class GameViewController: UIViewController {
     var tileSource : Tile?
     var tileDest : Tile?
 
-    @IBOutlet weak var menuButton: UIButton!
-
     @IBOutlet weak var nextUnitButton: UIButton!
     @IBOutlet weak var nextVillageButton: UIButton!
 
@@ -168,10 +166,16 @@ class GameViewController: UIViewController {
         validateButton.hidden = true
         cancelButton.hidden = true
 
+        self.showGamePlayScene()
+    }
+
+    override func viewDidAppear(animated: Bool) {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
+    }
 
-        self.showGamePlayScene()
+    func unwind() {
+        self.performSegueWithIdentifier("unwindFromMap", sender: self)
     }
 
     // MARK: - Button Handlers
