@@ -26,11 +26,11 @@ class MainMenuViewController: UIViewController {
     }
 
     func segueToGameViewController() {
-        self.performSegueWithIdentifier("gameViewControllerSegue", sender: self)
+        self.performSegueWithIdentifier("mainToGameSegue", sender: self)
     }
 
     func segueToMapSelectionViewController() {
-        self.performSegueWithIdentifier("mapSelectionViewControllerSegue", sender: self)
+        self.performSegueWithIdentifier("mainToMapSegue", sender: self)
     }
 
     @IBAction func unwindFromMapSelection(sender: UIStoryboardSegue) {

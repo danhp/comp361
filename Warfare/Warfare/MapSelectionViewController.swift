@@ -40,8 +40,19 @@ class MapSelectionViewController: UIViewController {
         MatchHelper.sharedInstance().vc = self
     }
 
+    func segueToGameViewController() {
+        self.performSegueWithIdentifier("mapToGameSegue", sender: self)
+    }
+
     func unwind() {
         self.performSegueWithIdentifier("unwindFromMap", sender: self)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "unwindFromMap" {
+            let vc = segue.destinationViewController as MainMenuViewController
+            MatchHelper.sharedInstance().vc = vc
+        }
     }
     
     @IBAction func confirmationAction(sender: AnyObject) {

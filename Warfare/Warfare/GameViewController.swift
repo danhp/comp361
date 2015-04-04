@@ -70,7 +70,7 @@ class GameViewController: UIViewController {
 
     func updateInfoPanel(tile: Tile?) {
         // Enable or disable end turn button
-        self.endTurnButton.enabled = (GameEngine.Instance.game?.localIsCurrentPlayer ?? false) ? false : true
+        self.endTurnButton.enabled = GameEngine.Instance.game?.localIsCurrentPlayer ?? false
 
         // Set player label
         self.updateTurnLabel()
@@ -160,7 +160,6 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.showNeutralInfo(nil)
         self.hideUnitSelection()
 
         validateButton.hidden = true
@@ -172,10 +171,23 @@ class GameViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
+
+        self.updateInfoPanel(nil)
+        self.hideUnitSelection()
+
+        validateButton.hidden = true
+        cancelButton.hidden = true
     }
 
     func unwind() {
-        self.performSegueWithIdentifier("unwindFromMap", sender: self)
+        self.performSegueWithIdentifier("unwindFromGame", sender: self)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "unwindFromGame" {
+            let vc = segue.destinationViewController as MainMenuViewController
+            MatchHelper.sharedInstance().vc = vc
+        }
     }
 
     // MARK: - Button Handlers
@@ -516,7 +528,7 @@ class GameViewController: UIViewController {
 
         self.hideButton(nextUnitButton)
         self.hideButton(nextVillageButton)
-        self.hideButton(endTurnButton)
+//        self.hideButton(endTurnButton)
     }
 
     func betweenPresses() {

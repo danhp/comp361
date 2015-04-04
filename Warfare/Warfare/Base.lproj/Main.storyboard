@@ -51,8 +51,8 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <segue destination="LVB-YS-i5n" kind="show" identifier="gameViewControllerSegue" id="XGZ-bE-edm"/>
-                        <segue destination="NNy-yW-8KV" kind="show" identifier="mapSelectionViewControllerSegue" id="eJp-Ut-zxi"/>
+                        <segue destination="LVB-YS-i5n" kind="show" identifier="mainToGameSegue" id="XGZ-bE-edm"/>
+                        <segue destination="NNy-yW-8KV" kind="show" identifier="mainToMapSegue" id="eJp-Ut-zxi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aut-iQ-ryz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -525,7 +525,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
                 <exit id="OwA-tD-SGG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="492" y="1001"/>
+            <point key="canvasLocation" x="492" y="1104"/>
         </scene>
         <!--MapSelectionViewController-->
         <scene sceneID="KEF-Ff-qs5">
@@ -629,6 +629,7 @@
                         <outlet property="map4" destination="MMD-O3-dqG" id="dFz-LF-HkT"/>
                         <outlet property="mapChoice" destination="X3L-ui-fC5" id="rbC-eg-60j"/>
                         <segue destination="PKu-Rr-mLq" kind="unwind" identifier="unwindFromMap" unwindAction="unwindFromMapSelection:" id="iuA-BZ-eSe"/>
+                        <segue destination="LVB-YS-i5n" kind="show" identifier="mapToGameSegue" id="MMV-n5-kyf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yUJ-E3-iyz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -652,4 +653,7 @@
         <image name="tower" width="44" height="73"/>
         <image name="tree" width="46" height="55"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="XGZ-bE-edm"/>
+    </inferredMetricsTieBreakers>
 </document>

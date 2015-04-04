@@ -33,27 +33,21 @@ class GameEngine {
     func showMapSelection() {
         if let vc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
             vc.segueToMapSelectionViewController()
-        } else if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
-            vc.unwind()
-            let newVC = MatchHelper.sharedInstance().vc as? MainMenuViewController
-            newVC?.segueToMapSelectionViewController()
         }
     }
 
     func showGameScene() {
+        // MAIN => GAME
+        // MAP  => GAME
         if let vc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
             vc.segueToGameViewController()
-        } else if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
-            vc.unwind()
-            let newVC = MatchHelper.sharedInstance().vc as? MainMenuViewController
-            newVC?.segueToGameViewController()
+        } else if let vc = MatchHelper.sharedInstance().vc as? MapSelectionViewController {
+            vc.segueToGameViewController()
         }
     }
 
     // User has selected a choice: Int, process it
     func processMapSelection(choice: Int) {
-        // TODO put the game in a "waiting for map selection..." state
-
         // Add choice to choices array
         if let cur = self.currentChoices {
             self.currentChoices = cur + [choice]    // append selection to previous ones
@@ -66,6 +60,10 @@ class GameEngine {
         var error:NSError?
         let matchData = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
         MatchHelper.sharedInstance().advanceSelectionTurn(matchData!)
+
+        if self.currentChoices?.count == 3 {
+            MatchHelper.sharedInstance().loadMatchData()
+        }
     }
 
     // MARK: - Operations
