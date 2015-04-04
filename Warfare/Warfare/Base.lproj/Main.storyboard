@@ -301,7 +301,8 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FUX-lM-tvq">
                                             <rect key="frame" x="150" y="0.0" width="75" height="75"/>
-                                            <state key="normal" image="road">
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="18"/>
+                                            <state key="normal" title="Road">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -317,9 +318,10 @@
                                                 <action selector="towerButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="efy-CX-YmI"/>
                                             </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYI-G3-B6m">
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYI-G3-B6m">
                                             <rect key="frame" x="75" y="0.0" width="75" height="75"/>
-                                            <state key="normal" image="meadow">
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="18"/>
+                                            <state key="normal" title="Meadow">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -533,7 +535,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
                 <exit id="OwA-tD-SGG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="492" y="1104"/>
+            <point key="canvasLocation" x="492" y="1048"/>
         </scene>
         <!--MapSelectionViewController-->
         <scene sceneID="KEF-Ff-qs5">
@@ -651,17 +653,15 @@
         <image name="fort" width="46" height="62"/>
         <image name="infantry" width="20" height="41"/>
         <image name="knight" width="25" height="49"/>
-        <image name="meadow" width="83" height="83"/>
         <image name="mountain" width="82" height="77"/>
         <image name="mountain2" width="82" height="65"/>
         <image name="peasant" width="23" height="41"/>
-        <image name="road" width="85" height="99"/>
         <image name="soldier" width="23" height="37"/>
         <image name="sound-on" width="45" height="36"/>
         <image name="tower" width="44" height="73"/>
         <image name="tree" width="46" height="55"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="XGZ-bE-edm"/>
+        <segue reference="MMV-n5-kyf"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -70,7 +70,7 @@ class GameViewController: UIViewController {
 
     func updateInfoPanel(tile: Tile?) {
         // Enable or disable end turn button
-        self.endTurnButton.enabled = GameEngine.Instance.game?.localIsCurrentPlayer ?? false
+//        self.endTurnButton.enabled = GameEngine.Instance.game?.localIsCurrentPlayer ?? false
 
         // Set player label
         self.updateTurnLabel()
@@ -160,6 +160,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.updateInfoPanel(nil)
         self.hideUnitSelection()
 
         validateButton.hidden = true
@@ -528,7 +529,7 @@ class GameViewController: UIViewController {
 
         self.hideButton(nextUnitButton)
         self.hideButton(nextVillageButton)
-//        self.hideButton(endTurnButton)
+        self.hideButton(endTurnButton)
     }
 
     func betweenPresses() {
