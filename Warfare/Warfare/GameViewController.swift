@@ -174,17 +174,17 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.updateInfoPanel(nil)
-        self.hideUnitSelection()
-
-        validateButton.hidden = true
-        cancelButton.hidden = true
-
-        self.showGamePlayScene()
+//
+//        self.updateInfoPanel(nil)
+//        self.hideUnitSelection()
+//
+//        validateButton.hidden = true
+//        cancelButton.hidden = true
+//
+//        self.showGamePlayScene()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
 
@@ -193,6 +193,8 @@ class GameViewController: UIViewController {
 
         validateButton.hidden = true
         cancelButton.hidden = true
+
+        self.showGamePlayScene()
     }
 
     func unwind() {

@@ -35,7 +35,7 @@ class MapSelectionViewController: UIViewController {
         map4.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "mapTapped:"))
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
     }
