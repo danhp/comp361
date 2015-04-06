@@ -54,7 +54,7 @@ class Tile: SKNode, Hashable {
         self.removeAllChildren()
 
         let alpha = selected ? Constants.Tile.Alpha.selected.rawValue: (lighten ? Constants.Tile.Alpha.flood.rawValue : Constants.Tile.Alpha.normal.rawValue)
-        if
+
         self.background.color = Utilities.Colors.colorForLandType(self.land, alpha: alpha)
         self.background.colorBlendFactor = 1
 
@@ -67,8 +67,10 @@ class Tile: SKNode, Hashable {
         }
 
         // Village
-        if self.village != nil {
-            self.addChild((self.owner?.draw())!)
+        if let s = self.village {
+            if let o = self.owner {
+                self.addChild(o.draw())
+            }
         }
 
         // Unit
@@ -123,8 +125,8 @@ class Tile: SKNode, Hashable {
     }
 
     func isWalkable() -> Bool {
-        return (self.land == .Grass || self.land == .Meadow)
-                && self.structure != .Tombstone
+        return (self.land == Constants.Types.Land.Grass || self.land == Constants.Types.Land.Meadow)
+                && self.structure != Constants.Types.Structure.Tombstone
     }
 
     // Check if self can prevent enemy from invading neighbouring tile.
