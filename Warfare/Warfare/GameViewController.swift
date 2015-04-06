@@ -122,7 +122,7 @@ class GameViewController: UIViewController {
         self.characterWage.text = "Wage: " + String(unit.type.wage())
         self.characterState.text = unit.currentAction.name()
     }
-    
+
     func removeUnitInfo() { }
 
     // MARK: - Turn label update
@@ -425,6 +425,7 @@ class GameViewController: UIViewController {
 
     @IBAction func validateButtonTapped(sender: AnyObject) {
         GameEngine.Instance.map?.resetColor()
+        GameEngine.Instance.map?.draw()
         let dest = GameEngine.Instance.map?.selected
         if self.state == .AttackPressed {
             GameEngine.Instance.attack(tileSource!, to: dest!)
@@ -574,19 +575,38 @@ class GameViewController: UIViewController {
 
     func showUpgradeOptions(tile: Tile) {
         if let u = tile.unit {
-        // show container
-        self.upgradeUnitContainer.hidden = false
+            // show container
+            self.upgradeUnitContainer.hidden = false
+
+            let ownerType = tile.owner.type.rawValue
 
             switch u.type {
             case .Peasant:
-            self.infantryButton.enabled = true
-            self.soldierButton.enabled = true
-            self.knightButton.enabled = true
+                if tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue {
+                    self.infantryButton.enabled = true
+                }
+                if ownerType > Constants.Types.Village.Town.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue * 2 {
+                    self.soldierButton.enabled = true
+                }
+                if ownerType > Constants.Types.Village.Fort.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue * 3 {
+                    self.knightButton.enabled = true
+                }
             case .Infantry:
-            self.soldierButton.enabled = true
-            self.knightButton.enabled = true
+                if ownerType > Constants.Types.Village.Town.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue{
+                    self.soldierButton.enabled = true
+                }
+                if ownerType > Constants.Types.Village.Fort.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue * 2 {
+                    self.knightButton.enabled = true
+                }
             case .Soldier:
-            self.knightButton.enabled = true
+                if ownerType > Constants.Types.Village.Fort.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue {
+                    self.knightButton.enabled = true
+                }
             default:
                 println("wut")
             }
@@ -597,17 +617,25 @@ class GameViewController: UIViewController {
         if let v = tile.owner {
             self.upgradeUnitContainer.hidden = false
 
-            self.peasantButton.enabled = true
-            self.infantryButton.enabled = true
+            if tile.owner.gold >= Constants.Types.Unit.Peasant.cost().0 {
+                self.peasantButton.enabled = true
+            }
+            if tile.owner.gold >= Constants.Types.Unit.Infantry.cost().0 {
+                self.infantryButton.enabled = true
+            }
 
-            if v.type.rawValue >= 1 {
-            self.soldierButton.enabled = true
+            if v.type.rawValue >= 1
+                        && tile.owner.gold >= Constants.Types.Unit.Soldier.cost().0 {
+                self.soldierButton.enabled = true
             }
-            if v.type.rawValue >= 2 {
-            self.knightButton.enabled = true
+            if v.type.rawValue >= 2
+                        && tile.owner.gold >= Constants.Types.Unit.Knight.cost().0 {
+                self.knightButton.enabled = true
             }
-            if v.type.rawValue >= 3 {
-            self.canonButton.enabled = true
+            if v.type.rawValue >= 3
+                        && tile.owner.gold >= Constants.Types.Unit.Canon.cost().0
+                        && tile.owner.wood >= Constants.Types.Unit.Canon.cost().1 {
+                self.canonButton.enabled = true
             }
         }
     }
