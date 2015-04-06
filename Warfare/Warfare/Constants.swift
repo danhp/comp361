@@ -65,7 +65,7 @@ struct Constants {
                 case .Meadow:
                     return "meadow"
                 case .Sea:
-                    return ["mountain", "mountain2"][Int(arc4random_uniform(2))]
+                    return "mountain2"
                 }
             }
 
@@ -131,7 +131,7 @@ struct Constants {
             }
         }
 
-        
+
         enum Unit: Int {
             case Peasant = 1, Infantry, Soldier, Knight, Canon
 
