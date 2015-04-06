@@ -26,6 +26,7 @@ struct Node {
 class Map: SKNode {
     let tiles: HexGrid
     let scroller = SKNode()
+    var isAnimating = false
 
     var selected: Tile? {
         willSet {
@@ -97,6 +98,9 @@ class Map: SKNode {
     }
 
     func centerAround(centerAround: Tile) {
+        if self.isAnimating { return }
+
+        self.selected = centerAround
         let positionInMap = convertPoint(centerAround.position, fromNode: self.scroller)
         let delta = CGVector(dx: -positionInMap.x , dy: -positionInMap.y )
         self.scroll(delta)
@@ -372,8 +376,9 @@ class Map: SKNode {
     }
 
     func scroll(delta: CGVector) {
+        self.isAnimating = true
         let move = SKAction.moveBy(delta, duration: 1)
-        self.scroller.runAction(move)
+        self.scroller.runAction(move, completion: ({self.isAnimating = false}))
     }
 
     func scroll(delta: CGPoint) {
