@@ -37,12 +37,21 @@ class Village {
     }
 
     func upgradeVillage() {
-        if self.type == Constants.Types.Village.Castle { return }
-        if self.disaled { return }
+        if self.type == Constants.Types.Village.Castle {
+            GameEngine.Instance.showToast("You can't upgrade a castle")
+            return
+        }
+        if self.disaled {
+            GameEngine.Instance.showToast("That village is busy")
+            return
+        }
 
         let newLevel = Constants.Types.Village(rawValue: self.type.rawValue + 1)
         let cost = newLevel?.upgradeCost()
-        if cost > self.wood { return }
+        if cost > self.wood {
+            GameEngine.Instance.showToast("That village lacks the resources to upgrade")
+            return
+        }
 
         self.wood -= cost!
         self.type = newLevel!
@@ -53,17 +62,31 @@ class Village {
 
     func upgradeUnit(unitTile: Tile, newType: Constants.Types.Unit) {
         if let unit = unitTile.unit {
-            if unitTile.owner !== self { return }
-            if unit.type == .Knight || unit.type == .Canon { return }
+            if unitTile.owner !== self {
+                GameEngine.Instance.showToast("You don't own that tile")
+                return
+            }
+            if unit.type == .Knight || unit.type == .Canon {
+                GameEngine.Instance.showToast("That unit has reached his maximum potential")
+                return
+            }
 
             let upgradeInterval = newType.rawValue - unit.type.rawValue
 
-            if upgradeInterval < 1 { return }
-            if self.gold < upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue { return }
+            if upgradeInterval < 1 {
+                GameEngine.Instance.showToast("That upgrade isn't legal")
+                return
+            }
+            if self.gold < upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue {
+                GameEngine.Instance.showToast("You don't have the resoureces to upgrade the unit")
+                return
+            }
 
             self.gold -= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue
             unit.type = newType
             unit.currentAction = .UpgradingCombining
+        } else {
+            GameEngine.Instance.showToast("There are no units to upgrade there")
         }
     }
 
