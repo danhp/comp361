@@ -23,8 +23,6 @@ class GameViewController: UIViewController {
     var tileSource : Tile?
     var tileDest : Tile?
 
-    @IBOutlet weak var menuButton: UIButton!
-
     @IBOutlet weak var nextUnitButton: UIButton!
     @IBOutlet weak var nextVillageButton: UIButton!
 
@@ -65,12 +63,21 @@ class GameViewController: UIViewController {
     @IBOutlet weak var characterState: UILabel!
 
     @IBOutlet weak var turnLabel: UILabel!
+    @IBOutlet weak var turnColorRectangle: UIView!
     @IBOutlet weak var playerGoldWoodLabel: UILabel!
+
+    // MARK: Toast
+    @IBOutlet weak var toastLabel: UILabel!
 
     // MARK - Info Panel
 
     func updateInfoPanel(tile: Tile?) {
+        // Enable or disable end turn button
+//        self.endTurnButton.enabled = GameEngine.Instance.game?.localIsCurrentPlayer ?? false
+
+        // Set player label
         self.updateTurnLabel()
+
         // Update player gold/wood
         let goldText = "Gold: " + String((GameEngine.Instance.game?.localPlayer.gold)!)
         let woodText = "Wood: " + String((GameEngine.Instance.game?.localPlayer.wood)!)
@@ -115,13 +122,28 @@ class GameViewController: UIViewController {
         self.characterWage.text = "Wage: " + String(unit.type.wage())
         self.characterState.text = unit.currentAction.name()
     }
-    
+
     func removeUnitInfo() { }
 
     // MARK: - Turn label update
 
     func updateTurnLabel() {
         self.turnLabel.text = GameEngine.Instance.game?.nameOfActivePlayer
+
+        // Show color
+        self.turnColorRectangle.backgroundColor = Utilities.Colors.colorForPlayer(MatchHelper.sharedInstance().currentParticipantIndex())
+    }
+
+    // MARK: - Toast
+
+    func showToast(msg: String) {
+        self.toastLabel.text = msg
+        self.toastLabel.hidden = false
+        NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("hideToast"), userInfo: nil, repeats: false)
+    }
+
+    func hideToast() {
+        self.toastLabel.hidden = true
     }
 
     // MARK: - Initializers
@@ -152,17 +174,38 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//
+//        self.updateInfoPanel(nil)
+//        self.hideUnitSelection()
+//
+//        validateButton.hidden = true
+//        cancelButton.hidden = true
+//
+//        self.showGamePlayScene()
+    }
 
-        self.showNeutralInfo(nil)
+    override func viewWillAppear(animated: Bool) {
+        // Set MatchHelper's view controller
+        MatchHelper.sharedInstance().vc = self
+
+        self.updateInfoPanel(nil)
         self.hideUnitSelection()
 
         validateButton.hidden = true
         cancelButton.hidden = true
 
-        // Set MatchHelper's view controller
-        MatchHelper.sharedInstance().vc = self
-
         self.showGamePlayScene()
+    }
+
+    func unwind() {
+        self.performSegueWithIdentifier("unwindFromGame", sender: self)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "unwindFromGame" {
+            let vc = segue.destinationViewController as MainMenuViewController
+            MatchHelper.sharedInstance().vc = vc
+        }
     }
 
     // MARK: - Button Handlers
@@ -382,6 +425,7 @@ class GameViewController: UIViewController {
 
     @IBAction func validateButtonTapped(sender: AnyObject) {
         GameEngine.Instance.map?.resetColor()
+        GameEngine.Instance.map?.draw()
         let dest = GameEngine.Instance.map?.selected
         if self.state == .AttackPressed {
             GameEngine.Instance.attack(tileSource!, to: dest!)
@@ -531,19 +575,38 @@ class GameViewController: UIViewController {
 
     func showUpgradeOptions(tile: Tile) {
         if let u = tile.unit {
-        // show container
-        self.upgradeUnitContainer.hidden = false
+            // show container
+            self.upgradeUnitContainer.hidden = false
+
+            let ownerType = tile.owner.type.rawValue
 
             switch u.type {
             case .Peasant:
-            self.infantryButton.enabled = true
-            self.soldierButton.enabled = true
-            self.knightButton.enabled = true
+                if tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue {
+                    self.infantryButton.enabled = true
+                }
+                if ownerType > Constants.Types.Village.Town.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue * 2 {
+                    self.soldierButton.enabled = true
+                }
+                if ownerType > Constants.Types.Village.Fort.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue * 3 {
+                    self.knightButton.enabled = true
+                }
             case .Infantry:
-            self.soldierButton.enabled = true
-            self.knightButton.enabled = true
+                if ownerType > Constants.Types.Village.Town.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue{
+                    self.soldierButton.enabled = true
+                }
+                if ownerType > Constants.Types.Village.Fort.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue * 2 {
+                    self.knightButton.enabled = true
+                }
             case .Soldier:
-            self.knightButton.enabled = true
+                if ownerType > Constants.Types.Village.Fort.rawValue
+                            && tile.owner.gold >= Constants.Cost.Upgrade.Unit.rawValue {
+                    self.knightButton.enabled = true
+                }
             default:
                 println("wut")
             }
@@ -554,17 +617,25 @@ class GameViewController: UIViewController {
         if let v = tile.owner {
             self.upgradeUnitContainer.hidden = false
 
-            self.peasantButton.enabled = true
-            self.infantryButton.enabled = true
+            if tile.owner.gold >= Constants.Types.Unit.Peasant.cost().0 {
+                self.peasantButton.enabled = true
+            }
+            if tile.owner.gold >= Constants.Types.Unit.Infantry.cost().0 {
+                self.infantryButton.enabled = true
+            }
 
-            if v.type.rawValue >= 1 {
-            self.soldierButton.enabled = true
+            if v.type.rawValue >= 1
+                        && tile.owner.gold >= Constants.Types.Unit.Soldier.cost().0 {
+                self.soldierButton.enabled = true
             }
-            if v.type.rawValue >= 2 {
-            self.knightButton.enabled = true
+            if v.type.rawValue >= 2
+                        && tile.owner.gold >= Constants.Types.Unit.Knight.cost().0 {
+                self.knightButton.enabled = true
             }
-            if v.type.rawValue >= 3 {
-            self.canonButton.enabled = true
+            if v.type.rawValue >= 3
+                        && tile.owner.gold >= Constants.Types.Unit.Canon.cost().0
+                        && tile.owner.wood >= Constants.Types.Unit.Canon.cost().1 {
+                self.canonButton.enabled = true
             }
         }
     }

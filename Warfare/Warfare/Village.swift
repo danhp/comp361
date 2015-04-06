@@ -6,8 +6,8 @@ class Village {
     var player: Player?
     var type = Constants.Types.Village.Hovel
     var state = Constants.Village.Action.ReadyForOrders
-    var gold: Int = 0
-    var wood: Int = 0
+    var gold: Int = 7
+    var wood: Int = 7
 
     var health: Int = 1
 
@@ -37,42 +37,57 @@ class Village {
     }
 
     func upgradeVillage() {
-        if self.type == Constants.Types.Village.Castle { return }
-        if self.disaled { return }
+        if self.type == Constants.Types.Village.Castle {
+            GameEngine.Instance.showToast("You can't upgrade a castle")
+            return
+        }
+        if self.disaled {
+            GameEngine.Instance.showToast("That village is busy")
+            return
+        }
 
         let newLevel = Constants.Types.Village(rawValue: self.type.rawValue + 1)
         let cost = newLevel?.upgradeCost()
-
-        if self.wood >= cost {
-            self.wood -= cost!
-            self.type = newLevel!
-            self.health = self.type.health()
+        if cost > self.wood {
+            GameEngine.Instance.showToast("That village lacks the resources to upgrade")
+            return
         }
+
+        self.wood -= cost!
+        self.type = newLevel!
+        self.health = self.type.health()
 
         self.state = .Upgrading1
     }
 
-    func upgradeUnit(unit: Unit, newType: Constants.Types.Unit) {
-        if !self.containsUnit(unit) { return }
-        if unit.type == .Knight || unit.type == .Canon { return }
+    func upgradeUnit(unitTile: Tile, newType: Constants.Types.Unit) {
+        if let unit = unitTile.unit {
+            if unitTile.owner !== self {
+                GameEngine.Instance.showToast("You don't own that tile")
+                return
+            }
+            if unit.type == .Knight || unit.type == .Canon {
+                GameEngine.Instance.showToast("That unit has reached his maximum potential")
+                return
+            }
 
-        let upgradeInterval = newType.rawValue - unit.type.rawValue
+            let upgradeInterval = newType.rawValue - unit.type.rawValue
 
-        if upgradeInterval >= 1 && self.gold >= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue {
+            if upgradeInterval < 1 {
+                GameEngine.Instance.showToast("That upgrade isn't legal")
+                return
+            }
+            if self.gold < upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue {
+                GameEngine.Instance.showToast("You don't have the resoureces to upgrade the unit")
+                return
+            }
+
             self.gold -= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue
             unit.type = newType
             unit.currentAction = .UpgradingCombining
+        } else {
+            GameEngine.Instance.showToast("There are no units to upgrade there")
         }
-    }
-
-    func containsUnit(unit: Unit) -> Bool {
-        for tile in self.controlledTiles {
-            if tile.unit === unit {
-                return true
-            }
-        }
-
-        return false
     }
 
     func compareTo(village: Village) -> Bool {

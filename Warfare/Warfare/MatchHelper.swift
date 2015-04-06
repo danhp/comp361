@@ -89,7 +89,6 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
             self.userAuthenticated = true
             GKLocalPlayer.localPlayer().unregisterAllListeners()
             GKLocalPlayer.localPlayer().registerListener(self)
-            println("Registered GKLocalPlayer listener")
         } else if !GKLocalPlayer.localPlayer().authenticated && self.userAuthenticated {
             self.userAuthenticated = false
         }
@@ -164,19 +163,17 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         }
     }
 
-    // TODO also take care of match outcome
     func nextParticipants(current: Int) -> NSArray {
-        // Too pretty to eliminate
-        //        var playing = [GKTurnBasedParticipant]()
-        //        var eliminated = [GKTurnBasedParticipant]()
-        //
-        //        self.myMatch?.participants.map({($0.matchOutcome == .None) ? playing.append($0) : eliminated.append($0)})
+        var playing = [GKTurnBasedParticipant]()
+        var eliminated = [GKTurnBasedParticipant]()
 
-        let nextParticipants = NSMutableArray(capacity: 3)
-        nextParticipants[0] = (self.myMatch?.participants[(current+1)%3])!
-        nextParticipants[1] = (self.myMatch?.participants[(current+2)%3])!
-        nextParticipants[2] = (self.myMatch?.participants[current])! // should be current participant
-        return nextParticipants
+        let current = self.myMatch?.currentParticipant
+
+       self.myMatch?.participants.map({($0.matchOutcome == .None && $0 !== current) ? playing.append($0 as GKTurnBasedParticipant) : eliminated.append($0 as GKTurnBasedParticipant)})
+
+        playing.append(current!)
+
+        return NSArray(array: playing + eliminated)
     }
 
     func nextParticipants() -> NSArray {
@@ -226,8 +223,10 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     }
 
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, didFindMatch match: GKTurnBasedMatch!) {
-        self.myMatch = match
-        self.loadMatchData()
+        self.vc?.dismissViewControllerAnimated(true, completion: ({
+            self.myMatch = match
+            self.loadMatchData()
+        }))
     }
 
     func turnBasedMatchmakerViewController(controller: GKTurnBasedMatchmakerViewController!, playerQuitForMatch match: GKTurnBasedMatch!) {

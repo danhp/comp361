@@ -95,7 +95,7 @@ class Map: SKNode {
 
         return neighbors
     }
-    
+
     func centerAround(centerAround: Tile) {
         let positionInScene = convertPoint(centerAround.position, fromNode: self.scroller)
         println(positionInScene)
@@ -229,8 +229,22 @@ class Map: SKNode {
                                 result.append(t)
                             }
                         } else {
+                            if t.owner != nil && seed.unit?.type == Constants.Types.Unit.Peasant { continue }
+                            if t.village == Constants.Types.Village.Castle { continue }
                             if !t.isProtected(seed.unit!) {
-                                result.append(t)
+                                var b = false
+                                for n in self.neighbors(tile: t) {
+                                    if n.owner == nil { continue }
+                                    if n.owner.player !== seed.owner.player {
+                                        if n.unit?.type == Constants.Types.Unit.Canon { continue }
+                                        if n.isProtected(seed.unit!) {
+                                            b = true
+                                        }
+                                    }
+                                }
+                                if !b {
+                                    result.append(t)
+                                }
                             }
                         }
                         seen.append(t)
@@ -290,12 +304,12 @@ class Map: SKNode {
 
         for n in neighbors(tile: seed) {
             for n2 in neighbors(tile: n) {
-                if n2.owner !== seed.owner {
+                if n2.owner !== seed.owner && !n2.isBelongsToLocal() {
                     result.append(n2)
                 }
             }
 
-            if n.owner !== seed.owner {
+            if n.owner !== seed.owner && !n.isBelongsToLocal() {
                 result.append(n)
             }
         }
@@ -342,9 +356,9 @@ class Map: SKNode {
                 tile.draw()
                 tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
 
-//              let label = SKLabelNode(text: s)
-//                label.fontSize = 16.0
-//              tile.addChild(label)
+                // let label = SKLabelNode(text: String(coord.x) + ", " + String(coord.y))
+                // label.fontSize = 16.0
+                // tile.addChild(label)
                 self.scroller.addChild(tile)
             }
         }

@@ -11,6 +11,7 @@ import GameKit
 
 class Game {
     var players = [Player]()
+    var roundCount = 0
     var currentPlayer: Player { return self.players[MatchHelper.sharedInstance().currentParticipantIndex()] }
     var localPlayer: Player { return self.players[MatchHelper.sharedInstance().localParticipantIndex()] }
 
@@ -73,12 +74,15 @@ class Game {
                 self.neutralTiles.append(t)
             }
         }
+
+       self.roundCount = dict["roundCount"] as? Int ?? 0
     }
 
     // Serializes the current game
     func serialize() -> NSDictionary {
         var dict = [String: AnyObject]()
 
+        dict["roundCount"] = self.roundCount
         dict["players"] = self.players.map({$0.serialize()})
         dict["neutral"] = self.neutralTiles.map({$0.serialize()})
 
