@@ -88,7 +88,11 @@ class GameViewController: UIViewController {
             if let village = t.owner {
                 showVillageInfo(village)
 
-                if let unit = t.unit { showUnitInfo(unit) }
+                if let unit = t.unit {
+                    if t.isBelongsToLocal() {
+                        showUnitInfo(unit)
+                    }
+                }
             } else { showNeutralInfo(tile) }
         }
     }
@@ -110,10 +114,13 @@ class GameViewController: UIViewController {
 
     func showVillageInfo(village: Village) {
         self.regionVillage.image = UIImage(named: village.type.name())
-        self.regionGold.text = "Gold: " + String(village.gold)
-        self.regionWood.text = "Wood: " + String(village.wood)
         self.regionHP.text =  "HP: " + String(village.health)
-        self.regionState.text = village.state.name()
+
+        if village.player === GameEngine.Instance.game?.localPlayer {
+            self.regionGold.text = "Gold: " + String(village.gold)
+            self.regionWood.text = "Wood: " + String(village.wood)
+            self.regionState.text = village.state.name()
+        }
     }
 
     func showUnitInfo(unit: Unit) {
