@@ -19,7 +19,7 @@ class GameScene: SKScene {
 
         if let m = self.map {
             m.draw()
-            m.position = CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
+            m.position = CGPoint(x:0,y:0)
             m.removeFromParent()
             self.addChild(m)
         }

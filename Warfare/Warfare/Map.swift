@@ -97,9 +97,8 @@ class Map: SKNode {
     }
 
     func centerAround(centerAround: Tile) {
-        let positionInScene = convertPoint(centerAround.position, fromNode: self.scroller)
-        println(positionInScene)
-        let delta = CGVector(dx: -positionInScene.x , dy: -positionInScene.y )
+        let positionInMap = convertPoint(centerAround.position, fromNode: self.scroller)
+        let delta = CGVector(dx: -positionInMap.x , dy: -positionInMap.y )
         self.scroll(delta)
     }
 
