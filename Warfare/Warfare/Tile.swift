@@ -40,8 +40,6 @@ class Tile: SKNode, Hashable {
 
         self.owner = village
         self.deserialize(dict)
-
-        self.draw()
     }
 
     init(coordinates: (Int, Int), landType: Constants.Types.Land = .Grass) {
@@ -56,6 +54,7 @@ class Tile: SKNode, Hashable {
         self.removeAllChildren()
 
         let alpha = selected ? Constants.Tile.Alpha.selected.rawValue: (lighten ? Constants.Tile.Alpha.flood.rawValue : Constants.Tile.Alpha.normal.rawValue)
+        if
         self.background.color = Utilities.Colors.colorForLandType(self.land, alpha: alpha)
         self.background.colorBlendFactor = 1
 

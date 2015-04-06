@@ -164,16 +164,22 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     }
 
     func nextParticipants(current: Int) -> NSArray {
-        var playing = [GKTurnBasedParticipant]()
-        var eliminated = [GKTurnBasedParticipant]()
 
-        let current = self.myMatch?.currentParticipant
+        let nextParticipants = NSMutableArray(capacity: 3)
+        nextParticipants[0] = (self.myMatch?.participants[(current+1)%3])!
+        nextParticipants[1] = (self.myMatch?.participants[(current+2)%3])!
+        nextParticipants[2] = (self.myMatch?.participants[current])! // should be current participant
 
-       self.myMatch?.participants.map({($0.matchOutcome == .None && $0 !== current) ? playing.append($0 as GKTurnBasedParticipant) : eliminated.append($0 as GKTurnBasedParticipant)})
+        // move eliminated players at the end
+        let tmp = NSArray(array: nextParticipants)
 
-        playing.append(current!)
-
-        return NSArray(array: playing + eliminated)
+        for p in tmp {
+            if p.matchOutcome != .None {
+                nextParticipants.removeObjectAtIndex(0)
+                nextParticipants.addObject(p)
+            }
+        }
+        return nextParticipants
     }
 
     func nextParticipants() -> NSArray {
