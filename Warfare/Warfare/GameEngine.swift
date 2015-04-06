@@ -411,55 +411,6 @@ class GameEngine {
         self.checkPostAttack(enemyVillage)
     }
 
-    func attack(from: Tile, to: Tile) {
-        if from.owner.player !== self.game?.currentPlayer { return }
-        if from.unit?.type != Constants.Types.Unit.Canon { return }
-        if to.isBelongsToLocal() { return }
-        if from.owner.wood < 1 { return }
-        if to.land == .Sea { return }
-        if !(self.map?.isDistanceOfTwo(from, to: to))! { return }
-
-        var enemyVillage = to.owner
-
-        to.structure = nil
-        to.land = .Grass
-        if to.unit != nil {
-            to.unit = nil
-            to.structure = .Tombstone
-        }
-        if to.village != nil {
-            to.owner.attacked()
-            if to.owner.health == 0 {
-                let newHovel = Village()
-                to.village = nil
-                to.owner.player?.removeVillage(to.owner)
-                to.owner.player?.addVillage(newHovel)
-                for t in to.owner.controlledTiles {
-                    if t === to {
-                        self.game?.neutralTiles.append(t)
-                        to.owner = nil
-                    } else {
-                        newHovel.addTile(t)
-                    }
-                }
-                enemyVillage = newHovel
-            }
-        } else {
-            self.game?.neutralTiles.append(to)
-            if let o = to.owner {
-                to.owner.removeTile(to)
-            }
-        }
-
-        if let v = enemyVillage {
-            self.checkPostAttack(v)
-        }
-
-        from.unit?.currentAction = Constants.Unit.Action.Moved
-        from.owner.wood -= 1
-        self.availableUnits = self.availableUnits.filter({ $0 !== from })
-    }
-
     private func checkPostAttack(enemyVillage: Village) {
         let regions = (self.map?.getRegions(enemyVillage.controlledTiles))!
         for r in regions {
