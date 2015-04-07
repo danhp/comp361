@@ -636,7 +636,7 @@ class GameEngine {
             }
         }
         if destination == nil {
-            self.showToast("There no more room around your village")
+            self.showToast("There is no more room around that village")
             return
         }
 
@@ -655,7 +655,7 @@ class GameEngine {
 
         // For testing purposes this is uncommented at times.
 //        newUnit.currentAction = .Moved
-//        self.availableUnits.append(destination!)
+        self.availableUnits.append(destination!)
         destination!.unit = newUnit
     }
 
@@ -686,6 +686,7 @@ class GameEngine {
         // Update the state
         village.wood -= tower.cost()
         on.structure = tower
+        on.land = .Grass
     }
 
     // Moves unit from -> on, instruct unit to start building road.
@@ -881,10 +882,9 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-        self.startGameWithMap(1)
-        self.beginTurn()
-        self.showGameScene()
-        return
+//        self.startGameWithMap(3)
+//        self.showGameScene()
+//        return
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data

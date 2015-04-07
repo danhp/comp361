@@ -238,7 +238,6 @@ class GameViewController: UIViewController {
         self.betweenPresses()
         self.state = .AttackPressed
         self.tileSource = GameEngine.Instance.map?.selected
-        GameEngine.Instance.map?.resetColor()
 
         self.hideButton(attackButton)
         let seed = GameEngine.Instance.map?.selected
@@ -247,7 +246,6 @@ class GameViewController: UIViewController {
                 t.lighten = true
             }
         }
-        GameEngine.Instance.map?.draw()
     }
 
     @IBAction func buildButtonTapped(sender: AnyObject) {
@@ -274,7 +272,6 @@ class GameViewController: UIViewController {
     @IBAction func towerButtonTapped(sender: AnyObject) {
         self.state = .BuildTowerPressed
 
-        GameEngine.Instance.map?.resetColor()
         if let tiles = tileSource?.owner.controlledTiles {
             for t in tiles {
                 if t.isBuildable() {
@@ -287,7 +284,6 @@ class GameViewController: UIViewController {
     @IBAction func roadButtonTapped(sender: AnyObject) {
         self.state = .BuildRoadPressed
 
-        GameEngine.Instance.map?.resetColor()
         if let tiles = GameEngine.Instance.map?.getBuildableRegion(tileSource!) {
             for t in tiles {
                 t.lighten = true
@@ -298,7 +294,6 @@ class GameViewController: UIViewController {
     @IBAction func meadowButtonTapped(sender: AnyObject) {
         self.state = .BuildMeadowPressed
 
-        GameEngine.Instance.map?.resetColor()
         if let tiles = GameEngine.Instance.map?.getBuildableRegion(tileSource!) {
             for t in tiles {
                 t.lighten = true
@@ -310,15 +305,13 @@ class GameViewController: UIViewController {
     func doneWithBuild() {
         self.betweenPresses()
         self.upgradeStructureContainer.hidden = true
-        self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
-        GameEngine.Instance.map?.draw()
+        GameEngine.Instance.updateInfoPanel()
     }
 
     @IBAction func moveButtonTapped(sender: AnyObject) {
         self.betweenPresses()
         self.state = .MovePressed
         if !(GameEngine.Instance.game?.localIsCurrentPlayer)! { return }
-        GameEngine.Instance.map?.resetColor()
 
         self.tileSource = GameEngine.Instance.map?.selected
 
@@ -335,8 +328,6 @@ class GameViewController: UIViewController {
                 self.cancelButton.hidden = false
             }
         }
-
-        GameEngine.Instance.map?.draw()
     }
 
     @IBAction func combineButtonTapped(sender: AnyObject) {
