@@ -73,7 +73,8 @@ class GameViewController: UIViewController {
 
     func updateInfoPanel(tile: Tile?) {
         // Enable or disable end turn button
-//        self.endTurnButton.enabled = GameEngine.Instance.game?.localIsCurrentPlayer ?? false
+        self.endTurnButton.enabled = GameEngine.Instance.game?.localIsCurrentPlayer ?? false
+        self.endTurnButton.hidden = GameEngine.Instance.matchEnded
 
         // Set player label
         self.updateTurnLabel()
@@ -184,14 +185,6 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         MatchHelper.sharedInstance().vc = self
-//
-//        self.updateInfoPanel(nil)
-//        self.hideUnitSelection()
-//
-//        validateButton.hidden = true
-//        cancelButton.hidden = true
-//
-//        self.showGamePlayScene()
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -308,7 +301,7 @@ class GameViewController: UIViewController {
     func doneWithBuild() {
         self.betweenPresses()
         self.upgradeStructureContainer.hidden = true
-        GameEngine.Instance.updateInfoPanel()
+        self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
         GameEngine.Instance.map?.draw()
     }
 
@@ -353,7 +346,7 @@ class GameViewController: UIViewController {
         MatchHelper.sharedInstance().advanceMatchTurn()
 
         GameEngine.Instance.map?.resetColor()
-        GameEngine.Instance.updateInfoPanel()
+        self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
         GameEngine.Instance.map?.draw()
     }
 
@@ -374,7 +367,7 @@ class GameViewController: UIViewController {
             self.showButton(cancelButton)
         }
 
-        GameEngine.Instance.updateInfoPanel()
+        self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
         GameEngine.Instance.map?.draw()
     }
 
@@ -429,7 +422,7 @@ class GameViewController: UIViewController {
         self.hideUnitSelection()
         self.hideButton(cancelButton)
         self.state = .NothingPressed
-        GameEngine.Instance.updateInfoPanel()
+        self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
         GameEngine.Instance.map?.draw()
     }
 
@@ -457,7 +450,7 @@ class GameViewController: UIViewController {
             }
         }
 
-        GameEngine.Instance.updateInfoPanel()
+        self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
         validateButton.hidden = true
         cancelButton.hidden = true
         if self.state != .MovePressed && self.state != .BuildRoadPressed && self.state != .BuildMeadowPressed {
@@ -557,7 +550,7 @@ class GameViewController: UIViewController {
 
         self.hideButton(nextUnitButton)
         self.hideButton(nextVillageButton)
-        self.hideButton(endTurnButton)
+//        self.hideButton(endTurnButton)
     }
 
     func betweenPresses() {

@@ -20,6 +20,7 @@ class GameScene: SKScene {
         if let m = self.map {
             m.draw()
             m.position = CGPoint(x:0,y:0)
+            m.centerAround((self.map?.tiles[4,4])!)
             m.removeFromParent()
             self.addChild(m)
         }
