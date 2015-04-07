@@ -143,10 +143,14 @@ class GameViewController: UIViewController {
 
     // MARK: - Toast
 
-    func showToast(msg: String) {
+    func showToast(msg: String, infinite: Bool = false) {
         self.toastLabel.text = msg
         self.toastLabel.hidden = false
-        NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("hideToast"), userInfo: nil, repeats: false)
+
+        // if not infinite, discard toast after 5 seconds
+        if !infinite {
+            NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("hideToast"), userInfo: nil, repeats: false)
+        }
     }
 
     func hideToast() {
@@ -181,6 +185,7 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        MatchHelper.sharedInstance().vc = self
 //
 //        self.updateInfoPanel(nil)
 //        self.hideUnitSelection()

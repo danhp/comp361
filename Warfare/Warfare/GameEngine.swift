@@ -98,10 +98,19 @@ class GameEngine {
 
     // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
+        if (!self.game?.localIsCurrentPlayer)! { return }
+
         self.availableUnits = []
         self.availableVillages = []
 
         self.game?.roundCount++
+
+        var gold = 0
+        var wages = 0
+        var starved = 0
+        var meadows = 0
+        var roads = 0
+        var unitsReady = 0
 
         for village in (self.game?.currentPlayer.villages)! {
             // Update the village's state
@@ -125,12 +134,15 @@ class GameEngine {
                     } else {
                         if action == .FinishCultivating {
                             tile.land = .Meadow
+                            meadows++
                         } else if action == .BuildingRoad {
                             tile.structure = .Road
+                            roads++
                         }
 
                         tile.unit?.currentAction = Constants.Unit.Action.ReadyForOrders
                         self.availableUnits.append(tile)
+                        unitsReady++
                     }
                 }
 
@@ -145,13 +157,25 @@ class GameEngine {
 
                 // Payout wages
                 village.gold -= tile.wage()
+
+                gold += tile.goldValue()
+                wages += tile.wage()
             }
 
-            // Delete the Village
+            // Starve the Village
             if village.gold <= 0 {
+                starved++
                 self.starveVillage(village)
             }
         }
+
+        let goldString = "You gained " + String(gold) + " gold and paid " + String(wages) + " gold. "
+        let starvedString = ((starved > 0) ? String(starved) + " of your villages starved. " : "")
+        let meadowString = (meadows > 0 ? String(meadows) + " meadows were cultivated. " : "")
+        let roadString = (roads > 0 ? String(roads) + " roads were built. " : "")
+        let unitString = "You now have " + String(unitsReady) + " units ready. "
+        let msg =  goldString +  starvedString + meadowString + roadString + unitString
+        self.showToast(msg)
     }
 
     private func starveVillage(village: Village) {
@@ -874,13 +898,13 @@ class GameEngine {
                 } else {
                     self.game = Game()
                     self.game?.importDictionary(dict)
+                    self.scene?.resetMap()
+                    self.updateTurnLabel()
+                    self.showGameScene()
                     self.beginTurn()
                     if (self.game?.roundCount)! % 3 == 0 {
                         self.growTrees()
                     }
-                    self.scene?.resetMap()
-                    self.updateTurnLabel()
-                    self.showGameScene()
                 }
             }
 
