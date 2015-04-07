@@ -37,6 +37,7 @@ class MapSelectionViewController: UIViewController {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
 
+        println(GameEngine.Instance.userSelectingMap)
         self.confirmationButton.enabled = GameEngine.Instance.userSelectingMap
     }
 
@@ -56,8 +57,6 @@ class MapSelectionViewController: UIViewController {
     }
     
     @IBAction func confirmationAction(sender: AnyObject) {
-        if !self.confirmationButton.enabled { return }
-
         self.confirmationButton.enabled = false
 
         // GameEngine will take care of dismissing this view controller

@@ -19,7 +19,7 @@ class GameEngine {
 
     // Map selection
     private var currentChoices: [Int]?
-    var userSelectingMap: Bool { return MatchHelper.sharedInstance().localParticipantIndex() == self.currentChoices?.count }
+    var userSelectingMap: Bool { return (self.currentChoices == nil && MatchHelper.sharedInstance().localParticipantIndex() == 0) || MatchHelper.sharedInstance().localParticipantIndex() == self.currentChoices?.count }
 
     init() { }
 
@@ -850,9 +850,9 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-        self.startGameWithMap(4)
-        self.showGameScene()
-        return
+//        self.startGameWithMap(4)
+//        self.showGameScene()
+//        return
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data
