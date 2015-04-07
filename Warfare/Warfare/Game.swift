@@ -18,7 +18,13 @@ class Game {
     let map = Map()
     var neutralTiles = [Tile]()
 
-    var localIsCurrentPlayer: Bool { return GKLocalPlayer.localPlayer().playerID == MatchHelper.sharedInstance().myMatch?.currentParticipant.playerID}
+    var localIsCurrentPlayer: Bool {
+        if !GameEngine.Instance.matchEnded {
+            return GKLocalPlayer.localPlayer().playerID == MatchHelper.sharedInstance().myMatch?.currentParticipant.playerID
+        } else {
+            return false
+        }
+    }
 
     var nameOfActivePlayer: String {
         return GameEngine.Instance.matchEnded ? "MATCH ENDED" : self.localIsCurrentPlayer ? "Your turn" : ("Player " + String(MatchHelper.sharedInstance().currentParticipantIndex()) + "'s turn")

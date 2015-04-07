@@ -24,8 +24,6 @@ class MapSelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.confirmationButton.enabled = true
-
         self.setChoiceView(self.map1.image!)
 
         // add tap gesture to images
@@ -38,6 +36,8 @@ class MapSelectionViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
+
+        self.confirmationButton.enabled = GameEngine.Instance.userSelectingMap
     }
 
     func segueToGameViewController() {
@@ -66,6 +66,8 @@ class MapSelectionViewController: UIViewController {
     }
     
     func mapTapped(sender: UITapGestureRecognizer) {
+        if !GameEngine.Instance.userSelectingMap { return }
+
         if sender.state == .Ended {
             if let view = sender.view as? UIImageView {
                 if let image = view.image {

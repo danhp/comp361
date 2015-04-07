@@ -19,6 +19,7 @@ class GameEngine {
 
     // Map selection
     private var currentChoices: [Int]?
+    var userSelectingMap: Bool { return MatchHelper.sharedInstance().localParticipantIndex() == self.currentChoices?.count }
 
     init() { }
 
