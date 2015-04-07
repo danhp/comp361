@@ -122,26 +122,12 @@ class Map: SKNode {
         while !queue.isEmpty {
             let node = queue.pop()
 
-            // Return the path
-            if node?.tile == to {
-                var current = to
-                var finalPath = [Tile]()
-                finalPath.append(current)
-
-                while current != from {
-                    current = cameFrom[current]!
-                    finalPath.append(current)
-                }
-
-                return finalPath.reverse()
-            }
-
             // Add unvisited neighbors to the queue
             for t in neighbors(tile: (node?.tile)!) {
                 let newCost = costSoFar[(node?.tile)!]! + t.land.priority()
 
                 if t.isWalkable()
-                            && contains(accessible, { $0 === t })
+                            && t.owner === from.owner
                             && (newCost < costSoFar[t] || !contains(seen, {$0 === t}))
                             || (t === to  && t.land != .Sea) {
                     queue.push(Node(priority: newCost, tile: t))
@@ -149,6 +135,20 @@ class Map: SKNode {
                     cameFrom[t] = node?.tile
                 }
                 seen += [t]
+
+                // Return the path with early exit
+                if t == to {
+                    var current = to
+                    var finalPath = [Tile]()
+                    finalPath.append(current)
+
+                    while current != from {
+                        current = cameFrom[current]!
+                        finalPath.append(current)
+                    }
+
+                    return finalPath.reverse()
+                }
             }
         }
 
@@ -180,7 +180,8 @@ class Map: SKNode {
 
                 // Visit the neighbours
                 for t in neighbors(tile: tile) {
-                    if contains(tileSet, {$0 === t}) && !contains(seen, {$0 === t}) {
+                    if contains(seen, t) { continue }
+                    if contains(tileSet, t) {
                         queue.append(t)
                     }
                     seen.append(t)
@@ -217,7 +218,7 @@ class Map: SKNode {
                     var newSeed = queue.removeLast()
 
                     for t in neighbors(tile: newSeed) {
-                        if contains(seen, { $0 === t}) { continue }
+                        if contains(seen, t) { continue }
                         if unitType.rawValue > 3 && !t.isWalkable() { continue }
                         if t.land == .Sea { continue }
 
@@ -273,7 +274,7 @@ class Map: SKNode {
             var newSeed = queue.removeLast()
 
             for t in neighbors(tile: newSeed) {
-                if contains(seen, { $0 === t}) { continue }
+                if contains(seen, t) { continue }
                 if !t.isWalkable() { continue }
                 if t.land == .Sea { continue }
 
