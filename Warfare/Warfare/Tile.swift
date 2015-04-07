@@ -28,7 +28,10 @@ class Tile: SKNode, Hashable {
 
     var selected: Bool = false {
         didSet {
-            self.draw()
+            let alpha = selected ? Constants.Tile.Alpha.selected.rawValue: (lighten ? Constants.Tile.Alpha.flood.rawValue : Constants.Tile.Alpha.normal.rawValue)
+
+            self.background.color = Utilities.Colors.colorForLandType(self.land, alpha: alpha)
+            self.background.colorBlendFactor = 1
         }
     }
 

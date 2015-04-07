@@ -40,9 +40,6 @@ class Map: SKNode {
                 vc.update(newValue!)
                 GameEngine.Instance.updateInfoPanel()
             }
-
-            // Added due to a weird behaviour of run action
-            self.draw()
         }
     }
 
