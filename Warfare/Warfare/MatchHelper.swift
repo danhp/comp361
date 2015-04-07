@@ -43,6 +43,8 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     }
 
     func currentParticipantIndex() -> Int {
+        if GameEngine.Instance.matchEnded { return -1 }
+        
         let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as [GKTurnBasedParticipant]
 
         for (index, p) in enumerate(participants) {
@@ -172,12 +174,11 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         // move eliminated players at the end
         let tmp = NSArray(array: nextParticipants)
 
-        for p in tmp {
-            if p.matchOutcome != .None {
-                nextParticipants.removeObjectAtIndex(0)
-                nextParticipants.addObject(p)
-            }
+        if nextParticipants[0].matchOutcome != .None {
+            nextParticipants.removeObject(nextParticipants[0])
+            nextParticipants.addObject(nextParticipants[0])
         }
+
         return nextParticipants
     }
 
@@ -292,7 +293,8 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
 
     func player(player: GKPlayer!,
         matchEnded match: GKTurnBasedMatch!) {
-
+            self.myMatch = match
+            self.loadMatchData()
     }
 
     func player(player: GKPlayer!,

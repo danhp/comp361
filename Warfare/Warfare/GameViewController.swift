@@ -143,14 +143,12 @@ class GameViewController: UIViewController {
 
     // MARK: - Toast
 
-    func showToast(msg: String, infinite: Bool = false) {
+    func showToast(msg: String, duration: NSTimeInterval = 5.0) {
         self.toastLabel.text = msg
         self.toastLabel.hidden = false
 
         // if not infinite, discard toast after 5 seconds
-        if !infinite {
-            NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: Selector("hideToast"), userInfo: nil, repeats: false)
-        }
+        NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: Selector("hideToast"), userInfo: nil, repeats: false)
     }
 
     func hideToast() {

@@ -71,6 +71,8 @@ class GameEngine {
 
     // Should get called once a cycle (after all player have played their turn
     func growTrees() {
+        if self.matchEnded { return }
+        
         if let rows = self.map?.tiles.rows {
             let allTiles = rows.reduce([], combine: +)
             var seen = [Tile]()
@@ -175,7 +177,7 @@ class GameEngine {
         let roadString = (roads > 0 ? String(roads) + " roads were built. " : "")
         let unitString = "You now have " + String(unitsReady) + " units ready. "
         let msg =  goldString +  starvedString + meadowString + roadString + unitString
-        self.showToast(msg)
+        self.showToast(msg, duration: 10.0)
     }
 
     private func starveVillage(village: Village) {
@@ -821,9 +823,9 @@ class GameEngine {
         }
     }
 
-    func showToast(msg: String) {
+    func showToast(msg: String, duration: NSTimeInterval = 5.0) {
         if let vc = MatchHelper.sharedInstance().vc as? GameViewController {
-            vc.showToast(msg)
+            vc.showToast(msg, duration: duration)
         }
     }
 
