@@ -98,7 +98,7 @@ class GameEngine {
 
     // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
-        if (!self.game?.localIsCurrentPlayer)! { return }
+        if !(self.game?.localIsCurrentPlayer)! { return }
 
         self.availableUnits = []
         self.availableVillages = []
