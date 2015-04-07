@@ -164,7 +164,6 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     }
 
     func nextParticipants(current: Int) -> NSArray {
-
         let nextParticipants = NSMutableArray(capacity: 3)
         nextParticipants[0] = (self.myMatch?.participants[(current+1)%3])!
         nextParticipants[1] = (self.myMatch?.participants[(current+2)%3])!
@@ -194,7 +193,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         // End the match if 2 participant have lost
         if !didEndMatch() {
             // Send the update to Game Center
-            self.updateMatchData()
+//            self.updateMatchData()
         }
     }
 
@@ -204,7 +203,15 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
             var playing = [GKTurnBasedParticipant]()
             var eliminated = [GKTurnBasedParticipant]()
 
-            self.myMatch?.participants.map({($0.matchOutcome == .None) ? playing.append($0 as GKTurnBasedParticipant) : eliminated.append($0 as GKTurnBasedParticipant)})
+//            self.myMatch?.participants.map({($0.matchOutcome == .None) ? playing.append($0 as GKTurnBasedParticipant) : eliminated.append($0 as GKTurnBasedParticipant)})
+
+            for p in self.myMatch?.participants as [GKTurnBasedParticipant] {
+                if p.matchOutcome == .None {
+                    playing.append(p)
+                } else {
+                    eliminated.append(p)
+                }
+            }
 
             if eliminated.count == 2 {
                 playing[0].matchOutcome = .Won
@@ -216,7 +223,6 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         return false
     }
 
-    // TODO right now, called only after removeParticipant() but not player quit
     func endMatch() {
         let finalMatchData = GameEngine.Instance.encodeMatchData()
         self.myMatch?.endMatchInTurnWithMatchData(finalMatchData, completionHandler: {(error: NSError!) -> Void in})
