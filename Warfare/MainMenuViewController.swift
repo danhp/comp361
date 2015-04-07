@@ -13,6 +13,8 @@ class MainMenuViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
+
+        GameEngine.Instance.currentChoices = nil
     }
 
     override func didReceiveMemoryWarning() {

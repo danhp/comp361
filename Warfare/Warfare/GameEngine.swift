@@ -18,7 +18,7 @@ class GameEngine {
     var availableVillages: [Tile] = []
 
     // Map selection
-    private var currentChoices: [Int]?
+    var currentChoices: [Int]?
     var userSelectingMap: Bool { return (self.currentChoices == nil && MatchHelper.sharedInstance().localParticipantIndex() == 0) || MatchHelper.sharedInstance().localParticipantIndex() == self.currentChoices?.count }
 
     init() { }
