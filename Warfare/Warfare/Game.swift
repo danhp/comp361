@@ -27,7 +27,7 @@ class Game {
     }
 
     var nameOfActivePlayer: String {
-        return GameEngine.Instance.matchEnded ? "MATCH ENDED" : self.localIsCurrentPlayer ? "Your turn" : ("Player " + String(MatchHelper.sharedInstance().currentParticipantIndex()) + "'s turn")
+        return GameEngine.Instance.matchEnded ? "Match Ended" : self.localIsCurrentPlayer ? "My turn" : ("Player " + String(MatchHelper.sharedInstance().currentParticipantIndex()) + "'s turn")
     }
 
     var currentPlayerGold: Int { return self.currentPlayer.gold }

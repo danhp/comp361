@@ -64,6 +64,7 @@ class GameViewController: UIViewController {
 
     @IBOutlet weak var turnLabel: UILabel!
     @IBOutlet weak var turnColorRectangle: UIView!
+    @IBOutlet weak var localColorRectangle: UIView!
     @IBOutlet weak var playerGoldWoodLabel: UILabel!
 
     // MARK: Toast
@@ -196,6 +197,8 @@ class GameViewController: UIViewController {
 
         if MatchHelper.sharedInstance().localHasLost { self.showToast("You have lost this game.", duration: 0.0) }
         else if MatchHelper.sharedInstance().localHasWon { self.showToast("You have won this game!", duration: 0.0) }
+
+        self.localColorRectangle.backgroundColor = Utilities.Colors.colorForPlayer(MatchHelper.sharedInstance().localParticipantIndex())
 
         self.updateInfoPanel(nil)
         self.hideUnitSelection()
