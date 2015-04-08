@@ -25,6 +25,7 @@ class GameEngine {
     // Mark: - Audio Player
     var audioPlayer: AVAudioPlayer?
     var musicPlayer: AVAudioPlayer?
+    var yesPlayer: AVAudioPlayer?
 
     func playMusic(inGame: Bool = true) {
         var name: String = "background"
@@ -59,8 +60,8 @@ class GameEngine {
         // play sound
         if random < sounds.count {
             if let url: NSURL = NSBundle.mainBundle().URLForResource(sounds[random], withExtension: "mp3") {
-                let player = AVAudioPlayer(contentsOfURL: url, error: nil)
-                player.play()
+                self.yesPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
+                self.yesPlayer?.play()
             }
         }
     }
@@ -679,7 +680,7 @@ class GameEngine {
         // Hovel (value: 0) can only recruit peasants and infantry (rawVaue: 1 & 2)
         // Town (value: 1) can also recruit soldiers (rawValue: 3)
         // Fort (value: 2) can also recruit knight and canon (rawValue: 4 & 5)
-        if type.rawValue > min(villageTile.owner.type.rawValue + 2, Constants.Types.Village.Fort.rawValue + 1) {
+        if (type.rawValue > village.type.rawValue + 2) && village.type.rawValue < Constants.Types.Village.Fort.rawValue {
             self.showToast("The village can't support that unit")
             return
         }

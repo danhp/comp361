@@ -110,12 +110,12 @@ class GameViewController: UIViewController {
             self.regionVillage.image = (t.land == Constants.Types.Land.Grass) ? nil : (UIImage(named: t.land.name()))
         } else { self.regionVillage.image = nil }
         self.regionVillage.backgroundColor = Utilities.Colors.colorForLandType(tile?.land ?? Constants.Types.Land.Grass, alpha: 1 )
-        self.regionGold.text = "Gold: ?"
-        self.regionWood.text = "Wood: ?"
-        self.regionHP.text = "HP: ?"
+        self.regionGold.text = ""
+        self.regionWood.text = ""
+        self.regionHP.text = ""
         self.regionState.text = ""
-        self.regionIncome.text = "Income: ?"
-        self.regionOutcome.text = "Upkeep: ?"
+        self.regionIncome.text = ""
+        self.regionOutcome.text = ""
         self.characterImage.image = nil
         self.characterName.text = ""
         self.characterWage.text = ""
@@ -132,6 +132,13 @@ class GameViewController: UIViewController {
             self.regionIncome.text = "Income: " + String(village.income)
             self.regionOutcome.text = "Upkeep: " + String(village.upkeep)
             self.regionState.text = village.state.name()
+        } else {
+            self.regionGold.text = "Gold: ?"
+            self.regionWood.text = "Wood: ?"
+            self.regionHP.text = "HP: ?"
+            self.regionState.text = ""
+            self.regionIncome.text = "Income: ?"
+            self.regionOutcome.text = "Upkeep: ?"
         }
     }
 
@@ -656,7 +663,7 @@ class GameViewController: UIViewController {
                         && tile.owner.gold >= Constants.Types.Unit.Knight.cost().0 {
                 self.knightButton.enabled = true
             }
-            if v.type.rawValue >= 3
+            if v.type.rawValue >= 2
                         && tile.owner.gold >= Constants.Types.Unit.Canon.cost().0
                         && tile.owner.wood >= Constants.Types.Unit.Canon.cost().1 {
                 self.canonButton.enabled = true
