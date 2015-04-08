@@ -24,7 +24,6 @@ class GameEngine {
 
     // Mark: - Audio Player
     var audioPlayer: AVAudioPlayer?
-    var shortPlayer: AVAudioPlayer?
     var musicPlayer: AVAudioPlayer?
 
     func playMusic(inGame: Bool = true) {
@@ -41,11 +40,11 @@ class GameEngine {
 
     func stopMusic() { self.musicPlayer?.stop() }
 
-    func playSound(name: String, type: String = "mp3") {
+    func playSound(name: String, type: String = "mp3", loop: Bool = true) {
         if let url: NSURL = NSBundle.mainBundle().URLForResource(name, withExtension: type) {
             self.audioPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
             self.audioPlayer?.play()
-            self.audioPlayer?.numberOfLoops = -1
+            if loop { self.audioPlayer?.numberOfLoops = -1 }
         }
     }
 
@@ -60,8 +59,8 @@ class GameEngine {
         // play sound
         if random < sounds.count {
             if let url: NSURL = NSBundle.mainBundle().URLForResource(sounds[random], withExtension: "mp3") {
-                self.shortPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
-                self.shortPlayer?.play()
+                let player = AVAudioPlayer(contentsOfURL: url, error: nil)
+                player.play()
             }
         }
     }
@@ -716,7 +715,7 @@ class GameEngine {
 //        self.availableUnits.append(destination!)
         destination!.unit = newUnit
 
-        self.playSound("recruit")
+        self.playSound("recruit", type: "mp3", loop: false)
         self.randomYesSound()
     }
 
