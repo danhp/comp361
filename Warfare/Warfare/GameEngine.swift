@@ -121,7 +121,7 @@ class GameEngine {
     // Should get called once a cycle (after all player have played their turn
     func growTrees() {
         if self.matchEnded { return }
-        
+
         if let rows = self.map?.tiles.rows {
             let allTiles = rows.reduce([], combine: +)
             var seen = [Tile]()
@@ -167,6 +167,12 @@ class GameEngine {
             // Update the village's state
             if village.state == .Upgrading1 {
                 village.state = .Upgrading2
+            } else if village.state == .Upgrading2 {
+                village.state = .ReadyForOrders
+                if let newType = Constants.Types.Village(rawValue: village.type.rawValue + 1) {
+                    village.type = newType
+                }
+                village.health = village.type.health()
             } else {
                 village.state = .ReadyForOrders
             }
@@ -951,7 +957,6 @@ class GameEngine {
         self.beginTurn()
         self.showGameScene()
         return
-
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data

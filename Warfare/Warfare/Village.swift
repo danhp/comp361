@@ -58,12 +58,10 @@ class Village {
         }
 
         self.wood -= cost!
-        self.type = newLevel!
-        self.health = self.type.health()
-        
+
         self.state = .Upgrading1
     }
-    
+
     func upgradeUnit(unitTile: Tile, newType: Constants.Types.Unit) {
         if let unit = unitTile.unit {
             if unitTile.owner !== self {
@@ -74,9 +72,9 @@ class Village {
                 GameEngine.Instance.showToast("That unit has reached his maximum potential")
                 return
             }
-            
+
             let upgradeInterval = newType.rawValue - unit.type.rawValue
-            
+
             if upgradeInterval < 1 {
                 GameEngine.Instance.showToast("That upgrade isn't legal")
                 return
@@ -85,7 +83,7 @@ class Village {
                 GameEngine.Instance.showToast("You don't have the resoureces to upgrade the unit")
                 return
             }
-            
+
             self.gold -= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue
             unit.type = newType
             unit.currentAction = .UpgradingCombining
@@ -93,27 +91,36 @@ class Village {
             GameEngine.Instance.showToast("There are no units to upgrade there")
         }
     }
-    
+
     func compareTo(village: Village) -> Bool {
+        if self.type == village.type {
+            if self.state != .ReadyForOrders {
+                return true
+            }
+            if village.state != .ReadyForOrders {
+                return false
+            }
+        }
+
         if self.type.rawValue > village.type.rawValue {
             return true
         } else {
             return false
         }
     }
-    
+
     func attacked() {
         self.health -= 1
     }
-    
+
     func clearRegion() {
         for t in self.controlledTiles {
             t.clear()
         }
     }
-    
+
     // MARK - Drawing
-    
+
     func draw() -> SKNode {
         node = SKNode()
 

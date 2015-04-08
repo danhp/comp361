@@ -12,7 +12,7 @@
                     ]
                 },
                 {
-                    "type":0, "gold":100, "wood":0,
+                    "type":0, "gold":100, "wood":30,
                     "controlledTiles":[
                         { "position":[5,0], "land":0 },
                         { "position":[5,1], "land":0, "village":0 },
