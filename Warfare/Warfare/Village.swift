@@ -10,6 +10,8 @@ class Village {
     var wood: Int = 7
 
     var health: Int = 1
+    var isSmoking: Bool = false
+    var isBurning: Bool = false
 
     var controlledTiles: [Tile] = [Tile]()
 
@@ -56,10 +58,10 @@ class Village {
         self.wood -= cost!
         self.type = newLevel!
         self.health = self.type.health()
-
+        
         self.state = .Upgrading1
     }
-
+    
     func upgradeUnit(unitTile: Tile, newType: Constants.Types.Unit) {
         if let unit = unitTile.unit {
             if unitTile.owner !== self {
@@ -70,9 +72,9 @@ class Village {
                 GameEngine.Instance.showToast("That unit has reached his maximum potential")
                 return
             }
-
+            
             let upgradeInterval = newType.rawValue - unit.type.rawValue
-
+            
             if upgradeInterval < 1 {
                 GameEngine.Instance.showToast("That upgrade isn't legal")
                 return
@@ -81,7 +83,7 @@ class Village {
                 GameEngine.Instance.showToast("You don't have the resoureces to upgrade the unit")
                 return
             }
-
+            
             self.gold -= upgradeInterval * Constants.Cost.Upgrade.Unit.rawValue
             unit.type = newType
             unit.currentAction = .UpgradingCombining
@@ -89,7 +91,7 @@ class Village {
             GameEngine.Instance.showToast("There are no units to upgrade there")
         }
     }
-
+    
     func compareTo(village: Village) -> Bool {
         if self.type.rawValue > village.type.rawValue {
             return true
@@ -97,21 +99,35 @@ class Village {
             return false
         }
     }
-
+    
     func attacked() {
         self.health -= 1
     }
-
+    
     func clearRegion() {
         for t in self.controlledTiles {
             t.clear()
         }
     }
-
+    
     // MARK - Drawing
-
+    
     func draw() -> SKNode {
-        node = SKSpriteNode(imageNamed: self.type.name())
+        node = SKNode()
+
+        if self.isSmoking {
+            let smokePath = NSBundle.mainBundle().pathForResource("smoke", ofType: "sks")
+            let smoke = NSKeyedUnarchiver.unarchiveObjectWithFile(smokePath!) as SKEmitterNode
+            self.node?.addChild(smoke)
+        } else if self.isBurning {
+            let firePath = NSBundle.mainBundle().pathForResource("fire", ofType: "sks")
+            let fire = NSKeyedUnarchiver.unarchiveObjectWithFile(firePath!) as SKEmitterNode
+            self.node?.addChild(fire)
+        }
+
+        self.node?.addChild(SKSpriteNode(imageNamed: self.type.name()))
+
+
         return node!
     }
 

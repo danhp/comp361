@@ -18,6 +18,11 @@
 		13541BEA1AAF7CA300689C60 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371013F1A701096009B807C /* GameViewController.swift */; };
 		13541BEB1AAF7CC900689C60 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1371013B1A701096009B807C /* GameScene.sks */; };
 		13541BEC1AAF7CE000689C60 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1371013D1A701096009B807C /* GameScene.swift */; };
+		135B38AB1AD5A48E0065A2F0 /* smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 135B38A91AD5A48E0065A2F0 /* smoke.sks */; };
+		135B38AC1AD5A48E0065A2F0 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 135B38AA1AD5A48E0065A2F0 /* spark.png */; };
+		135B38BF1AD5A7F50065A2F0 /* fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 135B38BD1AD5A7F50065A2F0 /* fire.sks */; };
+		135B38C21AD5AF5F0065A2F0 /* explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 135B38C11AD5AF5F0065A2F0 /* explosion.sks */; };
+		135B38C91AD5B0F60065A2F0 /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 135B38C71AD5B0F60065A2F0 /* blood.sks */; };
 		135DC1421A783D7E00474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		135DC1431A7849A800474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		1371013A1A701096009B807C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137101391A701096009B807C /* AppDelegate.swift */; };
@@ -73,6 +78,11 @@
 		131D32481A86A7A50073310B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Player.swift; path = Warfare/Player.swift; sourceTree = SOURCE_ROOT; };
 		132A65AA1A8EAAD300D588B2 /* 1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 1.json; path = Warfare/1.json; sourceTree = SOURCE_ROOT; };
 		13390A8D1A9692CC005949A1 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		135B38A91AD5A48E0065A2F0 /* smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = smoke.sks; path = Warfare/smoke.sks; sourceTree = SOURCE_ROOT; };
+		135B38AA1AD5A48E0065A2F0 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = Warfare/spark.png; sourceTree = SOURCE_ROOT; };
+		135B38BD1AD5A7F50065A2F0 /* fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = fire.sks; path = ../fire.sks; sourceTree = "<group>"; };
+		135B38C11AD5AF5F0065A2F0 /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = explosion.sks; path = Warfare/explosion.sks; sourceTree = SOURCE_ROOT; };
+		135B38C71AD5B0F60065A2F0 /* blood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = blood.sks; path = ../blood.sks; sourceTree = "<group>"; };
 		135DC1411A783D7E00474073 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = Warfare/Utilities.swift; sourceTree = SOURCE_ROOT; };
 		137101341A701096009B807C /* warfare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = warfare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		137101381A701096009B807C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -137,6 +147,18 @@
 			name = Maps;
 			sourceTree = "<group>";
 		};
+		135B38AD1AD5A4990065A2F0 /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				135B38C71AD5B0F60065A2F0 /* blood.sks */,
+				135B38A91AD5A48E0065A2F0 /* smoke.sks */,
+				135B38BD1AD5A7F50065A2F0 /* fire.sks */,
+				135B38C11AD5AF5F0065A2F0 /* explosion.sks */,
+				135B38AA1AD5A48E0065A2F0 /* spark.png */,
+			);
+			name = Particles;
+			sourceTree = "<group>";
+		};
 		1371012B1A701096009B807C = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +194,7 @@
 				5299B2781A8984F500EADED0 /* GameEngine.swift */,
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
+				135B38AD1AD5A4990065A2F0 /* Particles */,
 				B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */,
 				1371013F1A701096009B807C /* GameViewController.swift */,
 				B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */,
@@ -303,11 +326,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				13F60EC41ABA30BE008E4BF3 /* 1.json in Resources */,
+				135B38AB1AD5A48E0065A2F0 /* smoke.sks in Resources */,
 				137101481A701096009B807C /* LaunchScreen.xib in Resources */,
+				135B38C91AD5B0F60065A2F0 /* blood.sks in Resources */,
 				52A18F811ACD838E00E12BF7 /* 4.json in Resources */,
 				13C428661ABB623E008E35BD /* 2.json in Resources */,
+				135B38AC1AD5A48E0065A2F0 /* spark.png in Resources */,
+				135B38BF1AD5A7F50065A2F0 /* fire.sks in Resources */,
 				529549561ACCB6860024DBE0 /* 3.json in Resources */,
 				137101451A701096009B807C /* Images.xcassets in Resources */,
+				135B38C21AD5AF5F0065A2F0 /* explosion.sks in Resources */,
 				1371013C1A701096009B807C /* GameScene.sks in Resources */,
 				137101431A701096009B807C /* Main.storyboard in Resources */,
 			);

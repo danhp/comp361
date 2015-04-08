@@ -63,8 +63,8 @@
                "order":2,
                "villages":[
                            {
-                           "type":0,
-                           "gold":40,
+                           "type":1,
+                           "gold":-1000,
                            "wood":35,
                            "controlledTiles":[
                                               {

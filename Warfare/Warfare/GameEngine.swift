@@ -104,7 +104,7 @@ class GameEngine {
 
     // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
-        if !(self.game?.localIsCurrentPlayer)! { return }
+//        if !(self.game?.localIsCurrentPlayer)! { return }
 
         self.availableUnits = []
         self.availableVillages = []
@@ -194,6 +194,7 @@ class GameEngine {
         }
         village.wood = 0
         village.gold = 0
+        village.isStarving = true
     }
 
     private func killVillage(village: Village) {
@@ -880,9 +881,10 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-//        self.startGameWithMap(4)
-//        self.showGameScene()
-//        return
+        self.startGameWithMap(1)
+        self.beginTurn()
+        self.showGameScene()
+        return
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data
