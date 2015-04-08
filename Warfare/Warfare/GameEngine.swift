@@ -34,6 +34,8 @@ class GameEngine {
     func showMapSelection() {
         if let vc = MatchHelper.sharedInstance().vc as? MainMenuViewController {
             vc.segueToMapSelectionViewController()
+        } else if let vc = MatchHelper.sharedInstance().vc as? MapSelectionViewController {
+            vc.updateWaitCount((self.currentChoices?.count ?? 0))
         }
     }
 
@@ -61,6 +63,8 @@ class GameEngine {
         var error:NSError?
         let matchData = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
         MatchHelper.sharedInstance().advanceSelectionTurn(matchData!)
+
+        (MatchHelper.sharedInstance().vc as MapSelectionViewController).updateWaitCount((self.currentChoices?.count)!)
 
         if self.currentChoices?.count == 3 {
             MatchHelper.sharedInstance().loadMatchData()
