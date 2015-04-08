@@ -90,9 +90,13 @@ class GameViewController: UIViewController {
             if let village = t.owner {
                 showVillageInfo(village)
 
-                if let unit = t.unit {
-                    if t.isBelongsToLocal() {
+                if t.isBelongsToLocal() {
+                    if let unit = t.unit {
                         showUnitInfo(unit)
+                    } else if let structure = t.structure {
+                        if structure == .Tower {
+                            showStructureInfo(structure)
+                        }
                     }
                 }
             } else { showNeutralInfo(tile) }
@@ -130,6 +134,11 @@ class GameViewController: UIViewController {
         self.characterName.text = unit.type.name().capitalizedString
         self.characterWage.text = "Wage: " + String(unit.type.wage())
         self.characterState.text = unit.currentAction.name()
+    }
+
+    func showStructureInfo(structure: Constants.Types.Structure) {
+        self.characterImage.image = UIImage(named: structure.name())
+        self.characterName.text = structure.name().capitalizedString
     }
 
     func removeUnitInfo() { }
