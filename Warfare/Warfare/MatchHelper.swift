@@ -274,7 +274,6 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         }
 
         // Send quit
-        // TODO matchData mught not be the most up to date
         match.participantQuitInTurnWithOutcome(.Quit, nextParticipants: nextParticipants, turnTimeout: GKTurnTimeoutDefault, matchData: match.matchData, completionHandler: ({(e: NSError!) in println(e)}))
     }
 
@@ -308,24 +307,19 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
 
     func player(player: GKPlayer!,
         matchEnded match: GKTurnBasedMatch!) {
-            self.myMatch = match
-            self.loadMatchData()
+            if match.matchID == self.myMatch?.matchID {
+                self.myMatch = match
+                self.loadMatchData()
+            } // else show alert?
     }
 
     func player(player: GKPlayer!,
         receivedTurnEventForMatch match: GKTurnBasedMatch!,
         didBecomeActive: Bool) {
-            self.myMatch = match
-            self.loadMatchData()
-
-            // TODO if we want to handle the case where the appp was not opened
-            // then we'd want to pass didBecomeActive to the GameEngine so it
-            // can take care of showing the controller
-            /*if didBecomeActive {
-                if let mmvc = self.vc as? MainMenuViewController {
-                    mmvc.segueToGameViewController()
-                } else { println("huh... current view controller should be MainMenuViewController but is" + (self.vc?.description)!) }
-            }*/
+            if ((match.matchID == self.myMatch?.matchID && self.vc? is GameViewController) || didBecomeActive) {
+                self.myMatch = match
+                self.loadMatchData()
+            } // else show alert?
     }
     
 }
