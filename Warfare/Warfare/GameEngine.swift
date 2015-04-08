@@ -679,7 +679,7 @@ class GameEngine {
         // Hovel (value: 0) can only recruit peasants and infantry (rawVaue: 1 & 2)
         // Town (value: 1) can also recruit soldiers (rawValue: 3)
         // Fort (value: 2) can also recruit knight and canon (rawValue: 4 & 5)
-        if type.rawValue > min(villageTile.owner.type.rawValue + 2, Constants.Types.Village.Fort.rawValue + 1) {
+        if (type.rawValue > village.type.rawValue + 2) && village.type.rawValue < Constants.Types.Village.Fort.rawValue {
             self.showToast("The village can't support that unit")
             return
         }
@@ -950,7 +950,6 @@ class GameEngine {
 //        self.beginTurn()
 //        self.showGameScene()
 //        return
-
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data

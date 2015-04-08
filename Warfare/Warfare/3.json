@@ -39,7 +39,7 @@
                     ]
                 },
                 {
-                    "type":3,"gold":1000,"wood":1000,
+                    "type":2,"gold":1000,"wood":1000,
                     "controlledTiles":[
                         {"position":[11,1], "land":0, "unit":{"type":1, "currentAction":0}  },
                         {"position":[11,2], "land":0, "unit":{"type":1, "currentAction":0}  },
@@ -47,7 +47,7 @@
                         {"position":[11,4], "land":0, "unit":{"type":2, "currentAction":0}  },
                         {"position":[11,5], "land":0 },
                         {"position":[12,1], "land":0, "unit":{"type":2, "currentAction":0}  },
-                        {"position":[12,2], "land":0, "village":3 },
+                        {"position":[12,2], "land":0, "village":2 },
                         {"position":[12,3], "land":0, "unit":{"type":3, "currentAction":0}  },
                         {"position":[12,4], "land":0, "unit":{"type":3, "currentAction":0}  },
                         {"position":[12,5], "land":0 },

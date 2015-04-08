@@ -656,7 +656,7 @@ class GameViewController: UIViewController {
                         && tile.owner.gold >= Constants.Types.Unit.Knight.cost().0 {
                 self.knightButton.enabled = true
             }
-            if v.type.rawValue >= 3
+            if v.type.rawValue >= 2
                         && tile.owner.gold >= Constants.Types.Unit.Canon.cost().0
                         && tile.owner.wood >= Constants.Types.Unit.Canon.cost().1 {
                 self.canonButton.enabled = true
