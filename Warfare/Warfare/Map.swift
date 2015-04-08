@@ -379,6 +379,17 @@ class Map: SKNode {
     }
 
     func scroll(delta: CGPoint) {
+        let pos = CGPoint(x: scroller.position.x + delta.x, y: scroller.position.y + delta.y)
+
+        // limit translation
+        let scrollerSize = self.scroller.calculateAccumulatedFrame()
+        let maxX = -UIScreen.mainScreen().bounds.size.width/3.0
+        let maxY = UIScreen.mainScreen().bounds.size.height/3.0
+        let minX = -scrollerSize.size.width
+        let minY = scrollerSize.size.height
+
+        if pos.x < minX || pos.y > minY || pos.x > maxX || pos.y < maxY { return }
+
         scroller.position = CGPointMake(scroller.position.x + delta.x, scroller.position.y + delta.y)
     }
 
