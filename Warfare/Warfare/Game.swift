@@ -12,7 +12,7 @@ import GameKit
 class Game {
     var players = [Player]()
     var roundCount = 0
-    var currentPlayer: Player { return self.players[MatchHelper.sharedInstance().currentParticipantIndex()] }
+    var currentPlayer: Player { return (GameEngine.Instance.matchEnded ? self.players[0] : self.players[MatchHelper.sharedInstance().currentParticipantIndex()]) }
     var localPlayer: Player { return self.players[MatchHelper.sharedInstance().localParticipantIndex()] }
 
     let map = Map()
