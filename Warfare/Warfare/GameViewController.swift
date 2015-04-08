@@ -207,6 +207,12 @@ class GameViewController: UIViewController {
         cancelButton.hidden = true
 
         self.showGamePlayScene()
+
+        GameEngine.Instance.playMusic()
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        GameEngine.Instance.musicPlayer?.stop()
     }
 
     func unwind() {

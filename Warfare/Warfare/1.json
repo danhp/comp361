@@ -5,13 +5,13 @@
                "villages":[
                            {
                            "type":0,
-                           "gold":60,
+                           "gold":1000,
                            "wood":50,
                            "controlledTiles":[
                                               {
                                               "position":[0,0],
                                               "land":0,
-                                              "unit":{"type":1,"currentAction":0}
+                                              "unit":{"type":3,"currentAction":0}
                                               },
                                               {
                                               "position":[1,0],
@@ -20,7 +20,8 @@
                                               },
                                               {
                                               "position":[0,1],
-                                              "land":0
+                                              "land":0,
+                                              "unit":{"type":4,"currentAction":0}
                                               },
                                               {
                                               "position":[1,1],

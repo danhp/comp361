@@ -20,7 +20,7 @@ class GameScene: SKScene {
         if let m = self.map {
             m.draw()
             m.position = CGPoint(x:0,y:0)
-            m.centerAround((self.map?.tiles[4,4])!)
+            m.centerAround((self.map?.tiles[2,2])!)
             m.removeFromParent()
             self.addChild(m)
         }
@@ -53,6 +53,9 @@ class GameScene: SKScene {
             self.newSelection()
         } else if let touchedNode = nodeAtPoint(touchLocation) as? SKSpriteNode {
             if let tile = touchedNode.parent as? Tile {
+                self.map?.selected = tile
+                self.newSelection()
+            } else if let tile = touchedNode.parent?.parent as? Tile {
                 self.map?.selected = tile
                 self.newSelection()
             }

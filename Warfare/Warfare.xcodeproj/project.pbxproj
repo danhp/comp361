@@ -23,6 +23,37 @@
 		135B38BF1AD5A7F50065A2F0 /* fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 135B38BD1AD5A7F50065A2F0 /* fire.sks */; };
 		135B38C21AD5AF5F0065A2F0 /* explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 135B38C11AD5AF5F0065A2F0 /* explosion.sks */; };
 		135B38C91AD5B0F60065A2F0 /* blood.sks in Resources */ = {isa = PBXBuildFile; fileRef = 135B38C71AD5B0F60065A2F0 /* blood.sks */; };
+		135B38CE1AD5B94A0065A2F0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135B38CD1AD5B94A0065A2F0 /* AVFoundation.framework */; };
+		135B38ED1AD5B9A10065A2F0 /* build-upgrade.wav in Resources */ = {isa = PBXBuildFile; fileRef = 135B38D01AD5B9A10065A2F0 /* build-upgrade.wav */; };
+		135B38EE1AD5B9A10065A2F0 /* clairon-death.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38D21AD5B9A10065A2F0 /* clairon-death.mp3 */; };
+		135B38EF1AD5B9A10065A2F0 /* clairon-death2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38D31AD5B9A10065A2F0 /* clairon-death2.mp3 */; };
+		135B38F01AD5B9A10065A2F0 /* clairon-extinction.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38D41AD5B9A10065A2F0 /* clairon-extinction.mp3 */; };
+		135B38F11AD5B9A10065A2F0 /* clairon-wakeup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38D51AD5B9A10065A2F0 /* clairon-wakeup.mp3 */; };
+		135B38F21AD5B9A10065A2F0 /* tambour.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38D61AD5B9A10065A2F0 /* tambour.mp3 */; };
+		135B38F31AD5B9A10065A2F0 /* tambour2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38D71AD5B9A10065A2F0 /* tambour2.mp3 */; };
+		135B38F41AD5B9A10065A2F0 /* trompette.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38D81AD5B9A10065A2F0 /* trompette.mp3 */; };
+		135B38F51AD5B9A10065A2F0 /* canon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38DA1AD5B9A10065A2F0 /* canon.mp3 */; };
+		135B38F71AD5B9A10065A2F0 /* soldier.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38DC1AD5B9A10065A2F0 /* soldier.mp3 */; };
+		135B38F81AD5B9A10065A2F0 /* abattons.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38DE1AD5B9A10065A2F0 /* abattons.mp3 */; };
+		135B38F91AD5B9A10065A2F0 /* au combat.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38DF1AD5B9A10065A2F0 /* au combat.mp3 */; };
+		135B38FA1AD5B9A10065A2F0 /* chargez.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38E01AD5B9A10065A2F0 /* chargez.mp3 */; };
+		135B38FB1AD5B9A10065A2F0 /* ecrasons.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38E11AD5B9A10065A2F0 /* ecrasons.mp3 */; };
+		135B38FC1AD5B9A10065A2F0 /* en avant.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38E21AD5B9A10065A2F0 /* en avant.mp3 */; };
+		135B38FD1AD5B9A10065A2F0 /* pas de pitie.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38E31AD5B9A10065A2F0 /* pas de pitie.mp3 */; };
+		135B38FE1AD5B9A10065A2F0 /* pas de quartier.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38E41AD5B9A10065A2F0 /* pas de quartier.mp3 */; };
+		135B38FF1AD5B9A10065A2F0 /* rendez vous.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38E51AD5B9A10065A2F0 /* rendez vous.mp3 */; };
+		135B39001AD5B9A10065A2F0 /* a vos ordres.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38E71AD5B9A10065A2F0 /* a vos ordres.mp3 */; };
+		135B39011AD5B9A10065A2F0 /* attendons ordre.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38E81AD5B9A10065A2F0 /* attendons ordre.mp3 */; };
+		135B39021AD5B9A10065A2F0 /* recruit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38E91AD5B9A10065A2F0 /* recruit.mp3 */; };
+		135B39031AD5B9A10065A2F0 /* oui capitaine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38EA1AD5B9A10065A2F0 /* oui capitaine.mp3 */; };
+		135B39041AD5B9A10065A2F0 /* pour le roi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38EB1AD5B9A10065A2F0 /* pour le roi.mp3 */; };
+		135B39051AD5B9A10065A2F0 /* pour notre souverain.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B38EC1AD5B9A10065A2F0 /* pour notre souverain.mp3 */; };
+		135B39081AD5BDE40065A2F0 /* infantry.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B39061AD5BDE40065A2F0 /* infantry.mp3 */; };
+		135B39091AD5BDE40065A2F0 /* peasant.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B39071AD5BDE40065A2F0 /* peasant.mp3 */; };
+		135B390C1AD5BF4A0065A2F0 /* tree.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B390B1AD5BF4A0065A2F0 /* tree.mp3 */; };
+		135B390F1AD5C5260065A2F0 /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 135B390E1AD5C5260065A2F0 /* background.wav */; };
+		135B39111AD5C8540065A2F0 /* background2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 135B39101AD5C8540065A2F0 /* background2.wav */; };
+		135B39151AD5CE430065A2F0 /* knight.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 135B39141AD5CE430065A2F0 /* knight.mp3 */; };
 		135DC1421A783D7E00474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		135DC1431A7849A800474073 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135DC1411A783D7E00474073 /* Utilities.swift */; };
 		1371013A1A701096009B807C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137101391A701096009B807C /* AppDelegate.swift */; };
@@ -83,6 +114,37 @@
 		135B38BD1AD5A7F50065A2F0 /* fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = fire.sks; path = ../fire.sks; sourceTree = "<group>"; };
 		135B38C11AD5AF5F0065A2F0 /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = explosion.sks; path = Warfare/explosion.sks; sourceTree = SOURCE_ROOT; };
 		135B38C71AD5B0F60065A2F0 /* blood.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = blood.sks; path = ../blood.sks; sourceTree = "<group>"; };
+		135B38CD1AD5B94A0065A2F0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		135B38D01AD5B9A10065A2F0 /* build-upgrade.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "build-upgrade.wav"; path = "../build-upgrade.wav"; sourceTree = "<group>"; };
+		135B38D21AD5B9A10065A2F0 /* clairon-death.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "clairon-death.mp3"; sourceTree = "<group>"; };
+		135B38D31AD5B9A10065A2F0 /* clairon-death2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "clairon-death2.mp3"; sourceTree = "<group>"; };
+		135B38D41AD5B9A10065A2F0 /* clairon-extinction.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "clairon-extinction.mp3"; sourceTree = "<group>"; };
+		135B38D51AD5B9A10065A2F0 /* clairon-wakeup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "clairon-wakeup.mp3"; sourceTree = "<group>"; };
+		135B38D61AD5B9A10065A2F0 /* tambour.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tambour.mp3; sourceTree = "<group>"; };
+		135B38D71AD5B9A10065A2F0 /* tambour2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tambour2.mp3; sourceTree = "<group>"; };
+		135B38D81AD5B9A10065A2F0 /* trompette.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = trompette.mp3; sourceTree = "<group>"; };
+		135B38DA1AD5B9A10065A2F0 /* canon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = canon.mp3; sourceTree = "<group>"; };
+		135B38DC1AD5B9A10065A2F0 /* soldier.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = soldier.mp3; sourceTree = "<group>"; };
+		135B38DE1AD5B9A10065A2F0 /* abattons.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = abattons.mp3; sourceTree = "<group>"; };
+		135B38DF1AD5B9A10065A2F0 /* au combat.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "au combat.mp3"; sourceTree = "<group>"; };
+		135B38E01AD5B9A10065A2F0 /* chargez.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = chargez.mp3; sourceTree = "<group>"; };
+		135B38E11AD5B9A10065A2F0 /* ecrasons.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ecrasons.mp3; sourceTree = "<group>"; };
+		135B38E21AD5B9A10065A2F0 /* en avant.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "en avant.mp3"; sourceTree = "<group>"; };
+		135B38E31AD5B9A10065A2F0 /* pas de pitie.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pas de pitie.mp3"; sourceTree = "<group>"; };
+		135B38E41AD5B9A10065A2F0 /* pas de quartier.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "pas de quartier.mp3"; sourceTree = "<group>"; };
+		135B38E51AD5B9A10065A2F0 /* rendez vous.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "rendez vous.mp3"; sourceTree = "<group>"; };
+		135B38E71AD5B9A10065A2F0 /* a vos ordres.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "a vos ordres.mp3"; sourceTree = "<group>"; };
+		135B38E81AD5B9A10065A2F0 /* attendons ordre.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "attendons ordre.mp3"; sourceTree = "<group>"; };
+		135B38E91AD5B9A10065A2F0 /* recruit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = recruit.mp3; path = "../new order/recruit.mp3"; sourceTree = "<group>"; };
+		135B38EA1AD5B9A10065A2F0 /* oui capitaine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "oui capitaine.mp3"; sourceTree = "<group>"; };
+		135B38EB1AD5B9A10065A2F0 /* pour le roi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "pour le roi.mp3"; path = "../pour le roi.mp3"; sourceTree = "<group>"; };
+		135B38EC1AD5B9A10065A2F0 /* pour notre souverain.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "pour notre souverain.mp3"; path = "../pour notre souverain.mp3"; sourceTree = "<group>"; };
+		135B39061AD5BDE40065A2F0 /* infantry.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = infantry.mp3; sourceTree = "<group>"; };
+		135B39071AD5BDE40065A2F0 /* peasant.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = peasant.mp3; sourceTree = "<group>"; };
+		135B390B1AD5BF4A0065A2F0 /* tree.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tree.mp3; sourceTree = "<group>"; };
+		135B390E1AD5C5260065A2F0 /* background.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = background.wav; sourceTree = "<group>"; };
+		135B39101AD5C8540065A2F0 /* background2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = background2.wav; sourceTree = "<group>"; };
+		135B39141AD5CE430065A2F0 /* knight.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = knight.mp3; sourceTree = "<group>"; };
 		135DC1411A783D7E00474073 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = Warfare/Utilities.swift; sourceTree = SOURCE_ROOT; };
 		137101341A701096009B807C /* warfare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = warfare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		137101381A701096009B807C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -122,6 +184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				135B38CE1AD5B94A0065A2F0 /* AVFoundation.framework in Frameworks */,
 				13390A8E1A9692CC005949A1 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -159,9 +222,89 @@
 			name = Particles;
 			sourceTree = "<group>";
 		};
+		135B38CF1AD5B9550065A2F0 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				135B39101AD5C8540065A2F0 /* background2.wav */,
+				135B390E1AD5C5260065A2F0 /* background.wav */,
+				135B390A1AD5BF4A0065A2F0 /* other */,
+				135B38D11AD5B9A10065A2F0 /* instruments musique */,
+				135B38D91AD5B9A10065A2F0 /* units */,
+				135B38DD1AD5B9A10065A2F0 /* action */,
+				135B38E61AD5B9A10065A2F0 /* yes */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		135B38D11AD5B9A10065A2F0 /* instruments musique */ = {
+			isa = PBXGroup;
+			children = (
+				135B38D21AD5B9A10065A2F0 /* clairon-death.mp3 */,
+				135B38D31AD5B9A10065A2F0 /* clairon-death2.mp3 */,
+				135B38D41AD5B9A10065A2F0 /* clairon-extinction.mp3 */,
+				135B38D51AD5B9A10065A2F0 /* clairon-wakeup.mp3 */,
+				135B38D61AD5B9A10065A2F0 /* tambour.mp3 */,
+				135B38D71AD5B9A10065A2F0 /* tambour2.mp3 */,
+				135B38D81AD5B9A10065A2F0 /* trompette.mp3 */,
+			);
+			path = "instruments musique";
+			sourceTree = "<group>";
+		};
+		135B38D91AD5B9A10065A2F0 /* units */ = {
+			isa = PBXGroup;
+			children = (
+				135B39061AD5BDE40065A2F0 /* infantry.mp3 */,
+				135B39071AD5BDE40065A2F0 /* peasant.mp3 */,
+				135B39141AD5CE430065A2F0 /* knight.mp3 */,
+				135B38DA1AD5B9A10065A2F0 /* canon.mp3 */,
+				135B38DC1AD5B9A10065A2F0 /* soldier.mp3 */,
+			);
+			path = units;
+			sourceTree = "<group>";
+		};
+		135B38DD1AD5B9A10065A2F0 /* action */ = {
+			isa = PBXGroup;
+			children = (
+				135B38E91AD5B9A10065A2F0 /* recruit.mp3 */,
+				135B38D01AD5B9A10065A2F0 /* build-upgrade.wav */,
+				135B38DE1AD5B9A10065A2F0 /* abattons.mp3 */,
+				135B38DF1AD5B9A10065A2F0 /* au combat.mp3 */,
+				135B38E01AD5B9A10065A2F0 /* chargez.mp3 */,
+				135B38E11AD5B9A10065A2F0 /* ecrasons.mp3 */,
+				135B38E21AD5B9A10065A2F0 /* en avant.mp3 */,
+				135B38E31AD5B9A10065A2F0 /* pas de pitie.mp3 */,
+				135B38E41AD5B9A10065A2F0 /* pas de quartier.mp3 */,
+				135B38E51AD5B9A10065A2F0 /* rendez vous.mp3 */,
+			);
+			name = action;
+			path = "move:attack";
+			sourceTree = "<group>";
+		};
+		135B38E61AD5B9A10065A2F0 /* yes */ = {
+			isa = PBXGroup;
+			children = (
+				135B38E71AD5B9A10065A2F0 /* a vos ordres.mp3 */,
+				135B38E81AD5B9A10065A2F0 /* attendons ordre.mp3 */,
+				135B38EB1AD5B9A10065A2F0 /* pour le roi.mp3 */,
+				135B38EC1AD5B9A10065A2F0 /* pour notre souverain.mp3 */,
+				135B38EA1AD5B9A10065A2F0 /* oui capitaine.mp3 */,
+			);
+			name = yes;
+			path = "new order";
+			sourceTree = "<group>";
+		};
+		135B390A1AD5BF4A0065A2F0 /* other */ = {
+			isa = PBXGroup;
+			children = (
+				135B390B1AD5BF4A0065A2F0 /* tree.mp3 */,
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
 		1371012B1A701096009B807C = {
 			isa = PBXGroup;
 			children = (
+				135B38CD1AD5B94A0065A2F0 /* AVFoundation.framework */,
 				13390A8D1A9692CC005949A1 /* GameKit.framework */,
 				137101361A701096009B807C /* warfare */,
 				137101501A701096009B807C /* warfareTests */,
@@ -194,12 +337,13 @@
 				5299B2781A8984F500EADED0 /* GameEngine.swift */,
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
-				135B38AD1AD5A4990065A2F0 /* Particles */,
 				B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */,
 				1371013F1A701096009B807C /* GameViewController.swift */,
 				B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */,
 				130B0CF51A924901007A20EB /* MatchHelper.swift */,
 				5214D71C1ABCB4F500C7E26C /* PriorityQueue.swift */,
+				135B38CF1AD5B9550065A2F0 /* Sounds */,
+				135B38AD1AD5A4990065A2F0 /* Particles */,
 				132A65A91A8EAAC200D588B2 /* Maps */,
 				137101411A701096009B807C /* Main.storyboard */,
 				137101441A701096009B807C /* Images.xcassets */,
@@ -325,19 +469,49 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				135B38FB1AD5B9A10065A2F0 /* ecrasons.mp3 in Resources */,
+				135B38FA1AD5B9A10065A2F0 /* chargez.mp3 in Resources */,
+				135B38FF1AD5B9A10065A2F0 /* rendez vous.mp3 in Resources */,
 				13F60EC41ABA30BE008E4BF3 /* 1.json in Resources */,
+				135B39051AD5B9A10065A2F0 /* pour notre souverain.mp3 in Resources */,
 				135B38AB1AD5A48E0065A2F0 /* smoke.sks in Resources */,
+				135B38F01AD5B9A10065A2F0 /* clairon-extinction.mp3 in Resources */,
+				135B38F71AD5B9A10065A2F0 /* soldier.mp3 in Resources */,
+				135B39011AD5B9A10065A2F0 /* attendons ordre.mp3 in Resources */,
 				137101481A701096009B807C /* LaunchScreen.xib in Resources */,
+				135B38F21AD5B9A10065A2F0 /* tambour.mp3 in Resources */,
+				135B38FD1AD5B9A10065A2F0 /* pas de pitie.mp3 in Resources */,
+				135B39001AD5B9A10065A2F0 /* a vos ordres.mp3 in Resources */,
 				135B38C91AD5B0F60065A2F0 /* blood.sks in Resources */,
+				135B390C1AD5BF4A0065A2F0 /* tree.mp3 in Resources */,
+				135B38F31AD5B9A10065A2F0 /* tambour2.mp3 in Resources */,
 				52A18F811ACD838E00E12BF7 /* 4.json in Resources */,
 				13C428661ABB623E008E35BD /* 2.json in Resources */,
 				135B38AC1AD5A48E0065A2F0 /* spark.png in Resources */,
+				135B38F51AD5B9A10065A2F0 /* canon.mp3 in Resources */,
+				135B38F41AD5B9A10065A2F0 /* trompette.mp3 in Resources */,
 				135B38BF1AD5A7F50065A2F0 /* fire.sks in Resources */,
+				135B39091AD5BDE40065A2F0 /* peasant.mp3 in Resources */,
+				135B38ED1AD5B9A10065A2F0 /* build-upgrade.wav in Resources */,
+				135B38EE1AD5B9A10065A2F0 /* clairon-death.mp3 in Resources */,
+				135B39041AD5B9A10065A2F0 /* pour le roi.mp3 in Resources */,
 				529549561ACCB6860024DBE0 /* 3.json in Resources */,
+				135B39081AD5BDE40065A2F0 /* infantry.mp3 in Resources */,
 				137101451A701096009B807C /* Images.xcassets in Resources */,
 				135B38C21AD5AF5F0065A2F0 /* explosion.sks in Resources */,
+				135B38F11AD5B9A10065A2F0 /* clairon-wakeup.mp3 in Resources */,
+				135B39151AD5CE430065A2F0 /* knight.mp3 in Resources */,
+				135B38FE1AD5B9A10065A2F0 /* pas de quartier.mp3 in Resources */,
+				135B390F1AD5C5260065A2F0 /* background.wav in Resources */,
+				135B39021AD5B9A10065A2F0 /* recruit.mp3 in Resources */,
+				135B38EF1AD5B9A10065A2F0 /* clairon-death2.mp3 in Resources */,
+				135B38F81AD5B9A10065A2F0 /* abattons.mp3 in Resources */,
+				135B38FC1AD5B9A10065A2F0 /* en avant.mp3 in Resources */,
 				1371013C1A701096009B807C /* GameScene.sks in Resources */,
+				135B38F91AD5B9A10065A2F0 /* au combat.mp3 in Resources */,
 				137101431A701096009B807C /* Main.storyboard in Resources */,
+				135B39111AD5C8540065A2F0 /* background2.wav in Resources */,
+				135B39031AD5B9A10065A2F0 /* oui capitaine.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

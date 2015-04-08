@@ -42,6 +42,9 @@ class MapSelectionViewController: UIViewController {
 
     func segueToGameViewController() {
         self.performSegueWithIdentifier("mapToGameSegue", sender: self)
+        
+        // Stop music when going to game view controller
+        GameEngine.Instance.stopMusic()
     }
 
     func unwind() {

@@ -1,6 +1,7 @@
 import Foundation
 import GameKit
 import SpriteKit
+import AVFoundation
 
 private let _instance = GameEngine()
 
@@ -20,6 +21,50 @@ class GameEngine {
     // Map selection
     var currentChoices: [Int]?
     var userSelectingMap: Bool { return (self.currentChoices == nil && MatchHelper.sharedInstance().localParticipantIndex() == 0) || MatchHelper.sharedInstance().localParticipantIndex() == self.currentChoices?.count }
+
+    // Mark: - Audio Player
+    var audioPlayer: AVAudioPlayer?
+    var shortPlayer: AVAudioPlayer?
+    var musicPlayer: AVAudioPlayer?
+
+    func playMusic(inGame: Bool = true) {
+        var name: String = "background"
+        if inGame { name = "background2" }
+
+        if let url: NSURL = NSBundle.mainBundle().URLForResource(name, withExtension: "wav") {
+            self.musicPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
+            self.musicPlayer?.prepareToPlay()
+            self.musicPlayer?.play()
+            self.musicPlayer?.numberOfLoops = -1
+        }
+    }
+
+    func stopMusic() { self.musicPlayer?.stop() }
+
+    func playSound(name: String, type: String = "mp3") {
+        if let url: NSURL = NSBundle.mainBundle().URLForResource(name, withExtension: type) {
+            self.audioPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
+            self.audioPlayer?.play()
+            self.audioPlayer?.numberOfLoops = -1
+        }
+    }
+
+    func stopSound() {
+        self.audioPlayer?.stop()
+    }
+
+    func randomYesSound() {
+        let sounds = ["a vos ordres", "attendons order", "oui capitaine", "pour le roi", "pour notre souverain"]
+        let random = Int(arc4random_uniform(UInt32(sounds.count + 5)))   // 5 so it doesn't always play a sound
+
+        // play sound
+        if random < sounds.count {
+            if let url: NSURL = NSBundle.mainBundle().URLForResource(sounds[random], withExtension: "mp3") {
+                self.shortPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
+                self.shortPlayer?.play()
+            }
+        }
+    }
 
     init() { }
 
@@ -194,7 +239,7 @@ class GameEngine {
         }
         village.wood = 0
         village.gold = 0
-        village.isStarving = true
+        village.isSmoking = true
     }
 
     private func killVillage(village: Village) {
@@ -349,8 +394,14 @@ class GameEngine {
             moveActions.append(moveAction)
         }
 
-        let n = ((from.unit?)!.node?)!
-        n.runAction(SKAction.sequence(moveActions), completion: {
+        let u = (from.unit?)!
+
+        // play sound
+        self.playSound(u.type.name())
+        self.randomYesSound()
+
+        // run animation
+        u.node!.runAction(SKAction.sequence(moveActions), completion: {
             // Update the destination tile
             if to.structure? == Constants.Types.Structure.Tombstone {
                 to.structure = nil
@@ -372,6 +423,8 @@ class GameEngine {
             if let unit = to.unit {
                 unit.currentAction = state
             }
+
+            self.stopSound()
 
             GameEngine.Instance.map?.resetColor()
             GameEngine.Instance.map?.draw()
@@ -551,6 +604,8 @@ class GameEngine {
             return
         }
 
+        self.playSound("build-upgrade", type: "wav")
+
         tile.owner.upgradeVillage()
         self.availableVillages = self.availableVillages.filter({ $0 !== tile})
     }
@@ -573,6 +628,7 @@ class GameEngine {
             let village = tile.owner!
             village.upgradeUnit(tile, newType: newLevel)
             self.availableUnits = self.availableUnits.filter({ $0 !== tile })
+            self.randomYesSound()
         } else {
             self.showToast("There are no units to upgrade")
         }
@@ -600,6 +656,8 @@ class GameEngine {
         tileA.unit?.currentAction = Constants.Unit.Action.UpgradingCombining
         tileB.unit = nil
         self.availableUnits = self.availableUnits.filter({ $0 !== tileA || $0 !== tileB })
+
+        self.randomYesSound()
     }
 
     func recruitUnit(villageTile: Tile, type: Constants.Types.Unit) {
@@ -657,6 +715,9 @@ class GameEngine {
 //        newUnit.currentAction = .Moved
 //        self.availableUnits.append(destination!)
         destination!.unit = newUnit
+
+        self.playSound("recruit")
+        self.randomYesSound()
     }
 
     func buildTower(on: Tile) {
@@ -686,6 +747,8 @@ class GameEngine {
         // Update the state
         village.wood -= tower.cost()
         on.structure = tower
+
+        self.playSound("build-upgrade", type: "wav")
     }
 
     // Moves unit from -> on, instruct unit to start building road.
@@ -747,6 +810,8 @@ class GameEngine {
         }
 
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
+
+        self.playSound("build-upgrade", type: "wav")
     }
 
     // Moves unit from -> on, instruct unit to start creating meadow for 2 turns
@@ -881,7 +946,7 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-        self.startGameWithMap(1)
+        self.startGameWithMap(4)
         self.beginTurn()
         self.showGameScene()
         return

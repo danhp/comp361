@@ -15,6 +15,8 @@ class MainMenuViewController: UIViewController {
         MatchHelper.sharedInstance().vc = self
 
         GameEngine.Instance.currentChoices = nil
+
+        GameEngine.Instance.playMusic(inGame: false)
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,6 +31,9 @@ class MainMenuViewController: UIViewController {
 
     func segueToGameViewController() {
         self.performSegueWithIdentifier("mainToGameSegue", sender: self)
+
+        // Stop music when going to game view controller
+        GameEngine.Instance.stopMusic()
     }
 
     func segueToMapSelectionViewController() {
