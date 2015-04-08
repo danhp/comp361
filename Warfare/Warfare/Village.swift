@@ -9,6 +9,7 @@ class Village {
     var gold: Int = 7
     var wood: Int = 7
     var upkeep: Int { return self.controlledTiles.reduce(0) {$0 + $1.wage()} }
+    var income: Int { return self.controlledTiles.reduce(0) {$0 + $1.goldValue()} }
 
     var health: Int = 1
     var isSmoking: Bool = false

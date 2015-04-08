@@ -57,6 +57,8 @@ class GameViewController: UIViewController {
     @IBOutlet weak var regionWood: UILabel!
     @IBOutlet weak var regionHP: UILabel!
     @IBOutlet weak var regionState: UILabel!
+    @IBOutlet weak var regionIncome: UILabel!
+    @IBOutlet weak var regionOutcome: UILabel!
     @IBOutlet weak var characterImage: UIImageView!
     @IBOutlet weak var characterName: UILabel!
     @IBOutlet weak var characterWage: UILabel!
@@ -108,6 +110,8 @@ class GameViewController: UIViewController {
         self.regionWood.text = ""
         self.regionHP.text = ""
         self.regionState.text = ""
+        self.regionIncome.text = ""
+        self.regionOutcome.text = ""
         self.characterImage.image = nil
         self.characterName.text = ""
         self.characterWage.text = ""
@@ -119,8 +123,10 @@ class GameViewController: UIViewController {
         self.regionHP.text =  "HP: " + String(village.health)
 
         if village.player === GameEngine.Instance.game?.localPlayer {
-            self.regionGold.text = "Gold: " + String(village.gold)
-            self.regionWood.text = "Wood: " + String(village.wood)
+            self.regionGold.text = "Region Gold: " + String(village.gold)
+            self.regionWood.text = "Region Wood: " + String(village.wood)
+            self.regionIncome.text = "Income: " + String(village.income)
+            self.regionOutcome.text = "Upkeep: " + String(village.upkeep)
             self.regionState.text = village.state.name()
         }
     }

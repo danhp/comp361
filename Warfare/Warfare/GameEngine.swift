@@ -194,7 +194,7 @@ class GameEngine {
         }
         village.wood = 0
         village.gold = 0
-        village.isStarving = true
+//        village.isStarving = true
     }
 
     private func killVillage(village: Village) {
