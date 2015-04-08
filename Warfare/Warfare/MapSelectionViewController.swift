@@ -37,7 +37,6 @@ class MapSelectionViewController: UIViewController {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
 
-        println(GameEngine.Instance.userSelectingMap)
         self.confirmationButton.enabled = GameEngine.Instance.userSelectingMap
     }
 

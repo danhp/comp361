@@ -61,13 +61,28 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as [GKTurnBasedParticipant]
 
         for (index, p) in enumerate(participants) {
-            if p.player == GKLocalPlayer.localPlayer() {
+            if p.player === GKLocalPlayer.localPlayer() {
                 return index
             }
         }
 
         return 0
     }
+
+    func localParticipant() -> GKTurnBasedParticipant? {
+        let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as [GKTurnBasedParticipant]
+
+        for p in participants {
+            if p.player === GKLocalPlayer.localPlayer() {
+                return p
+            }
+        }
+
+        return nil
+    }
+
+    var localHasLost: Bool { return (self.localParticipant()?.matchOutcome)! != GKTurnBasedMatchOutcome.None && (self.localParticipant()?.matchOutcome)! != GKTurnBasedMatchOutcome.Won }
+    var localHasWon: Bool { return (self.localParticipant()?.matchOutcome)! == GKTurnBasedMatchOutcome.Won }
 
     // MARK: - Authentication
 

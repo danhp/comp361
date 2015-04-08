@@ -69,7 +69,7 @@ class GameViewController: UIViewController {
     // MARK: Toast
     @IBOutlet weak var toastLabel: UILabel!
 
-    // MARK - Info Panel
+    // MARK: - Info Panel
 
     func updateInfoPanel(tile: Tile?) {
         // Enable or disable end turn button
@@ -148,6 +148,9 @@ class GameViewController: UIViewController {
         self.toastLabel.text = msg
         self.toastLabel.hidden = false
 
+        // 0.0 simulates infinite
+        if duration == 0.0 { return }
+
         // if not infinite, discard toast after 5 seconds
         NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: Selector("hideToast"), userInfo: nil, repeats: false)
     }
@@ -190,6 +193,9 @@ class GameViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
+
+        if MatchHelper.sharedInstance().localHasLost { self.showToast("You have lost this game.", duration: 0.0) }
+        else if MatchHelper.sharedInstance().localHasWon { self.showToast("You have won this game!", duration: 0.0) }
 
         self.updateInfoPanel(nil)
         self.hideUnitSelection()
