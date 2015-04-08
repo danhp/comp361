@@ -21,7 +21,15 @@ class Tile: SKNode, Hashable {
     var structure: Constants.Types.Structure?
     var land: Constants.Types.Land!
     var owner: Village!
-    var lighten: Bool = false
+    var lighten: Bool = false {
+        didSet {
+            let alpha = selected ? Constants.Tile.Alpha.selected.rawValue: (lighten ? Constants.Tile.Alpha.flood.rawValue : Constants.Tile.Alpha.normal.rawValue)
+
+            self.background.color = Utilities.Colors.colorForLandType(self.land, alpha: alpha)
+            self.background.colorBlendFactor = 1
+
+        }
+    }
     override var hashValue: Int {
         return "\(self.coordinates.0), \(self.coordinates.1)".hashValue
     }

@@ -148,7 +148,7 @@ class GameEngine {
 
     // Set up the gameState after which the player can start giving out orders
     func beginTurn() {
-//        if !(self.game?.localIsCurrentPlayer)! { return }
+        if !(self.game?.localIsCurrentPlayer)! { return }
 
         self.availableUnits = []
         self.availableVillages = []
@@ -693,7 +693,7 @@ class GameEngine {
             }
         }
         if destination == nil {
-            self.showToast("There no more room around your village")
+            self.showToast("There is no more room around that village")
             return
         }
 
@@ -712,7 +712,7 @@ class GameEngine {
 
         // For testing purposes this is uncommented at times.
 //        newUnit.currentAction = .Moved
-//        self.availableUnits.append(destination!)
+        self.availableUnits.append(destination!)
         destination!.unit = newUnit
 
         self.playSound("recruit", type: "mp3", loop: false)
@@ -746,6 +746,7 @@ class GameEngine {
         // Update the state
         village.wood -= tower.cost()
         on.structure = tower
+        on.land = .Grass
 
         self.playSound("build-upgrade", type: "wav")
     }
@@ -945,10 +946,11 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-        self.startGameWithMap(4)
-        self.beginTurn()
-        self.showGameScene()
-        return
+//        self.startGameWithMap(4)
+//        self.beginTurn()
+//        self.showGameScene()
+//        return
+
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data
