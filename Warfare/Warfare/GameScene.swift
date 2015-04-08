@@ -11,6 +11,7 @@ import SpriteKit
 
 class GameScene: SKScene {
     var map: Map?
+    var moved: Bool = false
 
     override func didMoveToView(view: SKView) {
         self.anchorPoint = CGPointMake(0.5, 0.5)
@@ -43,6 +44,11 @@ class GameScene: SKScene {
     }
 
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        self.moved = false
+    }
+
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+        if self.moved { return }
         /* Called when a touch begins */
 
         let touch = touches.anyObject() as UITouch
@@ -66,6 +72,7 @@ class GameScene: SKScene {
     }
 
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+        self.moved = true
         let touch = touches.anyObject()! as UITouch
         let current = touch.locationInNode(self)
         let prev = touch.previousLocationInNode(self)
