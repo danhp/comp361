@@ -110,12 +110,12 @@ class GameViewController: UIViewController {
             self.regionVillage.image = (t.land == Constants.Types.Land.Grass) ? nil : (UIImage(named: t.land.name()))
         } else { self.regionVillage.image = nil }
         self.regionVillage.backgroundColor = Utilities.Colors.colorForLandType(tile?.land ?? Constants.Types.Land.Grass, alpha: 1 )
-        self.regionGold.text = ""
-        self.regionWood.text = ""
-        self.regionHP.text = ""
+        self.regionGold.text = "Gold: ?"
+        self.regionWood.text = "Wood: ?"
+        self.regionHP.text = "HP: ?"
         self.regionState.text = ""
-        self.regionIncome.text = ""
-        self.regionOutcome.text = ""
+        self.regionIncome.text = "Income: ?"
+        self.regionOutcome.text = "Upkeep: ?"
         self.characterImage.image = nil
         self.characterName.text = ""
         self.characterWage.text = ""
@@ -127,8 +127,8 @@ class GameViewController: UIViewController {
         self.regionHP.text =  "HP: " + String(village.health)
 
         if village.player === GameEngine.Instance.game?.localPlayer {
-            self.regionGold.text = "Region Gold: " + String(village.gold)
-            self.regionWood.text = "Region Wood: " + String(village.wood)
+            self.regionGold.text = "Gold: " + String(village.gold)
+            self.regionWood.text = "Wood: " + String(village.wood)
             self.regionIncome.text = "Income: " + String(village.income)
             self.regionOutcome.text = "Upkeep: " + String(village.upkeep)
             self.regionState.text = village.state.name()
