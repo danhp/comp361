@@ -59,21 +59,6 @@ class GameScene: SKScene {
         }
     }
 
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        let touch = touches.anyObject() as UITouch
-        let touchLocation = touch.locationInNode(self)
-
-        if let touchedTile = nodeAtPoint(touchLocation) as? Tile {
-            self.map?.selected = touchedTile
-            self.newSelection()
-        } else if let touchedNode = nodeAtPoint(touchLocation) as? SKSpriteNode {
-            if let tile = touchedNode.parent as? Tile {
-                self.map?.selected = tile
-                self.newSelection()
-            }
-        }
-    }
-
     private func newSelection() {
         if let map = self.map? {
             GameEngine.Instance.updateInfoPanel()
