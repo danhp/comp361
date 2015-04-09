@@ -841,6 +841,7 @@ class GameEngine {
     }
 
     func buildTower(on: Tile) {
+        if on.owner == nil { return }
         if on.owner.player !== self.game?.currentPlayer {
             self.showToast("You can only build towers on your land")
             return
