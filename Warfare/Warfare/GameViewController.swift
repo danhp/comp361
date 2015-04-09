@@ -293,6 +293,7 @@ class GameViewController: UIViewController {
 
         self.hideButton(validateButton)
         self.upgradeStructureContainer.hidden = false
+        self.state = .BuildPressed
 
         self.tileSource = GameEngine.Instance.map?.selected
     }
@@ -505,6 +506,12 @@ class GameViewController: UIViewController {
     func update(tile: Tile) {
         if self.state == .UpgradePressed || self.state == .RecruitPressed {
             self.doneWithUnit()
+        } else if self.state == .BuildPressed {
+            self.state = .NothingPressed
+            self.hideButton(validateButton)
+            self.hideButton(cancelButton)
+            self.upgradeStructureContainer.hidden = true
+            self.update((GameEngine.Instance.map?.selected)!)
         }
         self.hideActionButtons()
 

@@ -261,7 +261,7 @@ struct Constants {
 
     struct UI {
         enum State {
-            case NothingPressed, BuildRoadPressed, BuildTowerPressed, BuildMeadowPressed, MovePressed, CombinePressed, AttackPressed, UpgradePressed, RecruitPressed
+            case NothingPressed, BuildPressed, BuildRoadPressed, BuildTowerPressed, BuildMeadowPressed, MovePressed, CombinePressed, AttackPressed, UpgradePressed, RecruitPressed
         }
     }
 }
