@@ -76,10 +76,10 @@ class GameEngine {
         }
     }
 
-    func randomYesSound() {
+    func randomYesSound(attack: Bool = false) {
         if self.muted { return }
 
-        let sounds = ["a vos ordres", "attendons order", "oui capitaine", "pour le roi", "pour notre souverain", "pas de pitie", "pas de quartier"]
+        let sounds = attack ? ["a vos ordres", "attendons order", "oui capitaine", "pour le roi", "pour notre souverain", "pas de pitie", "pas de quartier"] : ["abattons", "au combat", "chargez", "ecrasons", "en avant", "rendez vous"]
         let random = Int(arc4random_uniform(UInt32(sounds.count * 2)))   // 5 so it doesn't always play a sound
 
         // play sound
@@ -369,6 +369,8 @@ class GameEngine {
 
         //===== UPDATE THE GAME STATE =====
 
+        var attacked = false
+
         // To tile is outside the controlled region.
         if to.owner !== village {
             // Check offensive rules
@@ -404,14 +406,14 @@ class GameEngine {
                     return
                 }
 
-                self.invadeEnemy(village, unit: from.unit!, to: to)
+                attacked = self.invadeEnemy(village, unit: from.unit!, to: to)
             }
         }
 
-        self.moveWithAnimation(to: to, from: from, path: path, state: .Moved)
+        self.moveWithAnimation(to: to, from: from, path: path, state: .Moved, attacked: attacked)
     }
 
-    func moveWithAnimation(#to: Tile, from: Tile, path: [Tile], state: Constants.Unit.Action) {
+    func moveWithAnimation(#to: Tile, from: Tile, path: [Tile], state: Constants.Unit.Action, attacked: Bool = false) {
         var moveActions = [SKAction]()
 
         // Update tiles in the path
@@ -442,7 +444,7 @@ class GameEngine {
 
         // play sound
         self.playSound(u.type.name())
-        self.randomYesSound()
+        self.randomYesSound(attack: attacked)
 
         // run animation
         u.node!.runAction(SKAction.sequence(moveActions), completion: {
@@ -515,13 +517,13 @@ class GameEngine {
         }
     }
 
-    private func invadeEnemy(village: Village, unit: Unit, to: Tile) {
+    private func invadeEnemy(village: Village, unit: Unit, to: Tile) -> Bool {
         var enemyPlayer = to.owner.player
         var enemyVillage = to.owner
 
         // Check specific offensive rules
         if to.village != nil && unit.type.rawValue < 3
-            || unit.type.rawValue == 3 && to.village?.rawValue == 2 { return }
+            || unit.type.rawValue == 3 && to.village?.rawValue == 2 { return false }
 
         // Update destination tile
         to.structure = nil
@@ -545,6 +547,8 @@ class GameEngine {
         village.addTile(to)
 
         self.checkPostAttack(enemyVillage)
+
+        return true
     }
 
     private func checkPostAttack(enemyVillage: Village) {
