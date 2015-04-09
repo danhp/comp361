@@ -801,7 +801,7 @@ class GameEngine {
                     if n.owner == nil { continue }
                     if n.owner.player? !== self.game?.currentPlayer {
                         if n.unit?.type == Constants.Types.Unit.Canon { continue }
-                        if n.isProtected(newUnit) {
+                        if n.isProtected(newUnit) && n.isBuildable() {
                             invadable = false
                             break
                         }
