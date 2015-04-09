@@ -1012,31 +1012,24 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <imageView tag="1" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mountain" translatesAutoresizingMaskIntoConstraints="NO" id="arM-bA-foV">
+                            <imageView tag="1" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="real1" translatesAutoresizingMaskIntoConstraints="NO" id="arM-bA-foV">
                                 <rect key="frame" x="81" y="85" width="100" height="100"/>
                             </imageView>
-                            <imageView tag="2" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mountain2" translatesAutoresizingMaskIntoConstraints="NO" id="54e-dr-1JT">
+                            <imageView tag="2" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="real2" translatesAutoresizingMaskIntoConstraints="NO" id="54e-dr-1JT">
                                 <rect key="frame" x="198" y="85" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="jqp-Kg-3cl"/>
                                     <constraint firstAttribute="width" constant="100" id="og5-6A-eBe"/>
                                 </constraints>
                             </imageView>
-                            <imageView tag="3" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tree" translatesAutoresizingMaskIntoConstraints="NO" id="5Jl-Op-yqR">
+                            <imageView tag="3" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playground" translatesAutoresizingMaskIntoConstraints="NO" id="5Jl-Op-yqR">
                                 <rect key="frame" x="81" y="200" width="100" height="100"/>
                             </imageView>
-                            <imageView tag="4" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fort" translatesAutoresizingMaskIntoConstraints="NO" id="MMD-O3-dqG">
+                            <imageView tag="4" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quickwin" translatesAutoresizingMaskIntoConstraints="NO" id="MMD-O3-dqG">
                                 <rect key="frame" x="198" y="200" width="100" height="100"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fort" translatesAutoresizingMaskIntoConstraints="NO" id="X3L-ui-fC5">
-                                <rect key="frame" x="359" y="85" width="164" height="164"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="164" id="gPd-7b-NUp"/>
-                                    <constraint firstAttribute="height" constant="164" id="nwV-8x-uBf"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jiS-YP-wK3">
-                                <rect key="frame" x="382" y="266" width="119" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jiS-YP-wK3">
+                                <rect key="frame" x="382" y="233" width="119" height="34"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="20"/>
                                 <state key="normal" title="CONFIRM">
@@ -1064,6 +1057,13 @@
                                     <segue destination="PKu-Rr-mLq" kind="unwind" unwindAction="unwindFromMapSelection:" id="ZYf-y6-16V"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="real1" translatesAutoresizingMaskIntoConstraints="NO" id="X3L-ui-fC5">
+                                <rect key="frame" x="359" y="77" width="164" height="164"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="164" id="gPd-7b-NUp"/>
+                                    <constraint firstAttribute="height" constant="164" id="nwV-8x-uBf"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.94901960784313721" green="0.36078431372549019" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1092,6 +1092,11 @@
                             <constraint firstItem="X3L-ui-fC5" firstAttribute="top" secondItem="Vgd-qb-s1i" secondAttribute="bottom" constant="16" id="uUH-wu-krH"/>
                             <constraint firstItem="Vgd-qb-s1i" firstAttribute="centerX" secondItem="TON-Af-31L" secondAttribute="centerX" id="yez-jq-w9t"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="FGN-Zn-2Sn"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
@@ -1110,19 +1115,37 @@
             </objects>
             <point key="canvasLocation" x="492" y="624"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="Rb8-Pq-5bW">
+            <objects>
+                <viewController id="wOQ-br-6hW" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="d8M-Wl-A6z"/>
+                        <viewControllerLayoutGuide type="bottom" id="hSV-8b-Etm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DQL-bx-lYx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Wb-MB-nYF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
     <resources>
         <image name="canon" width="44" height="33"/>
         <image name="fort" width="46" height="62"/>
         <image name="infantry" width="20" height="41"/>
         <image name="knight" width="25" height="49"/>
-        <image name="mountain" width="82" height="77"/>
-        <image name="mountain2" width="82" height="65"/>
         <image name="peasant" width="23" height="41"/>
+        <image name="playground" width="100" height="100"/>
+        <image name="quickwin" width="100" height="100"/>
+        <image name="real1" width="100" height="100"/>
+        <image name="real2" width="100" height="100"/>
         <image name="soldier" width="23" height="37"/>
         <image name="sound-on" width="45" height="36"/>
         <image name="tower" width="44" height="73"/>
-        <image name="tree" width="46" height="55"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="MMV-n5-kyf"/>
