@@ -135,9 +135,8 @@ class GameEngine {
             var seen = [Tile]()
 
             for t in allTiles {
-                // Only visit unseen tiles
-                if contains(seen, { $0 === t}) { continue }
-                seen.append(t)
+                // Grow from tombstones (edge case)
+                t.replaceTombstone()
 
                 // Only consider tiles with trees
                 if t.land != .Tree { continue }
