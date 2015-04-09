@@ -71,6 +71,7 @@ class GameScene: SKScene {
     private func newSelection() {
         if let map = self.map? {
             GameEngine.Instance.updateInfoPanel()
+            GameEngine.Instance.playUnitSound(map.selected!)
         }
     }
 

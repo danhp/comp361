@@ -27,8 +27,17 @@ class GameEngine {
     var musicPlayer: AVAudioPlayer?
     var shortPlayer: AVAudioPlayer?
     var yesPlayer: AVAudioPlayer?
+    var muted: Bool = false
+
+    func toggleSound() {
+        self.muted = !self.muted
+        if self.muted { self.stopMusic()
+        } else { self.playMusic(inGame: false) }
+    }
 
     func playMusic(inGame: Bool = true) {
+        if self.muted { return }
+
         var name: String = "background"
         if inGame { name = "background2" }
 
@@ -40,9 +49,13 @@ class GameEngine {
         }
     }
 
-    func stopMusic() { self.musicPlayer?.stop() }
+    func stopMusic() {
+        self.musicPlayer?.stop()
+    }
 
     func playSound(name: String, type: String = "mp3", loop: Bool = true) {
+        if self.muted { return }
+
         if let url: NSURL = NSBundle.mainBundle().URLForResource(name, withExtension: type) {
             self.audioPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
             self.audioPlayer?.play()
@@ -55,6 +68,8 @@ class GameEngine {
     }
 
     func playShortSound(name: String, type: String = "mp3") {
+        if self.muted { return }
+
         if let url: NSURL = NSBundle.mainBundle().URLForResource(name, withExtension: type) {
             self.shortPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
             self.shortPlayer?.play()
@@ -62,8 +77,10 @@ class GameEngine {
     }
 
     func randomYesSound() {
-        let sounds = ["a vos ordres", "attendons order", "oui capitaine", "pour le roi", "pour notre souverain"]
-        let random = Int(arc4random_uniform(UInt32(sounds.count + 5)))   // 5 so it doesn't always play a sound
+        if self.muted { return }
+
+        let sounds = ["a vos ordres", "attendons order", "oui capitaine", "pour le roi", "pour notre souverain", "pas de pitie", "pas de quartier"]
+        let random = Int(arc4random_uniform(UInt32(sounds.count * 2)))   // 5 so it doesn't always play a sound
 
         // play sound
         if random < sounds.count {
@@ -71,6 +88,12 @@ class GameEngine {
                 self.yesPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
                 self.yesPlayer?.play()
             }
+        }
+    }
+
+    func playUnitSound(tile: Tile) {
+        if let u = tile.unit {
+            self.randomYesSound()
         }
     }
 
@@ -446,6 +469,14 @@ class GameEngine {
                 unit.currentAction = state
             }
 
+            // Animate
+            if let u = to.unit {
+                let bloodPath = NSBundle.mainBundle().pathForResource("blood", ofType: "sks")
+                let blood = NSKeyedUnarchiver.unarchiveObjectWithFile(bloodPath!) as SKEmitterNode
+                to.addChild(blood)
+                
+                blood.runAction(SKAction.sequence([SKAction.waitForDuration(0.3), SKAction.fadeOutWithDuration(0.2), SKAction.runBlock({to.unit = nil})]))
+            }
             self.stopSound()
 
             GameEngine.Instance.map?.resetColor()
@@ -500,7 +531,6 @@ class GameEngine {
         // Check specific offensive rules
         if to.village != nil && unit.type.rawValue < 3
             || unit.type.rawValue == 3 && to.village?.rawValue == 2 { return }
-
 
         // Update destination tile
         to.unit = nil
@@ -1040,10 +1070,10 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-//        self.startGameWithMap(2)
-//        self.beginTurn()
-//        self.showGameScene()
-//        return
+        self.startGameWithMap(3)
+        self.beginTurn()
+        self.showGameScene()
+        return
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data

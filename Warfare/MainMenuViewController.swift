@@ -9,6 +9,7 @@
 import UIKit
 
 class MainMenuViewController: UIViewController {
+    @IBOutlet weak var soundButton: UIButton!
 
     override func viewWillAppear(animated: Bool) {
         // Set MatchHelper's view controller
@@ -17,6 +18,7 @@ class MainMenuViewController: UIViewController {
         GameEngine.Instance.currentChoices = nil
 
         GameEngine.Instance.playMusic(inGame: false)
+        self.soundButton.selected = GameEngine.Instance.muted
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,6 +49,12 @@ class MainMenuViewController: UIViewController {
     @IBAction func unwindFromGame(sender: UIStoryboardSegue) {
         
     }
+
+    @IBAction func soundToggle(sender: AnyObject) {
+        GameEngine.Instance.toggleSound()
+        self.soundButton.selected = GameEngine.Instance.muted
+    }
+
     /*
     // MARK: - Navigation
 
