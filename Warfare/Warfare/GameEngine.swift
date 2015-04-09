@@ -682,10 +682,11 @@ class GameEngine {
             return
         }
 
-        self.playShortSound("build-upgrade", type: "wav")
 
-        tile.owner.upgradeVillage()
-        self.availableVillages = self.availableVillages.filter({ $0 !== tile})
+        if tile.owner.upgradeVillage() {
+            self.playShortSound("build-upgrade", type: "wav")
+            self.availableVillages = self.availableVillages.filter({ $0 !== tile})
+        }
     }
 
     func upgradeUnit(tile: Tile, newLevel: Constants.Types.Unit) {
@@ -704,9 +705,10 @@ class GameEngine {
 
         if let unit = tile.unit {
             let village = tile.owner!
-            village.upgradeUnit(tile, newType: newLevel)
-            self.availableUnits = self.availableUnits.filter({ $0 !== tile })
-            self.randomYesSound()
+            if village.upgradeUnit(tile, newType: newLevel) {
+                self.availableUnits = self.availableUnits.filter({ $0 !== tile })
+                self.randomYesSound()
+            }
         } else {
             self.showToast("There are no units to upgrade")
         }
