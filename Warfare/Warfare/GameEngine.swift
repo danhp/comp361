@@ -395,6 +395,7 @@ class GameEngine {
                     removeGrass = SKAction.runBlock({
                         t.land = .Grass
                         t.draw()
+                        self.playShortSound("trample")
                     })
             }
 
@@ -438,7 +439,7 @@ class GameEngine {
 
             self.stopSound()
 
-            GameEngine.Instance.map?.resetColor(path)
+            GameEngine.Instance.map?.resetColor()
             GameEngine.Instance.map?.draw()
             self.updateInfoPanel()
         })
@@ -557,20 +558,20 @@ class GameEngine {
             self.showToast("Only canons may attack")
             return
         }
+        if to.land == .Sea || to.owner == nil {
+            self.showToast("This is war, the canon won't waste his shots")
+            return
+        }
         if from.owner.player === to.owner.player {
-            self.showToast("The Canon won't destroy his own land")
+            self.showToast("The canon won't destroy his own land")
             return
         }
         if from.owner.wood < 1 {
             self.showToast("You don't have the resources to shoot the canon")
             return
         }
-        if to.land == .Sea {
-            self.showToast("This is war, the canon won't waste his shots")
-            return
-        }
         if !(self.map?.isDistanceOfTwo(from, to: to))! {
-            self.showToast("That tile is too far to shoot at")
+            self.showToast("That tile is too far to shoot")
             return
         }
 
@@ -595,13 +596,20 @@ class GameEngine {
                 newLocation.structure = nil
                 newLocation.village = newHovel.type
             }
+
+            // animate
+            to.owner.isBurning = true
         }
 
         from.unit?.currentAction = Constants.Unit.Action.Moved
         from.owner.wood -= 1
 
+        from.alpha = 0.0
         from.draw()
+        from.runAction(SKAction.fadeInWithDuration(0.3))
         to.draw()
+
+        self.playShortSound("attack")
 
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
@@ -670,11 +678,18 @@ class GameEngine {
         }
         tileA.unit?.combine(tileB.unit!)
         tileA.unit?.currentAction = Constants.Unit.Action.UpgradingCombining
-        tileB.unit = nil
+//        tileB.unit = nil // setting below in animation
         self.availableUnits = self.availableUnits.filter({ $0 !== tileA || $0 !== tileB })
 
-        tileA.draw()
-        tileB.draw()
+        // Animate
+        tileB.unit?.node?.runAction(SKAction.fadeOutWithDuration(0.3), completion: ({
+            tileB.unit = nil
+            tileB.draw()
+
+            tileA.alpha = 0.0
+            tileA.draw()
+            tileA.runAction(SKAction.fadeInWithDuration(0.3))
+        }))
 
         self.randomYesSound()
     }
@@ -734,7 +749,10 @@ class GameEngine {
 //        newUnit.currentAction = .Moved
         self.availableUnits.append(destination!)
         destination!.unit = newUnit
+
+        destination?.alpha = 0.0
         destination?.draw()
+        destination?.runAction(SKAction.fadeInWithDuration(0.3))
 
         self.playSound("recruit", type: "mp3", loop: false)
         self.randomYesSound()
@@ -771,6 +789,8 @@ class GameEngine {
 
         // update ui
         on.draw()
+        on.alpha = 0
+        on.runAction(SKAction.fadeInWithDuration(0.3))
 
         self.playShortSound("build-upgrade", type: "wav")
     }
@@ -970,10 +990,10 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-//        self.startGameWithMap(3)
-//        self.beginTurn()
-//        self.showGameScene()
-//        return
+        self.startGameWithMap(3)
+        self.beginTurn()
+        self.showGameScene()
+        return
 
         // EXISTING MATCH
         if matchData.length > 0 {
