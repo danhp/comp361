@@ -165,7 +165,10 @@ class GameViewController: UIViewController {
         self.turnLabel.text = GameEngine.Instance.game?.nameOfActivePlayer
 
         // Show color
-        self.turnColorRectangle.backgroundColor = Utilities.Colors.colorForPlayer(MatchHelper.sharedInstance().currentParticipantIndex())
+        if !(GameEngine.Instance.game?.localIsCurrentPlayer)! {
+            self.turnColorRectangle.backgroundColor = Utilities.Colors.colorForPlayer(MatchHelper.sharedInstance().currentParticipantIndex())
+            self.turnColorRectangle.hidden = false
+        } else { self.turnColorRectangle.hidden = true }
     }
 
     // MARK: - Toast
