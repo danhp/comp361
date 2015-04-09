@@ -141,12 +141,16 @@ class GameEngine {
                 // Only consider tiles with trees
                 if t.land != .Tree { continue }
 
+                // Dont consider tiles with new trees
+                if contains(seen, t) { continue }
+
                 for n in (self.map?.neighbors(tile: t))! {
                     if n.isGrowable() {
                         let random = Int(arc4random_uniform(2))
                         if random == 0 {
                             n.land = .Tree
                             n.draw()
+                            seen.append(n)
                         }
                         break
                     }
