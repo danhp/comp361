@@ -79,8 +79,9 @@ class GameEngine {
     func randomYesSound(attack: Bool = false) {
         if self.muted { return }
 
-        let sounds = attack ? ["a vos ordres", "attendons order", "oui capitaine", "pour le roi", "pour notre souverain", "pas de pitie", "pas de quartier"] : ["abattons", "au combat", "chargez", "ecrasons", "en avant", "rendez vous"]
-        let random = Int(arc4random_uniform(UInt32(sounds.count * 2)))   // 5 so it doesn't always play a sound
+        let sounds = !attack ? ["a vos ordres", "attendons order", "oui capitaine", "pour le roi", "pour notre souverain"] : ["abattons", "au combat", "chargez", "ecrasons", "en avant", "rendez vous", "pas de pitie", "pas de quartier"]
+        let multiplier = !attack ? 2 : 1
+        let random = Int(arc4random_uniform(UInt32(sounds.count * multiplier)))   // 5 so it doesn't always play a sound
 
         // play sound
         if random < sounds.count {
@@ -407,6 +408,7 @@ class GameEngine {
                 }
 
                 attacked = self.invadeEnemy(village, unit: from.unit!, to: to)
+                if !attacked { return }
             }
         }
 
@@ -523,7 +525,10 @@ class GameEngine {
 
         // Check specific offensive rules
         if to.village != nil && unit.type.rawValue < 3
-            || unit.type.rawValue == 3 && to.village?.rawValue == 2 { return false }
+            || unit.type.rawValue == 3 && to.village?.rawValue == 2 {
+                self.showToast("Unit can't attack that tile")
+                return false
+        }
 
         // Update destination tile
         to.structure = nil
@@ -1070,10 +1075,10 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-//        self.startGameWithMap(3)
-//        self.beginTurn()
-//        self.showGameScene()
-//        return
+        self.startGameWithMap(3)
+        self.beginTurn()
+        self.showGameScene()
+        return
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data
