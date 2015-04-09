@@ -245,7 +245,7 @@ struct Constants {
                 case .ReadyForOrders:
                     return "Ready"
                 case .Upgrading1:
-                    return "Updrading"
+                    return "Upgrading"
                 case .Upgrading2:
                     return "Finishing Upgrade"
                 }

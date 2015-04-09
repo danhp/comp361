@@ -373,6 +373,12 @@ class Map: SKNode {
         }
     }
 
+    func resetColor(tiles: [Tile]) {
+        for t in tiles {
+            t.lighten = false
+        }
+    }
+
     func scroll(delta: CGVector) {
         self.isAnimating = true
         let move = SKAction.moveBy(delta, duration: 1)

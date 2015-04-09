@@ -25,6 +25,7 @@ class GameEngine {
     // Mark: - Audio Player
     var audioPlayer: AVAudioPlayer?
     var musicPlayer: AVAudioPlayer?
+    var shortPlayer: AVAudioPlayer?
     var yesPlayer: AVAudioPlayer?
 
     func playMusic(inGame: Bool = true) {
@@ -51,6 +52,13 @@ class GameEngine {
 
     func stopSound() {
         self.audioPlayer?.stop()
+    }
+
+    func playShortSound(name: String, type: String = "mp3") {
+        if let url: NSURL = NSBundle.mainBundle().URLForResource(name, withExtension: type) {
+            self.shortPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
+            self.shortPlayer?.play()
+        }
     }
 
     func randomYesSound() {
@@ -304,7 +312,7 @@ class GameEngine {
         if to.owner === village {
             // Cannot destroy object within controlled region
             if to.unit != nil || to.village != nil || to.structure == .Tower {
-                self.showToast("You already have somehting at the destination")
+                self.showToast("You already have something at the destination")
                 return
             }
 
@@ -383,6 +391,7 @@ class GameEngine {
                 && t.structure != .Road {
                     removeGrass = SKAction.runBlock({
                         t.land = .Grass
+                        t.draw()
                     })
             }
 
@@ -426,7 +435,7 @@ class GameEngine {
 
             self.stopSound()
 
-            GameEngine.Instance.map?.resetColor()
+            GameEngine.Instance.map?.resetColor(path)
             GameEngine.Instance.map?.draw()
             self.updateInfoPanel()
         })
@@ -587,6 +596,10 @@ class GameEngine {
 
         from.unit?.currentAction = Constants.Unit.Action.Moved
         from.owner.wood -= 1
+
+        from.draw()
+        to.draw()
+
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
 
@@ -604,7 +617,7 @@ class GameEngine {
             return
         }
 
-        self.playSound("build-upgrade", type: "wav")
+        self.playShortSound("build-upgrade", type: "wav")
 
         tile.owner.upgradeVillage()
         self.availableVillages = self.availableVillages.filter({ $0 !== tile})
@@ -656,6 +669,9 @@ class GameEngine {
         tileA.unit?.currentAction = Constants.Unit.Action.UpgradingCombining
         tileB.unit = nil
         self.availableUnits = self.availableUnits.filter({ $0 !== tileA || $0 !== tileB })
+
+        tileA.draw()
+        tileB.draw()
 
         self.randomYesSound()
     }
@@ -715,6 +731,7 @@ class GameEngine {
 //        newUnit.currentAction = .Moved
         self.availableUnits.append(destination!)
         destination!.unit = newUnit
+        destination?.draw()
 
         self.playSound("recruit", type: "mp3", loop: false)
         self.randomYesSound()
@@ -749,7 +766,10 @@ class GameEngine {
         on.structure = tower
         on.land = .Grass
 
-        self.playSound("build-upgrade", type: "wav")
+        // update ui
+        on.draw()
+
+        self.playShortSound("build-upgrade", type: "wav")
     }
 
     // Moves unit from -> on, instruct unit to start building road.
@@ -812,7 +832,7 @@ class GameEngine {
 
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
 
-        self.playSound("build-upgrade", type: "wav")
+        self.playShortSound("build-upgrade", type: "wav")
     }
 
     // Moves unit from -> on, instruct unit to start creating meadow for 2 turns
@@ -947,10 +967,10 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-        self.startGameWithMap(4)
-        self.beginTurn()
-        self.showGameScene()
-        return
+//        self.startGameWithMap(3)
+//        self.beginTurn()
+//        self.showGameScene()
+//        return
 
         // EXISTING MATCH
         if matchData.length > 0 {

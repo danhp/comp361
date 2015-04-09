@@ -135,7 +135,6 @@ class GameViewController: UIViewController {
         } else {
             self.regionGold.text = "Gold: ?"
             self.regionWood.text = "Wood: ?"
-            self.regionHP.text = "HP: ?"
             self.regionState.text = ""
             self.regionIncome.text = "Income: ?"
             self.regionOutcome.text = "Upkeep: ?"
@@ -279,16 +278,23 @@ class GameViewController: UIViewController {
     @IBAction func buildButtonTapped(sender: AnyObject) {
         self.betweenPresses()
         if let tile = GameEngine.Instance.map?.selected {
+            let parent = self.meadowButton.superview?.superview
+            var frame = parent?.frame
+
             if tile.village != nil {
                 self.towerButton.enabled = true
-                self.roadButton.enabled = false
-                self.meadowButton.enabled = false
+                self.roadButton.hidden = true
+                self.meadowButton.hidden = true
+                frame?.size.width = 75
             }
             else if tile.unit != nil {
                 self.towerButton.enabled = false
-                self.roadButton.enabled = true
-                self.meadowButton.enabled = true
+                self.roadButton.hidden = false
+                self.meadowButton.hidden = false
+                frame?.size.width = 225
             }
+
+            parent?.frame = frame!
         }
 
         self.hideButton(validateButton)
@@ -375,7 +381,7 @@ class GameViewController: UIViewController {
 
         GameEngine.Instance.map?.resetColor()
         self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
-        GameEngine.Instance.map?.draw()
+//        map.draw // useless to draw the map there?
     }
 
     @IBAction func upgradeButtonTapped(sender: AnyObject) {
@@ -396,7 +402,7 @@ class GameViewController: UIViewController {
         }
 
         self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
-        GameEngine.Instance.map?.draw()
+        GameEngine.Instance.game?.map.selected?.draw()
     }
 
     @IBAction func recruitButtonTapped(sender: AnyObject) {
@@ -451,7 +457,7 @@ class GameViewController: UIViewController {
         self.hideButton(cancelButton)
         self.state = .NothingPressed
         self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
-        GameEngine.Instance.map?.draw()
+        GameEngine.Instance.map?.selected?.draw()
     }
 
     @IBAction func validateButtonTapped(sender: AnyObject) {
@@ -482,7 +488,7 @@ class GameViewController: UIViewController {
         validateButton.hidden = true
         cancelButton.hidden = true
         if self.state != .MovePressed && self.state != .BuildRoadPressed && self.state != .BuildMeadowPressed {
-            GameEngine.Instance.map?.draw()
+//            GameEngine.Instance.map?.draw()
         }
 
         self.state = .NothingPressed
@@ -494,7 +500,7 @@ class GameViewController: UIViewController {
         self.hideButton(validateButton)
         self.hideButton(cancelButton)
         GameEngine.Instance.map?.selected = tileSource!
-        GameEngine.Instance.map?.draw()
+//        GameEngine.Instance.map?.draw()
         state = .NothingPressed
 
         self.update((GameEngine.Instance.map?.selected)!)
