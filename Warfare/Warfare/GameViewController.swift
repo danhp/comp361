@@ -422,6 +422,9 @@ class GameViewController: UIViewController {
 
         self.state = .RecruitPressed
         self.showRecruitOptions(tileSource!)
+        self.hideButton(upgradeButton)
+        self.hideButton(buildButton)
+        self.hideButton(recruitButton)
         self.showButton(cancelButton)
     }
 
