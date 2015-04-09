@@ -575,6 +575,8 @@ class GameEngine {
             return
         }
 
+        var enemyVillage = to.owner
+
         to.structure = nil
         to.land = .Grass
         if to.unit != nil {
@@ -585,20 +587,33 @@ class GameEngine {
             to.owner.attacked()
             if to.owner.health == 0 {
                 let newHovel = Village()
-                to.owner.player?.addVillage(newHovel)
-                // TODO: Not sure this will work
-                newHovel.controlledTiles = to.owner.controlledTiles
+                to.village = nil
                 to.owner.player?.removeVillage(to.owner)
-
-                let newLocation = newHovel.controlledTiles[0]
-                newLocation.land = .Grass
-                newLocation.unit = nil
-                newLocation.structure = nil
-                newLocation.village = newHovel.type
+                to.owner.player?.addVillage(newHovel)
+                for t in to.owner.controlledTiles {
+                    if t === to {
+                        self.game?.neutralTiles.append(t)
+                        to.owner = nil
+                    } else {
+                        newHovel.addTile(t)
+                    }
+                }
+                enemyVillage = newHovel
             }
 
             // animate
             to.owner.isBurning = true
+        } else {
+            self.game?.neutralTiles.append(to)
+            if let o = to.owner {
+                to.owner.removeTile(to)
+            }
+        }
+
+        if let v = enemyVillage {
+            self.checkPostAttack(v)
+            // TODO:
+            self.map?.draw()
         }
 
         from.unit?.currentAction = Constants.Unit.Action.Moved
