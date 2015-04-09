@@ -119,6 +119,11 @@ class Map: SKNode {
         costSoFar[from] = 0
         seen.append(from)
 
+        // Edge case
+        if from === to {
+            return to
+        }
+
         while !queue.isEmpty {
             let node = queue.pop()
 
