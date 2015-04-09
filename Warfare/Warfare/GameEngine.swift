@@ -683,6 +683,10 @@ class GameEngine {
     }
 
     func combineUnit(tileA: Tile, tileB: Tile) {
+        if tileA === tileB {
+            self.showToast("You can't combine with yourself")
+            return
+        }
         if tileA.owner !== tileB.owner {
             self.showToast("Units must be in the same region")
             return
