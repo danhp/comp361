@@ -96,7 +96,7 @@ class GameViewController: UIViewController {
                     if let unit = t.unit {
                         showUnitInfo(unit)
                     } else if let structure = t.structure {
-                        if structure == .Tower {
+                        if structure == .Tower || structure == .Tombstone {
                             showStructureInfo(structure)
                         }
                     }
