@@ -106,9 +106,7 @@ class GameViewController: UIViewController {
     }
 
     func showNeutralInfo(tile: Tile?) {
-        if let t = tile {
-            self.regionVillage.image = (t.land == Constants.Types.Land.Grass) ? nil : (UIImage(named: t.land.name()))
-        } else { self.regionVillage.image = nil }
+        self.regionVillage.image = nil
         self.regionVillage.backgroundColor = Utilities.Colors.colorForLandType(tile?.land ?? Constants.Types.Land.Grass, alpha: 1 )
         self.regionGold.text = ""
         self.regionWood.text = ""
@@ -120,6 +118,12 @@ class GameViewController: UIViewController {
         self.characterName.text = ""
         self.characterWage.text = ""
         self.characterState.text = ""
+
+        // image
+        if let t = tile {
+            self.regionVillage.image = (t.land == Constants.Types.Land.Grass) ? nil : (UIImage(named: t.land.name()))
+            self.regionWood.text = (t.structure == .Road ? "Paved " : "") + t.land.name().capitalizedString
+        }
     }
 
     func showVillageInfo(village: Village) {

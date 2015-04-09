@@ -65,7 +65,7 @@ struct Constants {
                 case .Meadow:
                     return "meadow"
                 case .Sea:
-                    return "mountain2"
+                    return "mountain"
                 }
             }
 

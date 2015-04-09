@@ -402,8 +402,8 @@ class Map: SKNode {
 
         // limit translation
         let scrollerSize = self.scroller.calculateAccumulatedFrame()
-        let maxX = -UIScreen.mainScreen().bounds.size.width/3.0
-        let maxY = UIScreen.mainScreen().bounds.size.height/3.0
+        let maxX: CGFloat = 0.0
+        let maxY: CGFloat = 0.0
         let minX = -scrollerSize.size.width
         let minY = scrollerSize.size.height
 
