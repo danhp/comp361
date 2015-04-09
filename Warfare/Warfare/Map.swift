@@ -121,7 +121,7 @@ class Map: SKNode {
 
         // Edge case
         if from === to {
-            return to
+            return [to]
         }
 
         while !queue.isEmpty {

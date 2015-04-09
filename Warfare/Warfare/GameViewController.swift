@@ -390,6 +390,8 @@ class GameViewController: UIViewController {
         GameEngine.Instance.map?.resetColor()
         self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
 //        map.draw // useless to draw the map there?
+
+        GameEngine.Instance.playShortSound("clairon-extinction")
     }
 
     @IBAction func upgradeButtonTapped(sender: AnyObject) {

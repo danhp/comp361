@@ -92,8 +92,10 @@ class GameEngine {
     }
 
     func playUnitSound(tile: Tile) {
-        if let u = tile.unit {
-            self.randomYesSound()
+        if tile.isBelongsToLocal() {
+            if let u = tile.unit {
+                self.randomYesSound()
+            }
         }
     }
 
@@ -261,15 +263,17 @@ class GameEngine {
                 starved++
                 self.starveVillage(village)
             }
+
         }
 
         let goldString = "You gained " + String(gold) + " gold and paid " + String(wages) + " gold. "
         let starvedString = ((starved > 0) ? String(starved) + " of your villages starved. " : "")
         let meadowString = (meadows > 0 ? String(meadows) + " meadows were cultivated. " : "")
         let roadString = (roads > 0 ? String(roads) + " roads were built. " : "")
-        let unitString = "You now have " + String(unitsReady) + " units ready. "
+        let unitString = (unitsReady > 0) ? "You now have " + String(unitsReady) + " units ready. " : ""
         let msg =  goldString +  starvedString + meadowString + roadString + unitString
         self.showToast(msg, duration: 10.0)
+        self.playShortSound("tambour2")
     }
 
     private func starveVillage(village: Village) {
@@ -336,7 +340,8 @@ class GameEngine {
                 self.showToast("Your canon won't clear that tile")
                 return
             }
-            if to.owner.player !== self.game?.currentPlayer {
+
+            if !to.isBelongsToLocal() && to.owner != nil {
                 self.showToast("The canon can't invade enemy land")
                 return
             }
@@ -751,7 +756,7 @@ class GameEngine {
             tileA.runAction(SKAction.fadeInWithDuration(0.3))
         }))
 
-        self.randomYesSound()
+        tileA.unit?.type == Constants.Types.Unit.Knight ? self.playShortSound("horse") : self.randomYesSound()
     }
 
     func recruitUnit(villageTile: Tile, type: Constants.Types.Unit) {
@@ -834,14 +839,21 @@ class GameEngine {
 
         destination?.alpha = 0.0
         destination?.draw()
-        destination?.runAction(SKAction.fadeInWithDuration(0.3))
+        destination?.runAction(SKAction.fadeInWithDuration(0.3), completion: ({self.redraw()}))
 
-        self.playSound("recruit", type: "mp3", loop: false)
+        self.playShortSound(type == .Knight ? "horse" : "recruit", type: "mp3")
         self.randomYesSound()
     }
 
+    func redraw() {
+        self.map?.draw()
+    }
+
     func buildTower(on: Tile) {
-        if on.owner == nil { return }
+        if on.owner == nil {
+            self.showToast("You can only build tower on your land")
+            return
+        }
         if on.owner.player !== self.game?.currentPlayer {
             self.showToast("You can only build towers on your land")
             return
@@ -1073,10 +1085,10 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-//        self.startGameWithMap(3)
-//        self.beginTurn()
-//        self.showGameScene()
-//        return
+        self.startGameWithMap(3)
+        self.beginTurn()
+        self.showGameScene()
+        return
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data
@@ -1089,8 +1101,9 @@ class GameEngine {
                         MatchHelper.sharedInstance().updateMatchData()      // send update to every one
                         self.beginTurn()
                         self.showGameScene()
+                        self.playShortSound("tambour2")
                         // MAP SELECTION SEQUENCE IN PROGRESS
-                    } else { // TODO pass a bool saying userShouldSelect or userShouldwait
+                    } else {
                         self.currentChoices = choices
                         self.showMapSelection() // current player will select a map
                     }
@@ -1106,6 +1119,7 @@ class GameEngine {
                     if (self.game?.roundCount)! % 3 == 0 {
                         self.growTrees()
                     }
+                    self.playShortSound("tambour2")
                 }
             }
 
