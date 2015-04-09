@@ -147,6 +147,7 @@ class GameEngine {
                         let random = Int(arc4random_uniform(2))
                         if random == 0 {
                             n.land = .Tree
+                            n.draw()
                         }
                         break
                     }
@@ -219,6 +220,8 @@ class GameEngine {
 
                 gold += tile.goldValue()
                 wages += tile.wage()
+
+                tile.draw()
             }
 
             // Starve the Village
