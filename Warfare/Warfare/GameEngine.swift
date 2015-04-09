@@ -117,10 +117,10 @@ class GameEngine {
         let matchData = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
         MatchHelper.sharedInstance().advanceSelectionTurn(matchData!)
 
-        (MatchHelper.sharedInstance().vc as MapSelectionViewController).updateWaitCount((self.currentChoices?.count)!)
-
         if self.currentChoices?.count == 3 {
             MatchHelper.sharedInstance().loadMatchData()
+        } else {
+            (MatchHelper.sharedInstance().vc as MapSelectionViewController).updateWaitCount((self.currentChoices?.count)!)
         }
     }
 

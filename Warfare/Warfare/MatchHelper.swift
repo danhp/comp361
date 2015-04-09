@@ -314,7 +314,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func player(player: GKPlayer!,
         receivedTurnEventForMatch match: GKTurnBasedMatch!,
         didBecomeActive: Bool) {
-            if ((match.matchID == self.myMatch?.matchID && self.vc? is GameViewController) || didBecomeActive) {
+            if ((match.matchID == self.myMatch?.matchID && !(self.vc? is MainMenuViewController)) || didBecomeActive) {
                 self.myMatch = match
                 self.loadMatchData()
             } // else show alert?
