@@ -719,19 +719,6 @@ class GameEngine {
             return
         }
 
-        var destination: Tile?
-        for n in (self.map?)!.neighbors(tile: villageTile) {
-            if n.owner !== villageTile.owner { continue }
-            if n.isWalkable() && n.unit == nil && n.structure == nil {
-                destination = n
-                break
-            }
-        }
-        if destination == nil {
-            self.showToast("There is no more room around that village")
-            return
-        }
-
         let costGold = type.cost().0
         let costWood = type.cost().1
         if village.gold < costGold || village.wood < costWood {
@@ -739,11 +726,46 @@ class GameEngine {
             return
         }
 
+        var newUnit = Unit(type: type)
+
+        var destination: Tile?
+        for n in village.controlledTiles {
+            if n.isBuildable() {
+                destination = n
+                break
+            }
+        }
+        // Look for a neutral tile around the edge
+        if destination == nil {
+            for t in self.map!.getEdgeTiles(village) {
+                var invadable = true
+                for n in (self.map?.neighbors(tile: t))! {
+                    if n.owner == nil { continue }
+                    if n.owner.player? !== self.game?.currentPlayer {
+                        if n.unit?.type == Constants.Types.Unit.Canon { continue }
+                        if n.isProtected(newUnit) {
+                            invadable = false
+                            break
+                        }
+                    }
+                }
+                if invadable {
+                    destination = t
+                    self.invadeNeutral(village, unit: newUnit, to: t)
+                    break
+                }
+            }
+        }
+        // Still nil means we failed to find anything.
+        if destination == nil {
+            self.showToast("There is no more room around that village")
+            return
+        }
+
 
         village.gold -= costGold
         village.wood -= costWood
 
-        var newUnit = Unit(type: type)
 
         // For testing purposes this is uncommented at times.
 //        newUnit.currentAction = .Moved

@@ -12,20 +12,20 @@
                     ]
                 },
                 {
-                    "type":0, "gold":100, "wood":0,
+                    "type":1, "gold":100, "wood":30,
                     "controlledTiles":[
                         { "position":[5,0], "land":0 },
-                        { "position":[5,1], "land":0, "village":0 },
-                        { "position":[4,2], "land":0 },
+                        { "position":[5,1], "land":0, "village":1 },
+                        { "position":[4,2], "land":0, "unit":{"type":1,"currentAction":0} },
                         { "position":[4,1], "land":0 }
                     ]
                 },
                 {
-                    "type": 1, "gold": 100, "wood":0,
+                    "type": 2, "gold": 100, "wood":0,
                     "controlledTiles":[
                         {"position":[5,3], "land":0 },
                         {"position":[6,2], "land":0 },
-                        {"position":[6,3], "land":0, "village":1 },
+                        {"position":[6,3], "land":0, "village":2 },
                         {"position":[5,4], "land":0 }
                     ]
                 },
@@ -85,6 +85,11 @@
                 {
                     "type":3, "gold":500, "wood":500, "health":3,
                     "controlledTiles":[
+                        { "position":[10,0], "land":0},
+                        { "position":[11,0], "land":0},
+                        { "position":[12,0], "land":0},
+                        { "position":[13,0], "land":0},
+                        { "position":[14,0], "land":0},
                         { "position":[9,1], "land":0 },
                         { "position":[9,2], "land":0, "structure":0 },
                         { "position":[9,3], "land":0 },
@@ -124,11 +129,11 @@
         {"position":[7,0], "land":0},
         {"position":[8,0], "land":0},
         {"position":[9,0], "land":0},
-        {"position":[10,0], "land":0},
-        {"position":[11,0], "land":0},
-        {"position":[12,0], "land":0},
-        {"position":[13,0], "land":0},
-        {"position":[14,0], "land":0},
+
+
+
+
+
         {"position":[15,0], "land":0},
         {"position":[16,0], "land":0},
         {"position":[17,0], "land":0},
