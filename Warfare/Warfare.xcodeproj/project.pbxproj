@@ -77,6 +77,8 @@
 		13CE45AA1ACF70F4007455F3 /* MapSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */; };
 		13D24A341AA2523B00378490 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D24A331AA2523B00378490 /* Game.swift */; };
 		13D24A351AA256B400378490 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D24A331AA2523B00378490 /* Game.swift */; };
+		13EB1C191AD62187003C1826 /* attack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13EB1C181AD62187003C1826 /* attack.mp3 */; };
+		13EB1C1B1AD62513003C1826 /* trample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13EB1C1A1AD62513003C1826 /* trample.mp3 */; };
 		13F60EC41ABA30BE008E4BF3 /* 1.json in Resources */ = {isa = PBXBuildFile; fileRef = 132A65AA1A8EAAD300D588B2 /* 1.json */; };
 		13F84E1F1A72C1EF005322B7 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
 		5214D71D1ABCB4F500C7E26C /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214D71C1ABCB4F500C7E26C /* PriorityQueue.swift */; };
@@ -165,6 +167,8 @@
 		13C428651ABB623E008E35BD /* 2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 2.json; sourceTree = "<group>"; };
 		13CDF0CB1A8AA4D300E6AB9D /* TileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileTests.swift; path = WarfareTests/TileTests.swift; sourceTree = SOURCE_ROOT; };
 		13D24A331AA2523B00378490 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Warfare/Game.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
+		13EB1C181AD62187003C1826 /* attack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = attack.mp3; path = ../units/attack.mp3; sourceTree = "<group>"; };
+		13EB1C1A1AD62513003C1826 /* trample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = trample.mp3; path = ../trample.mp3; sourceTree = "<group>"; };
 		13F84E1E1A72C1EF005322B7 /* HexGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexGrid.swift; sourceTree = "<group>"; };
 		5214D71C1ABCB4F500C7E26C /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PriorityQueue.swift; path = Warfare/PriorityQueue.swift; sourceTree = SOURCE_ROOT; };
 		5226838F1A80765800E54870 /* villageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = villageTests.swift; path = WarfareTests/villageTests.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
@@ -265,6 +269,8 @@
 		135B38DD1AD5B9A10065A2F0 /* action */ = {
 			isa = PBXGroup;
 			children = (
+				13EB1C1A1AD62513003C1826 /* trample.mp3 */,
+				13EB1C181AD62187003C1826 /* attack.mp3 */,
 				135B38E91AD5B9A10065A2F0 /* recruit.mp3 */,
 				135B38D01AD5B9A10065A2F0 /* build-upgrade.wav */,
 				135B38DE1AD5B9A10065A2F0 /* abattons.mp3 */,
@@ -484,10 +490,12 @@
 				135B39001AD5B9A10065A2F0 /* a vos ordres.mp3 in Resources */,
 				135B38C91AD5B0F60065A2F0 /* blood.sks in Resources */,
 				135B390C1AD5BF4A0065A2F0 /* tree.mp3 in Resources */,
+				13EB1C1B1AD62513003C1826 /* trample.mp3 in Resources */,
 				135B38F31AD5B9A10065A2F0 /* tambour2.mp3 in Resources */,
 				52A18F811ACD838E00E12BF7 /* 4.json in Resources */,
 				13C428661ABB623E008E35BD /* 2.json in Resources */,
 				135B38AC1AD5A48E0065A2F0 /* spark.png in Resources */,
+				13EB1C191AD62187003C1826 /* attack.mp3 in Resources */,
 				135B38F51AD5B9A10065A2F0 /* canon.mp3 in Resources */,
 				135B38F41AD5B9A10065A2F0 /* trompette.mp3 in Resources */,
 				135B38BF1AD5A7F50065A2F0 /* fire.sks in Resources */,

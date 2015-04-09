@@ -186,10 +186,8 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         nextParticipants[1] = (self.myMatch?.participants[(current+2)%3])!
         nextParticipants[2] = (self.myMatch?.participants[current])! // should be current participant
 
-        // move eliminated players at the end
-        let tmp = NSArray(array: nextParticipants)
-
-        if nextParticipants[0].matchOutcome != .None {
+        let p = nextParticipants[0] as GKTurnBasedParticipant
+        if p.matchOutcome != .None && p.status != .Matching {
             nextParticipants.removeObject(nextParticipants[0])
             nextParticipants.addObject(nextParticipants[0])
         }
@@ -316,7 +314,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func player(player: GKPlayer!,
         receivedTurnEventForMatch match: GKTurnBasedMatch!,
         didBecomeActive: Bool) {
-            if ((match.matchID == self.myMatch?.matchID && self.vc? is GameViewController) || didBecomeActive) {
+            if ((match.matchID == self.myMatch?.matchID && !(self.vc? is MainMenuViewController)) || didBecomeActive) {
                 self.myMatch = match
                 self.loadMatchData()
             } // else show alert?

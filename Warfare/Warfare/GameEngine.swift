@@ -25,6 +25,7 @@ class GameEngine {
     // Mark: - Audio Player
     var audioPlayer: AVAudioPlayer?
     var musicPlayer: AVAudioPlayer?
+    var shortPlayer: AVAudioPlayer?
     var yesPlayer: AVAudioPlayer?
 
     func playMusic(inGame: Bool = true) {
@@ -51,6 +52,13 @@ class GameEngine {
 
     func stopSound() {
         self.audioPlayer?.stop()
+    }
+
+    func playShortSound(name: String, type: String = "mp3") {
+        if let url: NSURL = NSBundle.mainBundle().URLForResource(name, withExtension: type) {
+            self.shortPlayer = AVAudioPlayer(contentsOfURL: url, error: nil)
+            self.shortPlayer?.play()
+        }
     }
 
     func randomYesSound() {
@@ -109,10 +117,10 @@ class GameEngine {
         let matchData = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
         MatchHelper.sharedInstance().advanceSelectionTurn(matchData!)
 
-        (MatchHelper.sharedInstance().vc as MapSelectionViewController).updateWaitCount((self.currentChoices?.count)!)
-
         if self.currentChoices?.count == 3 {
             MatchHelper.sharedInstance().loadMatchData()
+        } else {
+            (MatchHelper.sharedInstance().vc as MapSelectionViewController).updateWaitCount((self.currentChoices?.count)!)
         }
     }
 
@@ -127,9 +135,8 @@ class GameEngine {
             var seen = [Tile]()
 
             for t in allTiles {
-                // Only visit unseen tiles
-                if contains(seen, { $0 === t}) { continue }
-                seen.append(t)
+                // Grow from tombstones (edge case)
+                t.replaceTombstone()
 
                 // Only consider tiles with trees
                 if t.land != .Tree { continue }
@@ -139,6 +146,7 @@ class GameEngine {
                         let random = Int(arc4random_uniform(2))
                         if random == 0 {
                             n.land = .Tree
+                            n.draw()
                         }
                         break
                     }
@@ -217,6 +225,8 @@ class GameEngine {
 
                 gold += tile.goldValue()
                 wages += tile.wage()
+
+                tile.draw()
             }
 
             // Starve the Village
@@ -310,7 +320,7 @@ class GameEngine {
         if to.owner === village {
             // Cannot destroy object within controlled region
             if to.unit != nil || to.village != nil || to.structure == .Tower {
-                self.showToast("You already have somehting at the destination")
+                self.showToast("You already have something at the destination")
                 return
             }
 
@@ -389,6 +399,8 @@ class GameEngine {
                 && t.structure != .Road {
                     removeGrass = SKAction.runBlock({
                         t.land = .Grass
+                        t.draw()
+                        self.playShortSound("trample")
                     })
             }
 
@@ -551,22 +563,24 @@ class GameEngine {
             self.showToast("Only canons may attack")
             return
         }
+        if to.land == .Sea || to.owner == nil {
+            self.showToast("This is war, the canon won't waste his shots")
+            return
+        }
         if from.owner.player === to.owner.player {
-            self.showToast("The Canon won't destroy his own land")
+            self.showToast("The canon won't destroy his own land")
             return
         }
         if from.owner.wood < 1 {
             self.showToast("You don't have the resources to shoot the canon")
             return
         }
-        if to.land == .Sea {
-            self.showToast("This is war, the canon won't waste his shots")
-            return
-        }
         if !(self.map?.isDistanceOfTwo(from, to: to))! {
-            self.showToast("That tile is too far to shoot at")
+            self.showToast("That tile is too far to shoot")
             return
         }
+
+        var enemyVillage = to.owner
 
         to.structure = nil
         to.land = .Grass
@@ -578,21 +592,45 @@ class GameEngine {
             to.owner.attacked()
             if to.owner.health == 0 {
                 let newHovel = Village()
-                to.owner.player?.addVillage(newHovel)
-                // TODO: Not sure this will work
-                newHovel.controlledTiles = to.owner.controlledTiles
+                to.village = nil
                 to.owner.player?.removeVillage(to.owner)
-
-                let newLocation = newHovel.controlledTiles[0]
-                newLocation.land = .Grass
-                newLocation.unit = nil
-                newLocation.structure = nil
-                newLocation.village = newHovel.type
+                to.owner.player?.addVillage(newHovel)
+                for t in to.owner.controlledTiles {
+                    if t === to {
+                        self.game?.neutralTiles.append(t)
+                        to.owner = nil
+                    } else {
+                        newHovel.addTile(t)
+                    }
+                }
+                enemyVillage = newHovel
             }
+
+            // animate
+            to.owner.isBurning = true
+        } else {
+            self.game?.neutralTiles.append(to)
+            if let o = to.owner {
+                to.owner.removeTile(to)
+            }
+        }
+
+        if let v = enemyVillage {
+            self.checkPostAttack(v)
+            // TODO:
+            self.map?.draw()
         }
 
         from.unit?.currentAction = Constants.Unit.Action.Moved
         from.owner.wood -= 1
+
+        from.alpha = 0.0
+        from.draw()
+        from.runAction(SKAction.fadeInWithDuration(0.3))
+        to.draw()
+
+        self.playShortSound("attack")
+
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
 
@@ -610,7 +648,7 @@ class GameEngine {
             return
         }
 
-        self.playSound("build-upgrade", type: "wav")
+        self.playShortSound("build-upgrade", type: "wav")
 
         tile.owner.upgradeVillage()
         self.availableVillages = self.availableVillages.filter({ $0 !== tile})
@@ -660,8 +698,18 @@ class GameEngine {
         }
         tileA.unit?.combine(tileB.unit!)
         tileA.unit?.currentAction = Constants.Unit.Action.UpgradingCombining
-        tileB.unit = nil
+//        tileB.unit = nil // setting below in animation
         self.availableUnits = self.availableUnits.filter({ $0 !== tileA || $0 !== tileB })
+
+        // Animate
+        tileB.unit?.node?.runAction(SKAction.fadeOutWithDuration(0.3), completion: ({
+            tileB.unit = nil
+            tileB.draw()
+
+            tileA.alpha = 0.0
+            tileA.draw()
+            tileA.runAction(SKAction.fadeInWithDuration(0.3))
+        }))
 
         self.randomYesSound()
     }
@@ -691,19 +739,6 @@ class GameEngine {
             return
         }
 
-        var destination: Tile?
-        for n in (self.map?)!.neighbors(tile: villageTile) {
-            if n.owner !== villageTile.owner { continue }
-            if n.isWalkable() && n.unit == nil && n.structure == nil {
-                destination = n
-                break
-            }
-        }
-        if destination == nil {
-            self.showToast("There is no more room around that village")
-            return
-        }
-
         let costGold = type.cost().0
         let costWood = type.cost().1
         if village.gold < costGold || village.wood < costWood {
@@ -711,16 +746,55 @@ class GameEngine {
             return
         }
 
+        var newUnit = Unit(type: type)
+
+        var destination: Tile?
+        for n in village.controlledTiles {
+            if n.isBuildable() {
+                destination = n
+                break
+            }
+        }
+        // Look for a neutral tile around the edge
+        if destination == nil {
+            for t in self.map!.getEdgeTiles(village) {
+                var invadable = true
+                for n in (self.map?.neighbors(tile: t))! {
+                    if n.owner == nil { continue }
+                    if n.owner.player? !== self.game?.currentPlayer {
+                        if n.unit?.type == Constants.Types.Unit.Canon { continue }
+                        if n.isProtected(newUnit) {
+                            invadable = false
+                            break
+                        }
+                    }
+                }
+                if invadable {
+                    destination = t
+                    self.invadeNeutral(village, unit: newUnit, to: t)
+                    break
+                }
+            }
+        }
+        // Still nil means we failed to find anything.
+        if destination == nil {
+            self.showToast("There is no more room around that village")
+            return
+        }
+
 
         village.gold -= costGold
         village.wood -= costWood
 
-        var newUnit = Unit(type: type)
 
         // For testing purposes this is uncommented at times.
 //        newUnit.currentAction = .Moved
         self.availableUnits.append(destination!)
         destination!.unit = newUnit
+
+        destination?.alpha = 0.0
+        destination?.draw()
+        destination?.runAction(SKAction.fadeInWithDuration(0.3))
 
         self.playSound("recruit", type: "mp3", loop: false)
         self.randomYesSound()
@@ -755,7 +829,12 @@ class GameEngine {
         on.structure = tower
         on.land = .Grass
 
-        self.playSound("build-upgrade", type: "wav")
+        // update ui
+        on.draw()
+        on.alpha = 0
+        on.runAction(SKAction.fadeInWithDuration(0.3))
+
+        self.playShortSound("build-upgrade", type: "wav")
     }
 
     // Moves unit from -> on, instruct unit to start building road.
@@ -818,7 +897,7 @@ class GameEngine {
 
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
 
-        self.playSound("build-upgrade", type: "wav")
+        self.playShortSound("build-upgrade", type: "wav")
     }
 
     // Moves unit from -> on, instruct unit to start creating meadow for 2 turns
@@ -953,7 +1032,7 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-        self.startGameWithMap(4)
+        self.startGameWithMap(3)
         self.beginTurn()
         self.showGameScene()
         return

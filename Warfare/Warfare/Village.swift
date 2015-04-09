@@ -127,10 +127,12 @@ class Village {
         if self.isSmoking {
             let smokePath = NSBundle.mainBundle().pathForResource("smoke", ofType: "sks")
             let smoke = NSKeyedUnarchiver.unarchiveObjectWithFile(smokePath!) as SKEmitterNode
+            smoke.zPosition = 5
             self.node?.addChild(smoke)
         } else if self.isBurning {
             let firePath = NSBundle.mainBundle().pathForResource("fire", ofType: "sks")
             let fire = NSKeyedUnarchiver.unarchiveObjectWithFile(firePath!) as SKEmitterNode
+            fire.zPosition = 5
             self.node?.addChild(fire)
         }
 

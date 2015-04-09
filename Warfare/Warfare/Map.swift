@@ -318,6 +318,18 @@ class Map: SKNode {
         return result
     }
 
+    func getEdgeTiles(village: Village) -> [Tile] {
+        var result = [Tile]()
+        for t in village.controlledTiles {
+            for n in self.neighbors(tile: t) {
+                if n.owner == nil && n.owner !== village {
+                    result.append(n)
+                }
+            }
+        }
+        return result
+    }
+
     func getVillage(region: [Tile]) -> Village? {
         for tile in region {
             if tile.village != nil {
@@ -357,9 +369,9 @@ class Map: SKNode {
                 tile.draw()
                 tile.position = CGPointMake(CGFloat(Double(x_offset)+Double(j)*horiz), -CGFloat(i*vert))
 
-//                 let label = SKLabelNode(text: String(coord.x) + ", " + String(coord.y))
-//                 label.fontSize = 16.0
-//                 tile.addChild(label)
+                 let label = SKLabelNode(text: String(coord.x) + ", " + String(coord.y))
+                 label.fontSize = 16.0
+                 tile.addChild(label)
                 self.scroller.addChild(tile)
             }
         }
@@ -369,6 +381,12 @@ class Map: SKNode {
         let tileList: [Tile] = tiles.rows.reduce([], +)
 
         for t in tileList {
+            t.lighten = false
+        }
+    }
+
+    func resetColor(tiles: [Tile]) {
+        for t in tiles {
             t.lighten = false
         }
     }

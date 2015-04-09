@@ -668,6 +668,9 @@
                                             <state key="normal" title="Road">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <state key="disabled">
+                                                <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            </state>
                                             <connections>
                                                 <action selector="roadButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="lRr-aN-Sjg"/>
                                             </connections>
@@ -689,6 +692,9 @@
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="18"/>
                                             <state key="normal" title="Meadow">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="disabled">
+                                                <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                             </state>
                                             <connections>
                                                 <action selector="meadowButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="4Rn-Fc-kdL"/>
@@ -777,12 +783,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xtm-0C-oqS">
                                 <rect key="frame" x="334" y="13" width="12" height="12"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="12" id="5iE-ta-NOA"/>
+                                    <constraint firstAttribute="height" constant="12" id="Bxz-Vh-uaJ"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZUT-V7-tax">
                                 <rect key="frame" x="36" y="37" width="12" height="12"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="15" id="1Lf-fM-nNF"/>
+                                    <constraint firstAttribute="width" constant="12" id="oQx-gA-80G"/>
+                                    <constraint firstAttribute="height" constant="12" id="sdX-jc-9hv"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -844,6 +856,7 @@
                             <constraint firstItem="mZd-IH-pF4" firstAttribute="trailing" secondItem="Xtm-0C-oqS" secondAttribute="trailing" id="TfS-Um-mnz"/>
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="trailing" secondItem="ejv-Lo-dQZ" secondAttribute="trailing" id="TyP-G9-G2j"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MwL-rC-JPL" secondAttribute="trailing" constant="-1" id="VgO-yR-jxp"/>
+                            <constraint firstItem="PCf-gQ-wO7" firstAttribute="top" secondItem="zTL-B9-Oyo" secondAttribute="bottom" constant="-10" id="Wjf-1C-mAQ"/>
                             <constraint firstItem="Xtm-0C-oqS" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leading" constant="334" id="Wwc-1V-uda"/>
                             <constraint firstItem="ZUT-V7-tax" firstAttribute="top" secondItem="zTL-B9-Oyo" secondAttribute="bottom" constant="7" id="YTA-gL-Zkn"/>
                             <constraint firstItem="MwL-rC-JPL" firstAttribute="firstBaseline" secondItem="mZd-IH-pF4" secondAttribute="baseline" id="ZUh-IS-8PQ"/>
@@ -852,6 +865,7 @@
                             <constraint firstItem="LgP-eE-bvF" firstAttribute="bottom" secondItem="uNf-mE-ZH2" secondAttribute="bottom" id="cPx-rq-a5V"/>
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="56" id="d2Y-69-vUV"/>
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="top" secondItem="MwL-rC-JPL" secondAttribute="bottom" constant="71" id="dBZ-ig-Mn3"/>
+                            <constraint firstItem="ZUT-V7-tax" firstAttribute="top" secondItem="PCf-gQ-wO7" secondAttribute="bottom" constant="17" id="eVM-Jf-hql"/>
                             <constraint firstItem="ZUT-V7-tax" firstAttribute="leading" secondItem="NAB-Z4-zWq" secondAttribute="trailing" constant="6" id="eqo-0u-BfE"/>
                             <constraint firstItem="mZd-IH-pF4" firstAttribute="centerX" secondItem="uNf-mE-ZH2" secondAttribute="centerX" id="fdW-l9-oRD"/>
                             <constraint firstItem="Ah6-Mf-wdE" firstAttribute="trailing" secondItem="MwL-rC-JPL" secondAttribute="trailing" id="fhp-5H-5Ul"/>
@@ -864,6 +878,7 @@
                             <constraint firstItem="PCf-gQ-wO7" firstAttribute="top" secondItem="zTL-B9-Oyo" secondAttribute="bottom" constant="-10" id="lq6-BC-olE"/>
                             <constraint firstItem="ejv-Lo-dQZ" firstAttribute="top" secondItem="bdc-N1-crn" secondAttribute="top" constant="136" id="mlm-Xo-Jym"/>
                             <constraint firstAttribute="trailing" secondItem="sSO-VL-kLn" secondAttribute="trailing" id="otd-T6-skh"/>
+                            <constraint firstItem="ZUT-V7-tax" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leadingMargin" constant="20" id="oxL-fm-XEG"/>
                             <constraint firstItem="MwL-rC-JPL" firstAttribute="trailing" secondItem="Ah6-Mf-wdE" secondAttribute="trailing" id="pGF-Im-4TP"/>
                             <constraint firstItem="sSO-VL-kLn" firstAttribute="trailing" secondItem="uNf-mE-ZH2" secondAttribute="trailing" id="qrr-6e-Obe"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MwL-rC-JPL" secondAttribute="trailing" constant="-1" id="r9a-5Y-nj1"/>
@@ -882,10 +897,13 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="1rJ-2U-S51"/>
+                                <exclude reference="8dY-vY-aN9"/>
                                 <exclude reference="3pX-3a-7yt"/>
                                 <exclude reference="HMB-iB-6uC"/>
                                 <exclude reference="lq6-BC-olE"/>
+                                <exclude reference="Duz-g7-qxO"/>
                                 <exclude reference="NeI-di-jGl"/>
+                                <exclude reference="R81-gl-rB7"/>
                                 <exclude reference="jeP-gr-7bR"/>
                                 <exclude reference="tPt-Ci-90V"/>
                                 <exclude reference="ATo-nA-VNM"/>
