@@ -1086,6 +1086,7 @@ class GameEngine {
                         let finalChoice = choices[Int(arc4random_uniform(3))]
                         GameEngine.Instance.startGameWithMap(finalChoice)   // replace match data with a new game loaded with map number
                         MatchHelper.sharedInstance().updateMatchData()      // send update to every one
+                        self.beginTurn()
                         self.showGameScene()
                         // MAP SELECTION SEQUENCE IN PROGRESS
                     } else { // TODO pass a bool saying userShouldSelect or userShouldwait
