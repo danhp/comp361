@@ -78,6 +78,9 @@ class GameViewController: UIViewController {
         // Enable or disable end turn button
         self.endTurnButton.enabled = GameEngine.Instance.game?.localIsCurrentPlayer ?? false
         self.endTurnButton.hidden = GameEngine.Instance.matchEnded
+        if MatchHelper.sharedInstance().localHasLost { self.showToast("You have lost this game.", duration: 0.0) }
+        else if MatchHelper.sharedInstance().localHasWon { self.showToast("You have won this game!", duration: 0.0) }
+        
 
         // Set player label
         self.updateTurnLabel()
@@ -222,9 +225,6 @@ class GameViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         // Set MatchHelper's view controller
         MatchHelper.sharedInstance().vc = self
-
-        if MatchHelper.sharedInstance().localHasLost { self.showToast("You have lost this game.", duration: 0.0) }
-        else if MatchHelper.sharedInstance().localHasWon { self.showToast("You have won this game!", duration: 0.0) }
 
         self.localColorRectangle.backgroundColor = Utilities.Colors.colorForPlayer(MatchHelper.sharedInstance().localParticipantIndex())
 

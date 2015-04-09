@@ -282,7 +282,6 @@ class GameEngine {
         }
         village.wood = 0
         village.gold = 0
-        village.isSmoking = true
     }
 
     private func killVillage(village: Village) {
@@ -469,14 +468,6 @@ class GameEngine {
                 unit.currentAction = state
             }
 
-            // Animate
-            if let u = to.unit {
-                let bloodPath = NSBundle.mainBundle().pathForResource("blood", ofType: "sks")
-                let blood = NSKeyedUnarchiver.unarchiveObjectWithFile(bloodPath!) as SKEmitterNode
-                to.addChild(blood)
-                
-                blood.runAction(SKAction.sequence([SKAction.waitForDuration(0.3), SKAction.fadeOutWithDuration(0.2), SKAction.runBlock({to.unit = nil})]))
-            }
             self.stopSound()
 
             GameEngine.Instance.map?.resetColor()
@@ -533,12 +524,20 @@ class GameEngine {
             || unit.type.rawValue == 3 && to.village?.rawValue == 2 { return }
 
         // Update destination tile
-        to.unit = nil
         to.structure = nil
         if to.village != nil {
             village.wood += (to.owner?.wood)!
             village.gold += (to.owner?.gold)!
             to.village = nil
+        }
+
+        // Animate
+        if let u = to.unit {
+            let bloodPath = NSBundle.mainBundle().pathForResource("blood", ofType: "sks")
+            let blood = NSKeyedUnarchiver.unarchiveObjectWithFile(bloodPath!) as SKEmitterNode
+            to.addChild(blood)
+            
+            blood.runAction(SKAction.sequence([SKAction.waitForDuration(0.3), SKAction.fadeOutWithDuration(0.2), SKAction.runBlock({to.unit = nil})]))
         }
 
         // Invade enemy tile
@@ -639,9 +638,6 @@ class GameEngine {
                 }
                 enemyVillage = newHovel
             }
-
-            // animate
-            to.owner.isBurning = true
         } else {
             self.game?.neutralTiles.append(to)
             if let o = to.owner {
@@ -1070,10 +1066,10 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-        self.startGameWithMap(3)
-        self.beginTurn()
-        self.showGameScene()
-        return
+//        self.startGameWithMap(3)
+//        self.beginTurn()
+//        self.showGameScene()
+//        return
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data

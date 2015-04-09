@@ -77,6 +77,7 @@
 		13CE45AA1ACF70F4007455F3 /* MapSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */; };
 		13D24A341AA2523B00378490 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D24A331AA2523B00378490 /* Game.swift */; };
 		13D24A351AA256B400378490 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D24A331AA2523B00378490 /* Game.swift */; };
+		13E423DF1AD71162006F692A /* firesmall.sks in Resources */ = {isa = PBXBuildFile; fileRef = 13E423DE1AD71162006F692A /* firesmall.sks */; };
 		13EB1C191AD62187003C1826 /* attack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13EB1C181AD62187003C1826 /* attack.mp3 */; };
 		13EB1C1B1AD62513003C1826 /* trample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13EB1C1A1AD62513003C1826 /* trample.mp3 */; };
 		13F84E1F1A72C1EF005322B7 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
@@ -165,6 +166,7 @@
 		13C428651ABB623E008E35BD /* 2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 2.json; sourceTree = "<group>"; };
 		13CDF0CB1A8AA4D300E6AB9D /* TileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileTests.swift; path = WarfareTests/TileTests.swift; sourceTree = SOURCE_ROOT; };
 		13D24A331AA2523B00378490 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Warfare/Game.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
+		13E423DE1AD71162006F692A /* firesmall.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = firesmall.sks; sourceTree = "<group>"; };
 		13EB1C181AD62187003C1826 /* attack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = attack.mp3; path = ../units/attack.mp3; sourceTree = "<group>"; };
 		13EB1C1A1AD62513003C1826 /* trample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = trample.mp3; path = ../trample.mp3; sourceTree = "<group>"; };
 		13F84E1E1A72C1EF005322B7 /* HexGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexGrid.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 		135B38AD1AD5A4990065A2F0 /* Particles */ = {
 			isa = PBXGroup;
 			children = (
+				13E423DE1AD71162006F692A /* firesmall.sks */,
 				135B38C71AD5B0F60065A2F0 /* blood.sks */,
 				135B38A91AD5A48E0065A2F0 /* smoke.sks */,
 				135B38BD1AD5A7F50065A2F0 /* fire.sks */,
@@ -516,6 +519,7 @@
 				137101431A701096009B807C /* Main.storyboard in Resources */,
 				135B39111AD5C8540065A2F0 /* background2.wav in Resources */,
 				135B39031AD5B9A10065A2F0 /* oui capitaine.mp3 in Resources */,
+				13E423DF1AD71162006F692A /* firesmall.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
