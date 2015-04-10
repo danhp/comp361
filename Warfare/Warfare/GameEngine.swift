@@ -219,7 +219,7 @@ class GameEngine {
             for tile in village.controlledTiles {
 
                 // Replace tombstones
-                tile.replaceTombstone()
+//                tile.replaceTombstone()
 
                 // Produce constructions and set unit actions.
                 // ReadyForOrders for all except first phase cultivation
@@ -1138,10 +1138,10 @@ class GameEngine {
                     self.scene?.resetMap()
                     self.updateTurnLabel()
                     self.showGameScene()
-                    self.beginTurn()
                     if (self.game?.roundCount)! % 3 == 0 {
                         self.growTrees()
                     }
+                    self.beginTurn()
                     self.updateInfoPanel()
 
                     if !GameEngine.Instance.game!.localIsCurrentPlayer { self.playShortSound("tambour2")

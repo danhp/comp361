@@ -31,14 +31,15 @@ class GameScene: SKScene {
 
     func resetMap() {
         // remove
+        let position = self.map?.scroller.position // remember map position
         self.map?.removeFromParent()
-        let position = self.map?.position // remember map position
 
         // new map
         self.map = GameEngine.Instance.map
         self.map?.draw()
-        self.map?.position = position ?? CGPoint(x: -Constants.Map.dimension * Constants.Tile.size / 2, y: Constants.Map.dimension * Constants.Tile.size / 2)
+        self.map?.position = CGPoint(x: 0, y: 0)
         self.addChild(self.map!)
+        self.map?.scroller.position = position ?? CGPoint(x: 0, y: 0)
 
         GameEngine.Instance.updateInfoPanel()
     }
