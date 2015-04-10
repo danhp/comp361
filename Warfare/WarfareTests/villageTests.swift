@@ -3,37 +3,37 @@ import XCTest
 
 class villageTest: XCTestCase {
 
-    func testUpgradeVillage() {
-        let tile = Tile(coordinates: (0,0))
-        let village = Village()
-
-        village.wood = 0
-        village.wood += 10
-        XCTAssertEqual(village.wood, 10)
-
-        XCTAssertEqual(village.type, Constants.Types.Village.Hovel)
-
-        village.upgradeVillage()
-        XCTAssertEqual(village.type, Constants.Types.Village.Town)
-        XCTAssertEqual(village.wood, 2)
-
-        village.upgradeVillage()
-        XCTAssertEqual(village.type, Constants.Types.Village.Town)
-        XCTAssertEqual(village.wood, 2)
-
-        village.wood += 6
-        XCTAssertEqual(village.wood, 8)
-
-        village.state = .ReadyForOrders
-        village.upgradeVillage()
-        XCTAssertEqual(village.type, Constants.Types.Village.Fort)
-        XCTAssertEqual(village.wood, 0)
-
-        village.wood += 8
-        village.upgradeVillage()
-        XCTAssertEqual(village.type, Constants.Types.Village.Fort)
-        XCTAssertEqual(village.wood, 8)
-    }
+//    func testUpgradeVillage() {
+//        let tile = Tile(coordinates: (0,0))
+//        let village = Village()
+//
+//        village.wood = 0
+//        village.wood += 10
+//        XCTAssertEqual(village.wood, 10)
+//
+//        XCTAssertEqual(village.type, Constants.Types.Village.Hovel)
+//
+//        village.upgradeVillage()
+//        XCTAssertEqual(village.type, Constants.Types.Village.Town)
+//        XCTAssertEqual(village.wood, 2)
+//
+//        village.upgradeVillage()
+//        XCTAssertEqual(village.type, Constants.Types.Village.Town)
+//        XCTAssertEqual(village.wood, 2)
+//
+//        village.wood += 6
+//        XCTAssertEqual(village.wood, 8)
+//
+//        village.state = .ReadyForOrders
+//        village.upgradeVillage()
+//        XCTAssertEqual(village.type, Constants.Types.Village.Fort)
+//        XCTAssertEqual(village.wood, 0)
+//
+//        village.wood += 8
+//        village.upgradeVillage()
+//        XCTAssertEqual(village.type, Constants.Types.Village.Fort)
+//        XCTAssertEqual(village.wood, 8)
+//    }
 
     func testUpgradeUnit() {
         let tile = Tile(coordinates: (0,0))
