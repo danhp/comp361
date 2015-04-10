@@ -78,6 +78,7 @@
 		13D24A351AA256B400378490 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D24A331AA2523B00378490 /* Game.swift */; };
 		13E423E11AD76107006F692A /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E423E01AD76107006F692A /* Village.swift */; };
 		13E423E21AD7614C006F692A /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E423E01AD76107006F692A /* Village.swift */; };
+		13E423E41AD776A6006F692A /* 1.json in Resources */ = {isa = PBXBuildFile; fileRef = 13E423E31AD776A6006F692A /* 1.json */; };
 		13EB1C191AD62187003C1826 /* attack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13EB1C181AD62187003C1826 /* attack.mp3 */; };
 		13EB1C1B1AD62513003C1826 /* trample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13EB1C1A1AD62513003C1826 /* trample.mp3 */; };
 		13F84E1F1A72C1EF005322B7 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
@@ -167,6 +168,7 @@
 		13CDF0CB1A8AA4D300E6AB9D /* TileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileTests.swift; path = WarfareTests/TileTests.swift; sourceTree = SOURCE_ROOT; };
 		13D24A331AA2523B00378490 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Warfare/Game.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		13E423E01AD76107006F692A /* Village.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Village.swift; path = Warfare/Village.swift; sourceTree = SOURCE_ROOT; };
+		13E423E31AD776A6006F692A /* 1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 1.json; sourceTree = "<group>"; };
 		13EB1C181AD62187003C1826 /* attack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = attack.mp3; path = ../units/attack.mp3; sourceTree = "<group>"; };
 		13EB1C1A1AD62513003C1826 /* trample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = trample.mp3; path = ../trample.mp3; sourceTree = "<group>"; };
 		13F84E1E1A72C1EF005322B7 /* HexGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexGrid.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		132A65A91A8EAAC200D588B2 /* Maps */ = {
 			isa = PBXGroup;
 			children = (
+				13E423E31AD776A6006F692A /* 1.json */,
 				13C428651ABB623E008E35BD /* 2.json */,
 				529549551ACCB6860024DBE0 /* 3.json */,
 				52A18F801ACD838E00E12BF7 /* 4.json */,
@@ -494,6 +497,7 @@
 				52A18F811ACD838E00E12BF7 /* 4.json in Resources */,
 				13C428661ABB623E008E35BD /* 2.json in Resources */,
 				135B38AC1AD5A48E0065A2F0 /* spark.png in Resources */,
+				13E423E41AD776A6006F692A /* 1.json in Resources */,
 				13EB1C191AD62187003C1826 /* attack.mp3 in Resources */,
 				135B38F51AD5B9A10065A2F0 /* canon.mp3 in Resources */,
 				135B38F41AD5B9A10065A2F0 /* trompette.mp3 in Resources */,
