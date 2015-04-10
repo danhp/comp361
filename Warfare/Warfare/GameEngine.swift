@@ -947,6 +947,8 @@ class GameEngine {
         // Move the unit
         if from !== on {
             self.moveWithAnimation(to: on, from: from, path: path, state: .BuildingRoad)
+        } else {
+            from.unit?.currentAction = .BuildingRoad
         }
 
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
@@ -1015,6 +1017,8 @@ class GameEngine {
         // Move the unit
         if from !== on {
             self.moveWithAnimation(to: on, from: from, path: path, state: .StartCultivating)
+        } else {
+            from.unit?.currentAction = .StartCultivating
         }
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
@@ -1098,7 +1102,7 @@ class GameEngine {
                         MatchHelper.sharedInstance().updateMatchData()      // send update to every one
                         self.beginTurn()
                         self.showGameScene()
-                        if GameEngine.Instance.game!.localIsCurrentPlayer { self.playShortSound("tambour2")
+                        if !GameEngine.Instance.game!.localIsCurrentPlayer { self.playShortSound("tambour2")
                         } else { self.playShortSound("clairon-wakeup") }
                         // MAP SELECTION SEQUENCE IN PROGRESS
                     } else {
@@ -1118,7 +1122,7 @@ class GameEngine {
                         self.growTrees()
                     }
 
-                    if GameEngine.Instance.game!.localIsCurrentPlayer { self.playShortSound("tambour2")
+                    if !GameEngine.Instance.game!.localIsCurrentPlayer { self.playShortSound("tambour2")
                     } else { self.playShortSound("clairon-wakeup") }
                 }
             }
