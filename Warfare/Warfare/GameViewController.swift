@@ -386,6 +386,9 @@ class GameViewController: UIViewController {
 
         GameEngine.Instance.map?.resetColor()
         self.updateInfoPanel(GameEngine.Instance.game?.map.selected)
+
+        self.hidePlayerButtons()
+
 //        map.draw // useless to draw the map there?
 
         GameEngine.Instance.playShortSound("clairon-extinction")
@@ -531,25 +534,30 @@ class GameViewController: UIViewController {
         self.hideActionButtons()
 
         self.updateInfoPanel(tile)
-
+        
         if !(GameEngine.Instance.game?.localIsCurrentPlayer)! {
             self.hidePlayerButtons()
-        } else if !tile.isBelongsToLocal() {
-            self.neutralSelected()  // neutral or other player
-        } else if tile.village != nil {
-            if !tile.owner.disaled {
-                self.villageSelected(tile)
-            } else {
-                self.neutralSelected()
-            }
-        } else if let unit = tile.unit {
-            if !unit.disabled {
-                self.unitSelected(tile)
-            } else {
-                self.neutralSelected()
-            }
         } else {
-            self.neutralSelected()
+            self.showButton(self.nextUnitButton)
+            self.showButton(self.nextVillageButton)
+
+            if !tile.isBelongsToLocal() {
+                self.neutralSelected()  // neutral or other player
+            } else if tile.village != nil {
+                if !tile.owner.disaled {
+                    self.villageSelected(tile)
+                } else {
+                    self.neutralSelected()
+                }
+            } else if let unit = tile.unit {
+                if !unit.disabled {
+                    self.unitSelected(tile)
+                } else {
+                    self.neutralSelected()
+                }
+            } else {
+                self.neutralSelected()
+            }
         }
         self.updateInfoPanel(tile)
     }

@@ -81,7 +81,7 @@ class GameEngine {
 
         let sounds = !attack ? ["a vos ordres", "attendons order", "oui capitaine", "pour le roi", "pour notre souverain"] : ["abattons", "au combat", "chargez", "ecrasons", "en avant", "rendez vous", "pas de pitie", "pas de quartier"]
         let multiplier = !attack ? 2 : 1
-        let random = Int(arc4random_uniform(UInt32(sounds.count * multiplier)))   // 5 so it doesn't always play a sound
+        let random = Int(arc4random_uniform(UInt32(sounds.count * multiplier)))   
 
         // play sound
         if random < sounds.count {
@@ -1142,6 +1142,7 @@ class GameEngine {
                     if (self.game?.roundCount)! % 3 == 0 {
                         self.growTrees()
                     }
+                    self.updateInfoPanel()
 
                     if !GameEngine.Instance.game!.localIsCurrentPlayer { self.playShortSound("tambour2")
                     } else { self.playShortSound("clairon-wakeup") }
