@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		130B0CF61A924901007A20EB /* MatchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130B0CF51A924901007A20EB /* MatchHelper.swift */; };
 		131C14361A7E71DC00CE386D /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708531A72F148009ED4DA /* Unit.swift */; };
-		131C14371A7E71E000CE386D /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708551A72F56B009ED4DA /* Village.swift */; };
 		131D32491A86A7A50073310B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D32481A86A7A50073310B /* Player.swift */; };
 		131D324A1A86A7A50073310B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131D32481A86A7A50073310B /* Player.swift */; };
 		13390A8E1A9692CC005949A1 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13390A8D1A9692CC005949A1 /* GameKit.framework */; };
@@ -77,6 +76,8 @@
 		13CE45AA1ACF70F4007455F3 /* MapSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882D0911ABE0C70006EA5F2 /* MapSelectionViewController.swift */; };
 		13D24A341AA2523B00378490 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D24A331AA2523B00378490 /* Game.swift */; };
 		13D24A351AA256B400378490 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D24A331AA2523B00378490 /* Game.swift */; };
+		13E423E11AD76107006F692A /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E423E01AD76107006F692A /* Village.swift */; };
+		13E423E21AD7614C006F692A /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E423E01AD76107006F692A /* Village.swift */; };
 		13EB1C191AD62187003C1826 /* attack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13EB1C181AD62187003C1826 /* attack.mp3 */; };
 		13EB1C1B1AD62513003C1826 /* trample.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 13EB1C1A1AD62513003C1826 /* trample.mp3 */; };
 		13F84E1F1A72C1EF005322B7 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F84E1E1A72C1EF005322B7 /* HexGrid.swift */; };
@@ -84,7 +85,6 @@
 		5214D71E1ABCB96500C7E26C /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5214D71C1ABCB4F500C7E26C /* PriorityQueue.swift */; };
 		522683901A80765800E54870 /* villageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5226838F1A80765800E54870 /* villageTests.swift */; };
 		522708541A72F148009ED4DA /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708531A72F148009ED4DA /* Unit.swift */; };
-		522708561A72F56B009ED4DA /* Village.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522708551A72F56B009ED4DA /* Village.swift */; };
 		529549561ACCB6860024DBE0 /* 3.json in Resources */ = {isa = PBXBuildFile; fileRef = 529549551ACCB6860024DBE0 /* 3.json */; };
 		5299B2791A8984F500EADED0 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5299B2781A8984F500EADED0 /* GameEngine.swift */; };
 		5299B27A1A89855600EADED0 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5299B2781A8984F500EADED0 /* GameEngine.swift */; };
@@ -165,13 +165,13 @@
 		13C428651ABB623E008E35BD /* 2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 2.json; sourceTree = "<group>"; };
 		13CDF0CB1A8AA4D300E6AB9D /* TileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TileTests.swift; path = WarfareTests/TileTests.swift; sourceTree = SOURCE_ROOT; };
 		13D24A331AA2523B00378490 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Warfare/Game.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
+		13E423E01AD76107006F692A /* Village.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Village.swift; path = Warfare/Village.swift; sourceTree = SOURCE_ROOT; };
 		13EB1C181AD62187003C1826 /* attack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = attack.mp3; path = ../units/attack.mp3; sourceTree = "<group>"; };
 		13EB1C1A1AD62513003C1826 /* trample.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = trample.mp3; path = ../trample.mp3; sourceTree = "<group>"; };
 		13F84E1E1A72C1EF005322B7 /* HexGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexGrid.swift; sourceTree = "<group>"; };
 		5214D71C1ABCB4F500C7E26C /* PriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PriorityQueue.swift; path = Warfare/PriorityQueue.swift; sourceTree = SOURCE_ROOT; };
 		5226838F1A80765800E54870 /* villageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = villageTests.swift; path = WarfareTests/villageTests.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		522708531A72F148009ED4DA /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unit.swift; path = Warfare/Unit.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
-		522708551A72F56B009ED4DA /* Village.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Village.swift; path = Warfare/Village.swift; sourceTree = SOURCE_ROOT; };
 		529549551ACCB6860024DBE0 /* 3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 3.json; path = Warfare/3.json; sourceTree = SOURCE_ROOT; };
 		5299B2781A8984F500EADED0 /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameEngine.swift; path = Warfare/GameEngine.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		52A18F801ACD838E00E12BF7 /* 4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 4.json; path = Warfare/4.json; sourceTree = SOURCE_ROOT; };
@@ -333,11 +333,11 @@
 				1371015F1A701411009B807C /* Tile.swift */,
 				137101611A701B80009B807C /* Map.swift */,
 				131D32481A86A7A50073310B /* Player.swift */,
-				522708551A72F56B009ED4DA /* Village.swift */,
 				522708531A72F148009ED4DA /* Unit.swift */,
 				13F84E1E1A72C1EF005322B7 /* HexGrid.swift */,
 				13D24A331AA2523B00378490 /* Game.swift */,
 				5299B2781A8984F500EADED0 /* GameEngine.swift */,
+				13E423E01AD76107006F692A /* Village.swift */,
 				1371013B1A701096009B807C /* GameScene.sks */,
 				1371013D1A701096009B807C /* GameScene.swift */,
 				B841AEAB1AA6CFDA00D2A542 /* MainMenuViewController.swift */,
@@ -535,6 +535,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1371013E1A701096009B807C /* GameScene.swift in Sources */,
+				13E423E11AD76107006F692A /* Village.swift in Sources */,
 				13D24A341AA2523B00378490 /* Game.swift in Sources */,
 				5299B2791A8984F500EADED0 /* GameEngine.swift in Sources */,
 				137101401A701096009B807C /* GameViewController.swift in Sources */,
@@ -546,7 +547,6 @@
 				1371013A1A701096009B807C /* AppDelegate.swift in Sources */,
 				522708541A72F148009ED4DA /* Unit.swift in Sources */,
 				B841AEAC1AA6CFDA00D2A542 /* MainMenuViewController.swift in Sources */,
-				522708561A72F56B009ED4DA /* Village.swift in Sources */,
 				137101621A701B80009B807C /* Map.swift in Sources */,
 				1371015E1A7010CE009B807C /* Constants.swift in Sources */,
 				B882D0921ABE0C70006EA5F2 /* MapSelectionViewController.swift in Sources */,
@@ -574,10 +574,10 @@
 				13541BE81AAF7BD200689C60 /* MatchHelper.swift in Sources */,
 				139527761A7714DE0019E3F4 /* Map.swift in Sources */,
 				13541BE91AAF7C9F00689C60 /* MainMenuViewController.swift in Sources */,
+				13E423E21AD7614C006F692A /* Village.swift in Sources */,
 				5299B27A1A89855600EADED0 /* GameEngine.swift in Sources */,
 				52CEDA3D1AC8ED000094E011 /* unitTests.swift in Sources */,
 				131C14361A7E71DC00CE386D /* Unit.swift in Sources */,
-				131C14371A7E71E000CE386D /* Village.swift in Sources */,
 				13AF2AA61A7803E100B4C67B /* mapTests.swift in Sources */,
 				139527751A7714DC0019E3F4 /* Constants.swift in Sources */,
 			);

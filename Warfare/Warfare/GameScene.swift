@@ -53,18 +53,17 @@ class GameScene: SKScene {
 
         let touch = touches.anyObject() as UITouch
         let touchLocation = touch.locationInNode(self)
+        let touchedNode = nodeAtPoint(touchLocation)
 
-        if let touchedTile = nodeAtPoint(touchLocation) as? Tile {
+        if let touchedTile = touchedNode as? Tile {
             self.map?.selected = touchedTile
             self.newSelection()
-        } else if let touchedNode = nodeAtPoint(touchLocation) as? SKSpriteNode {
-            if let tile = touchedNode.parent as? Tile {
-                self.map?.selected = tile
-                self.newSelection()
-            } else if let tile = touchedNode.parent?.parent as? Tile {
-                self.map?.selected = tile
-                self.newSelection()
-            }
+        } else if let tile = touchedNode.parent as? Tile {
+            self.map?.selected = tile
+            self.newSelection()
+        } else if let tile = touchedNode.parent?.parent as? Tile {
+            self.map?.selected = tile
+            self.newSelection()
         }
     }
 

@@ -1,5 +1,6 @@
 import SpriteKit
 import Foundation
+import Darwin
 
 class Village {
     var node: SKNode?
@@ -12,8 +13,6 @@ class Village {
     var income: Int { return self.controlledTiles.reduce(0) {$0 + $1.goldValue()} }
 
     var health: Int = 1
-    var isSmoking: Bool = false
-    var isBurning: Bool = false
 
     var controlledTiles: [Tile] = [Tile]()
 
@@ -111,6 +110,7 @@ class Village {
 
     func attacked() {
         self.health -= 1
+        self.draw()
     }
 
     func clearRegion() {
@@ -121,19 +121,32 @@ class Village {
 
     // MARK - Drawing
 
+    // hovel 1, town 2, fort 5, castle 10
+
     func draw() -> SKNode {
         node = SKNode()
 
-        if self.isSmoking {
-            let smokePath = NSBundle.mainBundle().pathForResource("smoke", ofType: "sks")
-            let smoke = NSKeyedUnarchiver.unarchiveObjectWithFile(smokePath!) as SKEmitterNode
-            smoke.zPosition = 5
-            self.node?.addChild(smoke)
-        } else if self.isBurning {
-            let firePath = NSBundle.mainBundle().pathForResource("fire", ofType: "sks")
-            let fire = NSKeyedUnarchiver.unarchiveObjectWithFile(firePath!) as SKEmitterNode
-            fire.zPosition = 5
-            self.node?.addChild(fire)
+        let maxHealth = self.type.health()
+        let health = self.health
+
+
+        if health != maxHealth {
+            // smoke
+            if health >= Int(ceil(Double(maxHealth)/2.0)) {
+                let smokePath = NSBundle.mainBundle().pathForResource("smoke", ofType: "sks")
+                let smoke = NSKeyedUnarchiver.unarchiveObjectWithFile(smokePath!) as SKEmitterNode
+                smoke.zPosition = 5
+                smoke.particleBirthRate = CGFloat(maxHealth - self.health + 1)
+                self.node?.addChild(smoke)
+                
+                // fire
+            } else {
+                let firePath = NSBundle.mainBundle().pathForResource("fire", ofType: "sks")
+                let fire = NSKeyedUnarchiver.unarchiveObjectWithFile(firePath!) as SKEmitterNode
+                fire.zPosition = 5
+                fire.particleBirthRate = CGFloat((150 / maxHealth/2) * (maxHealth/2 - self.health) + 25)
+                self.node?.addChild(fire)
+            }
         }
 
         self.node?.addChild(SKSpriteNode(imageNamed: self.type.name()))

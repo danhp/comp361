@@ -105,6 +105,14 @@
                         { "position":[12,7], "land":0 },
                         { "position":[13,7], "land":0, "unit":{"type":5, "currentAction":0}  }
                     ]
+                },
+                        {
+                    "type":3, "gold":500, "wood":500, "health":10,
+                    "controlledTiles":[
+                        { "position":[14,4], "land":0, "village": 3},
+                        { "position":[14,5], "land":0},
+                        { "position":[15,4], "land":0}
+                    ]
                 }
             ]
         },
@@ -233,8 +241,6 @@
 
 
 
-        {"position":[14,4], "land":0},
-        {"position":[15,4], "land":0},
 
 
 
@@ -251,7 +257,6 @@
 
 
 
-        {"position":[14,5], "land":0},
         {"position":[15,5], "land":0},
         {"position":[-3,6], "land":0},
 
