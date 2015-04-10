@@ -81,7 +81,7 @@ class MapSelectionViewController: UIViewController {
     }
 
     func updateWaitCount(count: Int) {
-        self.confirmationButton.setTitle("WATING " + String(count), forState: UIControlState.Disabled)
+        self.confirmationButton.setTitle("WAITING " + String(count), forState: UIControlState.Disabled)
     }
 
     private func setChoiceView(image: UIImage) {

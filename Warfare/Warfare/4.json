@@ -4,7 +4,7 @@
             "order":0,
             "villages":[
                 {
-                    "type":3, "gold":500, "wood":200,
+                    "type":3, "gold":10000, "wood":200,
                     "controlledTiles":[
                         { "position":[3,3], "land":0, "village":3 },
                         { "position":[3,2], "land":0, "unit":{"type":4,"currentAction":0} },

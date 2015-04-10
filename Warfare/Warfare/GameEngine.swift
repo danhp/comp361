@@ -172,7 +172,7 @@ class GameEngine {
 
                 for n in (self.map?.neighbors(tile: t))! {
                     if n.isGrowable() {
-                        let random = Int(arc4random_uniform(2))
+                        let random = Int(arc4random_uniform(6))
                         if random == 0 {
                             n.land = .Tree
                             n.draw()
@@ -269,9 +269,15 @@ class GameEngine {
 
         let goldString = "You gained " + String(gold) + " gold and paid " + String(wages) + " gold. "
         let starvedString = ((starved > 0) ? String(starved) + " of your villages starved. " : "")
-        let meadowString = (meadows > 0 ? String(meadows) + " meadows were cultivated. " : "")
-        let roadString = (roads > 0 ? String(roads) + " roads were built. " : "")
-        let unitString = (unitsReady > 0) ? "You now have " + String(unitsReady) + " units ready. " : ""
+
+        var meadowString = ""
+        var roadString = ""
+        var unitString = ""
+        if starved == 0 {
+            meadowString = (meadows > 0 ? String(meadows) + " meadows were cultivated. " : "")
+            roadString = (roads > 0 ? String(roads) + " roads were built. " : "")
+            unitString = (unitsReady > 0) ? "You now have " + String(unitsReady) + " units ready. " : ""
+        }
         let msg =  goldString +  starvedString + meadowString + roadString + unitString
         self.showToast(msg, duration: 10.0)
         self.playShortSound("tambour2")
@@ -332,7 +338,7 @@ class GameEngine {
             return
         }
         if to.land == .Sea {
-            self.showToast("That unit doesn't want to drown")
+            self.showToast("That unit doesn't want to freeze to death")
             return
         }
 
@@ -1100,10 +1106,10 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-        self.startGameWithMap(3)
-        self.beginTurn()
-        self.showGameScene()
-        return
+ //       self.startGameWithMap(3)
+ //       self.beginTurn()
+ //       self.showGameScene()
+ //       return
 
         // EXISTING MATCH
         if matchData.length > 0 {
