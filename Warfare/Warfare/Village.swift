@@ -154,6 +154,7 @@ class Village {
         dict["gold"] = self.gold
         dict["wood"] = self.wood
         dict["health"] = self.health
+        dict["state"] = self.state.rawValue
         dict["controlledTiles"] = self.controlledTiles.map({$0.serialize()})
 
         return dict
@@ -164,6 +165,7 @@ class Village {
         self.gold = dict["gold"] as Int
         self.wood = dict["wood"] as Int
         self.health = dict["health"] as? Int ?? self.type.health()
+        self.state = Constants.Village.Action(rawValue: (dict["state"] as? Int ?? 0))!
 
         // TILES
         if let controlled = dict["controlledTiles"] as? NSArray {

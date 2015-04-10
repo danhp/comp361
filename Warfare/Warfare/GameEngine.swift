@@ -282,6 +282,7 @@ class GameEngine {
                 tile.unit = nil
                 tile.structure = .Tombstone
                 tile.land = .Grass
+                tile.draw()
             }
         }
         village.wood = 0
@@ -1085,10 +1086,6 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
-        self.startGameWithMap(3)
-        self.beginTurn()
-        self.showGameScene()
-        return
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data
@@ -1101,7 +1098,7 @@ class GameEngine {
                         MatchHelper.sharedInstance().updateMatchData()      // send update to every one
                         self.beginTurn()
                         self.showGameScene()
-                        self.playShortSound("tambour2")
+                        self.playShortSound(GameEngine.Instance.game!.localIsCurrentPlayer ? "tambour2" : "clairon-wakeup")
                         // MAP SELECTION SEQUENCE IN PROGRESS
                     } else {
                         self.currentChoices = choices
@@ -1119,7 +1116,7 @@ class GameEngine {
                     if (self.game?.roundCount)! % 3 == 0 {
                         self.growTrees()
                     }
-                    self.playShortSound("tambour2")
+                    self.playShortSound(GameEngine.Instance.game!.localIsCurrentPlayer ? "tambour2" : "clairon-wakeup")
                 }
             }
 
