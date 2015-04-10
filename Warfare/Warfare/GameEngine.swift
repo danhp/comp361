@@ -1098,7 +1098,8 @@ class GameEngine {
                         MatchHelper.sharedInstance().updateMatchData()      // send update to every one
                         self.beginTurn()
                         self.showGameScene()
-                        self.playShortSound(GameEngine.Instance.game!.localIsCurrentPlayer ? "tambour2" : "clairon-wakeup")
+                        if GameEngine.Instance.game!.localIsCurrentPlayer { self.playShortSound("tambour2")
+                        } else { self.playShortSound("clairon-wakeup") }
                         // MAP SELECTION SEQUENCE IN PROGRESS
                     } else {
                         self.currentChoices = choices
@@ -1116,7 +1117,9 @@ class GameEngine {
                     if (self.game?.roundCount)! % 3 == 0 {
                         self.growTrees()
                     }
-                    self.playShortSound(GameEngine.Instance.game!.localIsCurrentPlayer ? "tambour2" : "clairon-wakeup")
+
+                    if GameEngine.Instance.game!.localIsCurrentPlayer { self.playShortSound("tambour2")
+                    } else { self.playShortSound("clairon-wakeup") }
                 }
             }
 
