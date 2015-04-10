@@ -742,6 +742,11 @@ class GameEngine {
             self.showToast("One of the units is busy")
             return
         }
+        if tileA.unit!.type.rawValue + tileB.unit!.type.rawValue > tileA.owner.type.rawValue + 2
+                    && tileA.owner.type.rawValue < Constants.Types.Village.Fort.rawValue {
+            self.showToast("The village can't support that upgrade")
+            return
+        }
         tileA.unit?.combine(tileB.unit!)
         tileA.unit?.currentAction = Constants.Unit.Action.UpgradingCombining
 //        tileB.unit = nil // setting below in animation
