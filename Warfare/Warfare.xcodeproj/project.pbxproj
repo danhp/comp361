@@ -88,6 +88,7 @@
 		529549561ACCB6860024DBE0 /* 3.json in Resources */ = {isa = PBXBuildFile; fileRef = 529549551ACCB6860024DBE0 /* 3.json */; };
 		5299B2791A8984F500EADED0 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5299B2781A8984F500EADED0 /* GameEngine.swift */; };
 		5299B27A1A89855600EADED0 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5299B2781A8984F500EADED0 /* GameEngine.swift */; };
+		529CE4911AD73B7B00FFB0DA /* horse.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 529CE4901AD73B7B00FFB0DA /* horse.mp3 */; };
 		52A18F811ACD838E00E12BF7 /* 4.json in Resources */ = {isa = PBXBuildFile; fileRef = 52A18F801ACD838E00E12BF7 /* 4.json */; };
 		52ADD5541A91372C00F5307D /* gameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52ADD5531A91372C00F5307D /* gameTests.swift */; };
 		52CEDA3D1AC8ED000094E011 /* unitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CEDA3C1AC8ED000094E011 /* unitTests.swift */; };
@@ -174,6 +175,7 @@
 		522708531A72F148009ED4DA /* Unit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unit.swift; path = Warfare/Unit.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		529549551ACCB6860024DBE0 /* 3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 3.json; path = Warfare/3.json; sourceTree = SOURCE_ROOT; };
 		5299B2781A8984F500EADED0 /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameEngine.swift; path = Warfare/GameEngine.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
+		529CE4901AD73B7B00FFB0DA /* horse.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = horse.mp3; sourceTree = "<group>"; };
 		52A18F801ACD838E00E12BF7 /* 4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = 4.json; path = Warfare/4.json; sourceTree = SOURCE_ROOT; };
 		52ADD5531A91372C00F5307D /* gameTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = gameTests.swift; path = WarfareTests/gameTests.swift; sourceTree = SOURCE_ROOT; usesTabs = 0; };
 		52CEDA3C1AC8ED000094E011 /* unitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = unitTests.swift; path = WarfareTests/unitTests.swift; sourceTree = SOURCE_ROOT; };
@@ -254,6 +256,7 @@
 		135B38D91AD5B9A10065A2F0 /* units */ = {
 			isa = PBXGroup;
 			children = (
+				529CE4901AD73B7B00FFB0DA /* horse.mp3 */,
 				135B39061AD5BDE40065A2F0 /* infantry.mp3 */,
 				135B39071AD5BDE40065A2F0 /* peasant.mp3 */,
 				135B39141AD5CE430065A2F0 /* knight.mp3 */,
@@ -509,6 +512,7 @@
 				135B390F1AD5C5260065A2F0 /* background.wav in Resources */,
 				135B39021AD5B9A10065A2F0 /* recruit.mp3 in Resources */,
 				135B38EF1AD5B9A10065A2F0 /* clairon-death2.mp3 in Resources */,
+				529CE4911AD73B7B00FFB0DA /* horse.mp3 in Resources */,
 				135B38F81AD5B9A10065A2F0 /* abattons.mp3 in Resources */,
 				135B38FC1AD5B9A10065A2F0 /* en avant.mp3 in Resources */,
 				1371013C1A701096009B807C /* GameScene.sks in Resources */,

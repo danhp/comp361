@@ -93,8 +93,10 @@ class GameEngine {
     }
 
     func playUnitSound(tile: Tile) {
-        if let u = tile.unit {
-            self.randomYesSound()
+        if tile.isBelongsToLocal() {
+            if let u = tile.unit {
+                self.randomYesSound()
+            }
         }
     }
 
@@ -262,15 +264,17 @@ class GameEngine {
                 starved++
                 self.starveVillage(village)
             }
+
         }
 
         let goldString = "You gained " + String(gold) + " gold and paid " + String(wages) + " gold. "
         let starvedString = ((starved > 0) ? String(starved) + " of your villages starved. " : "")
         let meadowString = (meadows > 0 ? String(meadows) + " meadows were cultivated. " : "")
         let roadString = (roads > 0 ? String(roads) + " roads were built. " : "")
-        let unitString = "You now have " + String(unitsReady) + " units ready. "
+        let unitString = (unitsReady > 0) ? "You now have " + String(unitsReady) + " units ready. " : ""
         let msg =  goldString +  starvedString + meadowString + roadString + unitString
         self.showToast(msg, duration: 10.0)
+        self.playShortSound("tambour2")
     }
 
     private func starveVillage(village: Village) {
@@ -279,6 +283,7 @@ class GameEngine {
                 tile.unit = nil
                 tile.structure = .Tombstone
                 tile.land = .Grass
+                tile.draw()
             }
         }
         village.wood = 0
@@ -337,7 +342,8 @@ class GameEngine {
                 self.showToast("Your canon won't clear that tile")
                 return
             }
-            if to.owner.player !== self.game?.currentPlayer {
+
+            if !to.isBelongsToLocal() && to.owner != nil {
                 self.showToast("The canon can't invade enemy land")
                 return
             }
@@ -543,7 +549,7 @@ class GameEngine {
             let bloodPath = NSBundle.mainBundle().pathForResource("blood", ofType: "sks")
             let blood = NSKeyedUnarchiver.unarchiveObjectWithFile(bloodPath!) as SKEmitterNode
             to.addChild(blood)
-            
+
             blood.runAction(SKAction.sequence([SKAction.waitForDuration(0.3), SKAction.fadeOutWithDuration(0.2), SKAction.runBlock({to.unit = nil})]))
         }
 
@@ -687,10 +693,11 @@ class GameEngine {
             return
         }
 
-        self.playShortSound("build-upgrade", type: "wav")
 
-        tile.owner.upgradeVillage()
-        self.availableVillages = self.availableVillages.filter({ $0 !== tile})
+        if tile.owner.upgradeVillage() {
+            self.playShortSound("build-upgrade", type: "wav")
+            self.availableVillages = self.availableVillages.filter({ $0 !== tile})
+        }
     }
 
     func upgradeUnit(tile: Tile, newLevel: Constants.Types.Unit) {
@@ -709,9 +716,10 @@ class GameEngine {
 
         if let unit = tile.unit {
             let village = tile.owner!
-            village.upgradeUnit(tile, newType: newLevel)
-            self.availableUnits = self.availableUnits.filter({ $0 !== tile })
-            self.randomYesSound()
+            if village.upgradeUnit(tile, newType: newLevel) {
+                self.availableUnits = self.availableUnits.filter({ $0 !== tile })
+                self.randomYesSound()
+            }
         } else {
             self.showToast("There are no units to upgrade")
         }
@@ -732,11 +740,16 @@ class GameEngine {
         }
         if tileA.unit?.type.rawValue >= Constants.Types.Unit.Knight.rawValue
                     || tileB.unit?.type.rawValue >= Constants.Types.Unit.Knight.rawValue {
-            self.showToast("One of the units has reached the maximal potiential")
+            self.showToast("One of the units has reached the maximal potential")
             return
         }
         if (tileA.unit?.disabled)! || (tileB.unit?.disabled)! {
             self.showToast("One of the units is busy")
+            return
+        }
+        if tileA.unit!.type.rawValue + tileB.unit!.type.rawValue > tileA.owner.type.rawValue + 2
+                    && tileA.owner.type.rawValue < Constants.Types.Village.Fort.rawValue {
+            self.showToast("The village can't support that upgrade")
             return
         }
         tileA.unit?.combine(tileB.unit!)
@@ -754,7 +767,7 @@ class GameEngine {
             tileA.runAction(SKAction.fadeInWithDuration(0.3))
         }))
 
-        self.randomYesSound()
+        tileA.unit?.type == Constants.Types.Unit.Knight ? self.playShortSound("horse") : self.randomYesSound()
     }
 
     func recruitUnit(villageTile: Tile, type: Constants.Types.Unit) {
@@ -806,7 +819,7 @@ class GameEngine {
                     if n.owner == nil { continue }
                     if n.owner.player? !== self.game?.currentPlayer {
                         if n.unit?.type == Constants.Types.Unit.Canon { continue }
-                        if n.isProtected(newUnit) {
+                        if n.isProtected(newUnit) && n.isBuildable() {
                             invadable = false
                             break
                         }
@@ -837,13 +850,21 @@ class GameEngine {
 
         destination?.alpha = 0.0
         destination?.draw()
-        destination?.runAction(SKAction.fadeInWithDuration(0.3))
+        destination?.runAction(SKAction.fadeInWithDuration(0.3), completion: ({self.redraw()}))
 
-        self.playSound("recruit", type: "mp3", loop: false)
+        self.playShortSound(type == .Knight ? "horse" : "recruit", type: "mp3")
         self.randomYesSound()
     }
 
+    func redraw() {
+        self.map?.draw()
+    }
+
     func buildTower(on: Tile) {
+        if on.owner == nil {
+            self.showToast("You can only build tower on your land")
+            return
+        }
         if on.owner.player !== self.game?.currentPlayer {
             self.showToast("You can only build towers on your land")
             return
@@ -936,6 +957,8 @@ class GameEngine {
         // Move the unit
         if from !== on {
             self.moveWithAnimation(to: on, from: from, path: path, state: .BuildingRoad)
+        } else {
+            from.unit?.currentAction = .BuildingRoad
         }
 
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
@@ -1004,6 +1027,8 @@ class GameEngine {
         // Move the unit
         if from !== on {
             self.moveWithAnimation(to: on, from: from, path: path, state: .StartCultivating)
+        } else {
+            from.unit?.currentAction = .StartCultivating
         }
         self.availableUnits = self.availableUnits.filter({ $0 !== from })
     }
@@ -1079,6 +1104,7 @@ class GameEngine {
         self.beginTurn()
         self.showGameScene()
         return
+
         // EXISTING MATCH
         if matchData.length > 0 {
             if let dict = self.dataToDict(matchData) {  // try to extract match data
@@ -1089,9 +1115,12 @@ class GameEngine {
                         let finalChoice = choices[Int(arc4random_uniform(3))]
                         GameEngine.Instance.startGameWithMap(finalChoice)   // replace match data with a new game loaded with map number
                         MatchHelper.sharedInstance().updateMatchData()      // send update to every one
+                        self.beginTurn()
                         self.showGameScene()
+                        if !GameEngine.Instance.game!.localIsCurrentPlayer { self.playShortSound("tambour2")
+                        } else { self.playShortSound("clairon-wakeup") }
                         // MAP SELECTION SEQUENCE IN PROGRESS
-                    } else { // TODO pass a bool saying userShouldSelect or userShouldwait
+                    } else {
                         self.currentChoices = choices
                         self.showMapSelection() // current player will select a map
                     }
@@ -1107,6 +1136,9 @@ class GameEngine {
                     if (self.game?.roundCount)! % 3 == 0 {
                         self.growTrees()
                     }
+
+                    if !GameEngine.Instance.game!.localIsCurrentPlayer { self.playShortSound("tambour2")
+                    } else { self.playShortSound("clairon-wakeup") }
                 }
             }
 

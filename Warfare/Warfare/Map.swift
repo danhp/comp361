@@ -119,6 +119,11 @@ class Map: SKNode {
         costSoFar[from] = 0
         seen.append(from)
 
+        // Edge case
+        if from === to {
+            return [to]
+        }
+
         while !queue.isEmpty {
             let node = queue.pop()
 
@@ -231,6 +236,7 @@ class Map: SKNode {
                             }
                         } else {
                             if t.owner != nil && seed.unit?.type == Constants.Types.Unit.Peasant { continue }
+                            if t.village != nil && seed.unit?.type.rawValue <= Constants.Types.Unit.Infantry.rawValue { continue }
                             if t.village == Constants.Types.Village.Castle { continue }
                             if !t.isProtected(seed.unit!) {
                                 var b = false
