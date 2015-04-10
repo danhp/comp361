@@ -1158,6 +1158,7 @@
                                 <rect key="frame" x="16" y="7" width="39" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="39" id="GVh-Gi-Bae"/>
+                                    <constraint firstAttribute="height" constant="33" id="yGv-b6-g2N"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="15"/>
                                 <state key="normal" title="Menu">
@@ -1175,6 +1176,7 @@
                         <color key="backgroundColor" red="0.94901960784313721" green="0.36078431372549019" blue="0.36078431372549019" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="MMD-O3-dqG" secondAttribute="bottom" constant="20" symbolic="YES" id="0PY-2s-5Md"/>
+                            <constraint firstItem="efP-ni-fi2" firstAttribute="leading" secondItem="TON-Af-31L" secondAttribute="leadingMargin" id="0pY-R6-EJw"/>
                             <constraint firstItem="aUU-Q3-K0q" firstAttribute="top" secondItem="X3L-ui-fC5" secondAttribute="bottom" constant="79" id="0wZ-72-A05"/>
                             <constraint firstItem="efP-ni-fi2" firstAttribute="top" secondItem="tsl-zn-wIT" secondAttribute="bottom" constant="-13" id="2BG-Nq-Qbv"/>
                             <constraint firstItem="aUU-Q3-K0q" firstAttribute="top" secondItem="efP-ni-fi2" secondAttribute="bottom" constant="280" id="Dix-oS-juo"/>
@@ -1197,6 +1199,7 @@
                             <constraint firstItem="MMD-O3-dqG" firstAttribute="bottom" secondItem="5Jl-Op-yqR" secondAttribute="bottom" id="oZU-sb-D7C"/>
                             <constraint firstItem="54e-dr-1JT" firstAttribute="top" secondItem="Vgd-qb-s1i" secondAttribute="bottom" constant="16" id="p1E-bA-QLg"/>
                             <constraint firstItem="efP-ni-fi2" firstAttribute="leading" secondItem="TON-Af-31L" secondAttribute="leadingMargin" id="p9g-41-YHF"/>
+                            <constraint firstItem="efP-ni-fi2" firstAttribute="top" secondItem="tsl-zn-wIT" secondAttribute="bottom" constant="-13" id="t5V-4I-YvI"/>
                             <constraint firstItem="54e-dr-1JT" firstAttribute="bottom" secondItem="arM-bA-foV" secondAttribute="bottom" id="tdH-4I-REo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="X3L-ui-fC5" secondAttribute="trailing" constant="29" id="umu-eR-ZbX"/>
                             <constraint firstItem="efP-ni-fi2" firstAttribute="leading" secondItem="TON-Af-31L" secondAttribute="leadingMargin" id="xHf-W6-cyr"/>
@@ -1204,7 +1207,9 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="2BG-Nq-Qbv"/>
                                 <exclude reference="p9g-41-YHF"/>
+                                <exclude reference="xHf-W6-cyr"/>
                                 <exclude reference="Dix-oS-juo"/>
                                 <exclude reference="k83-gj-AU8"/>
                                 <exclude reference="FGN-Zn-2Sn"/>
