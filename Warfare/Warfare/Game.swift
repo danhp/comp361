@@ -15,12 +15,12 @@ class Game {
     var currentPlayer: Player { return (GameEngine.Instance.matchEnded ? self.players[0] : self.players[MatchHelper.sharedInstance().currentParticipantIndex()]) }
     var localPlayer: Player { return self.players[MatchHelper.sharedInstance().localParticipantIndex()] }
 
-    let map = Map()
+    var map = Map()
     var neutralTiles = [Tile]()
 
     var localIsCurrentPlayer: Bool {
         if !GameEngine.Instance.matchEnded {
-            return GKLocalPlayer.localPlayer().playerID == MatchHelper.sharedInstance().myMatch?.currentParticipant.playerID
+            return GKLocalPlayer.localPlayer() == MatchHelper.sharedInstance().myMatch?.currentParticipant
         } else {
             return false
         }
@@ -67,7 +67,7 @@ class Game {
         // PLAYERS
         if let players = dict["players"] as? NSArray {
             for p in players {
-                let p = Player(dict: p as NSDictionary)
+                let p = Player(dict: p as! NSDictionary)
                 self.players.append(p)
             }
         }
@@ -75,7 +75,7 @@ class Game {
         // NEUTRAL TILES
         if let neutral = dict["neutral"] as? NSArray {
             for t in neutral {  // t is an NSDictionary
-                let t = Tile(dict: t as NSDictionary)
+                let t = Tile(dict: t as! NSDictionary)
                 self.map.setTile(at: t.coordinates, to: t)
                 self.neutralTiles.append(t)
             }
@@ -101,7 +101,7 @@ class Game {
         var data = NSJSONSerialization.dataWithJSONObject(dict, options:NSJSONWritingOptions(0), error: &error)
 
         // Return as a String
-        return NSString(data: data!, encoding: NSUTF8StringEncoding)!
+        return NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
     }
 
 }

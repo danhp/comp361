@@ -44,15 +44,14 @@ class GameScene: SKScene {
         GameEngine.Instance.updateInfoPanel()
     }
 
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.moved = false
     }
 
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         if self.moved { return }
-        /* Called when a touch begins */
 
-        let touch = touches.anyObject() as UITouch
+        let touch = touches.first as! UITouch
         let touchLocation = touch.locationInNode(self)
         let touchedNode = nodeAtPoint(touchLocation)
 
@@ -69,15 +68,15 @@ class GameScene: SKScene {
     }
 
     private func newSelection() {
-        if let map = self.map? {
+        if let map = self.map {
             GameEngine.Instance.updateInfoPanel()
             GameEngine.Instance.playUnitSound(map.selected!)
         }
     }
 
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.moved = true
-        let touch = touches.anyObject()! as UITouch
+        let touch = touches.first as! UITouch
         let current = touch.locationInNode(self)
         let prev = touch.previousLocationInNode(self)
 

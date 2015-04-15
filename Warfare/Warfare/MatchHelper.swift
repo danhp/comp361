@@ -45,7 +45,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func currentParticipantIndex() -> Int {
         if GameEngine.Instance.matchEnded { return -1 }
         
-        let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as [GKTurnBasedParticipant]
+        let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as! [GKTurnBasedParticipant]
 
         for (index, p) in enumerate(participants) {
             if p === self.myMatch?.currentParticipant {
@@ -58,7 +58,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     }
 
     func localParticipantIndex() -> Int {
-        let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as [GKTurnBasedParticipant]
+        let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as! [GKTurnBasedParticipant]
 
         for (index, p) in enumerate(participants) {
             if p.player === GKLocalPlayer.localPlayer() {
@@ -70,7 +70,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     }
 
     func localParticipant() -> GKTurnBasedParticipant? {
-        let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as [GKTurnBasedParticipant]
+        let participants: [GKTurnBasedParticipant] = self.myMatch?.participants as! [GKTurnBasedParticipant]
 
         for p in participants {
             if p.player === GKLocalPlayer.localPlayer() {
@@ -159,7 +159,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
             let updatedMatchData = GameEngine.Instance.encodeMatchData()
             match.message = GameEngine.Instance.encodeTurnMessage()
 
-            match.endTurnWithNextParticipants(nextParticipants(), turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
+            match.endTurnWithNextParticipants(nextParticipants() as [AnyObject], turnTimeout: GKTurnTimeoutDefault, matchData: updatedMatchData, completionHandler: {(error: NSError!) -> Void in
                 if ((error) != nil) {
                     println(error)
                 }
@@ -172,7 +172,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     // NOTE: the function requires match data
     func advanceSelectionTurn(data: NSData) {
         if let match = self.myMatch {
-            match.endTurnWithNextParticipants(nextParticipants(), turnTimeout: GKTurnTimeoutDefault, matchData: data, completionHandler: {(error: NSError!) -> Void in
+            match.endTurnWithNextParticipants(nextParticipants() as [AnyObject], turnTimeout: GKTurnTimeoutDefault, matchData: data, completionHandler: {(error: NSError!) -> Void in
                 if ((error) != nil) {
                     println(error)
                 }
@@ -186,7 +186,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         nextParticipants[1] = (self.myMatch?.participants[(current+2)%3])!
         nextParticipants[2] = (self.myMatch?.participants[current])! // should be current participant
 
-        let p = nextParticipants[0] as GKTurnBasedParticipant
+        let p = nextParticipants[0] as! GKTurnBasedParticipant
         if p.matchOutcome != .None && p.status != .Matching {
             nextParticipants.removeObject(nextParticipants[0])
             nextParticipants.addObject(nextParticipants[0])
@@ -201,7 +201,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
 
     func removeParticipant(index: Int) {
         // Retrieve participant and set match outcome to lost
-        let p = self.myMatch?.participants[index] as GKTurnBasedParticipant
+        let p = self.myMatch?.participants[index] as! GKTurnBasedParticipant
         p.matchOutcome = GKTurnBasedMatchOutcome.Lost
 
         // End the match if 2 participant have lost
@@ -219,7 +219,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
 
 //            self.myMatch?.participants.map({($0.matchOutcome == .None) ? playing.append($0 as GKTurnBasedParticipant) : eliminated.append($0 as GKTurnBasedParticipant)})
 
-            for p in self.myMatch?.participants as [GKTurnBasedParticipant] {
+            for p in self.myMatch?.participants as! [GKTurnBasedParticipant] {
                 if p.matchOutcome == .None {
                     playing.append(p)
                 } else {
@@ -265,9 +265,9 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         var nextParticipants = [GKTurnBasedParticipant]()
         for p in participants {
             if p.playerID! != nil && p.playerID! == GKLocalPlayer.localPlayer().playerID {
-                nextParticipants.append(p as GKTurnBasedParticipant)
+                nextParticipants.append(p as! GKTurnBasedParticipant)
             } else if p.matchOutcome == .None {
-                nextParticipants.insert(p as GKTurnBasedParticipant, atIndex: 0)
+                nextParticipants.insert(p as! GKTurnBasedParticipant, atIndex: 0)
             }
         }
 
@@ -286,9 +286,9 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
         // Do nothing
     }
 
-    func player(player: GKPlayer!, receivedExchangeReplies replies: GKTurnBasedExchange!, forCompletedExchange exchange: GKTurnBasedExchange!,forMatch match: GKTurnBasedMatch!) {
-        // Do nothing
-    }
+//    func player(player: GKPlayer!, receivedExchangeReplies replies: GKTurnBasedExchange!, forCompletedExchange exchange: GKTurnBasedExchange!,forMatch match: GKTurnBasedMatch!) {
+//        // Do nothing
+//    }
 
     func player(player: GKPlayer!,
         receivedExchangeRequest exchange: GKTurnBasedExchange!,
@@ -314,7 +314,7 @@ class MatchHelper: NSObject, GKTurnBasedMatchmakerViewControllerDelegate, GKLoca
     func player(player: GKPlayer!,
         receivedTurnEventForMatch match: GKTurnBasedMatch!,
         didBecomeActive: Bool) {
-            if ((match.matchID == self.myMatch?.matchID && !(self.vc? is MainMenuViewController)) || didBecomeActive) {
+            if ((match.matchID == self.myMatch?.matchID && !(self.vc is MainMenuViewController)) || didBecomeActive) {
                 self.myMatch = match
                 self.loadMatchData()
             } // else show alert?

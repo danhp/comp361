@@ -53,7 +53,7 @@ class MapSelectionViewController: UIViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "unwindFromMap" {
-            let vc = segue.destinationViewController as MainMenuViewController
+            let vc = segue.destinationViewController as! MainMenuViewController
             MatchHelper.sharedInstance().vc = vc
         }
     }

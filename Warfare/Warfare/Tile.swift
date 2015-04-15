@@ -122,7 +122,7 @@ class Tile: SKNode, Hashable {
     }
 
     func replaceTombstone() {
-        if self.structure? == Constants.Types.Structure.Tombstone {
+        if self.structure == Constants.Types.Structure.Tombstone {
             self.structure = nil
             self.land = .Tree
         }
@@ -154,7 +154,7 @@ class Tile: SKNode, Hashable {
             return attackingType <= min(defendingUnitType.rawValue, Constants.Types.Unit.Knight.rawValue)
         }
 
-        return self.structure? == Constants.Types.Structure.Tower && attackingType < Constants.Types.Unit.Soldier.rawValue
+        return self.structure == Constants.Types.Structure.Tower && attackingType < Constants.Types.Unit.Soldier.rawValue
                     || self.village?.rawValue >= Constants.Types.Village.Fort.rawValue && attackingType < Constants.Types.Unit.Knight.rawValue
     }
 
@@ -204,9 +204,9 @@ class Tile: SKNode, Hashable {
 
     func deserialize(dict: NSDictionary) {
         let p = dict["position"] as? NSArray
-        self.coordinates = (p![0] as Int, p![1] as Int)
+        self.coordinates = (p![0] as! Int, p![1] as! Int)
 
-        self.land = Constants.Types.Land(rawValue: dict["land"] as Int)!
+        self.land = Constants.Types.Land(rawValue: dict["land"] as! Int)!
 
         // Unit
         if let u = dict["unit"] as? NSDictionary {

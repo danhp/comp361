@@ -34,8 +34,8 @@ class Unit {
     }
 
     func deserialize(dict: NSDictionary) {
-        self.type = Constants.Types.Unit(rawValue: dict["type"] as Int)!
-        self.currentAction = Constants.Unit.Action(rawValue: dict["currentAction"] as Int)!
+        self.type = Constants.Types.Unit(rawValue: dict["type"] as! Int)!
+        self.currentAction = Constants.Unit.Action(rawValue: dict["currentAction"] as! Int)!
     }
 
     func combine(with: Unit) {

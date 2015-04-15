@@ -14,11 +14,11 @@ class TileTests: XCTestCase {
         let t = Tile(coordinates: (0,0))
         t.structure = Constants.Types.Structure.Tombstone
         
-        XCTAssertEqual((t.structure?)!, Constants.Types.Structure.Tombstone)
+        XCTAssertEqual((t.structure)!, Constants.Types.Structure.Tombstone)
         
         t.replaceTombstone()
 
-        XCTAssertTrue(t.structure? == nil, "Tile structure should be nil after removing tombstone.")
+        XCTAssertTrue(t.structure == nil, "Tile structure should be nil after removing tombstone.")
         XCTAssertEqual(t.land, Constants.Types.Land.Tree, "Tile land type should be tree.")
     }
 }

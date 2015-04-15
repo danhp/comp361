@@ -100,7 +100,7 @@ class Map: SKNode {
         self.selected = centerAround
         let positionInMap = convertPoint(centerAround.position, fromNode: self.scroller)
         let delta = CGVector(dx: -positionInMap.x , dy: -positionInMap.y )
-        self.scroll(delta)
+        self.move(delta)
     }
 
     // Get the set of tiles in the shortest path
@@ -384,7 +384,7 @@ class Map: SKNode {
     }
 
     func resetColor() {
-        let tileList: [Tile] = tiles.rows.reduce([], +)
+        let tileList: [Tile] = tiles.rows.reduce([], combine: +)
 
         for t in tileList {
             t.lighten = false
@@ -397,7 +397,7 @@ class Map: SKNode {
         }
     }
 
-    func scroll(delta: CGVector) {
+    func move(delta: CGVector) {
         self.isAnimating = true
         let move = SKAction.moveBy(delta, duration: 1)
         self.scroller.runAction(move, completion: ({self.isAnimating = false}))

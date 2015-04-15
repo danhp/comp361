@@ -78,8 +78,8 @@ extension PriorityQueue {
 	public func update<T2 where T2: Equatable>(element: T2) -> T? {
 		assert(element is T)  // How to enforce this with type constraints?
 		for (index, item) in enumerate(_heap) {
-			if (item as T2) == element {
-				_heap[index] = element as T
+			if (item as! T2) == element {
+				_heap[index] = element as! T
 				if siftDown(index) || siftUp(index) {
 					return item
 				}
@@ -91,7 +91,7 @@ extension PriorityQueue {
 	public func remove<T2 where T2: Equatable>(element: T2) -> T? {
 		assert(element is T)  // How to enforce this with type constraints?
 		for (index, item) in enumerate(_heap) {
-			if (item as T2) == element {
+			if (item as! T2) == element {
 				swap(&_heap[index], &_heap[_heap.endIndex - 1])
 				_heap.removeLast()
 				siftDown(index)

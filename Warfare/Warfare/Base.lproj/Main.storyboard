@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Iq-47-Qvh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1Iq-47-Qvh">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Unknown constraint types" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--MainMenuViewController-->
@@ -479,7 +478,6 @@
                                         <constraint firstItem="oFK-4J-QLx" firstAttribute="leading" secondItem="Jhz-Am-nTC" secondAttribute="leading" id="is6-jH-l7j"/>
                                         <constraint firstItem="R9U-M9-D4u" firstAttribute="firstBaseline" secondItem="Jhz-Am-nTC" secondAttribute="baseline" id="isx-X5-Aac"/>
                                         <constraint firstItem="8ru-7G-GfM" firstAttribute="leading" secondItem="Ix0-Yq-6RM" secondAttribute="leading" id="jH3-Xz-R41"/>
-                                        <constraint firstItem="Jhz-Am-nTC" firstAttribute="leading" secondAttribute="trailing" constant="75" id="jhV-51-nko"/>
                                         <constraint firstAttribute="bottom" secondItem="XZQ-nP-JgT" secondAttribute="bottom" constant="-1" id="jqp-QA-T6i"/>
                                         <constraint firstItem="OBF-Ya-Z3a" firstAttribute="leading" secondItem="u60-XD-bMr" secondAttribute="leading" constant="233" id="jtY-vt-XRb"/>
                                         <constraint firstItem="oFK-4J-QLx" firstAttribute="leading" secondItem="Cs8-Er-d2l" secondAttribute="trailing" constant="8" symbolic="YES" id="kQt-Tg-5Xb"/>
@@ -557,7 +555,6 @@
                                             <exclude reference="Kkm-k5-Al8"/>
                                             <exclude reference="VdA-yF-EUG"/>
                                             <exclude reference="ZkY-8x-7kR"/>
-                                            <exclude reference="jhV-51-nko"/>
                                             <exclude reference="73c-07-eqD"/>
                                             <exclude reference="eOm-79-8Ji"/>
                                             <exclude reference="iXq-hI-wSP"/>

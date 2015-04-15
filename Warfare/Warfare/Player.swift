@@ -66,7 +66,7 @@ class Player {
         // VILLAGES
         if let villages = dict["villages"] as? NSArray {
             for v in villages { // v is NSDictionary
-                self.villages.append(Village(dict: v as NSDictionary, owner: self))
+                self.villages.append(Village(dict: v as! NSDictionary, owner: self))
             }
         }
     }

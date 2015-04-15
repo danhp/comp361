@@ -73,7 +73,7 @@ class mapTests: XCTestCase {
 
 		let from = tiles[0,0]!
 		let to = tiles[3,5]!
-		let tileList: [Tile] = tiles.rows.reduce([], +)
+		let tileList: [Tile] = tiles.rows.reduce([], combine: +)
 
 		XCTAssertTrue(!map.getPath(from: from, to: to, accessible: tileList).isEmpty)
 

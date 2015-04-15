@@ -137,7 +137,7 @@ class Village {
             // smoke
             if health >= Int(ceil(Double(maxHealth)/2.0)) {
                 let smokePath = NSBundle.mainBundle().pathForResource("smoke", ofType: "sks")
-                let smoke = NSKeyedUnarchiver.unarchiveObjectWithFile(smokePath!) as SKEmitterNode
+                let smoke = NSKeyedUnarchiver.unarchiveObjectWithFile(smokePath!) as! SKEmitterNode
                 smoke.zPosition = 5
                 smoke.particleBirthRate = CGFloat(maxHealth - self.health + 1)
                 self.node?.addChild(smoke)
@@ -145,7 +145,7 @@ class Village {
                 // fire
             } else {
                 let firePath = NSBundle.mainBundle().pathForResource("fire", ofType: "sks")
-                let fire = NSKeyedUnarchiver.unarchiveObjectWithFile(firePath!) as SKEmitterNode
+                let fire = NSKeyedUnarchiver.unarchiveObjectWithFile(firePath!) as! SKEmitterNode
                 fire.zPosition = 5
                 fire.particleBirthRate = CGFloat((150 / maxHealth/2) * (maxHealth/2 - self.health) + 25)
                 self.node?.addChild(fire)
@@ -174,16 +174,16 @@ class Village {
     }
 
     func deserialize(dict: NSDictionary) {
-        self.type = Constants.Types.Village(rawValue: dict["type"] as Int)!
-        self.gold = dict["gold"] as Int
-        self.wood = dict["wood"] as Int
+        self.type = Constants.Types.Village(rawValue: dict["type"] as! Int)!
+        self.gold = dict["gold"] as! Int
+        self.wood = dict["wood"] as! Int
         self.health = dict["health"] as? Int ?? self.type.health()
         self.state = Constants.Village.Action(rawValue: (dict["state"] as? Int ?? 0))!
 
         // TILES
         if let controlled = dict["controlledTiles"] as? NSArray {
             for t in controlled {    // t is NSDictionary
-                self.controlledTiles.append(Tile(dict: t as NSDictionary, ownerVillage: self))
+                self.controlledTiles.append(Tile(dict: t as! NSDictionary, ownerVillage: self))
             }
         }
     }

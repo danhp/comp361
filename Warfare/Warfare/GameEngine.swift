@@ -12,7 +12,7 @@ class GameEngine {
     var map: Map? { return self.game?.map }
     var scene: GameScene?
 
-    var matchEnded: Bool { return MatchHelper.sharedInstance().myMatch?.status == GKTurnBasedMatchStatus.Ended  ?? false }
+    var matchEnded: Bool { return (MatchHelper.sharedInstance().myMatch?.status == GKTurnBasedMatchStatus.Ended)  ?? false }
 
     // List of unit awaiting orders
     var availableUnits: [Tile] = []
@@ -146,7 +146,7 @@ class GameEngine {
         if self.currentChoices?.count == 3 {
             MatchHelper.sharedInstance().loadMatchData()
         } else {
-            (MatchHelper.sharedInstance().vc as MapSelectionViewController).updateWaitCount((self.currentChoices?.count)!)
+            (MatchHelper.sharedInstance().vc as! MapSelectionViewController).updateWaitCount((self.currentChoices?.count)!)
         }
     }
 
@@ -267,7 +267,8 @@ class GameEngine {
 
         }
 
-        let goldString = "You gained " + String(gold) + " gold and paid " + String(wages) + " gold. "
+        var goldString = "You gained " + String(gold) + " gold and paid "
+        goldString += String(wages) + " gold. "
         let starvedString = ((starved > 0) ? String(starved) + " of your villages starved. " : "")
 
         var meadowString = ""
@@ -397,7 +398,7 @@ class GameEngine {
             }
             for n in (self.map?.neighbors(tile: to))! {
                 if n.owner == nil { continue }
-                if n.owner.player? !== self.game?.currentPlayer {
+                if n.owner.player !== self.game?.currentPlayer {
                     if n.unit?.type == Constants.Types.Unit.Canon { continue }
                     if n.isProtected(from.unit!) {
                         self.showToast("Won't do that, there's unit standing guard")
@@ -454,7 +455,7 @@ class GameEngine {
             moveActions.append(moveAction)
         }
 
-        let u = (from.unit?)!
+        let u = (from.unit)!
 
         // play sound
         self.playSound(u.type.name())
@@ -463,7 +464,7 @@ class GameEngine {
         // run animation
         u.node!.runAction(SKAction.sequence(moveActions), completion: {
             // Update the destination tile
-            if to.structure? == Constants.Types.Structure.Tombstone {
+            if to.structure == Constants.Types.Structure.Tombstone {
                 to.structure = nil
             }
             if to.land == .Tree {
@@ -553,7 +554,7 @@ class GameEngine {
         // Animate
         if let u = to.unit {
             let bloodPath = NSBundle.mainBundle().pathForResource("blood", ofType: "sks")
-            let blood = NSKeyedUnarchiver.unarchiveObjectWithFile(bloodPath!) as SKEmitterNode
+            let blood = NSKeyedUnarchiver.unarchiveObjectWithFile(bloodPath!) as! SKEmitterNode
             to.addChild(blood)
 
             blood.runAction(SKAction.sequence([SKAction.waitForDuration(0.3), SKAction.fadeOutWithDuration(0.2), SKAction.runBlock({to.unit = nil})]))
@@ -823,7 +824,7 @@ class GameEngine {
                 var invadable = true
                 for n in (self.map?.neighbors(tile: t))! {
                     if n.owner == nil { continue }
-                    if n.owner.player? !== self.game?.currentPlayer {
+                    if n.owner.player !== self.game?.currentPlayer {
                         if n.unit?.type == Constants.Types.Unit.Canon { continue }
                         if n.isProtected(newUnit) && n.isBuildable() {
                             invadable = false
@@ -1106,10 +1107,10 @@ class GameEngine {
     // After 3, we enter in map final selection and start of the game
     //      - replace current match data with the map selected
     func decode(matchData: NSData) {
- //       self.startGameWithMap(3)
- //       self.beginTurn()
- //       self.showGameScene()
- //       return
+        self.startGameWithMap(3)
+        self.beginTurn()
+        self.showGameScene()
+        return
 
         // EXISTING MATCH
         if matchData.length > 0 {
